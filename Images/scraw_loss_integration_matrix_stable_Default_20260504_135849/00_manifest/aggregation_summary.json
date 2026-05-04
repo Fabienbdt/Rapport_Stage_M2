@@ -1,0 +1,11 @@
+{
+  "matrix_root": "/data2/fbidet/scRAW_EXPERIMENTAL/results/scraw_loss_integration_matrix_stable_Default_20260428_104305",
+  "all_seed_metrics_csv": "/data2/fbidet/scRAW_EXPERIMENTAL/results/scraw_loss_integration_matrix_stable_Default_20260428_104305/04_tables/all_seed_metrics.csv",
+  "summary_csv": "/data2/fbidet/scRAW_EXPERIMENTAL/results/scraw_loss_integration_matrix_stable_Default_20260428_104305/04_tables/summary_by_dataset_algorithm_variant.csv",
+  "delta_csv": "/data2/fbidet/scRAW_EXPERIMENTAL/results/scraw_loss_integration_matrix_stable_Default_20260428_104305/04_tables/delta_vs_baseline.csv",
+  "source_manifest_csv": "/data2/fbidet/scRAW_EXPERIMENTAL/results/scraw_loss_integration_matrix_stable_Default_20260428_104305/04_tables/source_manifest.csv",
+  "n_records": 6265,
+  "n_new_records": 4368,
+  "n_historical_records": 1897,
+  "plots_dir": "/data2/fbidet/scRAW_EXPERIMENTAL/results/scraw_loss_integration_matrix_stable_Default_20260428_104305/05_plots"
+}

@@ -1,0 +1,120 @@
+\documentclass[11pt,a4paper,oneside]{report}
+
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[french]{babel}
+\usepackage{lmodern}
+\usepackage{microtype}
+\usepackage{geometry}
+\geometry{margin=2.5cm}
+\usepackage{setspace}
+\onehalfspacing
+\usepackage{graphicx}
+\usepackage{booktabs}
+\usepackage{tabularx}
+\usepackage{array}
+\usepackage{enumitem}
+\usepackage{xcolor}
+\usepackage{hyperref}
+\usepackage{fancyhdr}
+\usepackage{csquotes}
+\usepackage[backend=biber,style=numeric,sorting=nyt]{biblatex}
+
+\addbibresource{bibliographie/references.bib}
+\graphicspath{{Images/}{Images/page_de_garde/}{figures/}}
+
+\newcommand{\StageInstitution}{Universit\'e de Bordeaux}
+\newcommand{\StageMaster}{Master Bio-informatique, 2\textsuperscript{e} ann\'ee}
+\newcommand{\StageType}{Plan d\'etaill\'e du rapport de stage}
+\newcommand{\StageTitle}{Benchmarking interactif, d\'eveloppement de scRAW et \'evaluation inductive pour le clustering scRNA-seq}
+\newcommand{\StageStudent}{Fabien Bidet}
+\newcommand{\StageDate}{Avril 2026}
+\newcommand{\StagePeriod}{[Janvier-Juin 2026]}
+\newcommand{\StageHost}{[LaBRI]}
+\newcommand{\StageAcademicSupervisor}{[Patricia Thébault]}
+\newcommand{\StageIndustrySupervisor}{[Victoria Bourgeais, Loann Giovannangeli]}
+
+\definecolor{ubblue}{HTML}{0969DA}
+\definecolor{softgray}{HTML}{F6F8FA}
+
+\hypersetup{
+  colorlinks=true,
+  linkcolor=ubblue,
+  urlcolor=ubblue,
+  citecolor=ubblue
+}
+
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[L]{\small \StageStudent}
+\fancyhead[R]{\small Plan du rapport}
+\fancyfoot[C]{\thepage}
+\setlength{\headheight}{14pt}
+
+\setlist[itemize]{itemsep=0.25em, topsep=0.35em}
+\setlist[enumerate]{itemsep=0.25em, topsep=0.35em}
+
+\begin{document}
+
+\pagenumbering{gobble}
+\begin{titlepage}
+\thispagestyle{empty}
+
+\begin{minipage}{0.16\textwidth}
+  \centering
+  \IfFileExists{Images/page_de_garde/logo_univ_bordeaux.png}
+    {\includegraphics[width=0.95\linewidth]{Images/page_de_garde/logo_univ_bordeaux.png}}
+    {\fbox{\parbox[c][2.8cm][c]{0.95\linewidth}{\centering Logo\\Universit\'e}}}
+\end{minipage}
+\hfill
+\begin{minipage}{0.78\textwidth}
+  \raggedleft
+  {\Large \textbf{\StageInstitution}}\\
+  \textbf{\StageMaster}
+\end{minipage}
+
+\vspace{1.2cm}
+\begin{center}
+  {\LARGE \textbf{\StageType}}
+\end{center}
+
+\vspace{0.7cm}
+\hrule
+\vspace{0.7cm}
+\begin{center}
+  {\LARGE \textbf{\StageTitle}}
+\end{center}
+\vspace{0.7cm}
+\hrule
+
+\vspace{1.2cm}
+\begin{center}
+  {\Large \StageStudent}\\[0.4cm]
+  {\large \StageDate}
+\end{center}
+
+\vspace{1.5cm}
+\noindent\textbf{P\'eriode :} \StagePeriod\\
+\textbf{Structure d'accueil :} \StageHost\\
+\textbf{Encadrant universitaire :} \StageAcademicSupervisor\\
+\textbf{Tuteur de stage :} \StageIndustrySupervisor\\
+\textbf{Axes du rapport :} logiciel de benchmark, algorithmes de l'\'etat de l'art, scRAW, hyperparam\`etres, extension inductive
+
+\vfill
+\end{titlepage}
+
+\cleardoublepage
+\pagenumbering{arabic}
+\pagestyle{fancy}
+\setcounter{page}{1}
+
+\tableofcontents
+
+\cleardoublepage
+\input{plan_detaille}
+
+\cleardoublepage
+\nocite{*}
+\printbibliography[title={Bibliographie}]
+
+\end{document}
