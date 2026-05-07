@@ -12,7 +12,7 @@
 \section*{Fil conducteur proposé}
 \addcontentsline{toc}{section}{Fil conducteur proposé}
 
-Le rapport peut suivre une progression en cinq blocs : introduire le problème biologique et méthodologique, replacer les méthodes dans l'état de l'art, comparer proprement l'existant, présenter scRAW comme réponse algorithmique, puis ouvrir sur les extensions encore en construction.
+Le rapport peut suivre une progression en cinq parties : introduire le problème biologique et méthodologique, replacer les méthodes dans l'état de l'art, comment j'ai comparer l'existant, présenter scRAW et ses performances, puis ouvrir sur les expériences complémentaires.
 
 \begin{center}
 \fbox{\begin{minipage}{0.92\linewidth}
@@ -23,19 +23,20 @@ Le rapport peut suivre une progression en cinq blocs : introduire le problème b
 Cette question relie les blocs du rapport :
 \begin{itemize}
   \item l'introduction pose le contexte scRNA-seq, le clustering et la difficulté des populations rares ;
-  \item le Related Work décrit les familles de méthodes, les données et les traitements qui conditionnent les résultats ;
-  \item la comparaison de l'existant justifie la construction de SCRBenchmark et donne une base expérimentale commune ;
-  \item scRAW est présenté comme une méthode centrée sur la pondération des cellules rares et l'apprentissage d'un espace latent adapté ;
+  \item l'état de l'art décrit les familles de méthodes, les données et les traitements qui conditionnent les résultats ;
+  \item la comparaison de l'existant justifie la construction de SCRBenchmark d'où on comprend l'origine de scRAW ;
+  \item scRAW est présenté comme une méthode centrée sur la pondération des cellules rares et l'apprentissage d'un espace latent adapté avec une suppression de l'effet batch;
   \item la dernière partie regroupe les extensions : transfert de loss, induction et interprétation biologique éventuelle.
 \end{itemize}
 
 \section{Introduction}
 
 \subsection*{Objectif de la section}
-Introduire le contexte biologique, les données scRNA-seq, le rôle du clustering et le problème spécifique des populations cellulaires rares.
+Présenter le laboratoire, le contexte et l'environnement de travail. Introduire le contexte biologique, les données scRNA-seq, le rôle du clustering et le problème spécifique des populations cellulaires rares.
 
 \subsection*{Points à traiter}
 \begin{itemize}
+  \item Présenter les équipes, les GTs réalisés, les séminaires et réunions hebdomadaires.
   \item Rappeler ce que sont les données scRNA-seq et pourquoi elles permettent d'étudier l'hétérogénéité cellulaire à l'échelle d'une cellule.
   \item Expliquer le rôle du clustering dans l'identification de types cellulaires, de sous-types et de populations minoritaires.
   \item Présenter les difficultés des données : grande dimension, sparsity, bruit, dropout, effets de batch, déséquilibre entre populations cellulaires.
@@ -218,24 +219,12 @@ Montrer comment les méthodes existantes ont été rendues comparables : constru
   \item Terminer par ce que scRAW valide et ce qui reste fragile avant les extensions.
 \end{itemize}
 
-\section{\texorpdfstring{? $\longleftarrow$ extensions de scRAW $\longrightarrow$ ?}{Extensions de scRAW}}
-
-\begin{center}
-{\Huge ?}\quad $\longleftarrow$ \quad \textbf{partie à stabiliser} \quad $\longrightarrow$ \quad {\Huge ?}
-\end{center}
+\section{Travaux complémentaires}
 
 \subsection*{Objectif de la section}
-Regrouper les pistes qui prolongent scRAW sans encore être complètement stabilisées dans le récit principal : extension de la méthode, transfert de la loss et passage à un mode inductif. Le titre final de cette section pourra être renommé en \enquote{Extensions de scRAW}, \enquote{Vers une généralisation de scRAW} ou \enquote{Perspectives méthodologiques}.
+Regrouper les différentes expériences complémentaires : transfert de la loss et passage à un mode inductif.
 
 \setcounter{subsection}{-1}
-
-\subsection{scRAW étendu}
-\begin{itemize}
-  \item Définir ce que signifie \enquote{scRAW étendu} : version enrichie par rapport au pipeline stable, nouvelles pertes, nouveaux modes d'entraînement ou nouvelles sorties.
-  \item Présenter les modifications apportées par rapport à la version scRAW principale.
-  \item Expliquer ce qui est validé, ce qui reste exploratoire et ce qui doit encore être testé.
-  \item Relier cette extension aux limites observées dans la section scRAW.
-\end{itemize}
 
 \subsection{Transfert de loss}
 \begin{itemize}
