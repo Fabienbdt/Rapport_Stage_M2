@@ -1,1 +1,317 @@
-# à rédiger 
+\section{Introduction}
+
+{\color{gray}\itshape
+\subsection*{Objectif de la section}
+Présenter le laboratoire, le contexte et l'environnement de travail. Introduire le contexte biologique, les données scRNA-seq, le rôle du clustering et le problème spécifique des populations cellulaires rares.
+
+\subsection*{Points à traiter}
+\begin{itemize}
+  \item Présenter les équipes, les GTs réalisés, les séminaires et réunions hebdomadaires.
+  \item Rappeler ce que sont les données scRNA-seq et pourquoi elles permettent d'étudier l'hétérogénéité cellulaire à l'échelle d'une cellule.
+  \item Expliquer le rôle du clustering dans l'identification de types cellulaires, de sous-types et de populations minoritaires.
+  \item Présenter les difficultés des données : grande dimension, sparsity, bruit, dropout, effets de batch, déséquilibre entre populations cellulaires.
+  \item Formuler le problème central : les populations rares contribuent peu aux objectifs moyens et peuvent être absorbées par des classes majoritaires ou par des types proches.
+  \item Donner un exemple biologique concret : cellule immunitaire minoritaire, sous-type tumoral, population pathologique, population transitoire ou population spécifique d'un tissu.
+  \item Expliquer l'impact biologique d'une population rare manquée : perte d'un signal d'intérêt, interprétation incomplète d'un tissu, confusion entre états cellulaires.
+  \item Annoncer les contributions du stage : SCRBenchmark, comparaison de l'état de l'art, développement de scRAW, optimisation, transfert de loss et premiers tests inductifs.
+\end{itemize}
+
+\subsection*{Message à faire passer}
+Le clustering scRNA-seq n'est pas seulement un problème de score global : une méthode utile doit aussi préserver les populations minoritaires et rester traçable dans un contexte d'analyse bioinformatique réelle.
+}
+
+\section{État de l'art}
+
+L'objectif de cette section est de présenter les bases nécessaires à la compréhension du rapport pour mieux comprendre mes contributions et où elles se situent par rapport à la recherche actuelle. Nous commencerons par examiner les jeux de données utilisés, puis nous verrons comment ces données sont préparées. Enfin, nous ferons un présentation des algorithmes de clustering existants, en comprenant notamment pourquoi les modèles d'intelligence artificielle actuels ont souvent du mal à repérer les cellules rares.
+
+\subsection{Données}
+
+Pour qu'une méthode de clustering soit considérée comme fiable, elle doit faire ses preuves sur des données variées. Dans le cadre de ce stage, nous nous sommes appuyés sur une collection de jeux de données diversifiés (détaillés dans nos tables de référence).
+
+Ces données proviennent de différents organes et espèces : pancréas humain et de souris, cerveau (Zeisel), rate (spleen), sang (PBMC), testicules, foie, ou encore rétine de macaque. Chaque jeu de données possède ses propres défis :
+\begin{itemize}
+    \item \textbf{La taille :} Cela va de petits jeux de données d'environ 2 000 cellules (comme \textit{Paul15 bone marrow} ou certains sous-jeux du pancréas) jusqu'à de très gros ensembles dépassant les 30 000 cellules (comme la rétine de macaque ou les PBMC).
+    \item \textbf{Les effets de batch :} La plupart des jeux de données sont composés de plusieurs "batchs" (lots expérimentaux). Par exemple, les données de PBMC combinent 16 lots différents, et la rétine de macaque en compte 30.
+    \item \textbf{Les populations rares :} C'est le cœur de notre problématique. Presque tous nos jeux de données contiennent des types cellulaires dits "rares" (représentant moins de 5\,\% des cellules) ou "ultra-rares" (moins de 1\,\%). Par exemple, dans les données du pancréas humain de Baron, certaines cellules immunitaires ou cellules de Schwann ne représentent qu'une fraction de pourcent du total.
+\end{itemize}
+
+L'utilisation d'annotations pré-existantes (la "vérité terrain") nous permet d'évaluer objectivement si les algorithmes parviennent à retrouver ces populations ou s'ils les noient dans la masse.
+
+\begin{table}[htpb]
+\centering
+\begin{tabular}{l c c c c}
+\toprule
+\textbf{Nom du Dataset} & \textbf{Cellules} & \textbf{Gènes} & \textbf{Batchs} & \textbf{Classes Rares ($<5\%$)} \\
+\midrule
+BBAG094 Zeisel & 3 006 & 19 972 & 10 & 4 \\
+BBAG094 spleen & 9 552 & 23 341 & 2 & 3 \\
+Baron human pancreas & 8 569 & 20 125 & 4 & 9 \\
+Human testis GSE112013 & 6 490 & 27 477 & 6 & 4 \\
+Kang PBMC & 24 679 & 35 635 & 16 & 1 \\
+Macaque retina bipolar & 30 302 & 36 162 & 30 & 4 \\
+Pancreas raw counts & 16 400 & 14 813 & 8 & 9 \\
+Pancreas 4 batches & 6 339 & 14 813 & 4 & 7 \\
+Paul15 bone marrow & 2 730 & 3 451 & 1 & 9 \\
+SCIB Human Pancreas 1 & 1 937 & 20 125 & 1 & 8 \\
+SCIB Human Pancreas 2 & 1 724 & 20 125 & 1 & 10 \\
+SCIB Mouse Pancreas 1 & 822 & 14 878 & 1 & 9 \\
+Tabula Muris liver & 2 859 & 22 966 & 1 & 5 \\
+\bottomrule
+\end{tabular}
+\caption{Récapitulatif des jeux de données utilisés pour l'évaluation.}
+\label{tab:datasets}
+\end{table}
+
+\subsection{Traitements de données}
+
+Les données brutes issues du séquençage scRNA-seq sont extrêmement bruitées et pleines de zéros (des gènes non détectés). Il est donc indispensable de les nettoyer et de les préparer.
+
+\subsubsection{Pré-process (Le nettoyage initial)}
+Le traitement standard \cite{luecken2019current} consiste d'abord à filtrer les cellules de mauvaise qualité et les gènes très peu exprimés. Ensuite, on normalise les données pour que toutes les cellules soient comparables, puis on applique une transformation mathématique (le logarithme) pour atténuer les écarts extrêmes. Enfin, on ne conserve généralement que les gènes dits "hautement variables" (HVG), c'est-à-dire ceux qui différencient le mieux les cellules entre elles. 
+Bien que ces étapes soient standardisées, elles présentent un risque pour les cellules rares : un filtrage trop agressif peut effacer les quelques gènes qui caractérisaient spécifiquement une toute petite population.
+
+\subsubsection{Batch effect (L'effet de lot)}
+L'effet de batch est un biais technique. Si l'on séquence le même tissu dans deux laboratoires différents, ou sur deux machines différentes, les cellules auront tendance à se regrouper par "laboratoire" plutôt que par "type cellulaire". 
+Il existe des méthodes dédiées pour corriger ce problème (comme ComBat \cite{johnson2007adjusting}, Harmony \cite{korsunsky2019fast}, Scanorama \cite{Hie2019}, ou scVI \cite{Lopez2018scVI}). L'objectif est d'aligner les différents lots pour effacer la signature technique. Cependant, la difficulté est de ne pas "sur-corriger" : en voulant effacer les différences techniques, on risque de gommer de vraies différences biologiques, en particulier celles des populations rares qui pourraient n'apparaître que dans un seul lot. De plus, il est crucial de réfléchir à la manière d'appliquer ces corrections sur de nouvelles données (mode inductif) sans avoir à tout recalculer depuis le début.
+
+\begin{table}[htpb]
+\centering
+\renewcommand{\arraystretch}{1.3}
+\begin{tabularx}{\textwidth}{l l X}
+\toprule
+\textbf{Outil} & \textbf{Méthodologie} & \textbf{Principe de correction} \\
+\midrule
+ComBat \cite{johnson2007adjusting} & Modèle bayésien empirique & Ajustement des moyennes et variances des gènes par lot \\
+Harmony \cite{korsunsky2019fast} & Soft K-Means itératif & Alignement des cellules similaires de lots différents en PCA \\
+Scanorama \cite{Hie2019} & Mutual Nearest Neighbors (MNN) & Identification des cellules "panoramas" communes entre les lots \\
+scVI \cite{Lopez2018scVI} & Autoencodeur Variationnel (VAE) & Modélisation probabiliste du bruit et des batchs dans l'espace latent \\
+\bottomrule
+\end{tabularx}
+\caption{Principaux outils de correction de l'effet de lot (Batch Effect).}
+\label{tab:batch_correction}
+\end{table}
+
+\subsection{Algorithmes de clustering}
+
+Une fois les données prêtes, l'objectif est de regrouper les cellules similaires.
+
+\subsubsection{Approches classiques}
+L'approche la plus courante en bioinformatique consiste à simplifier les données (généralement via une méthode appelée PCA), puis à regrouper directement les cellules avec un algorithme comme K-Means \cite{macqueen1967some}, ou bien à construire un graphe où chaque cellule est reliée à ses voisines les plus proches pour y identifier des communautés avec des algorithmes comme Louvain \cite{blondel2008fast} ou Leiden \cite{Traag2019Leiden}.
+Ces méthodes sont très rapides, faciles à utiliser et intégrées dans des outils standards comme Scanpy \cite{Wolf2018Scanpy}. Toutefois, elles sont très sensibles au nettoyage initial des données. De plus, si une population est très petite, elle risque de ne pas former sa propre communauté dans le graphe et d'être absorbée par une population voisine plus grande.
+
+\subsubsection{Approches Deep Learning (Apprentissage Profond)}
+Pour aller plus loin, les méthodes basées sur le Deep Learning (l'intelligence artificielle) apprennent à représenter les cellules dans un nouvel espace mathématique (l'espace latent) de manière beaucoup plus complexe et performante que la PCA.
+Ces méthodes, souvent basées sur des autoencodeurs, s'entraînent en essayant de minimiser une "fonction de perte" (ou \textit{loss}). Cette \textit{loss} est une note qui sanctionne le modèle lorsqu'il se trompe.
+
+Pour bien comprendre, regardons sur quoi se base la perte totale (\textit{total loss}) de différents modèles de l'état de l'art :
+\begin{itemize}
+    \item \textbf{La perte de reconstruction :} Des modèles comme scVI \cite{Lopez2018scVI} ou scMAE \cite{Fang2024scMAE} cherchent avant tout à bien reconstruire le profil d'expression initial de la cellule. Si le modèle compresse mal l'information et n'arrive pas à deviner les gènes de départ, sa perte augmente.
+    \item \textbf{La perte de clustering :} Des méthodes comme DESC \cite{li2020deep}, scDeepCluster \cite{tian2019clustering} ou scNAME \cite{wan_scname_2022} ajoutent une contrainte supplémentaire. Elles mesurent les distances entre les cellules et forcent le modèle à regrouper les cellules qui se ressemblent de plus en plus au fil du temps (souvent en minimisant une mesure de différence appelée divergence KL).
+\end{itemize}
+
+Le cœur du problème avec les populations rares vient précisément de la manière dont cette perte totale est calculée. Le modèle cherche à minimiser cette perte globale sur l'ensemble des données. Les populations majoritaires (qui contiennent des milliers de cellules) vont avoir un poids énorme dans ce calcul. À l'inverse, si le modèle se trompe sur un type cellulaire rare (qui ne contient que quelques dizaines de cellules), cela fera à peine bouger la perte globale. Le réseau de neurones va donc avoir tendance à "sacrifier" la précision sur les cellules rares pour optimiser sa représentation mathématique globale.
+
+Pour résumer, le tableau \ref{tab:algorithms_all} dresse un panorama pédagogique des méthodes abordées, des approches classiques (reposant sur des heuristiques géométriques ou de graphe) jusqu'aux architectures Deep Learning (pilotées par des fonctions de perte complexes).
+
+\begin{table}[htpb]
+\centering
+\renewcommand{\arraystretch}{1.3}
+\begin{tabularx}{\textwidth}{l l X X}
+\toprule
+\textbf{Algorithme} & \textbf{Catégorie} & \textbf{Principe fondamental} & \textbf{Objectif d'optimisation (Critère / Loss)} \\
+\midrule
+\multicolumn{4}{c}{\textbf{Méthodes Classiques}} \\
+\midrule
+PCA & Réduction & Combinaison linéaire des gènes & Maximisation de la variance expliquée \\
+K-Means \cite{macqueen1967some} & Clustering & Affectation itérative aux centroïdes & Minimisation de l'inertie intra-cluster \\
+Louvain \cite{blondel2008fast} & Graphe & Fusion hiérarchique de nœuds & Maximisation de la modularité \\
+Leiden \cite{Traag2019Leiden} & Graphe & Amélioration de Louvain & Maximisation de la modularité (sans déconnexions) \\
+\midrule
+\multicolumn{4}{c}{\textbf{Méthodes Deep Learning}} \\
+\midrule
+scVI \cite{Lopez2018scVI} & Autoencodeur (VAE) & Espace latent probabiliste & Reconstruction (ZINB/NB) + Divergence KL \\
+scMAE \cite{Fang2024scMAE} & Masked Autoencoder & Masquage de gènes & Reconstruction (MSE) \\
+DESC \cite{li2020deep} & Autoencodeur & Espace latent + Clustering itératif & Reconstruction + Clustering (KL avec cible) \\
+scDeepCluster \cite{tian2019clustering} & Autoencodeur & Modélisation du bruit scRNA-seq & Reconstruction (ZINB) + Clustering (KL) \\
+scNAME \cite{wan_scname_2022} & Contrastive Learning & Rapprochement des cellules similaires & Reconstruction + Clustering + Contrastive \\
+scCDCG \cite{xu_sccdcg_2025} & Graph Embedding & Plongement structurel du graphe & Reconstruction + Transport optimal + Graph Cut \\
+\midrule
+\multicolumn{4}{c}{\textbf{Méthodes Spécifiques (Cellules Rares)}} \\
+\midrule
+GiniClust \cite{Jiang2016} & Statistique & Utilisation de l'indice de Gini & Identification de gènes marqueurs atypiques \\
+CellSIUS \cite{Neri2019} & Heuristique & Signatures transcriptomiques à la marge & Extraction de sous-types cellulaires mineurs \\
+scCAD \cite{Xu2024scCAD} & Autoencodeur / Graphe & Isolement des types rares & Détection d'anomalies / Décomposition \\
+scAID \cite{scAIDE2020} & Autoencodeur & Projection + Clustering orienté & Reconstruction + Préservation des distances \\
+\bottomrule
+\end{tabularx}
+\caption{Synthèse pédagogique des algorithmes de traitement et de clustering utilisés en scRNA-seq.}
+\label{tab:algorithms_all}
+\end{table}
+
+\subsubsection{Les types cellulaires dans les algorithmes}
+Face à ce constat, l'identification des populations minoritaires est devenue un véritable enjeu. Des algorithmes se sont déjà concentrés sur cette question, mais en adoptant diverses stratégies.
+Par exemple, des outils comme \textbf{GiniClust} \cite{Jiang2016} se basent sur des indices statistiques particuliers (l'indice de Gini) pour repérer spécifiquement les gènes marqueurs de cellules rares indépendamment des clusters globaux. D'autres, comme \textbf{CellSIUS} \cite{Neri2019}, cherchent des signatures transcriptomiques uniques à la marge des gros clusters. Enfin, des méthodes plus récentes comme \textbf{scCAD} \cite{Xu2024scCAD} ou \textbf{scAID} \cite{scAIDE2020} utilisent des approches de détection d'anomalies ou de décomposition itérative de clusters pour isoler les cellules qui ont un comportement atypique par rapport à la masse globale.
+
+Tout comme nous, ces méthodes partent du principe qu'une approche de clustering globale classique ne suffit pas pour préserver la rareté. Notre démarche (scRAW) s'inscrit dans cette lignée : nous voulons forcer le modèle d'intelligence artificielle à accorder volontairement plus d'importance mathématique aux cellules isolées lors du calcul de sa \textit{loss}, afin de les préserver de manière robuste et naturelle dès la construction de l'espace latent.
+
+
+\section{Comparaison de l'existant}
+
+{\color{gray}\itshape
+\subsection*{Objectif de la section}
+Montrer comment les méthodes existantes ont été rendues comparables : construction logicielle, protocole expérimental, métriques et premiers résultats. Cette section doit préparer la transition vers scRAW.
+}
+
+\subsection{Logiciel}
+{\color{gray}\itshape
+\begin{itemize}
+  \item Présenter SCRBenchmark comme outil de benchmarking : chargement des données, sélection des méthodes, exécution, visualisation, export des résultats.
+  \item Décrire les deux modes d'utilisation : interface interactive et ligne de commande.
+  \item Présenter la structure logique : registre d'algorithmes, gestion des datasets, prétraitement, métriques, visualisations, sauvegarde des configurations.
+  \item Expliquer pourquoi cet outil était nécessaire avant d'interpréter les résultats : homogénéiser les entrées, les sorties, les métriques et les figures.
+  \item Mentionner les sorties sauvegardées : résultats bruts, tableaux agrégés, embeddings, labels prédits, figures, configurations et logs.
+  \item Discuter l'apport pratique : reproductibilité, traçabilité, comparaison plus simple pour des utilisateurs non spécialistes du code.
+\end{itemize}
+}
+
+\subsection{Expériences}
+
+\subsubsection{Données et splits}
+{\color{gray}\itshape
+\begin{itemize}
+  \item Présenter les jeux de données retenus : nom, espèce, tissu, nombre de cellules, nombre de gènes, nombre de classes, classes rares, batchs.
+  \item Expliquer les critères de sélection : diversité des tissus, présence de populations rares, disponibilité de labels, présence ou non d'effet batch.
+  \item Décrire les splits utilisés : transductif, train/test par batch, leave-one-batch-out ou autre protocole retenu.
+  \item Indiquer comment les classes rares sont définies pour les métriques RareACC et UltraRareACC.
+  \item Prévoir un tableau dédié aux datasets et aux splits.
+\end{itemize}
+}
+
+\subsubsection{Méthodes}
+{\color{gray}\itshape
+\begin{itemize}
+  \item Lister les méthodes comparées : PCA + Leiden, Harmony, ComBat, Scanorama, DESC, scMAE, scNAME, scVI, scRAW si utilisé comme référence interne.
+  \item Préciser les paramètres harmonisés entre méthodes lorsque c'est possible : prétraitement, nombre de voisins, dimension latente, seeds, nombre de clusters ou résolution.
+  \item Expliquer les contraintes pratiques : méthodes difficiles à installer, différences PyTorch/\allowbreak TensorFlow, temps de calcul, compatibilité GPU.
+  \item Décrire les métriques : ARI, NMI, ACC, BalancedACC, RareACC, UltraRareACC, temps d'exécution et stabilité.
+  \item Justifier pourquoi une seule métrique globale ne suffit pas pour juger la conservation des populations rares.
+\end{itemize}
+}
+
+\subsubsection{Résultats}
+{\color{gray}\itshape
+\begin{itemize}
+  \item Présenter un tableau global des scores par méthode et par dataset.
+  \item Identifier les familles qui fonctionnent bien globalement et celles qui préservent mieux les populations rares.
+  \item Comparer performance globale et performance rare pour montrer les compromis.
+  \item Montrer les UMAP comparatifs, matrices de confusion et temps de calcul lorsque les figures sont disponibles.
+  \item Discuter les méthodes instables, coûteuses ou sensibles aux hyperparamètres.
+  \item Conclure sur les limites observées qui motivent le développement de scRAW.
+\end{itemize}
+}
+
+\section{scRAW}
+
+\subsection{Positionnement et motivation}
+{\color{gray}\itshape
+\begin{itemize}
+  \item Présenter scRAW comme une réponse aux limites observées dans la comparaison de l'existant.
+  \item Expliquer l'objectif : apprendre un espace latent qui conserve les structures globales tout en donnant plus d'importance aux populations rares ou peu denses.
+  \item Distinguer scRAW des méthodes classiques et des autoencodeurs standards : pondération dynamique, objectif rare-aware, possibilité d'intégrer d'autres pertes.
+  \item Formuler clairement l'hypothèse : si les cellules minoritaires pèsent davantage pendant l'apprentissage, elles ont plus de chances de rester séparables dans l'espace latent.
+\end{itemize}
+}
+
+\subsection{Pipeline}
+{\color{gray}\itshape
+\begin{itemize}
+  \item Décrire les étapes : prétraitement, autoencodeur, espace latent, estimation de rareté ou de densité, pondération, pertes d'apprentissage, clustering final.
+  \item Présenter les sorties : embeddings, labels prédits, poids cellulaires, modèle entraîné, figures, métriques.
+  \item Expliquer le rôle de chaque bloc dans le pipeline et les paramètres importants.
+  \item Prévoir un schéma complet du pipeline scRAW.
+\end{itemize}
+}
+
+\subsection{Fonctions de perte et variantes}
+{\color{gray}\itshape
+\begin{itemize}
+  \item Décrire la loss de reconstruction pondérée et son lien avec les populations rares.
+  \item Présenter les variantes testées : pondération dynamique, DANN, triplet loss, fine-tuning ou autres variantes effectivement retenues.
+  \item Expliquer comment les poids cellulaires sont calculés ou mis à jour.
+  \item Discuter les compromis : amélioration des rares, stabilité globale, sensibilité aux hyperparamètres.
+\end{itemize}
+}
+
+\subsection{Recherche d'hyperparamètres}
+{\color{gray}\itshape
+\begin{itemize}
+  \item Décrire ce qui a été exploré : architecture, dimension latente, epochs, force de pondération, clustering final, pertes, prétraitement latent.
+  \item Préciser la stratégie : recherche large, ablations ciblées, consolidation finale, répétitions avec plusieurs seeds si disponibles.
+  \item Expliquer les critères de sélection : score global, RareACC, UltraRareACC, BalancedACC, stabilité, coût de calcul.
+  \item Montrer les configurations qui améliorent les rares, celles qui échouent et celles qui créent un mauvais compromis.
+  \item Prévoir une figure Optuna ou un tableau d'ablation.
+\end{itemize}
+}
+
+\subsection{Résultats et discussion}
+{\color{gray}\itshape
+\begin{itemize}
+  \item Comparer scRAW aux meilleures méthodes de l'état de l'art sur les datasets retenus.
+  \item Montrer les gains et les limites : scores, UMAP, matrices de confusion, visualisation des poids cellulaires.
+  \item Discuter le comportement sur classes rares, classes fréquentes et batchs difficiles.
+  \item Présenter le coût de calcul et les difficultés rencontrées.
+  \item Terminer par ce que scRAW valide et ce qui reste fragile avant les extensions.
+\end{itemize}
+}
+
+\section{Travaux complémentaires}
+
+{\color{gray}\itshape
+\subsection*{Objectif de la section}
+Regrouper les différentes expériences complémentaires : transfert de la loss et passage à un mode inductif.
+}
+
+\subsection{Transfert de loss}
+{\color{gray}\itshape
+\begin{itemize}
+  \item Présenter l'idée : transférer la loss de reconstruction pondérée ou la logique rare-aware vers d'autres algorithmes de deep learning.
+  \item Expliquer pourquoi c'est intéressant : séparer la contribution méthodologique de scRAW de son architecture précise.
+  \item Décrire le protocole expérimental : méthodes ciblées, variantes avec et sans loss transférée, datasets, métriques.
+  \item Montrer les premiers résultats : gains, échecs, stabilité, coût.
+  \item Discuter les limites : compatibilité des architectures, difficulté d'intégration, risque de sur-pondération des petites populations.
+\end{itemize}
+}
+
+\subsection{Induction}
+{\color{gray}\itshape
+\begin{itemize}
+  \item Distinguer transductif et inductif : entraîner sur un ensemble de cellules puis prédire ou projeter de nouvelles cellules non vues.
+  \item Décrire le protocole : train sur certains batchs, gel du prétraitement et du modèle, prédiction sur batchs non vus.
+  \item Préciser les artefacts sauvegardés : modèle, état du prétraitement, gènes retenus, centroïdes de référence, configuration.
+  \item Expliquer pourquoi l'inductif rapproche scRAW d'un usage réel : nouvelles cellules, nouveau batch, réanalyse rapide sans tout réentraîner.
+  \item Présenter les résultats comparant inductif et transductif lorsque c'est possible.
+  \item Discuter les limites : batch non représentatif, classes absentes du train, baisse possible des performances rares.
+\end{itemize}
+}
+
+\subsection{Interprétation biologique}
+{\color{gray}\itshape
+\begin{itemize}
+  \item Section optionnelle selon les résultats disponibles et la place restante.
+  \item Valider qualitativement certaines populations rares avec des marqueurs génétiques connus.
+  \item Comparer clusters prédits, annotations et marqueurs pour éviter une interprétation uniquement métrique.
+  \item Identifier les types cellulaires bien retrouvés et ceux qui restent ambigus.
+  \item Mentionner qu'une validation biologique externe serait nécessaire pour confirmer certaines conclusions.
+\end{itemize}
+}
+
+\section{Conclusion}
+
+{\color{gray}\itshape
+\begin{itemize}
+  \item Résumer les contributions : SCRBenchmark, comparaison standardisée, scRAW, optimisation et premières extensions.
+  \item Revenir à la question directrice : comment construire, évaluer et améliorer un pipeline de clustering scRNA-seq capable de mieux préserver les populations cellulaires rares, tout en restant reproductible et utilisable sur de nouvelles données ?
+  \item Présenter les limites : taille des datasets, vérité terrain, sensibilité aux hyperparamètres, coût de calcul, validation biologique.
+  \item Ouvrir sur les perspectives : stabilisation de l'inductif, transfert de loss, validation par marqueurs, intégration dans un workflow utilisateur.
+\end{itemize}
+}
