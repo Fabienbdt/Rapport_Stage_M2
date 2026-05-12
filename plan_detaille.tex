@@ -97,7 +97,7 @@ Les méthodes deep learning apprennent un espace latent avant le clustering. Le 
 Question sur cette section : Est ce que ici je traite que ce j'ai fait sur Baron ? Ou est ce que je présente les résultats sur tous les datasets introduit dans l'état de l'art qui chronologiquement sont étudiés plus tard? De manière plus globale, faut il vraiment laisser une description des datasets dans l'état de l'art, ne peut on pas la déplacer ici ?
 
 \subsection*{Idée de la section}
-Montrer comment les méthodes existantes ont été rendues comparables : comment cela à était implémenté, protocole expérimental, métriques et premiers résultats. Cette section doit préparer la transition vers scRAW.
+Montrer comment les méthodes existantes ont été rendues comparables : comment cela à était implémenté, protocole expérimental, métriques et premiers résultats. Cette section doit préparer la transition vers scRAW. L'idée est de montrer que les méthodes générale de DeepLearning et la PCA testées avaient des limites faces aux cellules rares et à l'effet batch. La section suivante détaillera les résultats de toutes les méthodes dont celles spécifiques à ces problématiques
 
 \subsection{Logiciel}
 \begin{itemize}
@@ -122,11 +122,11 @@ Montrer comment les méthodes existantes ont été rendues comparables : comment
 
 \subsubsection{Méthodes}
 \begin{itemize}
-  \item Lister les méthodes comparées : PCA + Leiden, Harmony, ComBat, Scanorama, DESC, scMAE, scNAME, scVI, scRAW si utilisé comme référence interne.
-  \item Préciser les paramètres harmonisés entre méthodes lorsque c'est possible : prétraitement, nombre de voisins, dimension latente, seeds, nombre de clusters ou résolution.
-  \item Expliquer les contraintes pratiques : méthodes difficiles à installer, différences PyTorch/\allowbreak TensorFlow, temps de calcul, compatibilité GPU.
-  \item Décrire les métriques : ARI, NMI, ACC, BalancedACC, RareACC, UltraRareACC, temps d'exécution et stabilité.
-  \item Justifier pourquoi une seule métrique globale ne suffit pas pour juger la conservation des populations rares.
+  \item Lister les méthodes comparées : PCA + Leiden, Harmony, ComBat, Scanorama, DESC, scMAE, scNAME, scVI
+  \item Préciser les choix d'hyperparamètres et les étapes de préprocessing
+  \item Expliquer les contraintes pratiques : méthodes difficiles à installer, différences PyTorch/\allowbreak TensorFlow, temps de calcul,
+  \item Décrire les métriques : ARI, NMI, ACC, BalancedACC, RareACC, UltraRareACC, temps d'exécution
+  \item Justifier pourquoi une seule métrique globale ne suffit pas pour juger la conservation des populations rares. Montrer pour cela une matrice de confusion. L'idée est de se rendre compte du manques de performances pour des populations minoritaires et si il y a de l'effet batch.
 \end{itemize}
 
 \subsubsection{Résultats}
