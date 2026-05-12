@@ -1,37 +1,7 @@
-\chapter*{Plan détaillé}
-\addcontentsline{toc}{chapter}{Plan détaillé}
-\addtocontents{toc}{\protect\setcounter{tocdepth}{4}}
-
-\setcounter{secnumdepth}{4}
-\setcounter{section}{0}
-\renewcommand{\thesection}{\arabic{section}}
-\renewcommand{\thesubsection}{\thesection.\arabic{subsection}}
-\renewcommand{\thesubsubsection}{\thesubsection.\arabic{subsubsection}}
-\renewcommand{\theparagraph}{\thesubsubsection.\arabic{paragraph}}
-
-\section*{Fil conducteur proposé}
-\addcontentsline{toc}{section}{Fil conducteur proposé}
-
-Le rapport peut suivre une progression en cinq parties : introduire le problème biologique et méthodologique, replacer les méthodes dans l'état de l'art, comment j'ai comparer l'existant, présenter scRAW et ses performances, puis ouvrir sur les expériences complémentaires.
-
-\begin{center}
-\fbox{\begin{minipage}{0.92\linewidth}
-\textbf{Question directrice :} comment construire, évaluer et améliorer un pipeline de clustering scRNA-seq capable de mieux préserver les populations cellulaires rares, tout en restant reproductible et utilisable sur de nouvelles données ?
-\end{minipage}}
-\end{center}
-
-Cette question relie les blocs du rapport :
-\begin{itemize}
-  \item l'introduction pose le contexte scRNA-seq, le clustering et la difficulté des populations rares ;
-  \item l'état de l'art décrit les familles de méthodes, les données et les traitements qui conditionnent les résultats ;
-  \item la comparaison de l'existant justifie la construction de SCRBenchmark d'où on comprend l'origine de scRAW ;
-  \item scRAW est présenté comme une méthode centrée sur la pondération des cellules rares et l'apprentissage d'un espace latent adapté avec une suppression de l'effet batch;
-  \item la dernière partie regroupe les extensions : transfert de loss, induction et interprétation biologique éventuelle.
-\end{itemize}
 
 \section{Introduction}
 
-\subsection*{Objectif de la section}
+\subsection*{Idée de la section }
 Présenter le laboratoire, le contexte et l'environnement de travail. Introduire le contexte biologique, les données scRNA-seq, le rôle du clustering et le problème spécifique des populations cellulaires rares.
 
 \subsection*{Points à traiter}
@@ -43,23 +13,23 @@ Présenter le laboratoire, le contexte et l'environnement de travail. Introduire
   \item Formuler le problème central : les populations rares contribuent peu aux objectifs moyens et peuvent être absorbées par des classes majoritaires ou par des types proches.
   \item Donner un exemple biologique concret : cellule immunitaire minoritaire, sous-type tumoral, population pathologique, population transitoire ou population spécifique d'un tissu.
   \item Expliquer l'impact biologique d'une population rare manquée : perte d'un signal d'intérêt, interprétation incomplète d'un tissu, confusion entre états cellulaires.
+  \item Expliquer l'intérêt de rendre notre méthode inductive dans le contexte de médecine personnalisée.
   \item Annoncer les contributions du stage : SCRBenchmark, comparaison de l'état de l'art, développement de scRAW, optimisation, transfert de loss et premiers tests inductifs.
 \end{itemize}
 
-\subsection*{Message à faire passer}
-Le clustering scRNA-seq n'est pas seulement un problème de score global : une méthode utile doit aussi préserver les populations minoritaires et rester traçable dans un contexte d'analyse bioinformatique réelle.
-
 \section{État de l'art}
 
+\subsection*{Idée de la section  }
+Présenter les données, les étapes de préprocessing nécessaires, les algorithmes utilisés.
+
 \subsection*{Objectif de la section}
-Présenter l'état de l'art de manière organisée : d'abord les algorithmes de clustering, puis les données utilisées pour les évaluer, puis les traitements appliqués avant ou pendant l'apprentissage. Cette partie reprend le détail attendu dans le tableau de synthèse de l'état de l'art.
 
 \subsection{Données}
 \begin{itemize}
   \item Décrire les caractéristiques des données scRNA-seq : matrice cellules-gènes, comptages bruts, normalisation, annotations cellulaires, métadonnées de batch.
   \item Présenter les types de datasets utilisés dans les papiers et dans le benchmark : pancréas, PBMC, rétine, testis, spleen ou autres jeux retenus.
   \item Préciser les critères importants pour comparer les méthodes : nombre de cellules, nombre de gènes, nombre de types cellulaires, présence de classes rares, nombre de batchs, espèce, tissu.
-  \item Expliquer la question de la vérité terrain : annotations manuelles, marqueurs connus, annotations héritées, incertitude biologique.
+  \item Expliquer de l'origine de la vérité terrain : annotations manuelles, marqueurs connus, annotations héritées, incertitude biologique.
   \item Prévoir un tableau de synthèse des datasets avec taille, classes rares, batchs et protocole d'utilisation.
 \end{itemize}
 
@@ -122,23 +92,17 @@ Les méthodes deep learning apprennent un espace latent avant le clustering. Le 
 \end{itemize}
 
 
-
-\subsection*{Figures et tableaux attendus}
-\begin{itemize}
-  \item Tableau comparatif des algorithmes de l'état de l'art, avec famille, entrée, correction batch, statut dans le benchmark et lien avec les populations rares.
-  \item Schéma conceptuel : données scRNA-seq vers prétraitement, embedding, clustering, métriques.
-  \item Figure expliquant pourquoi une population rare peut être absorbée par des populations majoritaires.
-\end{itemize}
-
 \section{Comparaison de l'existant}
 
-\subsection*{Objectif de la section}
-Montrer comment les méthodes existantes ont été rendues comparables : construction logicielle, protocole expérimental, métriques et premiers résultats. Cette section doit préparer la transition vers scRAW.
+Question sur cette section : Est ce que ici je traite que ce j'ai fait sur Baron ? Ou est ce que je présente les résultats sur tous les datasets introduit dans l'état de l'art qui chronologiquement sont étudiés plus tard? De manière plus globale, faut il vraiment laisser une description des datasets dans l'état de l'art, ne peut on pas la déplacer ici ?
+
+\subsection*{Idée de la section}
+Montrer comment les méthodes existantes ont été rendues comparables : comment cela à était implémenté, protocole expérimental, métriques et premiers résultats. Cette section doit préparer la transition vers scRAW.
 
 \subsection{Logiciel}
 \begin{itemize}
   \item Présenter SCRBenchmark comme outil de benchmarking : chargement des données, sélection des méthodes, exécution, visualisation, export des résultats.
-  \item Décrire les deux modes d'utilisation : interface interactive et ligne de commande.
+  \item Décrire les deux modes d'utilisation : interface interactive et ligne de commande et pourquoi.
   \item Présenter la structure logique : registre d'algorithmes, gestion des datasets, prétraitement, métriques, visualisations, sauvegarde des configurations.
   \item Expliquer pourquoi cet outil était nécessaire avant d'interpréter les résultats : homogénéiser les entrées, les sorties, les métriques et les figures.
   \item Mentionner les sorties sauvegardées : résultats bruts, tableaux agrégés, embeddings, labels prédits, figures, configurations et logs.
@@ -170,8 +134,7 @@ Montrer comment les méthodes existantes ont été rendues comparables : constru
   \item Présenter un tableau global des scores par méthode et par dataset.
   \item Identifier les familles qui fonctionnent bien globalement et celles qui préservent mieux les populations rares.
   \item Comparer performance globale et performance rare pour montrer les compromis.
-  \item Montrer les UMAP comparatifs, matrices de confusion et temps de calcul lorsque les figures sont disponibles.
-  \item Discuter les méthodes instables, coûteuses ou sensibles aux hyperparamètres.
+  \item Montrer les UMAP comparatifs, matrices de confusion  (et temps de calcul).
   \item Conclure sur les limites observées qui motivent le développement de scRAW.
 \end{itemize}
 
@@ -180,7 +143,7 @@ Montrer comment les méthodes existantes ont été rendues comparables : constru
 \subsection{Positionnement et motivation}
 \begin{itemize}
   \item Présenter scRAW comme une réponse aux limites observées dans la comparaison de l'existant.
-  \item Expliquer l'objectif : apprendre un espace latent qui conserve les structures globales tout en donnant plus d'importance aux populations rares ou peu denses.
+  \item Expliquer l'objectif : apprendre un espace latent qui conserve les structures globales tout en donnant plus d'importance aux populations rares ou peu denses tout en prévenant l'effet batch de manière interne à l'algorithme.
   \item Distinguer scRAW des méthodes classiques et des autoencodeurs standards : pondération dynamique, objectif rare-aware, possibilité d'intégrer d'autres pertes.
   \item Formuler clairement l'hypothèse : si les cellules minoritaires pèsent davantage pendant l'apprentissage, elles ont plus de chances de rester séparables dans l'espace latent.
 \end{itemize}
@@ -204,8 +167,8 @@ Montrer comment les méthodes existantes ont été rendues comparables : constru
 \subsection{Recherche d'hyperparamètres}
 \begin{itemize}
   \item Décrire ce qui a été exploré : architecture, dimension latente, epochs, force de pondération, clustering final, pertes, prétraitement latent.
-  \item Préciser la stratégie : recherche large, ablations ciblées, consolidation finale, répétitions avec plusieurs seeds si disponibles.
-  \item Expliquer les critères de sélection : score global, RareACC, UltraRareACC, BalancedACC, stabilité, coût de calcul.
+  \item Préciser la stratégie : recherche large, ablations ciblées, consolidation finale, répétitions avec plusieurs seeds.
+  \item Expliquer les critères de sélection : score global, RareACC, UltraRareACC, BalancedACC, stabilité.
   \item Montrer les configurations qui améliorent les rares, celles qui échouent et celles qui créent un mauvais compromis.
   \item Prévoir une figure Optuna ou un tableau d'ablation.
 \end{itemize}
@@ -221,7 +184,7 @@ Montrer comment les méthodes existantes ont été rendues comparables : constru
 
 \section{Travaux complémentaires}
 
-\subsection*{Objectif de la section}
+\subsection*{Idée de la section}
 Regrouper les différentes expériences complémentaires : transfert de la loss et passage à un mode inductif.
 
 \setcounter{subsection}{-1}
@@ -247,11 +210,7 @@ Regrouper les différentes expériences complémentaires : transfert de la loss 
 
 \subsection{Interprétation biologique ?}
 \begin{itemize}
-  \item Section optionnelle selon les résultats disponibles et la place restante.
-  \item Valider qualitativement certaines populations rares avec des marqueurs génétiques connus.
-  \item Comparer clusters prédits, annotations et marqueurs pour éviter une interprétation uniquement métrique.
-  \item Identifier les types cellulaires bien retrouvés et ceux qui restent ambigus.
-  \item Mentionner qu'une validation biologique externe serait nécessaire pour confirmer certaines conclusions.
+    \item À définir 
 \end{itemize}
 
 \section*{Conclusion finale à rédiger}
@@ -268,20 +227,20 @@ Regrouper les différentes expériences complémentaires : transfert de la loss 
 \addcontentsline{toc}{section}{Figures et tableaux à préparer}
 
 \begin{itemize}
-  \item \textbf{Tableau Related Work} : algorithmes, famille, type d'entrée, objectif, correction batch, prise en compte des populations rares, limites.
-  \item \textbf{Schéma général du pipeline de benchmarking} : données scRNA-seq, prétraitement, algorithmes, clustering, métriques et exports.
-  \item \textbf{Capture ou schéma de SCRBenchmark} : interface, modes d'utilisation, sorties produites.
-  \item \textbf{Tableau des jeux de données} : nom, espèce, tissu, nombre de cellules, nombre de gènes, nombre de classes, classes rares et batchs.
-  \item \textbf{Tableau des méthodes comparées} : paramètres principaux, statut dans le benchmark, contraintes d'installation et temps d'exécution.
-  \item \textbf{Tableau des métriques} : ARI, NMI, ACC, BalancedACC, RareACC, UltraRareACC, temps, stabilité.
-  \item \textbf{Tableau principal des performances} : comparaison des algorithmes sur les métriques choisies.
-  \item \textbf{UMAP comparatifs} : vérité terrain, meilleurs algorithmes de l'état de l'art et scRAW.
-  \item \textbf{Matrices de confusion} : populations bien retrouvées, confusions entre types proches et classes rares perdues.
-  \item \textbf{Schéma du pipeline scRAW} : prétraitement, autoencodeur, espace latent, pondération rare-aware, pertes, clustering final.
-  \item \textbf{Visualisation des poids cellulaires de scRAW} : UMAP coloré par poids pour vérifier que les zones minoritaires sont mises en avant.
+  \item \textbf{Tableau État de l'art} 
+  \item \textbf{Schéma général du pipeline de benchmarking} 
+  \item \textbf{Capture ou schéma de SCRBenchmark} :
+  \item \textbf{Tableau des jeux de données} 
+  \item \textbf{Tableau des méthodes comparées} : Lors des premiers nous n'avions pas testés toutes les méthodes décrites, comment le justifier ?
+  \item \textbf{Tableau des métriques} : 
+  \item \textbf{Tableau ou figures principal des performances} :
+  \item \textbf{UMAP comparatifs} :
+  \item \textbf{Matrices de confusion} :
+  \item \textbf{Schéma du pipeline scRAW} : 
+  \item \textbf{Visualisation des poids cellulaires de scRAW} :
   \item \textbf{Tableau d'ablation} : variantes de scRAW, pertes, poids, clustering final.
   \item \textbf{Figure de recherche d'hyperparamètres} : résumé Optuna ou graphiques montrant le compromis entre performance globale, performance rare et stabilité.
-  \item \textbf{Figure inductive} : schéma train/test par batch, comparaison transductif/inductif.
-  \item \textbf{Tableau du coût de calcul} : performance en fonction du temps d'exécution.
-  \item \textbf{Figure ou tableau d'analyse biologique} : marqueurs, types cellulaires, clusters ambigus, si la section optionnelle est conservée.
+  \item \textbf{Figure inductive} : 
+  \item \textbf{Tableau du coût de calcul} : 
+  \item \textbf{Figure ou tableau d'analyse biologique} :
 \end{itemize}
