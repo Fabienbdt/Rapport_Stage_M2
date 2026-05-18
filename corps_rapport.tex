@@ -172,42 +172,50 @@ Pour bien comprendre, regardons sur quoi se base la perte totale (\textit{total 
 
 Le cœur du problème avec les populations rares vient précisément de la manière dont cette perte totale est calculée. Le modèle cherche à minimiser cette perte globale sur l'ensemble des données. Les populations majoritaires (qui contiennent des milliers de cellules) vont avoir un poids énorme dans ce calcul. À l'inverse, si le modèle se trompe sur un type cellulaire rare (qui ne contient que quelques dizaines de cellules), cela fera à peine bouger la perte globale. Le réseau de neurones va donc avoir tendance à "sacrifier" la précision sur les cellules rares pour optimiser sa représentation mathématique globale.
 
-Pour résumer, le tableau \ref{tab:algorithms_all} présente une synthèse des méthodes citées, des approches classiques  jusqu'aux architectures Deep Learning .
+Pour résumer, le tableau \ref{tab:algorithms_all} présente une synthèse des méthodes citées, des approches classiques jusqu'aux architectures Deep Learning et aux méthodes dédiées aux populations rares.
 
 \begin{table}[H]
 \centering
-\small
-\renewcommand{\arraystretch}{1.3}
-\begin{tabularx}{\textwidth}{>{\raggedright\arraybackslash}p{0.18\textwidth} >{\raggedright\arraybackslash}p{0.15\textwidth} X X}
+\scriptsize
+\setlength{\tabcolsep}{3pt}
+\renewcommand{\arraystretch}{1.22}
+\begin{tabularx}{\textwidth}{@{}
+>{\centering\arraybackslash}p{0.12\textwidth}
+>{\raggedright\arraybackslash}p{0.14\textwidth}
+>{\raggedright\arraybackslash}p{0.145\textwidth}
+>{\centering\arraybackslash}p{0.11\textwidth}
+>{\raggedright\arraybackslash}p{0.18\textwidth}
+>{\centering\arraybackslash}p{0.085\textwidth}
+>{\raggedright\arraybackslash}X
+@{}}
 \toprule
-\textbf{Algorithme} & \textbf{Catégorie} & \textbf{Principe fondamental} & \textbf{Objectif / Loss} \\
+\textbf{Famille} & \textbf{Méthode} & \textbf{Framework} & \textbf{Nb. clusters} & \textbf{Objectif / loss} & \textbf{Réf.} & \textbf{Source} \\
 \midrule
-\multicolumn{4}{c}{\textbf{Méthodes Classiques}} \\
+\multirow{4}{0.12\textwidth}{\centering\textbf{Approches classiques}}
+& PCA & Projection linéaire & -- & Maximisation de la variance expliquée & \cite{Pearson1901} & Philosophical Magazine \\
+& K-Means & Centroïdes & $k$ fixé & Minimisation de l'inertie intra-cluster & \cite{macqueen1967some} & Berkeley Symposium \\
+& Louvain & Graphe de voisinage & Résolution & Maximisation de la modularité & \cite{blondel2008fast} & Journal of Statistical Mechanics \\
+& Leiden & Graphe de voisinage & Résolution & Modularité avec communautés mieux connectées & \cite{Traag2019Leiden} & Scientific Reports \\
 \midrule
-PCA & Réduction & Combinaison linéaire des gènes & Maximisation de la variance expliquée \\
-K-Means \cite{macqueen1967some} & Clustering & Affectation itérative aux centroïdes & Minimisation de l'inertie intra-cluster \\
-Louvain \cite{blondel2008fast} & Graphe & Fusion hiérarchique de nœuds & Maximisation de la modularité \\
-Leiden \cite{Traag2019Leiden} & Graphe & Amélioration de Louvain & Maximisation de la modularité (sans déconnexions) \\
+\multirow{5}{0.12\textwidth}{\centering\textbf{Deep Learning}}
+& scVI & VAE probabiliste & Clustering aval & Reconstruction NB/ZINB + divergence KL & \cite{Lopez2018scVI} & Nature Methods \\
+& scMAE & Masked autoencoder & Clustering aval & Reconstruction de gènes masqués & \cite{Fang2024scMAE} & Bioinformatics \\
+& DESC & Autoencodeur + clustering & Hyper-param. & Reconstruction + clustering par divergence KL & \cite{li2020deep} & Nature Communications \\
+& scDeepCluster & Autoencodeur ZINB & Hyper-param. & Reconstruction ZINB + clustering par divergence KL & \cite{tian2019clustering} & Nature Machine Intelligence \\
+& scNAME & Contrastive learning & Hyper-param. & Reconstruction + clustering + contraste de voisinage & \cite{wan_scname_2022} & Bioinformatics \\
 \midrule
-\multicolumn{4}{c}{\textbf{Méthodes Deep Learning}} \\
+\textbf{Graphes profonds}
+& scCDCG & AE + graph embedding & Hyper-param. & Reconstruction + transport optimal + graph cut & \cite{xu_sccdcg_2025} & DASFAA \\
 \midrule
-scVI \cite{Lopez2018scVI} & Autoencodeur (VAE) & Espace latent probabiliste & Reconstruction (ZINB/NB) + Divergence KL \\
-scMAE \cite{Fang2024scMAE} & Masked Autoencoder & Masquage de gènes & Reconstruction (MSE) \\
-DESC \cite{li2020deep} & Autoencodeur & Espace latent + Clustering itératif & Reconstruction + Clustering (KL avec cible) \\
-scDeepCluster \cite{tian2019clustering} & Autoencodeur & Modélisation du bruit scRNA-seq & Reconstruction (ZINB) + Clustering (KL) \\
-scNAME \cite{wan_scname_2022} & Contrastive Learning & Rapprochement des cellules similaires & Reconstruction + Clustering + Contrastive \\
-scCDCG \cite{xu_sccdcg_2025} & Graph Embedding & Plongement structurel du graphe & Reconstruction + Transport optimal + Graph Cut \\
-\midrule
-\multicolumn{4}{c}{\textbf{Méthodes Spécifiques (Cellules Rares)}} \\
-\midrule
-GiniClust \cite{Jiang2016} & Statistique & Utilisation de l'indice de Gini & Identification de gènes marqueurs atypiques \\
-CellSIUS \cite{Neri2019} & Heuristique & Signatures transcriptomiques à la marge & Extraction de sous-types cellulaires mineurs \\
-scCAD \cite{Xu2024scCAD} & Autoencodeur / Graphe & Isolement des types rares & Détection d'anomalies / Décomposition \\
-scAID \cite{scAIDE2020} & Autoencodeur & Projection + Clustering orienté & Reconstruction + Préservation des distances \\
-DeepScena \cite{Lei2023scHDR} & Self-supervised & Clustering hiérarchique coarse-to-fine & Auto-supervision + Détection itérative des pop. rares \\
+\multirow{5}{0.12\textwidth}{\centering\textbf{Cellules rares}}
+& GiniClust & Indice de Gini & Automatique & Détection de gènes marqueurs atypiques & \cite{Jiang2016} & Genome Biology \\
+& CellSIUS & Signatures locales & Sous-clusters & Identification de sous-populations minoritaires & \cite{Neri2019} & Genome Biology \\
+& scAIDE & Autoencodeur & Hyper-param. & Débruitage + clustering orienté populations rares & \cite{scAIDE2020} & NAR Genomics and Bioinformatics \\
+& DeepScena & Self-supervised hiérarchique & Hiérarchique & Raffinement coarse-to-fine des clusters rares & \cite{Lei2023scHDR} & Briefings in Bioinformatics \\
+& scCAD & Détection d'anomalies & Automatique & Décomposition de clusters pour isoler les types rares & \cite{Xu2024scCAD} & Nature Communications \\
 \bottomrule
 \end{tabularx}
-\caption{Synthèse des algorithmes de traitement et de clustering utilisés en scRNA-seq.}
+\caption{Synthèse des méthodes de clustering et de détection de populations rares citées dans l'état de l'art. AE : autoencodeur ; VAE : autoencodeur variationnel ; KL : divergence de Kullback-Leibler ; NB/ZINB : lois binomiale négative et binomiale négative à inflation de zéros.}
 \label{tab:algorithms_all}
 \end{table}
 
