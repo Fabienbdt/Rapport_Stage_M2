@@ -192,26 +192,26 @@ Pour résumer, le tableau \ref{tab:algorithms_all} présente une synthèse des m
 \midrule
 \multirow{4}{0.12\textwidth}{\centering\textbf{Approches classiques}}
 & PCA & Projection linéaire & Maximisation de la variance expliquée & \cite{Pearson1901} & Philosophical Magazine \\
-& K-Means & Centroïdes ($k$ fixé) & Minimisation de l'inertie intra-cluster & \cite{macqueen1967some} & Berkeley Symposium \\
-& Louvain & Graphe de voisinage (résolution) & Maximisation de la modularité & \cite{blondel2008fast} & Journal of Statistical Mechanics \\
-& Leiden & Graphe de voisinage (résolution) & Modularité avec communautés mieux connectées & \cite{Traag2019Leiden} & Scientific Reports \\
+& K-Means & Centroïdes & Minimisation de l'inertie intra-cluster & \cite{macqueen1967some} & Berkeley Symposium \\
+& Louvain & Graphe de voisinage & Maximisation de la modularité & \cite{blondel2008fast} & Journal of Statistical Mechanics \\
+& Leiden & Graphe de voisinage & Modularité avec communautés mieux connectées & \cite{Traag2019Leiden} & Scientific Reports \\
 \midrule
 \multirow{5}{0.12\textwidth}{\centering\textbf{Deep Learning}}
-& scVI & VAE probabiliste (clustering aval) & Reconstruction NB/ZINB + divergence KL & \cite{Lopez2018scVI} & Nature Methods \\
-& scMAE & Masked autoencoder (clustering aval) & Reconstruction de gènes masqués & \cite{Fang2024scMAE} & Bioinformatics \\
-& DESC & Autoencodeur + clustering (hyper-param.) & Reconstruction + clustering par divergence KL & \cite{li2020deep} & Nature Communications \\
-& scDeepCluster & Autoencodeur ZINB (hyper-param.) & Reconstruction ZINB + clustering par divergence KL & \cite{tian2019clustering} & Nature Machine Intelligence \\
-& scNAME & Contrastive learning (hyper-param.) & Reconstruction + clustering + contraste de voisinage & \cite{wan_scname_2022} & Bioinformatics \\
+& scVI & VAE probabiliste & Reconstruction NB/ZINB + divergence KL & \cite{Lopez2018scVI} & Nature Methods \\
+& scMAE & Masked autoencoder & Reconstruction de gènes masqués & \cite{Fang2024scMAE} & Bioinformatics \\
+& DESC & Autoencodeur + clustering & Reconstruction + clustering par divergence KL & \cite{li2020deep} & Nature Communications \\
+& scDeepCluster & Autoencodeur ZINB & Reconstruction ZINB + clustering par divergence KL & \cite{tian2019clustering} & Nature Machine Intelligence \\
+& scNAME & Contrastive learning & Reconstruction + clustering + contraste de voisinage & \cite{wan_scname_2022} & Bioinformatics \\
 \midrule
 \textbf{Graphes profonds}
-& scCDCG & AE + graph embedding (hyper-param.) & Reconstruction + transport optimal + graph cut & \cite{xu_sccdcg_2025} & DASFAA \\
+& scCDCG & AE + graph embedding & Reconstruction + transport optimal + graph cut & \cite{xu_sccdcg_2025} & DASFAA \\
 \midrule
 \multirow{5}{0.12\textwidth}{\centering\textbf{Cellules rares}}
-& GiniClust & Indice de Gini (automatique) & Détection de gènes marqueurs atypiques & \cite{Jiang2016} & Genome Biology \\
-& CellSIUS & Signatures locales (sous-clusters) & Identification de sous-populations minoritaires & \cite{Neri2019} & Genome Biology \\
-& scAIDE & Autoencodeur (hyper-param.) & Débruitage + clustering orienté populations rares & \cite{scAIDE2020} & NAR Genomics and Bioinformatics \\
-& DeepScena & Self-supervised (hiérarchique) & Raffinement coarse-to-fine des clusters rares & \cite{Lei2023scHDR} & Briefings in Bioinformatics \\
-& scCAD & Détection d'anomalies (automatique) & Décomposition de clusters pour isoler les types rares & \cite{Xu2024scCAD} & Nature Communications \\
+& GiniClust & Indice de Gini & Détection de gènes marqueurs atypiques & \cite{Jiang2016} & Genome Biology \\
+& CellSIUS & Signatures locales & Identification de sous-populations minoritaires & \cite{Neri2019} & Genome Biology \\
+& scAIDE & Autoencodeur & Débruitage + clustering orienté populations rares & \cite{scAIDE2020} & NAR Genomics and Bioinformatics \\
+& DeepScena & Self-supervised & Raffinement coarse-to-fine des clusters rares & \cite{Lei2023scHDR} & Briefings in Bioinformatics \\
+& scCAD & Détection d'anomalies & Décomposition de clusters pour isoler les types rares & \cite{Xu2024scCAD} & Nature Communications \\
 \bottomrule
 \end{tabularx}
 \caption{Synthèse des méthodes de clustering et de détection de populations rares citées dans l'état de l'art. AE : autoencodeur ; VAE : autoencodeur variationnel ; KL : divergence de Kullback-Leibler ; NB/ZINB : lois binomiale négative et binomiale négative à inflation de zéros.}
