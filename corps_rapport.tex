@@ -181,38 +181,37 @@ Pour résumer, le tableau \ref{tab:algorithms_all} présente une synthèse des m
 \renewcommand{\arraystretch}{1.22}
 \begin{tabularx}{\textwidth}{@{}
 >{\centering\arraybackslash}p{0.12\textwidth}
->{\raggedright\arraybackslash}p{0.14\textwidth}
->{\raggedright\arraybackslash}p{0.145\textwidth}
->{\centering\arraybackslash}p{0.11\textwidth}
->{\raggedright\arraybackslash}p{0.18\textwidth}
->{\centering\arraybackslash}p{0.085\textwidth}
+>{\raggedright\arraybackslash}p{0.12\textwidth}
+>{\raggedright\arraybackslash}p{0.22\textwidth}
 >{\raggedright\arraybackslash}X
+>{\centering\arraybackslash}p{0.06\textwidth}
+>{\raggedright\arraybackslash}p{0.18\textwidth}
 @{}}
 \toprule
-\textbf{Famille} & \textbf{Méthode} & \textbf{Framework} & \textbf{Nb. clusters} & \textbf{Objectif / loss} & \textbf{Réf.} & \textbf{Source} \\
+\textbf{Famille} & \textbf{Méthode} & \textbf{Framework} & \textbf{Objectif / loss} & \textbf{Réf.} & \textbf{Source} \\
 \midrule
 \multirow{4}{0.12\textwidth}{\centering\textbf{Approches classiques}}
-& PCA & Projection linéaire & -- & Maximisation de la variance expliquée & \cite{Pearson1901} & Philosophical Magazine \\
-& K-Means & Centroïdes & $k$ fixé & Minimisation de l'inertie intra-cluster & \cite{macqueen1967some} & Berkeley Symposium \\
-& Louvain & Graphe de voisinage & Résolution & Maximisation de la modularité & \cite{blondel2008fast} & Journal of Statistical Mechanics \\
-& Leiden & Graphe de voisinage & Résolution & Modularité avec communautés mieux connectées & \cite{Traag2019Leiden} & Scientific Reports \\
+& PCA & Projection linéaire & Maximisation de la variance expliquée & \cite{Pearson1901} & Philosophical Magazine \\
+& K-Means & Centroïdes ($k$ fixé) & Minimisation de l'inertie intra-cluster & \cite{macqueen1967some} & Berkeley Symposium \\
+& Louvain & Graphe de voisinage (résolution) & Maximisation de la modularité & \cite{blondel2008fast} & Journal of Statistical Mechanics \\
+& Leiden & Graphe de voisinage (résolution) & Modularité avec communautés mieux connectées & \cite{Traag2019Leiden} & Scientific Reports \\
 \midrule
 \multirow{5}{0.12\textwidth}{\centering\textbf{Deep Learning}}
-& scVI & VAE probabiliste & Clustering aval & Reconstruction NB/ZINB + divergence KL & \cite{Lopez2018scVI} & Nature Methods \\
-& scMAE & Masked autoencoder & Clustering aval & Reconstruction de gènes masqués & \cite{Fang2024scMAE} & Bioinformatics \\
-& DESC & Autoencodeur + clustering & Hyper-param. & Reconstruction + clustering par divergence KL & \cite{li2020deep} & Nature Communications \\
-& scDeepCluster & Autoencodeur ZINB & Hyper-param. & Reconstruction ZINB + clustering par divergence KL & \cite{tian2019clustering} & Nature Machine Intelligence \\
-& scNAME & Contrastive learning & Hyper-param. & Reconstruction + clustering + contraste de voisinage & \cite{wan_scname_2022} & Bioinformatics \\
+& scVI & VAE probabiliste (clustering aval) & Reconstruction NB/ZINB + divergence KL & \cite{Lopez2018scVI} & Nature Methods \\
+& scMAE & Masked autoencoder (clustering aval) & Reconstruction de gènes masqués & \cite{Fang2024scMAE} & Bioinformatics \\
+& DESC & Autoencodeur + clustering (hyper-param.) & Reconstruction + clustering par divergence KL & \cite{li2020deep} & Nature Communications \\
+& scDeepCluster & Autoencodeur ZINB (hyper-param.) & Reconstruction ZINB + clustering par divergence KL & \cite{tian2019clustering} & Nature Machine Intelligence \\
+& scNAME & Contrastive learning (hyper-param.) & Reconstruction + clustering + contraste de voisinage & \cite{wan_scname_2022} & Bioinformatics \\
 \midrule
 \textbf{Graphes profonds}
-& scCDCG & AE + graph embedding & Hyper-param. & Reconstruction + transport optimal + graph cut & \cite{xu_sccdcg_2025} & DASFAA \\
+& scCDCG & AE + graph embedding (hyper-param.) & Reconstruction + transport optimal + graph cut & \cite{xu_sccdcg_2025} & DASFAA \\
 \midrule
 \multirow{5}{0.12\textwidth}{\centering\textbf{Cellules rares}}
-& GiniClust & Indice de Gini & Automatique & Détection de gènes marqueurs atypiques & \cite{Jiang2016} & Genome Biology \\
-& CellSIUS & Signatures locales & Sous-clusters & Identification de sous-populations minoritaires & \cite{Neri2019} & Genome Biology \\
-& scAIDE & Autoencodeur & Hyper-param. & Débruitage + clustering orienté populations rares & \cite{scAIDE2020} & NAR Genomics and Bioinformatics \\
-& DeepScena & Self-supervised hiérarchique & Hiérarchique & Raffinement coarse-to-fine des clusters rares & \cite{Lei2023scHDR} & Briefings in Bioinformatics \\
-& scCAD & Détection d'anomalies & Automatique & Décomposition de clusters pour isoler les types rares & \cite{Xu2024scCAD} & Nature Communications \\
+& GiniClust & Indice de Gini (automatique) & Détection de gènes marqueurs atypiques & \cite{Jiang2016} & Genome Biology \\
+& CellSIUS & Signatures locales (sous-clusters) & Identification de sous-populations minoritaires & \cite{Neri2019} & Genome Biology \\
+& scAIDE & Autoencodeur (hyper-param.) & Débruitage + clustering orienté populations rares & \cite{scAIDE2020} & NAR Genomics and Bioinformatics \\
+& DeepScena & Self-supervised (hiérarchique) & Raffinement coarse-to-fine des clusters rares & \cite{Lei2023scHDR} & Briefings in Bioinformatics \\
+& scCAD & Détection d'anomalies (automatique) & Décomposition de clusters pour isoler les types rares & \cite{Xu2024scCAD} & Nature Communications \\
 \bottomrule
 \end{tabularx}
 \caption{Synthèse des méthodes de clustering et de détection de populations rares citées dans l'état de l'art. AE : autoencodeur ; VAE : autoencodeur variationnel ; KL : divergence de Kullback-Leibler ; NB/ZINB : lois binomiale négative et binomiale négative à inflation de zéros. Le terme «~Clustering aval~» indique que l'algorithme produit une représentation latente réduite et qu'un algorithme externe (ex. K-Means ou Leiden) doit y être appliqué par la suite pour former les groupes. Les «~Sous-clusters~» font référence à une recherche locale de sous-populations minoritaires à l'intérieur de groupes préexistants. Le terme «~Hiérarchique~» désigne une approche par raffinements successifs (du niveau grossier au niveau fin) pour isoler les cellules rares.}
