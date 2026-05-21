@@ -308,15 +308,15 @@ Dans l'interface web, le déroulement a été organisé comme une suite d'étape
 
 L'interface web se structure ainsi autour de neuf modules distincts, présentés dans la figure \ref{fig:scrbenchmark_panel} :
 \begin{itemize}
-    \item \textbf{Importation des données} (Figure \ref{fig:scr_upload}) : chargement des fichiers au format standard (comme \texttt{.h5ad}) et extraction automatique des annotations disponibles (types cellulaires de référence, lots expérimentaux).
-    \item \textbf{Configuration du découpage} (Figure \ref{fig:scr_split}) : définition de la répartition entre apprentissage, validation et test, notamment pour évaluer les méthodes en configuration intra ou inter-donneurs.
-    \item \textbf{Prétraitement} (Figure \ref{fig:scr_preprocess}) : filtrage des cellules/gènes de faible qualité, normalisation, log-transformation et sélection des gènes hautement variables (HVG).
-    \item \textbf{Configuration des algorithmes} (Figure \ref{fig:scr_config}) : sélection des modèles (par ex. scDeepCluster, PCA+Leiden) et paramétrage de leurs hyperparamètres respectifs.
-    \item \textbf{Exécution des calculs} (Figure \ref{fig:scr_run}) : suivi en direct de l'apprentissage avec affichage de la progression et des logs de calcul en temps réel.
-    \item \textbf{Visualisation interactive} (Figure \ref{fig:scr_vis}) : projection bidimensionnelle des cellules (UMAP/t-SNE) avec comparaison interactive côte à côte des étiquettes de référence et des clusters prédits.
-    \item \textbf{Re-clustering latent} (Figure \ref{fig:scr_latent}) : possibilité de relancer des algorithmes de clustering classiques sur les représentations de basse dimension générées par les modèles de deep learning.
-    \item \textbf{Exploration des résultats} (Figure \ref{fig:scr_results}) : tableaux et visualisations de comparaison des métriques d'évaluation (ARI, NMI, silhouette, temps de calcul, etc.).
-    \item \textbf{Optimisation} (Figure \ref{fig:scr_hparam}) : suivi des expériences de recherche d'hyperparamètres automatiques avec visualisations de l'espace de recherche (Optuna).
+    \item \textbf{Importation des données} (Figure \ref{fig:scr_upload}) : chargement des fichiers au format standard (comme \texttt{.h5ad}) et détection automatique des annotations de référence et des lots.
+    \item \textbf{Visualisation des données} (Figure \ref{fig:scr_vis_donnees}) : inspection visuelle préliminaire du jeu de données via des projections UMAP interactives.
+    \item \textbf{Choix de l'expérience} (Figure \ref{fig:scr_choix_exp}) : configuration du mode d'expérience (standard ou benchmark) et des stratégies de split.
+    \item \textbf{Prétraitement} (Figure \ref{fig:scr_preprocess}) : définition du pipeline de filtrage, normalisation, sélection des HVG et correction d'effet de lot.
+    \item \textbf{Choix des algorithmes} (Figure \ref{fig:scr_choix_algo}) : sélection et paramétrage des méthodes de clustering et de réduction de dimension à évaluer.
+    \item \textbf{Génération de la commande CLI} (Figure \ref{fig:scr_cli}) : génération automatique de scripts d'exécution en ligne de commande pour lancer les analyses sur serveur.
+    \item \textbf{Exécution des calculs} (Figure \ref{fig:scr_runner}) : suivi de l'avancement de l'apprentissage avec affichage des logs de calcul en direct.
+    \item \textbf{Résultats des métriques} (Figure \ref{fig:scr_results}) : comparaison tabulaire et graphique des performances (ARI, NMI, etc.) et du temps d'exécution.
+    \item \textbf{UMAPs des résultats} (Figure \ref{fig:scr_results_umaps}) : UMAP comparatives interactives entre annotations réelles et clusters prédits par les méthodes sélectionnées.
 \end{itemize}
 
 \begin{figure}[p]
@@ -330,74 +330,74 @@ L'interface web se structure ainsi autour de neuf modules distincts, présentés
     \hfill
     \begin{subfigure}[b]{0.32\textwidth}
         \centering
-        \includegraphics[width=\textwidth]{SCRBenchmark/scr_02_split.png}
-        \caption{Configuration du découpage}
-        \label{fig:scr_split}
+        \includegraphics[width=\textwidth]{SCRBenchmark/scr_02_visualisation_des_donnees.png}
+        \caption{Visualisation des données}
+        \label{fig:scr_vis_donnees}
     \end{subfigure}
     \hfill
     \begin{subfigure}[b]{0.32\textwidth}
         \centering
-        \includegraphics[width=\textwidth]{SCRBenchmark/scr_03_preprocessing.png}
-        \caption{Prétraitement des données}
+        \includegraphics[width=\textwidth]{SCRBenchmark/scr_03_choixExperience.png}
+        \caption{Choix de l'expérience}
+        \label{fig:scr_choix_exp}
+    \end{subfigure}
+    
+    \vspace{0.3cm}
+    
+    \begin{subfigure}[b]{0.32\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{SCRBenchmark/scr_04_preprocess.png}
+        \caption{Prétraitement}
         \label{fig:scr_preprocess}
     \end{subfigure}
+    \hfill
+    \begin{subfigure}[b]{0.32\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{SCRBenchmark/scr_05_choixAlgo.png}
+        \caption{Choix des algorithmes}
+        \label{fig:scr_choix_algo}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}[b]{0.32\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{SCRBenchmark/scr_06_CommandeCLI.png}
+        \caption{Génération CLI}
+        \label{fig:scr_cli}
+    \end{subfigure}
     
     \vspace{0.3cm}
     
     \begin{subfigure}[b]{0.32\textwidth}
         \centering
-        \includegraphics[width=\textwidth]{SCRBenchmark/scr_04_config.png}
-        \caption{Configuration des algorithmes}
-        \label{fig:scr_config}
-    \end{subfigure}
-    \hfill
-    \begin{subfigure}[b]{0.32\textwidth}
-        \centering
-        \includegraphics[width=\textwidth]{SCRBenchmark/scr_05_run.png}
+        \includegraphics[width=\textwidth]{SCRBenchmark/scr_07_runner.png}
         \caption{Exécution des calculs}
-        \label{fig:scr_run}
-    \end{subfigure}
-    \hfill
-    \begin{subfigure}[b]{0.32\textwidth}
-        \centering
-        \includegraphics[width=\textwidth]{SCRBenchmark/scr_06_vis.png}
-        \caption{Visualisation interactive}
-        \label{fig:scr_vis}
-    \end{subfigure}
-    
-    \vspace{0.3cm}
-    
-    \begin{subfigure}[b]{0.32\textwidth}
-        \centering
-        \includegraphics[width=\textwidth]{SCRBenchmark/scr_07_latent.png}
-        \caption{Re-clustering latent}
-        \label{fig:scr_latent}
+        \label{fig:scr_runner}
     \end{subfigure}
     \hfill
     \begin{subfigure}[b]{0.32\textwidth}
         \centering
         \includegraphics[width=\textwidth]{SCRBenchmark/scr_08_results.png}
-        \caption{Exploration des résultats}
+        \caption{Résultats des métriques}
         \label{fig:scr_results}
     \end{subfigure}
     \hfill
     \begin{subfigure}[b]{0.32\textwidth}
         \centering
-        \includegraphics[width=\textwidth]{SCRBenchmark/scr_09_hparam.png}
-        \caption{Optimisation}
-        \label{fig:scr_hparam}
+        \includegraphics[width=\textwidth]{SCRBenchmark/scr_09_resultsUmaps.png}
+        \caption{UMAPs des résultats}
+        \label{fig:scr_results_umaps}
     \end{subfigure}
     
     \caption{Aperçu des différentes étapes de l'interface Streamlit de SCRBenchmark. 
     (a) Importation et détection des annotations des données single-cell. 
-    (b) Découpage du jeu de données (standard ou benchmark). 
-    (c) Pipeline modulaire de prétraitement et filtrage. 
-    (d) Sélection et réglage des hyperparamètres des algorithmes. 
-    (e) Suivi en temps réel de l'exécution et des logs de calcul. 
-    (f) Visualisation des projections (UMAP, t-SNE) colorées selon diverses étiquettes. 
-    (g) Ajustement interactif du clustering dans l'espace latent appris. 
-    (h) Analyse comparative des métriques d'évaluation. 
-    (i) Visualisation de la recherche d'hyperparamètres (Optuna).}
+    (b) Visualisation en 2D interactive des données initiales. 
+    (c) Configuration de la stratégie expérimentale (standard ou benchmark). 
+    (d) Définition du pipeline modulaire de prétraitement. 
+    (e) Sélection et paramétrage des hyperparamètres des algorithmes. 
+    (f) Export de scripts en ligne de commande pour assurer la reproductibilité. 
+    (g) Suivi en direct du runner et des logs d'exécution. 
+    (h) Analyse comparative tabulaire des performances. 
+    (i) Visualisation des UMAPs comparatives après clustering.}
     \label{fig:scrbenchmark_panel}
 \end{figure}
 
