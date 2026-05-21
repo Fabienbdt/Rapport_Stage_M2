@@ -306,6 +306,102 @@ Le premier choix important dans SCRBenchmark a été de séparer ce que voit l'u
 
 Dans l'interface web, le déroulement a été organisé comme une suite d'étapes. L'utilisateur charge d'abord les données, puis il choisit la stratégie expérimentale, les traitements à appliquer, les méthodes à comparer et enfin lance l'analyse. Des pages supplémentaires permettent ensuite de revenir sur les résultats et de produire les figures nécessaires à leur interprétation. Cette organisation était importante car, sans outil dédié, les différentes décisions expérimentales se retrouvaient rapidement dispersées dans plusieurs scripts : choix des données, choix du prétraitement, choix des méthodes, puis analyse des résultats.
 
+L'interface web se structure ainsi autour de neuf modules distincts, présentés dans la figure \ref{fig:scrbenchmark_panel} :
+\begin{itemize}
+    \item \textbf{Importation des données} (Figure \ref{fig:scr_upload}) : chargement des fichiers au format standard (comme \texttt{.h5ad}) et extraction automatique des annotations disponibles (types cellulaires de référence, lots expérimentaux).
+    \item \textbf{Configuration du découpage} (Figure \ref{fig:scr_split}) : définition de la répartition entre apprentissage, validation et test, notamment pour évaluer les méthodes en configuration intra ou inter-donneurs.
+    \item \textbf{Prétraitement} (Figure \ref{fig:scr_preprocess}) : filtrage des cellules/gènes de faible qualité, normalisation, log-transformation et sélection des gènes hautement variables (HVG).
+    \item \textbf{Configuration des algorithmes} (Figure \ref{fig:scr_config}) : sélection des modèles (par ex. scDeepCluster, PCA+Leiden) et paramétrage de leurs hyperparamètres respectifs.
+    \item \textbf{Exécution des calculs} (Figure \ref{fig:scr_run}) : suivi en direct de l'apprentissage avec affichage de la progression et des logs de calcul en temps réel.
+    \item \textbf{Visualisation interactive} (Figure \ref{fig:scr_vis}) : projection bidimensionnelle des cellules (UMAP/t-SNE) avec comparaison interactive côte à côte des étiquettes de référence et des clusters prédits.
+    \item \textbf{Re-clustering latent} (Figure \ref{fig:scr_latent}) : possibilité de relancer des algorithmes de clustering classiques sur les représentations de basse dimension générées par les modèles de deep learning.
+    \item \textbf{Exploration des résultats} (Figure \ref{fig:scr_results}) : tableaux et visualisations de comparaison des métriques d'évaluation (ARI, NMI, silhouette, temps de calcul, etc.).
+    \item \textbf{Optimisation} (Figure \ref{fig:scr_hparam}) : suivi des expériences de recherche d'hyperparamètres automatiques avec visualisations de l'espace de recherche (Optuna).
+\end{itemize}
+
+\begin{figure}[p]
+    \centering
+    \begin{subfigure}[b]{0.32\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{SCRBenchmark/scr_01_upload.png}
+        \caption{Importation des données}
+        \label{fig:scr_upload}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}[b]{0.32\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{SCRBenchmark/scr_02_split.png}
+        \caption{Configuration du découpage}
+        \label{fig:scr_split}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}[b]{0.32\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{SCRBenchmark/scr_03_preprocessing.png}
+        \caption{Prétraitement des données}
+        \label{fig:scr_preprocess}
+    \end{subfigure}
+    
+    \vspace{0.3cm}
+    
+    \begin{subfigure}[b]{0.32\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{SCRBenchmark/scr_04_config.png}
+        \caption{Configuration des algorithmes}
+        \label{fig:scr_config}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}[b]{0.32\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{SCRBenchmark/scr_05_run.png}
+        \caption{Exécution des calculs}
+        \label{fig:scr_run}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}[b]{0.32\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{SCRBenchmark/scr_06_vis.png}
+        \caption{Visualisation interactive}
+        \label{fig:scr_vis}
+    \end{subfigure}
+    
+    \vspace{0.3cm}
+    
+    \begin{subfigure}[b]{0.32\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{SCRBenchmark/scr_07_latent.png}
+        \caption{Re-clustering latent}
+        \label{fig:scr_latent}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}[b]{0.32\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{SCRBenchmark/scr_08_results.png}
+        \caption{Exploration des résultats}
+        \label{fig:scr_results}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}[b]{0.32\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{SCRBenchmark/scr_09_hparam.png}
+        \caption{Optimisation}
+        \label{fig:scr_hparam}
+    \end{subfigure}
+    
+    \caption{Aperçu des différentes étapes de l'interface Streamlit de SCRBenchmark. 
+    (a) Importation et détection des annotations des données single-cell. 
+    (b) Découpage du jeu de données (standard ou benchmark). 
+    (c) Pipeline modulaire de prétraitement et filtrage. 
+    (d) Sélection et réglage des hyperparamètres des algorithmes. 
+    (e) Suivi en temps réel de l'exécution et des logs de calcul. 
+    (f) Visualisation des projections (UMAP, t-SNE) colorées selon diverses étiquettes. 
+    (g) Ajustement interactif du clustering dans l'espace latent appris. 
+    (h) Analyse comparative des métriques d'évaluation. 
+    (i) Visualisation de la recherche d'hyperparamètres (Optuna).}
+    \label{fig:scrbenchmark_panel}
+\end{figure}
+
+
 Après le chargement des données, SCRBenchmark propose deux modes principaux. Le premier est un mode standard, dans lequel toutes les cellules du jeu de données sont utilisées ensemble. Ce mode est utile lorsque l'on veut appliquer une méthode sur un dataset donné et observer directement le résultat. Le second est un mode benchmark, dans lequel les données sont séparées en plusieurs groupes : une partie pour entrainer les modèles, une partie pour éventuellement ajuster certains choix, et une partie gardée à part pour tester les résultats. Ce mode était indispensable pour nos expériences, car il permettait de comparer les méthodes dans des conditions plus contrôlées, notamment lorsque l'on voulait évaluer leur capacité à fonctionner sur des cellules ou des batchs non vus pendant l'entrainement.
 
 Une fois ce mode choisi, le logiciel applique un pipeline commun à toutes les méthodes. Les données brutes sont conservées afin de pouvoir revenir à l'information initiale, puis les mêmes étapes de prétraitement peuvent être appliquées à chaque méthode : filtrage des cellules ou des gènes de mauvaise qualité, normalisation des valeurs d'expression, sélection des gènes les plus informatifs et, si besoin, correction de l'effet de lot. Ce point était particulièrement important pour la comparaison, car deux méthodes ne peuvent pas être comparées correctement si elles ne reçoivent pas les mêmes données en entrée. Une différence de prétraitement peut parfois expliquer autant les résultats qu'une différence entre deux algorithmes.
