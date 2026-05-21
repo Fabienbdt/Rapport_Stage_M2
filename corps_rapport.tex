@@ -123,6 +123,36 @@ Tabula Muris liver & Souris & 2 859 & 22 966 & 1 & 5 \\
 \label{tab:datasets}
 \end{table}
 
+Les données de séquençage d'ARN sur cellule unique (scRNA-seq) manipulées sont généralement structurées sous forme de matrices d'expression accompagnées de métadonnées. Par convention (notamment dans le format \texttt{AnnData} utilisé par notre pipeline), ces informations sont organisées de la façon suivante :
+\begin{itemize}
+    \item \textbf{La matrice d'expression ($X$) :} De dimension $N \times M$ (où $N$ est le nombre de cellules et $M$ le nombre de gènes). Chaque entrée représente le niveau d'expression (par exemple le nombre de comptages d'U.M.I., pour \textit{Unique Molecular Identifiers}) d'un gène spécifique dans une cellule donnée. Cette matrice est généralement très creuse (majoritairement remplie de zéros).
+    \item \textbf{Les métadonnées cellulaires (\textit{observations} ou \textit{obs}) :} Une table de dimension $N \times D$ alignée sur les lignes de la matrice d'expression. Elle attribue à chaque cellule des informations de contexte comme le lot expérimental d'origine (\textit{batch}) ou l'annotation biologique (\textit{cell type}).
+    \item \textbf{Les métadonnées des gènes (\textit{variables} ou \textit{var}) :} Une table de dimension $M \times G$ alignée sur les colonnes de la matrice d'expression, décrivant les caractéristiques des gènes (nom du gène, niveau de variabilité globale, etc.).
+\end{itemize}
+
+Le tableau~\ref{tab:sc_dataset_layout} illustre un exemple conceptuel de cet alignement entre la matrice d'expression et les métadonnées cellulaires.
+
+\begin{table}[H]
+\centering
+\small
+\renewcommand{\arraystretch}{1.2}
+\begin{tabular}{l ccc c cc}
+\toprule
+& \multicolumn{3}{c}{\textbf{Matrice d'expression ($X$)}} & \phantom{a} & \multicolumn{2}{c}{\textbf{Métadonnées des cellules (obs)}} \\
+\cmidrule{2-4} \cmidrule{6-7}
+\textbf{Identifiant Cellule} & \textbf{Gène A} & \textbf{Gène B} & \textbf{Gène C} & & \textbf{Lot (Batch)} & \textbf{Type cellulaire} \\
+\midrule
+Cellule\_1 & 0  & 14 & 0  & & Lot\_A  & Cellule Beta \\
+Cellule\_2 & 3  & 0  & 1  & & Lot\_A  & Cellule Alpha \\
+Cellule\_3 & 0  & 0  & 0  & & Lot\_B  & Cellule de Schwann \\
+Cellule\_4 & 24 & 1  & 0  & & Lot\_B  & Cellule Beta \\
+Cellule\_5 & 0  & 0  & 8  & & Lot\_C  & Lymphocyte T \\
+\bottomrule
+\end{tabular}
+\caption{Structure conceptuelle d'un jeu de données scRNA-seq. La matrice d'expression à gauche est alignée ligne à ligne (par cellule) avec la table des métadonnées cellulaires à droite.}
+\label{tab:sc_dataset_layout}
+\end{table}
+
 \subsection{Traitements de données}
 
 Les données brutes issues du séquençage scRNA-seq sont extrêmement bruitées et pleines de zéros (des gènes non détectés). Il est donc indispensable de les nettoyer et de les préparer.
@@ -250,6 +280,9 @@ Enfin, des méthodes plus récentes comme \textbf{scCAD} \cite{Xu2024scCAD} abor
 Ces méthodes reposent donc sur une idée commune : un clustering global classique tend à favoriser les grandes populations cellulaires et peut masquer les cellules rares ou les états intermédiaires. Notre démarche, \textbf{scRAW}, s’inscrit dans cette continuité tout en proposant une stratégie différente. Plutôt que d’identifier les populations rares uniquement après la construction des clusters ou par une étape de raffinement, nous cherchons à intégrer cette contrainte directement pendant l’apprentissage du modèle. Concrètement, scRAW attribue un poids plus important aux cellules isolées ou faiblement représentées dans le calcul de la \textit{loss}, afin qu’elles influencent davantage la construction de l’espace latent. L’objectif est ainsi de produire une représentation latente plus informative, dans laquelle les populations rares ne sont pas absorbées par les grands groupes cellulaires et étant mise en évidence tout au long de l'entrainement du modèle.
 \section{Comparaison de l'existant}
 
+Nos travaux ont débuté par une comparaison des méthodes de l'état de l'art traitant des données de séquençage d'ARN à cellule unique (scRNA-seq). À ce stade, nous souhaitions étudier des approches généralistes, qui ne traitaient ni de l'effet de lot (\textit{batch effect}) ni du déséquilibre des populations cellulaires. Pour ce faire, nous nous sommes en partie appuyés sur le protocole et les sélections du benchmark scCluBench \cite{xu_scclubench_2026} où nous avons sélectionné les méthodes de deeplearning basés sur des autoencoders et sur des graphs les plus performantes sur les métriques comparées. 
+La problématique ensuite recontrée pour comparer les méthodes sélectionner était la façon dont on voulais effectuer les tests. Nous souhaitions à la fois pouvoir modifier à notre guise les hyperparamètres des méthodes, tout en ajustant les étapes de préprocessing. De plus la quantité des tests différents et des résultats disponibles m'a poussé à dévelloper une solution logiciel le plus ergonimique possible, SCRBenchmark, afin d'automatiser, simplifier la mise en place des différentes expériences et l'exploration des résultats.
+
 {\color{gray}\itshape
 Question sur cette section : Est ce que ici je traite que ce j'ai fait sur Baron ? Ou est ce que je présente les résultats sur tous les datasets introduit dans l'état de l'art qui chronologiquement sont étudiés plus tard? De manière plus globale, faut il vraiment laisser une description des datasets dans l'état de l'art, ne peut on pas la déplacer ici ?
 
@@ -257,48 +290,143 @@ Question sur cette section : Est ce que ici je traite que ce j'ai fait sur Baron
 Montrer comment les méthodes existantes ont été rendues comparables : comment cela à était implémenté, protocole expérimental, métriques et premiers résultats. Cette section doit préparer la transition vers scRAW. L'idée est de montrer que les méthodes générale de DeepLearning et la PCA testées avaient des limites faces aux cellules rares et à l'effet batch. La section suivante détaillera les résultats de toutes les méthodes dont celles spécifiques à ces problématiques
 }
 
+\clearpage
 \subsection{Logiciel}
-{\color{gray}\itshape
-\begin{itemize}
-  \item Présenter SCRBenchmark comme outil de benchmarking : chargement des données, sélection des méthodes, exécution, visualisation, export des résultats.
-  \item Décrire les deux modes d'utilisation : interface interactive et ligne de commande et pourquoi.
-  \item Présenter la structure logique : registre d'algorithmes, gestion des datasets, prétraitement, métriques, visualisations, sauvegarde des configurations.
-  \item Expliquer pourquoi cet outil était nécessaire avant d'interpréter les résultats : homogénéiser les entrées, les sorties, les métriques et les figures.
-  \item Mentionner les sorties sauvegardées : résultats bruts, tableaux agrégés, embeddings, labels prédits, figures, configurations et logs.
-  \item Discuter l'apport pratique : reproductibilité, traçabilité, comparaison plus simple pour des utilisateurs non spécialistes du code.
-\end{itemize}
-}
+
+SCRBenchmark a été développé dans l'optique d'être accessible à des biologistes non-informaticiens. Le logiciel permet à l'expérimentateur de charger ses données, choisir le type d'expérience à mener, définir les étapes de prétraitement et les outils correspondants, sélectionner les méthodes à évaluer ainsi que leurs hyperparamètres, et enfin choisir les métriques de validation. Il permet également d'explorer et d'exporter les résultats via diverses solutions de visualisation interactives. En outre, l'expérimentateur peut générer des scripts Bash pour lancer des analyses en ligne de commande (CLI), assurant ainsi la reproductibilité et la traçabilité des expériences menées. La structure logique et le flux de travail de cet outil sont résumés dans la figure \ref{fig:organisation_logiciel}.
+
+\begin{figure}[htbp]
+    \centering
+    \includegraphics[width=0.8\textwidth]{SCRBenchmark/OrganisationLogiciel.png}
+    \caption{Structure logique et flux de travail de la plateforme de benchmarking SCRBenchmark.}
+    \label{fig:organisation_logiciel}
+\end{figure}
+
+Le premier choix important dans SCRBenchmark a été de séparer ce que voit l'utilisateur de ce qui exécute réellement les calculs. Comme on le voit dans la figure \ref{fig:organisation_logiciel}, l'utilisateur commence par importer ses données, qui correspondent en pratique à une grande matrice indiquant, pour chaque cellule, le niveau d'expression de chaque gène. Le logiciel est capable de lire plusieurs formats couramment utilisés en bioinformatique et tente aussi de retrouver les annotations disponibles, par exemple les types cellulaires connus ou les lots expérimentaux. À partir de là, l'utilisateur peut travailler soit avec une interface web, plus simple pour construire une expérience pas à pas, soit avec la ligne de commande, plus adaptée aux longues expériences lancées sur un serveur de calcul.
+
+Dans l'interface web, le déroulement a été organisé comme une suite d'étapes. L'utilisateur charge d'abord les données, puis il choisit la stratégie expérimentale, les traitements à appliquer, les méthodes à comparer et enfin lance l'analyse. Des pages supplémentaires permettent ensuite de revenir sur les résultats et de produire les figures nécessaires à leur interprétation. Cette organisation était importante car, sans outil dédié, les différentes décisions expérimentales se retrouvaient rapidement dispersées dans plusieurs scripts : choix des données, choix du prétraitement, choix des méthodes, puis analyse des résultats.
+
+Après le chargement des données, SCRBenchmark propose deux modes principaux. Le premier est un mode standard, dans lequel toutes les cellules du jeu de données sont utilisées ensemble. Ce mode est utile lorsque l'on veut appliquer une méthode sur un dataset donné et observer directement le résultat. Le second est un mode benchmark, dans lequel les données sont séparées en plusieurs groupes : une partie pour entrainer les modèles, une partie pour éventuellement ajuster certains choix, et une partie gardée à part pour tester les résultats. Ce mode était indispensable pour nos expériences, car il permettait de comparer les méthodes dans des conditions plus contrôlées, notamment lorsque l'on voulait évaluer leur capacité à fonctionner sur des cellules ou des batchs non vus pendant l'entrainement.
+
+Une fois ce mode choisi, le logiciel applique un pipeline commun à toutes les méthodes. Les données brutes sont conservées afin de pouvoir revenir à l'information initiale, puis les mêmes étapes de prétraitement peuvent être appliquées à chaque méthode : filtrage des cellules ou des gènes de mauvaise qualité, normalisation des valeurs d'expression, sélection des gènes les plus informatifs et, si besoin, correction de l'effet de lot. Ce point était particulièrement important pour la comparaison, car deux méthodes ne peuvent pas être comparées correctement si elles ne reçoivent pas les mêmes données en entrée. Une différence de prétraitement peut parfois expliquer autant les résultats qu'une différence entre deux algorithmes.
+
+Le moteur d'exécution a ensuite été pensé pour que toutes les méthodes soient appelées de la même façon. Qu'il s'agisse d'une méthode classique comme PCA suivie de K-Means ou Leiden, d'une méthode de deep learning comme scDeepCluster, scMAE ou scNAME, d'une méthode utilisant un graphe comme scCDCG, ou d'une approche plus expérimentale orientée cellules rares, SCRBenchmark demande à chaque méthode de produire les mêmes types de sorties : des groupes de cellules prédits, une représentation des cellules dans un espace plus simple lorsque c'est possible, et les paramètres utilisés. Cette organisation évite d'avoir un protocole différent pour chaque algorithme et rend l'ajout de nouvelles méthodes plus simple.
+
+L'étape d'évaluation a également été homogénéisée. Après l'exécution d'une méthode, les groupes prédits par l'algorithme sont comparés aux annotations biologiques disponibles. Comme les numéros de clusters n'ont pas de signification directe, le logiciel commence par associer chaque cluster prédit au type cellulaire de référence le plus proche, puis il calcule plusieurs scores. Certains scores mesurent la qualité globale du clustering, tandis que d'autres donnent davantage d'importance aux classes peu représentées ou analysent les performances type cellulaire par type cellulaire. L'intérêt n'était donc pas seulement d'obtenir un score final, mais de pouvoir comprendre où une méthode réussit et où elle échoue. Une méthode peut en effet obtenir un bon résultat moyen tout en manquant une population rare biologiquement importante.
+
+Enfin, SCRBenchmark sauvegarde systématiquement les éléments nécessaires à l'analyse et à la reproductibilité : les scores obtenus, les groupes prédits, les représentations numériques des cellules, les figures, les paramètres utilisés et les messages d'exécution. Les visualisations générées automatiquement, comme les UMAP, les matrices de confusion, les boxplots ou les figures comparant entrainement et test, ont permis d'explorer rapidement les résultats sans devoir réécrire du code de visualisation à chaque expérience. Cette partie a été essentielle dans le stage, car le nombre de méthodes, de jeux de données et de variantes testées rendait difficile une analyse manuelle. SCRBenchmark a donc servi à la fois d'outil de production d'expériences et d'outil d'exploration des résultats, avant même de pouvoir interpréter scientifiquement les performances des méthodes comparées.
 
 \subsection{Expériences}
 
 \subsubsection{Données et splits}
-{\color{gray}\itshape
-\begin{itemize}
-  \item Expliquer pourquoi Baron a était choisi. 
-  \item Décrire les splits utilisés : transductif, train/test par batch, train sur un batch et autres.
-  \item Indiquer comment les classes rares sont définies pour les métriques RareACC et UltraRareACC.
-  \item Prévoir une figure dédié aux splits.
-\end{itemize}
-}
+
+Nous avons sélectionné le jeu de données de Baron \cite{Baron2016} pour effectuer ces premières expériences. Ce jeu de données de pancréas (comprenant des cohortes humaines et de souris) constitue un standard de référence largement utilisé dans la littérature pour évaluer les algorithmes de clustering de l'état de l'art. En particulier, les publications originales de plusieurs méthodes d'apprentissage profond comme scDeepCluster \cite{tian2019clustering}, scNAME \cite{wan_scname_2022}, scMAE \cite{Fang2024scMAE} et scCDCG \cite{xu_sccdcg_2025}, ainsi que des approches dédiées aux populations rares telles que CellSIUS \cite{Neri2019}, scAIDE \cite{scAIDE2020}, DeepScena \cite{Lei2023scHDR} et scCAD \cite{Xu2024scCAD} ainsi que le benchmark scClubench \cite{xu_scclubench_2026}, ont directement validé leurs performances sur ce jeu de données. L'intérêt majeur du jeu de données de Baron réside dans la présence de populations cellulaires bien caractérisées et de tailles extrêmement variées, ce qui est idéal pour évaluer les méthodes sur la détection de populations rares dans des contextes multi-donneurs impliquant des effets de lot importants. Dans nos expériences, nous avons séparé les données humaines et de souris afin de nous concentrer sur le jeu de données humain de Baron.
+
+Le tableau \ref{tab:classes_baron_humain} présente la composition du jeu de données humain utilisé dans nos expériences. Il contient 8\,569 cellules réparties en quatorze types cellulaires. Cette répartition montre que les données sont très déséquilibrées : les cellules \textit{beta} et \textit{alpha} représentent plus de la moitié du jeu de données, tandis que plusieurs populations, comme les \textit{macrophage}, \textit{mast} ou \textit{t\_cell}, représentent moins de 1\,\% des cellules.
+
+\begin{table}[H]
+    \centering
+    \small
+    \begin{tabular}{lrrl}
+        \toprule
+        \textbf{Type cellulaire} & \textbf{Cellules} & \textbf{Proportion} & \textbf{Statut} \\
+        \midrule
+        \textit{beta} & 2\,525 & 29,47\,\% & Fréquente \\
+        \textit{alpha} & 2\,326 & 27,14\,\% & Fréquente \\
+        \textit{ductal} & 1\,077 & 12,57\,\% & Fréquente \\
+        \textit{acinar} & 958 & 11,18\,\% & Fréquente \\
+        \textit{delta} & 601 & 7,01\,\% & Fréquente \\
+        \textit{activated\_stellate} & 284 & 3,31\,\% & Rare \\
+        \textit{gamma} & 255 & 2,98\,\% & Rare \\
+        \textit{endothelial} & 252 & 2,94\,\% & Rare \\
+        \textit{quiescent\_stellate} & 173 & 2,02\,\% & Rare \\
+        \textit{macrophage} & 55 & 0,64\,\% & Ultra-rare \\
+        \textit{mast} & 25 & 0,29\,\% & Ultra-rare \\
+        \textit{epsilon} & 18 & 0,21\,\% & Ultra-rare \\
+        \textit{schwann} & 13 & 0,15\,\% & Ultra-rare \\
+        \textit{t\_cell} & 7 & 0,08\,\% & Ultra-rare \\
+        \bottomrule
+    \end{tabular}
+    \caption{Composition du jeu de données humain de Baron par type cellulaire. Les classes rares correspondent aux types représentant moins de 5\,\% des cellules, et les classes ultra-rares à ceux représentant moins de 1\,\%.}
+    \label{tab:classes_baron_humain}
+\end{table}
+
+Différentes expériences ont été menées afin de répondre à une question simple : est-ce qu'un modèle qui apprend une représentation sur certaines cellules est ensuite capable de rester performant sur des cellules qu'il n'a jamais vues ? Cette question distingue deux cadres d'évaluation. Dans un cadre transductif, toutes les cellules sont disponibles au moment de l'apprentissage et le modèle construit ses groupes à partir de l'ensemble complet. Ce cadre est utile pour explorer un jeu de données déjà acquis, mais il ne dit pas vraiment ce qui se passerait si l'on ajoutait de nouvelles cellules ensuite. Dans un cadre inductif, au contraire, le modèle est entraîné sur une partie des cellules, puis il doit projeter ou classer de nouvelles cellules sans être réentraîné depuis le début.
+
+Pour rendre cette évaluation possible avec des modèles fondés sur des autoencodeurs, nous avons utilisé leur encodeur comme outil de projection. Une fois le modèle entraîné, ses poids sont gelés : cela signifie qu'ils ne sont plus modifiés. Les cellules d'entraînement sont projetées dans l'espace latent, puis les centres des clusters appris sont calculés dans cet espace. Les nouvelles cellules passent ensuite par le même prétraitement et par le même encodeur ; elles sont finalement rattachées au cluster dont le centre est le plus proche, ou à un groupe de référence construit pendant l'entraînement. Cette logique a été appliquée aux modèles pour lesquels une projection de nouvelles cellules était possible. Elle ne peut pas être appliquée de manière automatique à toutes les méthodes, car certaines approches reconstruisent un graphe ou un clustering global à chaque analyse et restent donc principalement transductives.
+
+Le jeu de données humain de Baron est composé de quatre sous-jeux, notés ici H1, H2, H3 et H4, qui correspondent à quatre donneurs humains. Nous avons donc utilisé ces sous-jeux pour construire plusieurs scénarios expérimentaux. Le premier scénario correspond à une analyse standard sur l'ensemble des données, éventuellement équilibrée pour éviter qu'un donneur plus grand domine l'évaluation. Le deuxième scénario consiste à séparer chaque donneur en trois parties : entraînement, validation et test. Les trois ensembles contiennent alors des cellules issues de tous les donneurs, mais les cellules du test n'ont pas été vues pendant l'apprentissage. Le troisième scénario est plus strict : on entraîne le modèle sur un ou plusieurs donneurs, puis on l'évalue sur un donneur différent. Ce dernier cas se rapproche davantage d'une situation réelle où l'on voudrait appliquer un modèle déjà entraîné à un nouveau patient ou à une nouvelle expérience.
+
+\begin{figure}[H]
+    \centering
+    \small
+    \setlength{\fboxsep}{2pt}
+    \newcommand{\bhone}[1][0.055\textwidth]{\fcolorbox{gray}{yellow!25}{\makebox[#1][c]{H1}}}
+    \newcommand{\bhtwo}[1][0.055\textwidth]{\fcolorbox{gray}{blue!25}{\makebox[#1][c]{H2}}}
+    \newcommand{\bhthree}[1][0.055\textwidth]{\fcolorbox{gray}{green!25}{\makebox[#1][c]{H3}}}
+    \newcommand{\bhfour}[1][0.055\textwidth]{\fcolorbox{gray}{purple!20}{\makebox[#1][c]{H4}}}
+    \newcommand{\bhthreewide}{\fcolorbox{gray}{green!25}{\makebox[0.16\textwidth][c]{H3}}}
+    \begin{tabularx}{0.95\textwidth}{@{}p{0.27\textwidth}X@{}}
+        \toprule
+        \textbf{Situation représentée} & \textbf{Schéma simplifié} \\
+        \midrule
+        Données initiales & \bhone \bhtwo \bhthreewide \bhfour \quad H3 est plus grand que les autres donneurs. \\
+        Équilibrage global & \bhone \bhtwo \bhthree \bhfour \quad Une partie des cellules des donneurs trop représentés est retirée ou réinjectée dans l'entraînement selon le protocole. \\
+        Split stratifié & Train : \bhone[0.07\textwidth] \bhtwo[0.07\textwidth] \bhthree[0.07\textwidth] \bhfour[0.07\textwidth] \newline Val : \bhone[0.025\textwidth] \bhtwo[0.025\textwidth] \bhthree[0.025\textwidth] \bhfour[0.025\textwidth] \newline Test : \bhone[0.025\textwidth] \bhtwo[0.025\textwidth] \bhthree[0.025\textwidth] \bhfour[0.025\textwidth] \\
+        Validation inter-donneur & Train : \bhone \bhtwo \bhthree \quad Test : \bhfour \\
+        \bottomrule
+    \end{tabularx}
+    \smallskip
+    \hfill\parbox{0.95\textwidth}{\footnotesize\textit{Note : Le donneur testé n'est pas utilisé pendant l'entraînement.}}\hfill\null
+    \caption{Représentation simplifiée des principaux découpages utilisés sur le jeu de données humain de Baron. H1 à H4 correspondent aux quatre donneurs humains.}
+    \label{fig:splits_baron}
+\end{figure}
+
+Ces différents découpages permettent de mesurer des propriétés complémentaires. Le mode standard indique si une méthode retrouve correctement la structure globale du jeu de données. Le split stratifié mesure la capacité à généraliser à de nouvelles cellules lorsque les mêmes donneurs sont représentés dans l'entraînement. Le split inter-donneur est plus difficile, car il teste la robustesse du modèle face à un nouveau batch biologique ou technique. Dans chaque cas, les performances ont été évaluées avec des métriques globales, mais aussi avec des métriques centrées sur les petites populations. Nous avons défini les classes rares comme les types cellulaires représentant moins de 5\,\% des cellules, et les classes ultra-rares comme celles représentant moins de 1\,\%.
 
 \subsubsection{Méthodes}
-{\color{gray}\itshape
-\begin{itemize}
-  \item Lister les méthodes comparées : PCA + Leiden, Harmony, ComBat, Scanorama, DESC, scMAE, scNAME, scVI
-  \item Préciser les choix d'hyperparamètres et les étapes de préprocessing
-  \item Expliquer les contraintes pratiques : méthodes difficiles à installer, différences PyTorch/\allowbreak TensorFlow, temps de calcul,
-  \item Décrire les métriques : ARI, NMI, ACC, BalancedACC, RareACC, UltraRareACC, temps d'exécution
-  \item Justifier pourquoi une seule métrique globale ne suffit pas pour juger la conservation des populations rares. Montrer pour cela une matrice de confusion. L'idée est de se rendre compte du manques de performances pour des populations minoritaires et si il y a de l'effet batch.
-\end{itemize}
-}
+
+Nous avons alors lancé l'analyse sur un ensemble restreint de méthodes représentatives de l'état de l'art : PCA suivie de clustering K-Means ou de Leiden, scDeepCluster, scMAE, scNAME et scCDCG. Le but n'était pas de multiplier les algorithmes, mais de comparer des familles suffisamment différentes tout en gardant un protocole maîtrisable : une approche linéaire classique servant de référence, plusieurs méthodes fondées sur des autoencodeurs, et une méthode intégrant explicitement une structure de graphe. Les méthodes ont été exécutées avec les recommandations des auteurs lorsque celles-ci étaient disponibles, en conservant les hyperparamètres standards afin d'éviter d'optimiser une méthode au détriment des autres.
+
+Le prétraitement a été identique pour toutes les méthodes afin que les différences observées proviennent principalement des algorithmes et non de la préparation des données. Les cellules et les gènes très peu informatifs ont d'abord été filtrés, puis les comptes ont été normalisés à 10\,000 par cellule et transformés par logarithme. Nous avons ensuite conservé les 2\,000 gènes hautement variables (\textit{highly variable genes}, HVG) selon la stratégie de Seurat, avant une mise à l'échelle des données. Ce nombre de gènes a été retenu car il donnait les meilleurs résultats préliminaires sur le jeu de données de Baron, tout en restant suffisamment standard pour être comparable aux protocoles habituellement utilisés en scRNA-seq.
+
+Dans les expériences avec séparation entraînement/validation/test, la sélection des gènes variables a été réalisée à partir des données d'entraînement afin d'éviter d'utiliser indirectement de l'information provenant du test. Chaque configuration a ensuite été répétée cinq fois avec des graines aléatoires différentes. Cette répétition était nécessaire car plusieurs méthodes d'apprentissage profond dépendent de l'initialisation du modèle, et parce que les résultats d'un seul lancement peuvent donner une vision trop optimiste ou trop pessimiste des performances réelles.
+
+Afin de comparer les méthodes de manière homogène, les mêmes métriques ont été calculées pour toutes les expériences. La difficulté principale vient du fait qu'un algorithme de clustering ne prédit pas directement des noms de types cellulaires. Il produit seulement des groupes numérotés, par exemple cluster 0, cluster 1 ou cluster 2. Ces numéros sont arbitraires : le cluster 0 peut correspondre aux cellules alpha dans un lancement, mais à un autre type cellulaire dans un autre lancement. Avant de calculer les métriques de type accuracy, il faut donc associer les clusters prédits aux annotations biologiques de référence.
+
+Pour réaliser cette association, nous avons construit une matrice de correspondance entre les clusters prédits et les classes biologiques connues, puis nous avons appliqué l'algorithme hongrois. Cet algorithme résout un problème d'appariement optimal : il cherche la correspondance cluster--classe qui maximise le nombre total de cellules correctement attribuées. Cette stratégie est utilisée dans des benchmarks de clustering comme scCluBench pour l'annotation par meilleur appariement \cite{xu_scclubench_2026}, et correspond à la méthode hongroise proposée initialement pour les problèmes d'affectation \cite{kuhn1955hungarian}. Après cette étape, les métriques ACC, BalancedACC, RareACC et UltraRareACC peuvent être interprétées comme des performances de classification sur les types cellulaires. À l'inverse, l'ARI et le NMI comparent directement deux partitions et ne nécessitent pas ce renommage explicite des clusters.
+
+Dans les formules suivantes, \(y_i\) désigne l'annotation biologique de la cellule \(i\), \(\hat{y}_i\) le cluster prédit par la méthode, \(n\) le nombre total de cellules, \(\mathcal{C}\) l'ensemble des classes biologiques et \(\pi\) l'appariement optimal obtenu par l'algorithme hongrois.
+
+\begin{table}[H]
+    \centering
+    \footnotesize
+    \renewcommand{\arraystretch}{1.35}
+    \begin{tabularx}{\textwidth}{@{}p{0.15\textwidth}p{0.19\textwidth}p{0.38\textwidth}X@{}}
+        \toprule
+        \textbf{Métrique} & \textbf{Rôle} & \textbf{Formule ou principe} & \textbf{Interprétation} \\
+        \midrule
+        ARI & Clustering global & \(\displaystyle ARI=\frac{RI-\mathrm{E}[RI]}{\max(RI)-\mathrm{E}[RI]}\), où \(RI\) mesure l'accord entre paires de cellules. & Mesure si deux cellules regroupées ensemble dans la vérité biologique le sont aussi dans la prédiction, en corrigeant l'accord attendu au hasard. \\
+        NMI & Clustering global & \(\displaystyle NMI(Y,\hat{Y})=\frac{2I(Y;\hat{Y})}{H(Y)+H(\hat{Y})}\) & Mesure la quantité d'information partagée entre les annotations biologiques et les groupes prédits. \\
+        ACC & Classification après appariement des clusters & \(\displaystyle ACC=\frac{1}{n}\max_{\pi}\sum_{i=1}^{n}\mathbf{1}\{y_i=\pi(\hat{y}_i)\}\) & Donne la proportion globale de cellules correctement attribuées après correspondance entre clusters et classes. \\
+        BalancedACC & Classification équilibrée & \(\displaystyle BalancedACC=\frac{1}{|\mathcal{C}|}\sum_{c\in\mathcal{C}}\frac{TP_c}{N_c}\) & Calcule la moyenne des rappels par classe, afin qu'une classe très abondante ne masque pas les erreurs sur les classes petites. \\
+        RareACC & Classification des classes rares & \(\displaystyle RareACC=\frac{1}{|\mathcal{R}|}\sum_{c\in\mathcal{R}}\frac{TP_c}{N_c}\), avec \(\mathcal{R}=\{c\,|\,N_c/n<5\,\%\}\) & Évalue spécifiquement les types cellulaires rares, qui représentent moins de 5\,\% des cellules. \\
+        UltraRareACC & Classification des classes ultra-rares & \(\displaystyle UltraRareACC=\frac{1}{|\mathcal{U}|}\sum_{c\in\mathcal{U}}\frac{TP_c}{N_c}\), avec \(\mathcal{U}=\{c\,|\,N_c/n<1\,\%\}\) & Mesure la capacité de la méthode à préserver les populations les plus minoritaires. \\
+        Temps & Coût computationnel & \(\displaystyle t_{\mathrm{exec}}=t_{\mathrm{fin}}-t_{\mathrm{debut}}\) & Permet de comparer les méthodes non seulement sur leur qualité de clustering, mais aussi sur leur coût pratique. \\
+        \bottomrule
+    \end{tabularx}
+    \caption{Métriques utilisées pour comparer les méthodes. \(TP_c\) correspond au nombre de cellules de la classe \(c\) correctement attribuées après appariement, et \(N_c\) au nombre total de cellules de cette classe.}
+    \label{tab:metriques_evaluation}
+\end{table}
+
+Les métriques globales comme l'ARI, le NMI ou l'ACC donnent une vision générale de la qualité du regroupement, mais elles peuvent rester élevées même si une petite population est mal retrouvée. Les métriques BalancedACC, RareACC et UltraRareACC complètent donc cette lecture en donnant davantage de poids à chaque type cellulaire, indépendamment de sa taille. Elles sont particulièrement importantes dans notre cadre, car l'objectif n'est pas seulement de retrouver les grandes populations pancréatiques, mais aussi de vérifier que les cellules rares ne sont pas absorbées dans des groupes majoritaires.
 
 \subsubsection{Résultats}
 {\color{gray}\itshape
 \begin{itemize}
-  \item Présenter un tableau global des scores par méthode et par dataset.
-  \item Identifier les familles qui fonctionnent bien globalement et celles qui préservent mieux les populations rares.
+  \item Présenter un tableau global des scores par méthode, par dataset et par types cellulaires. Montrer les UMAP comparatifs, matrices de confusion (et temps de calcul).
   \item Comparer performance globale et performance rare pour montrer les compromis.
-  \item Montrer les UMAP comparatifs, matrices de confusion (et temps de calcul).
+  \item Identifier les familles qui fonctionnent bien globalement et celles qui préservent mieux les populations rares.
   \item Conclure sur les limites observées qui motivent le développement de scRAW.
 \end{itemize}
 }
@@ -318,19 +446,18 @@ Montrer comment les méthodes existantes ont été rendues comparables : comment
 \subsection{Pipeline}
 {\color{gray}\itshape
 \begin{itemize}
-  \item Décrire les étapes : prétraitement, autoencodeur, espace latent, estimation de rareté ou de densité, pondération, pertes d'apprentissage, clustering final.
-  \item Présenter les sorties : embeddings, labels prédits, poids cellulaires, modèle entraîné, figures, métriques.
+  \item Décrire les étapes : prétraitement, autoencodeur, espace latent, estimation de rareté ou de densité, pondération, pertes d'apprentissage, clustering final = MON SCHÉMA
   \item Expliquer le rôle de chaque bloc dans le pipeline et les paramètres importants.
-  \item Prévoir un schéma complet du pipeline scRAW.
+  \item Présenter les sorties : embeddings, labels prédits, poids cellulaires, modèle entraîné, figures, métriques.
 \end{itemize}
 }
 
 \subsection{Fonctions de perte et variantes}
 {\color{gray}\itshape
 \begin{itemize}
-  \item Décrire la loss de reconstruction pondérée et son lien avec les populations rares.
+  \item Décrire la pondération de la loss et son lien avec les populations rares.
   \item Présenter les variantes testées : pondération dynamique, DANN, triplet loss, fine-tuning ou autres variantes effectivement retenues.
-  \item Expliquer comment les poids cellulaires sont calculés ou mis à jour.
+  \item Expliquer quand les poids cellulaires sont calculés ou mis à jour.
   \item Discuter les compromis : amélioration des rares, stabilité globale, sensibilité aux hyperparamètres.
 \end{itemize}
 }
