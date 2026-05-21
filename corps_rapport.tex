@@ -1,23 +1,5 @@
 \section{Introduction}
 
-{\color{gray}\itshape
-\subsection*{Idée de la section}
-Présenter le laboratoire, le contexte et l'environnement de travail. Introduire le contexte biologique, les données scRNA-seq, le rôle du clustering et le problème spécifique des populations cellulaires rares.
-
-\subsection*{Points à traiter}
-\begin{itemize}
-  \item Présenter les équipes, les GTs réalisés, les séminaires et réunions hebdomadaires.
-  \item Rappeler ce que sont les données scRNA-seq et pourquoi elles permettent d'étudier l'hétérogénéité cellulaire à l'échelle d'une cellule.
-  \item Expliquer le rôle du clustering dans l'identification de types cellulaires, de sous-types et de populations minoritaires.
-  \item Présenter les difficultés des données : grande dimension, sparsity, bruit, dropout, effets de batch, déséquilibre entre populations cellulaires.
-  \item Formuler le problème central : les populations rares contribuent peu aux objectifs moyens et peuvent être absorbées par des classes majoritaires ou par des types proches.
-  \item Donner un exemple biologique concret : cellule immunitaire minoritaire, sous-type tumoral, population pathologique, population transitoire ou population spécifique d'un tissu.
-  \item Expliquer l'impact biologique d'une population rare manquée : perte d'un signal d'intérêt, interprétation incomplète d'un tissu, confusion entre états cellulaires.
-  \item Expliquer l'intérêt de rendre notre méthode inductive dans le contexte de médecine personnalisée.
-  \item Annoncer les contributions du stage : SCRBenchmark, comparaison de l'état de l'art, développement de scRAW, optimisation, transfert de loss et premiers tests inductifs.
-\end{itemize}
-}
-
 \subsection{Environnement de travail}
 
 Ce stage de fin d'études s'est déroulé du 4 janvier au 30 juin 2026 au sein du Laboratoire Bordelais de Recherche en Informatique (LaBRI). J'ai intégré l'équipe Bench to Knowledge and Beyond (BKB), dirigée par Romain Bourqui (responsable d'équipe) et Patricia Thébault (adjointe). Cette équipe est rattachée au département Systèmes et Données (SeD). Afin de mieux appréhender la structure dans laquelle j'ai évolué, l'organisation du laboratoire est détaillée ci-après.
@@ -248,24 +230,6 @@ Pour résumer, le tableau \ref{tab:algorithms_all} présente une synthèse des m
 \label{tab:algorithms_all}
 \end{table}
 
-{\color{gray}\itshape
-\paragraph{Autoencodeurs (AE)}
-\begin{itemize}
-  \item Présenter le principe : encoder les profils d'expression dans un espace latent puis reconstruire l'entrée.
-  \item Citer les familles pertinentes : autoencodeurs classiques, autoencodeurs variationnels, modèles de type scDeepCluster, DESC, scMAE, scNAME, scVI ou variantes proches.
-  \item Expliquer l'intérêt : réduction non linéaire, débruitage, espace latent potentiellement plus adapté au clustering.
-  \item Discuter les limites : coût de calcul, choix d'hyperparamètres, instabilité, dépendance au dataset, difficulté à préserver les classes rares si la loss est dominée par les populations majoritaires.
-\end{itemize}
-
-\paragraph{Graphes}
-\begin{itemize}
-  \item Présenter les méthodes qui exploitent explicitement un graphe cellule-cellule, gène-gène ou cellule-gène.
-  \item Expliquer l'intérêt des GNN ou des approches graph-based : propagation d'information locale, structure de voisinage, meilleure modélisation des relations entre cellules.
-  \item Discuter les limites : construction du graphe sensible au bruit et au batch, coût mémoire, difficulté à évaluer si le graphe améliore réellement la séparation des types rares.
-  \item Relier ces approches aux pipelines classiques basés sur graphes de voisinage, afin de montrer la continuité entre Leiden/Louvain et les modèles profonds sur graphes.
-\end{itemize}
-}
-
 \subsubsection{Les types cellulaires dans les algorithmes}
 Face à ces limites, l’identification des populations cellulaires minoritaires est devenue un enjeu central dans l’analyse des données single-cell RNA-seq. Plusieurs algorithmes ont ainsi été développés pour mieux détecter ces sous-populations rares. Tous s’appuient, d’une manière ou d’une autre, sur les profils d’expression des gènes, mais ils ne les exploitent pas de la même façon.
 
@@ -283,17 +247,10 @@ Ces méthodes reposent donc sur une idée commune : un clustering global classiq
 Nos travaux ont débuté par une comparaison des méthodes de l'état de l'art traitant des données de séquençage d'ARN à cellule unique (scRNA-seq). À ce stade, nous souhaitions étudier des approches généralistes, qui ne traitaient ni de l'effet de lot (\textit{batch effect}) ni du déséquilibre des populations cellulaires. Pour ce faire, nous nous sommes en partie appuyés sur le protocole et les sélections du benchmark scCluBench \cite{xu_scclubench_2026} où nous avons sélectionné les méthodes de deeplearning basés sur des autoencoders et sur des graphs les plus performantes sur les métriques comparées. 
 La problématique ensuite recontrée pour comparer les méthodes sélectionner était la façon dont on voulais effectuer les tests. Nous souhaitions à la fois pouvoir modifier à notre guise les hyperparamètres des méthodes, tout en ajustant les étapes de préprocessing. De plus la quantité des tests différents et des résultats disponibles m'a poussé à dévelloper une solution logiciel le plus ergonimique possible, SCRBenchmark, afin d'automatiser, simplifier la mise en place des différentes expériences et l'exploration des résultats.
 
-{\color{gray}\itshape
-Question sur cette section : Est ce que ici je traite que ce j'ai fait sur Baron ? Ou est ce que je présente les résultats sur tous les datasets introduit dans l'état de l'art qui chronologiquement sont étudiés plus tard? De manière plus globale, faut il vraiment laisser une description des datasets dans l'état de l'art, ne peut on pas la déplacer ici ?
-
-\subsection*{Idée de la section}
-Montrer comment les méthodes existantes ont été rendues comparables : comment cela à était implémenté, protocole expérimental, métriques et premiers résultats. Cette section doit préparer la transition vers scRAW. L'idée est de montrer que les méthodes générale de DeepLearning et la PCA testées avaient des limites faces aux cellules rares et à l'effet batch. La section suivante détaillera les résultats de toutes les méthodes dont celles spécifiques à ces problématiques
-}
-
 \clearpage
 \subsection{Logiciel}
 
-SCRBenchmark a été développé dans l'optique d'être accessible à des biologistes non-informaticiens. Le logiciel permet à l'expérimentateur de charger ses données, choisir le type d'expérience à mener, définir les étapes de prétraitement et les outils correspondants, sélectionner les méthodes à évaluer ainsi que leurs hyperparamètres, et enfin choisir les métriques de validation. Il permet également d'explorer et d'exporter les résultats via diverses solutions de visualisation interactives. En outre, l'expérimentateur peut générer des scripts Bash pour lancer des analyses en ligne de commande (CLI), assurant ainsi la reproductibilité et la traçabilité des expériences menées. La structure logique et le flux de travail de cet outil sont résumés dans la figure \ref{fig:organisation_logiciel}.
+SCRBenchmark a été développé pour rendre les expériences de comparaison plus simples à construire, plus faciles à reproduire et plus lisibles pour des utilisateurs qui ne travaillent pas nécessairement dans le code au quotidien. Le logiciel regroupe dans un même environnement le chargement des données, le choix du protocole expérimental, le prétraitement, la sélection des méthodes, l'exécution des analyses et l'exploration des résultats. Sa structure logique est résumée dans la figure \ref{fig:organisation_logiciel}.
 
 \begin{figure}[htbp]
     \centering
@@ -302,116 +259,89 @@ SCRBenchmark a été développé dans l'optique d'être accessible à des biolog
     \label{fig:organisation_logiciel}
 \end{figure}
 
-Le premier choix important dans SCRBenchmark a été de séparer ce que voit l'utilisateur de ce qui exécute réellement les calculs. Comme on le voit dans la figure \ref{fig:organisation_logiciel}, l'utilisateur commence par importer ses données, qui correspondent en pratique à une grande matrice indiquant, pour chaque cellule, le niveau d'expression de chaque gène. Le logiciel est capable de lire plusieurs formats couramment utilisés en bioinformatique et tente aussi de retrouver les annotations disponibles, par exemple les types cellulaires connus ou les lots expérimentaux. À partir de là, l'utilisateur peut travailler soit avec une interface web, plus simple pour construire une expérience pas à pas, soit avec la ligne de commande, plus adaptée aux longues expériences lancées sur un serveur de calcul.
-
-Dans l'interface web, le déroulement a été organisé comme une suite d'étapes. L'utilisateur charge d'abord les données, puis il choisit la stratégie expérimentale, les traitements à appliquer, les méthodes à comparer et enfin lance l'analyse. Des pages supplémentaires permettent ensuite de revenir sur les résultats et de produire les figures nécessaires à leur interprétation. Cette organisation était importante car, sans outil dédié, les différentes décisions expérimentales se retrouvaient rapidement dispersées dans plusieurs scripts : choix des données, choix du prétraitement, choix des méthodes, puis analyse des résultats.
-
-L'interface web se structure ainsi autour de neuf modules distincts, présentés dans la figure \ref{fig:scrbenchmark_panel} :
-\begin{itemize}
-    \item \textbf{Importation des données} (Figure \ref{fig:scr_upload}) : chargement des fichiers au format standard (comme \texttt{.h5ad}) et détection automatique des annotations de référence et des lots.
-    \item \textbf{Visualisation des données} (Figure \ref{fig:scr_vis_donnees}) : inspection visuelle préliminaire du jeu de données via des projections UMAP interactives.
-    \item \textbf{Choix de l'expérience} (Figure \ref{fig:scr_choix_exp}) : configuration du mode d'expérience (standard ou benchmark) et des stratégies de split.
-    \item \textbf{Prétraitement} (Figure \ref{fig:scr_preprocess}) : définition du pipeline de filtrage, normalisation, sélection des HVG et correction d'effet de lot.
-    \item \textbf{Choix des algorithmes} (Figure \ref{fig:scr_choix_algo}) : sélection et paramétrage des méthodes de clustering et de réduction de dimension à évaluer.
-    \item \textbf{Génération de la commande CLI} (Figure \ref{fig:scr_cli}) : génération automatique de scripts d'exécution en ligne de commande pour lancer les analyses sur serveur.
-    \item \textbf{Exécution des calculs} (Figure \ref{fig:scr_runner}) : suivi de l'avancement de l'apprentissage avec affichage des logs de calcul en direct.
-    \item \textbf{Résultats des métriques} (Figure \ref{fig:scr_results}) : comparaison tabulaire et graphique des performances (ARI, NMI, etc.) et du temps d'exécution.
-    \item \textbf{UMAPs des résultats} (Figure \ref{fig:scr_results_umaps}) : UMAP comparatives interactives entre annotations réelles et clusters prédits par les méthodes sélectionnées.
-\end{itemize}
+Le premier choix important a été de séparer l'interface utilisée pour configurer les expériences du moteur chargé d'exécuter les calculs. L'interface web guide l'utilisateur étape par étape, tandis que la ligne de commande permet de relancer la même analyse sur un serveur ou dans un environnement de calcul plus adapté aux expériences longues. Les neuf écrans principaux de l'interface, présentés dans la figure \ref{fig:scrbenchmark_panel}, couvrent l'ensemble du parcours : importation des données, visualisation préliminaire, choix du type d'expérience, prétraitement, sélection des algorithmes, génération de la commande d'exécution, suivi du calcul, consultation des métriques et visualisation des UMAP finales.
 
 \begin{figure}[p]
-    \centering
-    \begin{subfigure}[b]{0.32\textwidth}
+    \centering\small
+    \begin{subfigure}[b]{0.328\textwidth}
         \centering
         \includegraphics[width=\textwidth]{SCRBenchmark/scr_01_upload.png}
         \caption{Importation des données}
         \label{fig:scr_upload}
     \end{subfigure}
     \hfill
-    \begin{subfigure}[b]{0.32\textwidth}
+    \begin{subfigure}[b]{0.328\textwidth}
         \centering
         \includegraphics[width=\textwidth]{SCRBenchmark/scr_02_visualisation_des_donnees.png}
         \caption{Visualisation des données}
         \label{fig:scr_vis_donnees}
     \end{subfigure}
     \hfill
-    \begin{subfigure}[b]{0.32\textwidth}
+    \begin{subfigure}[b]{0.328\textwidth}
         \centering
         \includegraphics[width=\textwidth]{SCRBenchmark/scr_03_choixExperience.png}
         \caption{Choix de l'expérience}
         \label{fig:scr_choix_exp}
     \end{subfigure}
     
-    \vspace{0.3cm}
+    \vspace{0.4cm}
     
-    \begin{subfigure}[b]{0.32\textwidth}
+    \begin{subfigure}[b]{0.328\textwidth}
         \centering
         \includegraphics[width=\textwidth]{SCRBenchmark/scr_04_preprocess.png}
         \caption{Prétraitement}
         \label{fig:scr_preprocess}
     \end{subfigure}
     \hfill
-    \begin{subfigure}[b]{0.32\textwidth}
+    \begin{subfigure}[b]{0.328\textwidth}
         \centering
         \includegraphics[width=\textwidth]{SCRBenchmark/scr_05_choixAlgo.png}
         \caption{Choix des algorithmes}
         \label{fig:scr_choix_algo}
     \end{subfigure}
     \hfill
-    \begin{subfigure}[b]{0.32\textwidth}
+    \begin{subfigure}[b]{0.328\textwidth}
         \centering
         \includegraphics[width=\textwidth]{SCRBenchmark/scr_06_CommandeCLI.png}
         \caption{Génération CLI}
         \label{fig:scr_cli}
     \end{subfigure}
     
-    \vspace{0.3cm}
+    \vspace{0.4cm}
     
-    \begin{subfigure}[b]{0.32\textwidth}
+    \begin{subfigure}[b]{0.328\textwidth}
         \centering
         \includegraphics[width=\textwidth]{SCRBenchmark/scr_07_runner.png}
         \caption{Exécution des calculs}
         \label{fig:scr_runner}
     \end{subfigure}
     \hfill
-    \begin{subfigure}[b]{0.32\textwidth}
+    \begin{subfigure}[b]{0.328\textwidth}
         \centering
         \includegraphics[width=\textwidth]{SCRBenchmark/scr_08_results.png}
         \caption{Résultats des métriques}
         \label{fig:scr_results}
     \end{subfigure}
     \hfill
-    \begin{subfigure}[b]{0.32\textwidth}
+    \begin{subfigure}[b]{0.328\textwidth}
         \centering
         \includegraphics[width=\textwidth]{SCRBenchmark/scr_09_resultsUmaps.png}
         \caption{UMAPs des résultats}
         \label{fig:scr_results_umaps}
     \end{subfigure}
     
-    \caption{Aperçu des différentes étapes de l'interface Streamlit de SCRBenchmark. 
-    (a) Importation et détection des annotations des données single-cell. 
-    (b) Visualisation en 2D interactive des données initiales. 
-    (c) Configuration de la stratégie expérimentale (standard ou benchmark). 
-    (d) Définition du pipeline modulaire de prétraitement. 
-    (e) Sélection et paramétrage des hyperparamètres des algorithmes. 
-    (f) Export de scripts en ligne de commande pour assurer la reproductibilité. 
-    (g) Suivi en direct du runner et des logs d'exécution. 
-    (h) Analyse comparative tabulaire des performances. 
-    (i) Visualisation des UMAPs comparatives après clustering.}
+    \caption{Aperçu des différentes étapes de l'interface Streamlit de SCRBenchmark, depuis l'importation des données jusqu'à l'exploration des métriques et des UMAP finales.}
     \label{fig:scrbenchmark_panel}
 \end{figure}
 
 
-Après le chargement des données, SCRBenchmark propose deux modes principaux. Le premier est un mode standard, dans lequel toutes les cellules du jeu de données sont utilisées ensemble. Ce mode est utile lorsque l'on veut appliquer une méthode sur un dataset donné et observer directement le résultat. Le second est un mode benchmark, dans lequel les données sont séparées en plusieurs groupes : une partie pour entrainer les modèles, une partie pour éventuellement ajuster certains choix, et une partie gardée à part pour tester les résultats. Ce mode était indispensable pour nos expériences, car il permettait de comparer les méthodes dans des conditions plus contrôlées, notamment lorsque l'on voulait évaluer leur capacité à fonctionner sur des cellules ou des batchs non vus pendant l'entrainement.
+SCRBenchmark propose ensuite deux modes d'analyse. Le mode standard utilise toutes les cellules ensemble et sert à observer directement le comportement d'une méthode sur un jeu de données. Le mode benchmark sépare au contraire les cellules en ensembles d'entraînement, de validation et de test, afin d'évaluer les méthodes dans des conditions plus contrôlées, notamment lorsqu'il s'agit de tester leur comportement sur des cellules ou des lots non vus pendant l'entraînement.
 
-Une fois ce mode choisi, le logiciel applique un pipeline commun à toutes les méthodes. Les données brutes sont conservées afin de pouvoir revenir à l'information initiale, puis les mêmes étapes de prétraitement peuvent être appliquées à chaque méthode : filtrage des cellules ou des gènes de mauvaise qualité, normalisation des valeurs d'expression, sélection des gènes les plus informatifs et, si besoin, correction de l'effet de lot. Ce point était particulièrement important pour la comparaison, car deux méthodes ne peuvent pas être comparées correctement si elles ne reçoivent pas les mêmes données en entrée. Une différence de prétraitement peut parfois expliquer autant les résultats qu'une différence entre deux algorithmes.
+L'intérêt principal du logiciel est d'imposer un cadre commun à des méthodes très différentes. Le même pipeline de prétraitement peut être appliqué à toutes les méthodes : filtrage, normalisation, sélection des gènes les plus informatifs et, si nécessaire, correction de l'effet de lot. De la même manière, le moteur d'exécution attend de chaque algorithme les mêmes types de sorties : groupes de cellules prédits, représentation numérique des cellules lorsque la méthode en produit une, paramètres utilisés et temps d'exécution. Cette homogénéisation limite le risque d'attribuer à un algorithme une différence qui viendrait en réalité du prétraitement ou d'un format de sortie particulier.
 
-Le moteur d'exécution a ensuite été pensé pour que toutes les méthodes soient appelées de la même façon. Qu'il s'agisse d'une méthode classique comme PCA suivie de K-Means ou Leiden, d'une méthode de deep learning comme scDeepCluster, scMAE ou scNAME, d'une méthode utilisant un graphe comme scCDCG, ou d'une approche plus expérimentale orientée cellules rares, SCRBenchmark demande à chaque méthode de produire les mêmes types de sorties : des groupes de cellules prédits, une représentation des cellules dans un espace plus simple lorsque c'est possible, et les paramètres utilisés. Cette organisation évite d'avoir un protocole différent pour chaque algorithme et rend l'ajout de nouvelles méthodes plus simple.
+Enfin, SCRBenchmark sauvegarde les éléments nécessaires à l'analyse et à la reproductibilité : scores, labels prédits, embeddings, figures, paramètres et logs. Les visualisations générées automatiquement, comme les UMAP, les matrices de confusion ou les figures comparant entraînement et test, permettent d'explorer rapidement les résultats sans réécrire du code pour chaque expérience. L'outil a donc servi à la fois à produire les expériences et à en analyser les sorties de manière cohérente.
 
-L'étape d'évaluation a également été homogénéisée. Après l'exécution d'une méthode, les groupes prédits par l'algorithme sont comparés aux annotations biologiques disponibles. Comme les numéros de clusters n'ont pas de signification directe, le logiciel commence par associer chaque cluster prédit au type cellulaire de référence le plus proche, puis il calcule plusieurs scores. Certains scores mesurent la qualité globale du clustering, tandis que d'autres donnent davantage d'importance aux classes peu représentées ou analysent les performances type cellulaire par type cellulaire. L'intérêt n'était donc pas seulement d'obtenir un score final, mais de pouvoir comprendre où une méthode réussit et où elle échoue. Une méthode peut en effet obtenir un bon résultat moyen tout en manquant une population rare biologiquement importante.
-
-Enfin, SCRBenchmark sauvegarde systématiquement les éléments nécessaires à l'analyse et à la reproductibilité : les scores obtenus, les groupes prédits, les représentations numériques des cellules, les figures, les paramètres utilisés et les messages d'exécution. Les visualisations générées automatiquement, comme les UMAP, les matrices de confusion, les boxplots ou les figures comparant entrainement et test, ont permis d'explorer rapidement les résultats sans devoir réécrire du code de visualisation à chaque expérience. Cette partie a été essentielle dans le stage, car le nombre de méthodes, de jeux de données et de variantes testées rendait difficile une analyse manuelle. SCRBenchmark a donc servi à la fois d'outil de production d'expériences et d'outil d'exploration des résultats, avant même de pouvoir interpréter scientifiquement les performances des méthodes comparées.
-
+\clearpage
 \subsection{Expériences}
 
 \subsubsection{Données et splits}
@@ -630,16 +560,10 @@ Regrouper les différentes expériences complémentaires : transfert de la loss 
 \end{itemize}
 }
 
-\section*{Figures et tableaux à préparer}
-\addcontentsline{toc}{section}{Figures et tableaux à préparer}
+\section*{Figures et tableaux restants à préparer}
+\addcontentsline{toc}{section}{Figures et tableaux restants à préparer}
 {\color{gray}\itshape
 \begin{itemize}
-  \item \textbf{Tableau État de l'art} 
-  \item \textbf{Schéma général du pipeline de benchmarking} 
-  \item \textbf{Capture ou schéma de SCRBenchmark} :
-  \item \textbf{Tableau des jeux de données} 
-  \item \textbf{Tableau des méthodes comparées} : Lors des premiers nous n'avions pas testés toutes les méthodes décrites, comment le justifier ?
-  \item \textbf{Tableau des métriques} : 
   \item \textbf{Tableau ou figures principal des performances} :
   \item \textbf{UMAP comparatifs} :
   \item \textbf{Matrices de confusion} :
