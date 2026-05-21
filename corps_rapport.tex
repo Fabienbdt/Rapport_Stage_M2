@@ -346,7 +346,6 @@ L'intérêt principal du logiciel est d'imposer un cadre commun à des méthodes
 
 Enfin, SCRBenchmark sauvegarde les éléments nécessaires à l'analyse et à la reproductibilité : scores, labels prédits, embeddings, figures, paramètres et logs. Les visualisations générées automatiquement, comme les UMAP, les matrices de confusion ou les figures comparant entraînement et test, permettent d'explorer rapidement les résultats sans réécrire du code pour chaque expérience. L'outil a donc servi à la fois à produire les expériences et à en analyser les sorties de manière cohérente.
 
-\clearpage
 \subsection{Expériences}
 
 \subsubsection{Données et splits}
@@ -429,7 +428,7 @@ Pour réaliser cette association, nous avons construit une matrice de correspond
 
 Dans les formules suivantes, \(y_i\) désigne l'annotation biologique de la cellule \(i\), \(\hat{y}_i\) le cluster prédit par la méthode, \(n\) le nombre total de cellules, \(\mathcal{C}\) l'ensemble des classes biologiques et \(\pi\) l'appariement optimal obtenu par l'algorithme hongrois.
 
-\begin{table}[H]
+\begin{table}[htbp]
     \centering
     \footnotesize
     \renewcommand{\arraystretch}{1.35}
