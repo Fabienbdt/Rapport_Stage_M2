@@ -1,0 +1,161 @@
+dataset,dataset_key,ground_truth_label,n_cells,label_display,sort_key
+BBAG094 Zeisel,bbag094_zeisel,unknown,1,unknown,1
+BBAG094 Zeisel,bbag094_zeisel,8,26,8,26
+BBAG094 Zeisel,bbag094_zeisel,9,60,9,60
+BBAG094 Zeisel,bbag094_zeisel,5,98,5,98
+BBAG094 Zeisel,bbag094_zeisel,6,175,6,175
+BBAG094 Zeisel,bbag094_zeisel,7,198,7,198
+BBAG094 Zeisel,bbag094_zeisel,1,290,1,290
+BBAG094 Zeisel,bbag094_zeisel,2,390,2,390
+BBAG094 Zeisel,bbag094_zeisel,4,820,4,820
+BBAG094 Zeisel,bbag094_zeisel,3,948,3,948
+BBAG094 spleen,bbag094_spleen,dendritic cell,42,dendritic cell,42
+BBAG094 spleen,bbag094_spleen,natural killer cell,230,natural killer cell,230
+BBAG094 spleen,bbag094_spleen,macrophage,464,macrophage,464
+BBAG094 spleen,bbag094_spleen,T cell,1930,T cell,1930
+BBAG094 spleen,bbag094_spleen,B cell,6886,B cell,6886
+Baron human pancreas,baron_human_pancreas,t_cell,7,t_cell,7
+Baron human pancreas,baron_human_pancreas,schwann,13,schwann,13
+Baron human pancreas,baron_human_pancreas,epsilon,18,epsilon,18
+Baron human pancreas,baron_human_pancreas,mast,25,mast,25
+Baron human pancreas,baron_human_pancreas,macrophage,55,macrophage,55
+Baron human pancreas,baron_human_pancreas,quiescent_stellate,173,quiescent_stellate,173
+Baron human pancreas,baron_human_pancreas,endothelial,252,endothelial,252
+Baron human pancreas,baron_human_pancreas,gamma,255,gamma,255
+Baron human pancreas,baron_human_pancreas,activated_stellate,284,activated_stellate,284
+Baron human pancreas,baron_human_pancreas,delta,601,delta,601
+Baron human pancreas,baron_human_pancreas,acinar,958,acinar,958
+Baron human pancreas,baron_human_pancreas,ductal,1077,ductal,1077
+Baron human pancreas,baron_human_pancreas,alpha,2326,alpha,2326
+Baron human pancreas,baron_human_pancreas,beta,2525,beta,2525
+Human testis GSE112013,gse112013_human_testis_raw_counts,Sertoli,28,Sertoli,28
+Human testis GSE112013,gse112013_human_testis_raw_counts,SSC,294,SSC,294
+Human testis GSE112013,gse112013_human_testis_raw_counts,Late_spermatocyte,319,Late_spermatocyte,319
+Human testis GSE112013,gse112013_human_testis_raw_counts,Spermatogonia,320,Spermatogonia,320
+Human testis GSE112013,gse112013_human_testis_raw_counts,Myoid,338,Myoid,338
+Human testis GSE112013,gse112013_human_testis_raw_counts,Macrophage,341,Macrophage,341
+Human testis GSE112013,gse112013_human_testis_raw_counts,Endothelial,353,Endothelial,353
+Human testis GSE112013,gse112013_human_testis_raw_counts,Round_spermatid,509,Round_spermatid,509
+Human testis GSE112013,gse112013_human_testis_raw_counts,Early_spermatocyte,560,Early_spermatocyte,560
+Human testis GSE112013,gse112013_human_testis_raw_counts,Leydig,607,Leydig,607
+Human testis GSE112013,gse112013_human_testis_raw_counts,Elongated_spermatid,876,Elongated_spermatid,876
+Human testis GSE112013,gse112013_human_testis_raw_counts,Sperm1,920,Sperm1,920
+Human testis GSE112013,gse112013_human_testis_raw_counts,Sperm2,1025,Sperm2,1025
+Kang PBMC,kang_pbmc_gse96583_singlets_raw_counts,Megakaryocytes,260,Megakaryocytes,260
+Kang PBMC,kang_pbmc_gse96583_singlets_raw_counts,Dendritic cells,432,Dendritic cells,432
+Kang PBMC,kang_pbmc_gse96583_singlets_raw_counts,FCGR3A+ Monocytes,1599,FCGR3A+ Monocytes,1599
+Kang PBMC,kang_pbmc_gse96583_singlets_raw_counts,NK cells,1993,NK cells,1993
+Kang PBMC,kang_pbmc_gse96583_singlets_raw_counts,CD8 T cells,2042,CD8 T cells,2042
+Kang PBMC,kang_pbmc_gse96583_singlets_raw_counts,B cells,2579,B cells,2579
+Kang PBMC,kang_pbmc_gse96583_singlets_raw_counts,CD14+ Monocytes,5385,CD14+ Monocytes,5385
+Kang PBMC,kang_pbmc_gse96583_singlets_raw_counts,CD4 T cells,10389,CD4 T cells,10389
+Macaque retina bipolar,macaque_retina_gse118480_bipolar_raw_counts,OFFx,147,OFFx,147
+Macaque retina bipolar,macaque_retina_gse118480_bipolar_raw_counts,DB3a,623,DB3a,623
+Macaque retina bipolar,macaque_retina_gse118480_bipolar_raw_counts,DB6,658,DB6,658
+Macaque retina bipolar,macaque_retina_gse118480_bipolar_raw_counts,DB1,996,DB1,996
+Macaque retina bipolar,macaque_retina_gse118480_bipolar_raw_counts,BB/GB*,1815,BB/GB*,1815
+Macaque retina bipolar,macaque_retina_gse118480_bipolar_raw_counts,DB2,2244,DB2,2244
+Macaque retina bipolar,macaque_retina_gse118480_bipolar_raw_counts,DB3b,2640,DB3b,2640
+Macaque retina bipolar,macaque_retina_gse118480_bipolar_raw_counts,DB4,2985,DB4,2985
+Macaque retina bipolar,macaque_retina_gse118480_bipolar_raw_counts,DB5*,3467,DB5*,3467
+Macaque retina bipolar,macaque_retina_gse118480_bipolar_raw_counts,RB,4076,RB,4076
+Macaque retina bipolar,macaque_retina_gse118480_bipolar_raw_counts,FMB,4500,FMB,4500
+Macaque retina bipolar,macaque_retina_gse118480_bipolar_raw_counts,IMB,6151,IMB,6151
+Pancreas,pancreas_raw_counts,t_cell,7,t_cell,7
+Pancreas,pancreas_raw_counts,schwann,25,schwann,25
+Pancreas,pancreas_raw_counts,epsilon,32,epsilon,32
+Pancreas,pancreas_raw_counts,mast,42,mast,42
+Pancreas,pancreas_raw_counts,macrophage,79,macrophage,79
+Pancreas,pancreas_raw_counts,quiescent_stellate,193,quiescent_stellate,193
+Pancreas,pancreas_raw_counts,endothelial,313,endothelial,313
+Pancreas,pancreas_raw_counts,activated_stellate,464,activated_stellate,464
+Pancreas,pancreas_raw_counts,gamma,616,gamma,616
+Pancreas,pancreas_raw_counts,delta,1007,delta,1007
+Pancreas,pancreas_raw_counts,acinar,1671,acinar,1671
+Pancreas,pancreas_raw_counts,ductal,2143,ductal,2143
+Pancreas,pancreas_raw_counts,beta,3700,beta,3700
+Pancreas,pancreas_raw_counts,alpha,4616,alpha,4616
+Pancreas 4 batches,pancreas_raw_counts_four_batches_celseq_celseq2_fluidigmc1_smartseq2,schwann,12,schwann,12
+Pancreas 4 batches,pancreas_raw_counts_four_batches_celseq_celseq2_fluidigmc1_smartseq2,epsilon,14,epsilon,14
+Pancreas 4 batches,pancreas_raw_counts_four_batches_celseq_celseq2_fluidigmc1_smartseq2,mast,17,mast,17
+Pancreas 4 batches,pancreas_raw_counts_four_batches_celseq_celseq2_fluidigmc1_smartseq2,quiescent_stellate,20,quiescent_stellate,20
+Pancreas 4 batches,pancreas_raw_counts_four_batches_celseq_celseq2_fluidigmc1_smartseq2,macrophage,24,macrophage,24
+Pancreas 4 batches,pancreas_raw_counts_four_batches_celseq_celseq2_fluidigmc1_smartseq2,endothelial,61,endothelial,61
+Pancreas 4 batches,pancreas_raw_counts_four_batches_celseq_celseq2_fluidigmc1_smartseq2,activated_stellate,180,activated_stellate,180
+Pancreas 4 batches,pancreas_raw_counts_four_batches_celseq_celseq2_fluidigmc1_smartseq2,gamma,361,gamma,361
+Pancreas 4 batches,pancreas_raw_counts_four_batches_celseq_celseq2_fluidigmc1_smartseq2,delta,406,delta,406
+Pancreas 4 batches,pancreas_raw_counts_four_batches_celseq_celseq2_fluidigmc1_smartseq2,acinar,713,acinar,713
+Pancreas 4 batches,pancreas_raw_counts_four_batches_celseq_celseq2_fluidigmc1_smartseq2,ductal,1066,ductal,1066
+Pancreas 4 batches,pancreas_raw_counts_four_batches_celseq_celseq2_fluidigmc1_smartseq2,beta,1175,beta,1175
+Pancreas 4 batches,pancreas_raw_counts_four_batches_celseq_celseq2_fluidigmc1_smartseq2,alpha,2290,alpha,2290
+Paul15 bone marrow,paul15_bone_marrow_raw_counts,18Eos,9,18Eos,9
+Paul15 bone marrow,paul15_bone_marrow_raw_counts,17Neu,22,17Neu,22
+Paul15 bone marrow,paul15_bone_marrow_raw_counts,11DC,30,11DC,30
+Paul15 bone marrow,paul15_bone_marrow_raw_counts,19Lymph,31,19Lymph,31
+Paul15 bone marrow,paul15_bone_marrow_raw_counts,1Ery,43,1Ery,43
+Paul15 bone marrow,paul15_bone_marrow_raw_counts,9GMP,63,9GMP,63
+Paul15 bone marrow,paul15_bone_marrow_raw_counts,8Mk,68,8Mk,68
+Paul15 bone marrow,paul15_bone_marrow_raw_counts,12Baso,69,12Baso,69
+Paul15 bone marrow,paul15_bone_marrow_raw_counts,4Ery,124,4Ery,124
+Paul15 bone marrow,paul15_bone_marrow_raw_counts,10GMP,153,10GMP,153
+Paul15 bone marrow,paul15_bone_marrow_raw_counts,16Neu,164,16Neu,164
+Paul15 bone marrow,paul15_bone_marrow_raw_counts,7MEP,167,7MEP,167
+Paul15 bone marrow,paul15_bone_marrow_raw_counts,6Ery,173,6Ery,173
+Paul15 bone marrow,paul15_bone_marrow_raw_counts,5Ery,180,5Ery,180
+Paul15 bone marrow,paul15_bone_marrow_raw_counts,15Mo,186,15Mo,186
+Paul15 bone marrow,paul15_bone_marrow_raw_counts,3Ery,246,3Ery,246
+Paul15 bone marrow,paul15_bone_marrow_raw_counts,13Baso,300,13Baso,300
+Paul15 bone marrow,paul15_bone_marrow_raw_counts,2Ery,329,2Ery,329
+Paul15 bone marrow,paul15_bone_marrow_raw_counts,14Mo,373,14Mo,373
+SCIB Human Pancreas 1,Human_Pancreas_1_raw_counts,t_cell,2,t_cell,2
+SCIB Human Pancreas 1,Human_Pancreas_1_raw_counts,schwann,5,schwann,5
+SCIB Human Pancreas 1,Human_Pancreas_1_raw_counts,mast,8,mast,8
+SCIB Human Pancreas 1,Human_Pancreas_1_raw_counts,epsilon,13,epsilon,13
+SCIB Human Pancreas 1,Human_Pancreas_1_raw_counts,macrophage,14,macrophage,14
+SCIB Human Pancreas 1,Human_Pancreas_1_raw_counts,activated_stellate,51,activated_stellate,51
+SCIB Human Pancreas 1,Human_Pancreas_1_raw_counts,gamma,70,gamma,70
+SCIB Human Pancreas 1,Human_Pancreas_1_raw_counts,quiescent_stellate,92,quiescent_stellate,92
+SCIB Human Pancreas 1,Human_Pancreas_1_raw_counts,acinar,110,acinar,110
+SCIB Human Pancreas 1,Human_Pancreas_1_raw_counts,ductal,120,ductal,120
+SCIB Human Pancreas 1,Human_Pancreas_1_raw_counts,endothelial,130,endothelial,130
+SCIB Human Pancreas 1,Human_Pancreas_1_raw_counts,delta,214,delta,214
+SCIB Human Pancreas 1,Human_Pancreas_1_raw_counts,alpha,236,alpha,236
+SCIB Human Pancreas 1,Human_Pancreas_1_raw_counts,beta,872,beta,872
+SCIB Human Pancreas 2,Human_Pancreas_2_raw_counts,epsilon,2,epsilon,2
+SCIB Human Pancreas 2,Human_Pancreas_2_raw_counts,t_cell,2,t_cell,2
+SCIB Human Pancreas 2,Human_Pancreas_2_raw_counts,acinar,3,acinar,3
+SCIB Human Pancreas 2,Human_Pancreas_2_raw_counts,schwann,6,schwann,6
+SCIB Human Pancreas 2,Human_Pancreas_2_raw_counts,mast,9,mast,9
+SCIB Human Pancreas 2,Human_Pancreas_2_raw_counts,macrophage,17,macrophage,17
+SCIB Human Pancreas 2,Human_Pancreas_2_raw_counts,quiescent_stellate,22,quiescent_stellate,22
+SCIB Human Pancreas 2,Human_Pancreas_2_raw_counts,endothelial,23,endothelial,23
+SCIB Human Pancreas 2,Human_Pancreas_2_raw_counts,activated_stellate,81,activated_stellate,81
+SCIB Human Pancreas 2,Human_Pancreas_2_raw_counts,gamma,86,gamma,86
+SCIB Human Pancreas 2,Human_Pancreas_2_raw_counts,delta,125,delta,125
+SCIB Human Pancreas 2,Human_Pancreas_2_raw_counts,ductal,301,ductal,301
+SCIB Human Pancreas 2,Human_Pancreas_2_raw_counts,beta,371,beta,371
+SCIB Human Pancreas 2,Human_Pancreas_2_raw_counts,alpha,676,alpha,676
+SCIB Mouse Pancreas 1,Mouse_Pancreas_1_raw_counts,B_cell,2,B_cell,2
+SCIB Mouse Pancreas 1,Mouse_Pancreas_1_raw_counts,schwann,3,schwann,3
+SCIB Mouse Pancreas 1,Mouse_Pancreas_1_raw_counts,T_cell,4,T_cell,4
+SCIB Mouse Pancreas 1,Mouse_Pancreas_1_raw_counts,activated_stellate,4,activated_stellate,4
+SCIB Mouse Pancreas 1,Mouse_Pancreas_1_raw_counts,immune_other,4,immune_other,4
+SCIB Mouse Pancreas 1,Mouse_Pancreas_1_raw_counts,alpha,9,alpha,9
+SCIB Mouse Pancreas 1,Mouse_Pancreas_1_raw_counts,gamma,14,gamma,14
+SCIB Mouse Pancreas 1,Mouse_Pancreas_1_raw_counts,macrophage,17,macrophage,17
+SCIB Mouse Pancreas 1,Mouse_Pancreas_1_raw_counts,quiescent_stellate,29,quiescent_stellate,29
+SCIB Mouse Pancreas 1,Mouse_Pancreas_1_raw_counts,endothelial,72,endothelial,72
+SCIB Mouse Pancreas 1,Mouse_Pancreas_1_raw_counts,delta,85,delta,85
+SCIB Mouse Pancreas 1,Mouse_Pancreas_1_raw_counts,ductal,236,ductal,236
+SCIB Mouse Pancreas 1,Mouse_Pancreas_1_raw_counts,beta,343,beta,343
+Tabula Muris liver,Tabula_Muris_liver_filtered_raw_counts,neutrophil,30,neutrophil,30
+Tabula Muris liver,Tabula_Muris_liver_filtered_raw_counts,"CD4-positive, alpha-beta T cell",42,"CD4-positive, alpha-beta T cell",42
+Tabula Muris liver,Tabula_Muris_liver_filtered_raw_counts,NK cell,42,NK cell,42
+Tabula Muris liver,Tabula_Muris_liver_filtered_raw_counts,T cell,45,T cell,45
+Tabula Muris liver,Tabula_Muris_liver_filtered_raw_counts,"CD8-positive, alpha-beta T cell",64,"CD8-positive, alpha-beta T cell",64
+Tabula Muris liver,Tabula_Muris_liver_filtered_raw_counts,mature NK T cell,176,mature NK T cell,176
+Tabula Muris liver,Tabula_Muris_liver_filtered_raw_counts,myeloid leukocyte,209,myeloid leukocyte,209
+Tabula Muris liver,Tabula_Muris_liver_filtered_raw_counts,B cell,210,B cell,210
+Tabula Muris liver,Tabula_Muris_liver_filtered_raw_counts,Kupffer cell,262,Kupffer cell,262
+Tabula Muris liver,Tabula_Muris_liver_filtered_raw_counts,endothelial cell of hepatic sinusoid,617,endothelial cell of hepatic sinusoid,617
+Tabula Muris liver,Tabula_Muris_liver_filtered_raw_counts,hepatocyte,1162,hepatocyte,1162
