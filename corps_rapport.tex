@@ -2,33 +2,7 @@
 
 \subsection{Environnement de travail}
 
-Ce stage de fin d'études s'est déroulé du 4 janvier au 30 juin 2026 au sein du Laboratoire Bordelais de Recherche en Informatique (LaBRI). J'ai intégré l'équipe Bench to Knowledge and Beyond (BKB), dirigée par Romain Bourqui (responsable d'équipe) et Patricia Thébault (adjointe). Cette équipe est rattachée au département Systèmes et Données (SeD). Afin de mieux appréhender la structure dans laquelle j'ai évolué, l'organisation du laboratoire est détaillée ci-après.
-
-\subsubsection*{Organisation du laboratoire}
-Le LaBRI est structuré autour de plusieurs grands pôles :
-\begin{itemize}
-    \item \textbf{Direction :} Pascal Desbarats (Directeur par intérim), Nicolas Hanusse (Directeur adjoint par intérim), Serge Chaumette (Chargé de mission transfert et valorisation).
-    \item \textbf{Administration} (Administratrice d'unité : Christine Richard) :
-    \begin{itemize}
-        \item \textit{Équipe administrative} (resp. Cathy Roubineau) : Accueil (Claire Douvier, Laurence Pinosa), Assistante administrative (Safia Amsili), Assistante de communication (Auriane Dantès).
-        \item \textit{Équipe financière} (resp. Chloé Godard) : Gestionnaires (Isabelle Garcia, Anthony Gau, Emmanuelle Lesage, Elia Meyre).
-        \item \textit{Assistante du SCRIME} : Annick Mersier.
-    \end{itemize}
-    \item \textbf{Recherche} (structurée en plusieurs départements) :
-    \begin{itemize}
-        \item \textit{Image et Son} (Fabien Baldacci)
-        \item \textit{Combinatoire et Algorithmique} (Cyril Gavoille)
-        \item \textit{Systèmes et Données} (Jean-Rémy Falleri), département auquel appartient l'équipe BKB.
-        \item \textit{Méthodes et Modèles formels} (Laurent Bienvenu)
-        \item \textit{Supports et AlgoriThmes pour les Applications Numériques hAutes performanceS} (Pierre Ramet)
-    \end{itemize}
-    \item \textbf{Appui à la recherche :}
-    \begin{itemize}
-        \item \textit{Ingénieurs affectés sur projet} : Nathalie Furmento, Frédéric Lalanne, Boris Mansencal, Gérald Point.
-        \item \textit{Équipe soutien "Systèmes - Réseaux"} (resp. Pascal Ung) : Ingénieurs ASR (Michaël Fontaine, Emmanuel Fontaine, Gabriel Larrouy), Technicien ASR (Alexandre Issouli), Ingénieur DEV-Web (Pierre Lacroix).
-    \end{itemize}
-    \item \textbf{Autre :} Assistant de prévention (Gérald Point).
-\end{itemize}
+Ce stage de fin d'études s'est déroulé du 4 janvier au 30 juin 2026 au sein du Laboratoire Bordelais de Recherche en Informatique (LaBRI). J'ai intégré l'équipe Bench to Knowledge and Beyond (BKB), dirigée par Romain Bourqui (responsable d'équipe) et Patricia Thébault (adjointe). Cette équipe est rattachée au département Systèmes et Données (SeD). Afin de mieux appréhender la structure dans laquelle j'ai évolué, l'organisation détaillée du laboratoire ainsi que son organigramme structurel sont présentés en Annexe~\ref{annexe:labri} (Figure~\ref{fig:organigramme_labri}).
 
 \subsubsection*{Équipe d'encadrement}
 Au cours de ce stage, j'ai été encadré par une équipe aux expertises complémentaires :
@@ -77,33 +51,7 @@ Ces données proviennent de différents organes et espèces : pancréas humain e
     \item \textbf{Les populations rares :} C'est le cœur de notre problématique. Presque tous nos jeux de données contiennent des types cellulaires dits "rares" (représentant moins de 5\,\% des cellules) ou "ultra-rares" (moins de 1\,\%). Par exemple, dans les données du pancréas humain de Baron, certaines cellules immunitaires ou cellules de Schwann ne représentent qu'une fraction de pourcent du total.
 \end{itemize}
 
-L'utilisation d'annotations pré-existantes (la "vérité terrain") nous permet d'évaluer objectivement si les algorithmes parviennent à retrouver ces populations ou s'ils les noient dans la masse. Le tableau~\ref{tab:datasets} résume l'ensemble des jeux de données de référence retenus pour notre étude, détaillant pour chacun d'eux l'espèce d'origine, le nombre de cellules et de gènes, le nombre de lots (batchs) ainsi que la quantité de populations cellulaires rares.
-
-\begin{table}[H]
-\centering
-\small
-\begin{tabular}{l l c c c c}
-\toprule
-\textbf{Nom du Dataset} & \textbf{Espèce} & \textbf{Cellules} & \textbf{Gènes} & \textbf{Batchs} & \textbf{ClassesRares ($<5\%$)} \\
-\midrule
-BBAG094 Zeisel & Souris & 3 006 & 19 972 & 10 & 4 \\
-BBAG094 spleen & Souris & 9 552 & 23 341 & 2 & 3 \\
-Baron human pancreas & Humain & 8 569 & 20 125 & 4 & 9 \\
-Human testis GSE112013 & Humain & 6 490 & 27 477 & 6 & 4 \\
-Kang PBMC & Humain & 24 679 & 35 635 & 16 & 1 \\
-Macaque retina bipolar & Macaque & 30 302 & 36 162 & 30 & 4 \\
-Pancreas raw counts & Humain & 16 400 & 14 813 & 8 & 9 \\
-Pancreas 4 batches & Humain & 6 339 & 14 813 & 4 & 7 \\
-Paul15 bone marrow & Souris & 2 730 & 3 451 & 1 & 9 \\
-SCIB Human Pancreas 1 & Humain & 1 937 & 20 125 & 1 & 8 \\
-SCIB Human Pancreas 2 & Humain & 1 724 & 20 125 & 1 & 10 \\
-SCIB Mouse Pancreas 1 & Souris & 822 & 14 878 & 1 & 9 \\
-Tabula Muris liver & Souris & 2 859 & 22 966 & 1 & 5 \\
-\bottomrule
-\end{tabular}
-\caption{Récapitulatif des jeux de données utilisés dans nos expériences.}
-\label{tab:datasets}
-\end{table}
+L'utilisation d'annotations pré-existantes (la "vérité terrain") nous permet d'évaluer objectivement si les algorithmes parviennent à retrouver ces populations ou s'ils les noient dans la masse. Le tableau~\ref{tab:datasets} (disponible en Annexe~\ref{annexe:datasets}) résume l'ensemble des jeux de données de référence retenus pour notre étude, détaillant pour chacun d'eux l'espèce d'origine, le nombre de cellules et de gènes, le nombre de lots (batchs) ainsi que la quantité de populations cellulaires rares.
 
 Les données de séquençage d'ARN sur cellule unique (scRNA-seq) manipulées sont généralement structurées sous forme de matrices d'expression accompagnées de métadonnées. Par convention (notamment dans le format \texttt{AnnData} utilisé par notre pipeline), ces informations sont organisées de la façon suivante :
 \begin{itemize}
@@ -258,86 +206,7 @@ SCRBenchmark a été développé pour rendre les expériences de comparaison plu
     \label{fig:organisation_logiciel}
 \end{figure}
 
-Le premier choix important a été de séparer l'interface utilisée pour configurer les expériences du moteur chargé d'exécuter les calculs. L'interface web guide l'utilisateur étape par étape, tandis que la ligne de commande permet de relancer la même analyse sur un serveur ou dans un environnement de calcul plus adapté aux expériences longues. Les neuf écrans principaux de l'interface, présentés dans la figure \ref{fig:scrbenchmark_panel}, couvrent l'ensemble du parcours : importation des données, visualisation préliminaire, choix du type d'expérience, prétraitement, sélection des algorithmes, génération de la commande d'exécution, suivi du calcul, consultation des métriques et visualisation des UMAP finales.
-
-\begin{figure}[p]
-    \centering\footnotesize
-    \begin{subfigure}[b]{0.42\textwidth}
-        \centering
-        \includegraphics[width=\textwidth]{SCRBenchmark/scr_01_upload.png}
-        \caption{Importation des données}
-        \label{fig:scr_upload}
-    \end{subfigure}
-    \hfill
-    \begin{subfigure}[b]{0.42\textwidth}
-        \centering
-        \includegraphics[width=\textwidth]{SCRBenchmark/scr_02_visualisation_des_donnees.png}
-        \caption{Visualisation des données}
-        \label{fig:scr_vis_donnees}
-    \end{subfigure}
-    
-    \vspace{0.1cm}
-    
-    \begin{subfigure}[b]{0.42\textwidth}
-        \centering
-        \includegraphics[width=\textwidth]{SCRBenchmark/scr_03_choixExperience.png}
-        \caption{Choix de l'expérience}
-        \label{fig:scr_choix_exp}
-    \end{subfigure}
-    \hfill
-    \begin{subfigure}[b]{0.42\textwidth}
-        \centering
-        \includegraphics[width=\textwidth]{SCRBenchmark/scr_04_preprocess.png}
-        \caption{Prétraitement}
-        \label{fig:scr_preprocess}
-    \end{subfigure}
-    
-    \vspace{0.1cm}
-    
-    \begin{subfigure}[b]{0.42\textwidth}
-        \centering
-        \includegraphics[width=\textwidth]{SCRBenchmark/scr_05_choixAlgo.png}
-        \caption{Choix des algorithmes}
-        \label{fig:scr_choix_algo}
-    \end{subfigure}
-    \hfill
-    \begin{subfigure}[b]{0.42\textwidth}
-        \centering
-        \includegraphics[width=\textwidth]{SCRBenchmark/scr_06_CommandeCLI.png}
-        \caption{Génération CLI}
-        \label{fig:scr_cli}
-    \end{subfigure}
-    
-    \vspace{0.1cm}
-    
-    \begin{subfigure}[b]{0.42\textwidth}
-        \centering
-        \includegraphics[width=\textwidth]{SCRBenchmark/scr_07_runner.png}
-        \caption{Exécution des calculs}
-        \label{fig:scr_runner}
-    \end{subfigure}
-    \hfill
-    \begin{subfigure}[b]{0.42\textwidth}
-        \centering
-        \includegraphics[width=\textwidth]{SCRBenchmark/scr_08_results.png}
-        \caption{Résultats des métriques}
-        \label{fig:scr_results}
-    \end{subfigure}
-    
-    \vspace{0.1cm}
-    
-    \hfill
-    \begin{subfigure}[b]{0.42\textwidth}
-        \centering
-        \includegraphics[width=\textwidth]{SCRBenchmark/scr_09_resultsUmaps.png}
-        \caption{UMAPs des résultats}
-        \label{fig:scr_results_umaps}
-    \end{subfigure}
-    \hfill
-    
-    \caption{Aperçu des différentes étapes de l'interface Streamlit de SCRBenchmark, depuis l'importation des données jusqu'à l'exploration des métriques et des UMAP finales.}
-    \label{fig:scrbenchmark_panel}
-\end{figure}
+Le premier choix important a été de séparer l'interface utilisée pour configurer les expériences du moteur chargé d'exécuter les calculs. L'interface web guide l'utilisateur étape par étape, tandis que la ligne de commande permet de relancer la même analyse sur un serveur ou dans un environnement de calcul plus adapté aux expériences longues. Les neuf écrans principaux de l'interface, consultables en Annexe~\ref{annexe:screenshots} (Figure~\ref{fig:scrbenchmark_panel}), couvrent l'ensemble du parcours : importation des données, visualisation préliminaire, choix du type d'expérience, prétraitement, sélection des algorithmes, génération de la commande d'exécution, suivi du calcul, consultation des métriques et visualisation des UMAP finales.
 
 
 SCRBenchmark propose ensuite deux modes d'analyse. Le mode standard utilise toutes les cellules ensemble et sert à observer directement le comportement d'une méthode sur un jeu de données. Le mode benchmark sépare au contraire les cellules en ensembles d'entraînement, de validation et de test, afin d'évaluer les méthodes dans des conditions plus contrôlées, notamment lorsqu'il s'agit de tester leur comportement sur des cellules ou des lots non vus pendant l'entraînement.
@@ -383,7 +252,7 @@ Le tableau \ref{tab:classes_baron_humain} présente la composition du jeu de don
 
 Différentes expériences ont été menées afin de répondre à une question simple : est-ce qu'un modèle qui apprend une représentation sur certaines cellules est ensuite capable de rester performant sur des cellules qu'il n'a jamais vues ? Cette question distingue deux cadres d'évaluation. Dans un cadre transductif, toutes les cellules sont disponibles au moment de l'apprentissage et le modèle construit ses groupes à partir de l'ensemble complet. Ce cadre est utile pour explorer un jeu de données déjà acquis, mais il ne dit pas vraiment ce qui se passerait si l'on ajoutait de nouvelles cellules ensuite. Dans un cadre inductif, au contraire, le modèle est entraîné sur une partie des cellules, puis il doit projeter ou classer de nouvelles cellules sans être réentraîné depuis le début.
 
-Pour rendre cette évaluation possible avec des modèles fondés sur des autoencodeurs, nous avons utilisé leur encodeur comme outil de projection. Cette adaptation s'appuie sur une idée déjà présente dans les méthodes de deep clustering comme DEC \cite{xie2016unsupervised} et IDEC \cite{guo2017improved}, où les cellules sont projetées dans un espace latent avant d'être rapprochées de centres de clusters. L'objectif d'appliquer un modèle entraîné à de nouvelles cellules se rapproche quant à lui davantage de la logique de projection de requêtes sur une référence (\textit{query-to-reference mapping}) proposée par scArches \cite{lotfollahi2021query} en génomique sur cellule unique. Concrètement, une fois le modèle entraîné, ses poids sont gelés : cela signifie qu'ils ne sont plus modifiés. Les cellules d'entraînement sont projetées dans l'espace latent, puis les centres des clusters appris sont calculés dans cet espace. Les nouvelles cellules passent ensuite par le même prétraitement et par le même encodeur ; elles sont finalement rattachées au cluster dont le centre est le plus proche, ou à un groupe de référence construit pendant l'entraînement. Cette logique a été appliquée aux modèles pour lesquels une projection de nouvelles cellules était possible. Elle ne peut pas être appliquée de manière automatique à toutes les méthodes, car certaines approches reconstruisent un graphe ou un clustering global à chaque analyse et restent donc principalement transductives.
+Pour rendre cette évaluation possible avec des modèles basés sur des autoencodeurs, nous avons utilisé leur encodeur comme outil de projection. Cette adaptation s'appuie sur une idée déjà présente dans les méthodes de deep clustering comme DEC \cite{xie2016unsupervised} et IDEC \cite{guo2017improved}, où les cellules sont projetées dans un espace latent avant d'être rapprochées de centres de clusters. L'objectif d'appliquer un modèle entraîné à de nouvelles cellules se rapproche quant à lui davantage de la logique de projection de requêtes sur une référence (\textit{query-to-reference mapping}) proposée par scArches \cite{lotfollahi2021query} en génomique sur cellule unique. Concrètement, une fois le modèle entraîné, ses poids sont gelés : cela signifie qu'ils ne sont plus modifiés. Les cellules d'entraînement sont projetées dans l'espace latent, puis les centres des clusters appris sont calculés dans cet espace. Les nouvelles cellules passent ensuite par le même prétraitement et par le même encodeur ; elles sont finalement rattachées au cluster dont le centre est le plus proche, ou à un groupe de référence construit pendant l'entraînement. Cette logique a été appliquée aux modèles pour lesquels une projection de nouvelles cellules était possible. Elle ne peut pas être appliquée de manière automatique à toutes les méthodes, car certaines approches reconstruisent un graphe ou un clustering global à chaque analyse et restent donc principalement transductives.
 
 Le jeu de données humain de Baron est composé de quatre sous-jeux, notés ici H1, H2, H3 et H4, qui correspondent à quatre donneurs humains. Nous avons donc utilisé ces sous-jeux pour construire plusieurs scénarios expérimentaux, dont le principe est schématisé dans la figure~\ref{fig:splits_baron}. Le premier scénario correspond à une analyse standard sur l'ensemble des données, éventuellement équilibrée pour éviter qu'un donneur plus grand domine l'évaluation. Le deuxième scénario consiste à séparer chaque donneur en trois parties : entraînement, validation et test. Les trois ensembles contiennent alors des cellules issues de tous les donneurs, mais les cellules du test n'ont pas été vues pendant l'apprentissage. Le troisième scénario est plus strict : on entraîne le modèle sur un ou plusieurs donneurs, puis on l'évalue sur un donneur différent. Ce dernier cas se rapproche davantage d'une situation réelle où l'on voudrait appliquer un modèle déjà entraîné à un nouveau patient ou à une nouvelle expérience.
 
@@ -424,30 +293,9 @@ Dans les expériences avec séparation entraînement/validation/test, la sélect
 
 Afin de comparer les méthodes de manière homogène, les mêmes métriques ont été calculées pour toutes les expériences. La difficulté principale vient du fait qu'un algorithme de clustering ne prédit pas directement des noms de types cellulaires. Il produit seulement des groupes numérotés, par exemple cluster 0, cluster 1 ou cluster 2. Ces numéros sont arbitraires : le cluster 0 peut correspondre aux cellules alpha dans un lancement, mais à un autre type cellulaire dans un autre lancement. Avant de calculer les métriques de type accuracy, il faut donc associer les clusters prédits aux annotations biologiques de référence.
 
-Pour réaliser cette association, nous avons construit une matrice de correspondance entre les clusters prédits et les classes biologiques connues, puis nous avons appliqué l'algorithme hongrois. Cet algorithme résout un problème d'appariement optimal : il cherche la correspondance cluster--classe qui maximise le nombre total de cellules correctement attribuées. Cette stratégie est utilisée dans des benchmarks de clustering comme scCluBench pour l'annotation par meilleur appariement \cite{xu_scclubench_2026}, et correspond à la méthode hongroise proposée initialement pour les problèmes d'affectation \cite{kuhn1955hungarian}. Après cette étape, les métriques ACC, BalancedACC, RareACC et UltraRareACC peuvent être interprétées comme des performances de classification sur les types cellulaires. À l'inverse, l'ARI et le NMI comparent directement deux partitions et ne nécessitent pas ce renommage explicite des clusters. L'ensemble des métriques d'évaluation utilisées, avec leurs formules et leurs rôles respectifs, est récapitulé dans le tableau~\ref{tab:metriques_evaluation}.
+Pour réaliser cette association, nous avons construit une matrice de correspondance entre les clusters prédits et les classes biologiques connues, puis nous avons appliqué l'algorithme hongrois. Cet algorithme résout un problème d'appariement optimal : il cherche la correspondance cluster--classe qui maximise le nombre total de cellules correctement attribuées. Cette stratégie est utilisée dans des benchmarks de clustering comme scCluBench pour l'annotation par meilleur appariement \cite{xu_scclubench_2026}, et correspond à la méthode hongroise proposée initialement pour les problèmes d'affectation \cite{kuhn1955hungarian}. Après cette étape, les métriques ACC, BalancedACC, RareACC et UltraRareACC peuvent être interprétées comme des performances de classification sur les types cellulaires. À l'inverse, l'ARI et le NMI comparent directement deux clusters et ne nécessitent pas ce renommage explicite de ces derniers. L'ensemble des métriques d'évaluation utilisées, avec leurs formules et leurs rôles respectifs, est récapitulé dans le tableau~\ref{tab:metriques_evaluation} (disponible en Annexe~\ref{annexe:metriques}).
 
 Dans les formules suivantes, \(y_i\) désigne l'annotation biologique de la cellule \(i\), \(\hat{y}_i\) le cluster prédit par la méthode, \(n\) le nombre total de cellules, \(\mathcal{C}\) l'ensemble des classes biologiques et \(\pi\) l'appariement optimal obtenu par l'algorithme hongrois.
-
-\begin{table}[htbp]
-    \centering
-    \footnotesize
-    \renewcommand{\arraystretch}{1.35}
-    \begin{tabularx}{\textwidth}{@{}p{0.15\textwidth}p{0.19\textwidth}p{0.38\textwidth}X@{}}
-        \toprule
-        \textbf{Métrique} & \textbf{Rôle} & \textbf{Formule ou principe} & \textbf{Interprétation} \\
-        \midrule
-        ARI & Clustering global & \(\displaystyle ARI=\frac{RI-\mathrm{E}[RI]}{\max(RI)-\mathrm{E}[RI]}\), où \(RI\) mesure l'accord entre paires de cellules. & Mesure si deux cellules regroupées ensemble dans la vérité biologique le sont aussi dans la prédiction, en corrigeant l'accord attendu au hasard. \\
-        NMI & Clustering global & \(\displaystyle NMI(Y,\hat{Y})=\frac{2I(Y;\hat{Y})}{H(Y)+H(\hat{Y})}\) & Mesure la quantité d'information partagée entre les annotations biologiques et les groupes prédits. \\
-        ACC & Classification après appariement des clusters & \(\displaystyle ACC=\frac{1}{n}\max_{\pi}\sum_{i=1}^{n}\mathbf{1}\{y_i=\pi(\hat{y}_i)\}\) & Donne la proportion globale de cellules correctement attribuées après correspondance entre clusters et classes. \\
-        BalancedACC & Classification équilibrée & \(\displaystyle BalancedACC=\frac{1}{|\mathcal{C}|}\sum_{c\in\mathcal{C}}\frac{TP_c}{N_c}\) & Calcule la moyenne des rappels par classe, afin qu'une classe très abondante ne masque pas les erreurs sur les classes petites. \\
-        RareACC & Classification des classes rares & \(\displaystyle RareACC=\frac{1}{|\mathcal{R}|}\sum_{c\in\mathcal{R}}\frac{TP_c}{N_c}\), avec \(\mathcal{R}=\{c\,|\,N_c/n<5\,\%\}\) & Évalue spécifiquement les types cellulaires rares, qui représentent moins de 5\,\% des cellules. \\
-        UltraRareACC & Classification des classes ultra-rares & \(\displaystyle UltraRareACC=\frac{1}{|\mathcal{U}|}\sum_{c\in\mathcal{U}}\frac{TP_c}{N_c}\), avec \(\mathcal{U}=\{c\,|\,N_c/n<1\,\%\}\) & Mesure la capacité de la méthode à préserver les populations les plus minoritaires. \\
-        Temps & Coût computationnel & \(\displaystyle t_{\mathrm{exec}}=t_{\mathrm{fin}}-t_{\mathrm{debut}}\) & Permet de comparer les méthodes non seulement sur leur qualité de clustering, mais aussi sur leur coût pratique. \\
-        \bottomrule
-    \end{tabularx}
-    \caption{Métriques utilisées pour comparer les méthodes. \(TP_c\) correspond au nombre de cellules de la classe \(c\) correctement attribuées après appariement, et \(N_c\) au nombre total de cellules de cette classe.}
-    \label{tab:metriques_evaluation}
-\end{table}
 
 Les métriques globales comme l'ARI, le NMI ou l'ACC donnent une vision générale de la qualité du regroupement, mais elles peuvent rester élevées même si une petite population est mal retrouvée. Les métriques BalancedACC, RareACC et UltraRareACC complètent donc cette lecture en donnant davantage de poids à chaque type cellulaire, indépendamment de sa taille. Elles sont particulièrement importantes dans notre cadre, car l'objectif n'est pas seulement de retrouver les grandes populations pancréatiques, mais aussi de vérifier que les cellules rares ne sont pas absorbées dans des groupes majoritaires.
 

@@ -1,0 +1,217 @@
+\section{Structure et organigramme du LaBRI}
+\label{annexe:labri}
+
+Le Laboratoire Bordelais de Recherche en Informatique (LaBRI), UMR 5800, au sein duquel s'est déroulé ce stage de fin d'études au sein de l'équipe BKB, est structuré autour de plusieurs grands pôles :
+\begin{itemize}
+    \item \textbf{Direction :} Pascal Desbarats (Directeur par intérim), Nicolas Hanusse (Directeur adjoint par intérim), Serge Chaumette (Chargé de mission transfert et valorisation).
+    \item \textbf{Administration} (Administratrice d'unité : Christine Richard) :
+    \begin{itemize}
+        \item \textit{Équipe administrative} (resp. Cathy Roubineau) : Accueil (Claire Douvier, Laurence Pinosa), Assistante administrative (Safia Amsili), Assistante de communication (Auriane Dantès).
+        \item \textit{Équipe financière} (resp. Chloé Godard) : Gestionnaires (Isabelle Garcia, Anthony Gau, Emmanuelle Lesage, Elia Meyre).
+        \item \textit{Assistante du SCRIME} : Annick Mersier.
+    \end{itemize}
+    \item \textbf{Recherche} (structurée en plusieurs départements) :
+    \begin{itemize}
+        \item \textit{Image et Son} (Fabien Baldacci)
+        \item \textit{Combinatoire et Algorithmique} (Cyril Gavoille)
+        \item \textit{Systèmes et Données} (Jean-Rémy Falleri), département auquel appartient l'équipe BKB.
+        \item \textit{Méthodes et Modèles formels} (Laurent Bienvenu)
+        \item \textit{Supports et AlgoriThmes pour les Applications Numériques hAutes performanceS} (Pierre Ramet)
+    \end{itemize}
+    \item \textbf{Appui à la recherche :}
+    \begin{itemize}
+        \item \textit{Ingénieurs affectés sur projet} : Nathalie Furmento, Frédéric Lalanne, Boris Mansencal, Gérald Point.
+        \item \textit{Équipe soutien "Systèmes - Réseaux"} (resp. Pascal Ung) : Ingénieurs ASR (Michaël Fontaine, Emmanuel Fontaine, Gabriel Larrouy), Technicien ASR (Alexandre Issouli), Ingénieur DEV-Web (Pierre Lacroix).
+    \end{itemize}
+    \item \textbf{Autre :} Assistant de prévention (Gérald Point).
+\end{itemize}
+
+L'organigramme structurel simplifié correspondant est présenté dans la Figure~\ref{fig:organigramme_labri}.
+
+\begin{figure}[H]
+  \centering
+  \begin{tikzpicture}[
+    box/.style={draw=ubblue, fill=softgray, thick, rounded corners, align=center, text width=3.8cm, font=\small, minimum height=1cm},
+    dirbox/.style={box, fill=ubblue!10, text width=6cm},
+    deptbox/.style={box, draw=green!60!black, fill=green!5, text width=2.45cm, font=\scriptsize},
+    adminbox/.style={box, draw=orange!70!black, fill=orange!5, text width=3.5cm, font=\scriptsize},
+    supportbox/.style={box, draw=purple!70!black, fill=purple!5, text width=3.5cm, font=\scriptsize},
+    line/.style={draw, thick, -latex}
+  ]
+
+  % Nodes
+  \node (dir) [dirbox] {\textbf{Direction du LaBRI} \\ \scriptsize P. Desbarats (Dir. int.), N. Hanusse (Dir. adj. int.), S. Chaumette (Transfert)};
+
+  \node (admin) [adminbox, below left=1.2cm and 0.5cm of dir] {\textbf{Administration} \\ (Christine Richard) \\ \vspace{0.1cm} \raggedright \scriptsize $\bullet$ Éq. Administrative \\ (C. Roubineau) \\ $\bullet$ Éq. Financière \\ (C. Godard) \\ $\bullet$ SCRIME \\ (A. Mersier)};
+
+  \node (support) [supportbox, below right=1.2cm and 0.5cm of dir] {\textbf{Appui à la Recherche} \\ \vspace{0.1cm} \raggedright \scriptsize $\bullet$ Systèmes \& Réseaux \\ (P. Ung) \\ $\bullet$ Ingénieurs projets \\ (N. Furmento, F. Lalanne, B. Mansencal, G. Point) \\ $\bullet$ Assistant Prévention \\ (G. Point)};
+
+  \node (coord) [below=3.5cm of dir, inner sep=0pt, minimum size=0pt] {};
+
+  % Departements de recherche
+  \node (dept3) [deptbox, below=1cm of coord] {\textbf{Systèmes \& Données} \\ (J.-R. Falleri) \\ \vspace{0.05cm} \textit{Équipe BKB (accueil)}};
+  \node (dept2) [deptbox, left=0.2cm of dept3] {\textbf{Combinatoire \& Algorithmique} \\ (C. Gavoille)};
+  \node (dept1) [deptbox, left=0.2cm of dept2] {\textbf{Image \& Son} \\ (F. Baldacci)};
+  \node (dept4) [deptbox, right=0.2cm of dept3] {\textbf{Méthodes \& Modèles} \\ (L. Bienvenu)};
+  \node (dept5) [deptbox, right=0.2cm of dept4] {\textbf{Satanas} \\ (P. Ramet)};
+
+  % Lines
+  \path [draw, thick] (dir) -- (coord);
+  \path [draw, thick] (dir) -| (admin);
+  \path [draw, thick] (dir) -| (support);
+  \path [draw, thick] (coord) -| (dept1);
+  \path [draw, thick] (coord) -| (dept2);
+  \path [draw, thick] (coord) -- (dept3);
+  \path [draw, thick] (coord) -| (dept4);
+  \path [draw, thick] (coord) -| (dept5);
+
+  \end{tikzpicture}
+  \caption{Organigramme structurel simplifié du LaBRI.}
+  \label{fig:organigramme_labri}
+\end{figure}
+
+\newpage
+\section{Détails des datasets de l'état de l'art}
+\label{annexe:datasets}
+
+Cette section fournit les détails des différents jeux de données scRNA-seq de référence utilisés dans l'étude, y compris l'espèce, les tailles (cellules et gènes), le nombre de lots et la quantité de populations cellulaires rares.
+
+\begin{table}[H]
+\centering
+\small
+\begin{tabular}{l l c c c c}
+\toprule
+\textbf{Nom du Dataset} & \textbf{Espèce} & \textbf{Cellules} & \textbf{Gènes} & \textbf{Batchs} & \textbf{ClassesRares ($<5\%$)} \\
+\midrule
+BBAG094 Zeisel & Souris & 3 006 & 19 972 & 10 & 4 \\
+BBAG094 spleen & Souris & 9 552 & 23 341 & 2 & 3 \\
+Baron human pancreas & Humain & 8 569 & 20 125 & 4 & 9 \\
+Human testis GSE112013 & Humain & 6 490 & 27 477 & 6 & 4 \\
+Kang PBMC & Humain & 24 679 & 35 635 & 16 & 1 \\
+Macaque retina bipolar & Macaque & 30 302 & 36 162 & 30 & 4 \\
+Pancreas raw counts & Humain & 16 400 & 14 813 & 8 & 9 \\
+Pancreas 4 batches & Humain & 6 339 & 14 813 & 4 & 7 \\
+Paul15 bone marrow & Souris & 2 730 & 3 451 & 1 & 9 \\
+SCIB Human Pancreas 1 & Humain & 1 937 & 20 125 & 1 & 8 \\
+SCIB Human Pancreas 2 & Humain & 1 724 & 20 125 & 1 & 10 \\
+SCIB Mouse Pancreas 1 & Souris & 822 & 14 878 & 1 & 9 \\
+Tabula Muris liver & Souris & 2 859 & 22 966 & 1 & 5 \\
+\bottomrule
+\end{tabular}
+\caption{Récapitulatif des jeux de données utilisés dans nos expériences.}
+\label{tab:datasets}
+\end{table}
+
+\newpage
+\section{Tableau des métriques d'évaluation}
+\label{annexe:metriques}
+
+Cette section regroupe les définitions, formules mathématiques et interprétations des métriques utilisées pour évaluer et comparer les performances des algorithmes de clustering, tant sur l'aspect global que sur la détection des classes rares et ultra-rares.
+
+\begin{table}[H]
+    \centering
+    \scriptsize
+    \renewcommand{\arraystretch}{1.2}
+    \begin{tabularx}{\textwidth}{@{}p{0.15\textwidth}p{0.17\textwidth}p{0.35\textwidth}X@{}}
+        \toprule
+        \textbf{Métrique} & \textbf{Rôle} & \textbf{Formule ou principe} & \textbf{Interprétation} \\
+        \midrule
+        ARI & Clustering global & \(ARI=\frac{RI-\mathrm{E}[RI]}{\max(RI)-\mathrm{E}[RI]}\), où \(RI\) mesure l'accord entre paires de cellules. & Mesure si deux cellules regroupées ensemble dans la vérité biologique le sont aussi dans la prédiction, en corrigeant l'accord attendu au hasard. \\
+        NMI & Clustering global & \(NMI(Y,\hat{Y})=\frac{2I(Y;\hat{Y})}{H(Y)+H(\hat{Y})}\) & Mesure la quantité d'information partagée entre les annotations biologiques et les groupes prédits. \\
+        ACC & Classification après appariement des clusters & \(ACC=\frac{1}{n}\max_{\pi}\sum_{i=1}^{n}\mathbf{1}\{y_i=\pi(\hat{y}_i)\}\) & Donne la proportion globale de cellules correctement attribuées après correspondance entre clusters et classes. \\
+        BalancedACC & Classification équilibrée & BalancedACC\({}=\frac{1}{|\mathcal{C}|}\sum_{c\in\mathcal{C}}\frac{TP_c}{N_c}\) & Calcule la moyenne des rappels par classe, afin qu'une classe très abondante ne masque pas les erreurs sur les classes petites. \\
+        RareACC & Classification des classes rares & RareACC\({}=\frac{1}{|\mathcal{R}|}\sum_{c\in\mathcal{R}}\frac{TP_c}{N_c}\), avec \(\mathcal{R}=\{c\,|\,N_c/n<5\,\%\}\) & Évalue spécifiquement les types cellulaires rares, qui représentent moins de 5\,\% des cellules. \\
+        UltraRareACC & Classification des classes ultra-rares & UltraRareACC\({}=\frac{1}{|\mathcal{U}|}\sum_{c\in\mathcal{U}}\frac{TP_c}{N_c}\), avec \(\mathcal{U}=\{c\,|\,N_c/n<1\,\%\}\) & Mesure la capacité de la méthode à préserver les populations les plus minoritaires. \\
+        Temps & Coût computationnel & \(t_{\mathrm{exec}}=t_{\mathrm{fin}}-t_{\mathrm{debut}}\) & Permet de comparer les méthodes non seulement sur leur qualité de clustering, mais aussi sur leur coût pratique. \\
+        \bottomrule
+    \end{tabularx}
+    \caption{Métriques utilisées pour comparer les méthodes. \(TP_c\) correspond au nombre de cellules de la classe \(c\) correctement attribuées après appariement, et \(N_c\) au nombre total de cellules de cette classe.}
+    \label{tab:metriques_evaluation}
+\end{table}
+
+\newpage
+\section{Screenshots de l'interface graphique SCRBenchmark}
+\label{annexe:screenshots}
+
+Cette section regroupe les captures d'écran illustrant le fonctionnement et le flux complet de l'interface utilisateur Streamlit développée pour SCRBenchmark.
+
+\begin{figure}[H]
+    \centering\footnotesize
+    \begin{subfigure}[b]{0.45\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{SCRBenchmark/scr_01_upload.png}
+        \caption{Importation des données}
+        \label{fig:scr_upload}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}[b]{0.45\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{SCRBenchmark/scr_02_visualisation_des_donnees.png}
+        \caption{Visualisation des données}
+        \label{fig:scr_vis_donnees}
+    \end{subfigure}
+    
+    \vspace{0.3cm}
+    
+    \begin{subfigure}[b]{0.45\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{SCRBenchmark/scr_03_choixExperience.png}
+        \caption{Choix de l'expérience}
+        \label{fig:scr_choix_exp}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}[b]{0.45\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{SCRBenchmark/scr_04_preprocess.png}
+        \caption{Prétraitement}
+        \label{fig:scr_preprocess}
+    \end{subfigure}
+    
+    \vspace{0.3cm}
+    
+    \begin{subfigure}[b]{0.45\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{SCRBenchmark/scr_05_choixAlgo.png}
+        \caption{Choix des algorithmes}
+        \label{fig:scr_choix_algo}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}[b]{0.45\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{SCRBenchmark/scr_06_CommandeCLI.png}
+        \caption{Génération CLI}
+        \label{fig:scr_cli}
+    \end{subfigure}
+    
+    \caption{Aperçu des différentes étapes de l'interface Streamlit de SCRBenchmark (1\textsuperscript{re} partie : configuration et préparation).}
+    \label{fig:scrbenchmark_panel}
+\end{figure}
+
+\begin{figure}[H]
+    \ContinuedFloat
+    \centering\footnotesize
+    \begin{subfigure}[b]{0.45\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{SCRBenchmark/scr_07_runner.png}
+        \caption{Exécution des calculs}
+        \label{fig:scr_runner}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}[b]{0.45\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{SCRBenchmark/scr_08_results.png}
+        \caption{Résultats des métriques}
+        \label{fig:scr_results}
+    \end{subfigure}
+    
+    \vspace{0.3cm}
+    
+    \begin{subfigure}[b]{0.45\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{SCRBenchmark/scr_09_resultsUmaps.png}
+        \caption{UMAPs des résultats}
+        \label{fig:scr_results_umaps}
+    \end{subfigure}
+    
+    \caption{Aperçu des différentes étapes de l'interface Streamlit de SCRBenchmark (2\textsuperscript{e} partie : exécution et résultats).}
+\end{figure}
