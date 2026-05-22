@@ -62,7 +62,7 @@ PANCREAS_ALGORITHMS = [
     ("sc_mae", "scMAE"),
     ("scdeepcluster", "scDeepCluster"),
     ("scname", "scNAME"),
-    ("simple_autoencoder", "Simple AE"),
+    ("sccdcg", "scCDCG"),
 ]
 
 CELL_ORDER = [
