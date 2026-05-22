@@ -13,10 +13,12 @@ import matplotlib.pyplot as plt
 import numpy as np
 import pandas as pd
 from matplotlib.gridspec import GridSpec
+from scipy.optimize import linear_sum_assignment
 from sklearn.metrics import (
     accuracy_score,
     adjusted_rand_score,
     balanced_accuracy_score,
+    f1_score,
     normalized_mutual_info_score,
 )
 
@@ -37,6 +39,30 @@ ALGORITHMS = [
     ("sc_mae", "scMAE"),
     ("scdeepcluster", "scDeepCluster"),
     ("scname", "scNAME"),
+]
+
+PANCREAS_ROOT = Path("/data2/fbidet/SCRBenchmark/results/results_openproblems_pancreas_04_02")
+PANCREAS_INDUCTIVE_LABELS = (
+    PANCREAS_ROOT
+    / "split_balanced_reinject"
+    / "2026-02-04_20-45-41"
+    / "results"
+    / "labels"
+)
+PANCREAS_TRANSDUCTIVE_LABELS = (
+    PANCREAS_ROOT
+    / "standard_no_split_no_balanced"
+    / "2026-02-04_16-26-30"
+    / "results"
+    / "labels"
+)
+PANCREAS_ALGORITHMS = [
+    ("pca_kmeans", "PCA+KMeans"),
+    ("pca_leiden", "PCA+Leiden"),
+    ("sc_mae", "scMAE"),
+    ("scdeepcluster", "scDeepCluster"),
+    ("scname", "scNAME"),
+    ("simple_autoencoder", "Simple AE"),
 ]
 
 CELL_ORDER = [
@@ -488,11 +514,345 @@ def plot_inductive_transductive_panel() -> None:
     plt.close(fig)
 
 
+def pancreas_label_path(mode_key: str, algorithm_key: str, run_id: int) -> Path:
+    if mode_key == "inductive":
+        return PANCREAS_INDUCTIVE_LABELS / f"benchmark_{algorithm_key}_run{run_id}_test.csv"
+    if mode_key == "transductive":
+        return PANCREAS_TRANSDUCTIVE_LABELS / f"labels_{algorithm_key}_run{run_id}.csv"
+    raise ValueError(f"Unknown mode: {mode_key}")
+
+
+def align_cluster_labels(y_true: pd.Series, y_pred: pd.Series) -> pd.Series:
+    contingency = pd.crosstab(y_pred.astype(str), y_true.astype(str))
+    if contingency.empty:
+        return y_pred.astype(str)
+    rows, cols = linear_sum_assignment(-contingency.to_numpy())
+    mapping = {
+        str(contingency.index[row]): str(contingency.columns[col])
+        for row, col in zip(rows, cols)
+    }
+    return y_pred.astype(str).map(lambda label: mapping.get(str(label), f"unmatched_{label}"))
+
+
+def evaluate_label_file(path: Path) -> tuple[dict[str, float], list[dict[str, float]]]:
+    if not path.exists():
+        raise FileNotFoundError(path)
+    labels = pd.read_csv(path)
+    y_true = labels["true_label"].astype(str)
+    y_raw = labels["predicted_label"].astype(str)
+    y_aligned = align_cluster_labels(y_true, y_raw)
+
+    recalls = class_recalls(y_true, y_aligned)
+    rare = rare_classes(y_true, 0.05)
+    ultra = rare_classes(y_true, 0.01)
+    counts = y_true.value_counts()
+
+    metrics = {
+        "NMI": normalized_mutual_info_score(y_true, y_raw),
+        "ARI": adjusted_rand_score(y_true, y_raw),
+        "ACC": accuracy_score(y_true, y_aligned),
+        "BalancedACC": float(np.mean(list(recalls.values()))),
+        "F1Macro": f1_score(
+            y_true,
+            y_aligned,
+            labels=sorted(y_true.unique()),
+            average="macro",
+            zero_division=0,
+        ),
+        "RareACC": restricted_accuracy(y_true, y_aligned, rare),
+        "UltraRareACC": restricted_accuracy(y_true, y_aligned, ultra),
+        "n_eval": float(len(y_true)),
+        "n_rare_cells": float(y_true.isin(rare).sum()),
+        "n_ultrarare_cells": float(y_true.isin(ultra).sum()),
+        "min_class_support": float(counts.min()),
+    }
+
+    errors = []
+    for cell_type, support in counts.items():
+        recall = recalls[str(cell_type)]
+        errors.append(
+            {
+                "cell_type": str(cell_type),
+                "support": float(support),
+                "error_rate": 1.0 - recall,
+            }
+        )
+    return metrics, errors
+
+
+def collect_pancreas_panel_data() -> tuple[pd.DataFrame, pd.DataFrame]:
+    metric_rows: list[dict[str, float | int | str]] = []
+    error_rows: list[dict[str, float | int | str]] = []
+    modes = [
+        ("inductive", "Inductif"),
+        ("transductive", "Transductif"),
+    ]
+    for mode_key, mode_name in modes:
+        for algorithm_key, method_name in PANCREAS_ALGORITHMS:
+            for run_id in range(5):
+                path = pancreas_label_path(mode_key, algorithm_key, run_id)
+                metrics, errors = evaluate_label_file(path)
+                metric_rows.append(
+                    {
+                        "mode_key": mode_key,
+                        "mode": mode_name,
+                        "algorithm_key": algorithm_key,
+                        "Methode": method_name,
+                        "seed": run_id,
+                        **metrics,
+                    }
+                )
+                for row in errors:
+                    error_rows.append(
+                        {
+                            "mode_key": mode_key,
+                            "mode": mode_name,
+                            "algorithm_key": algorithm_key,
+                            "Methode": method_name,
+                            "seed": run_id,
+                            **row,
+                        }
+                    )
+
+    per_run_metrics = pd.DataFrame(metric_rows)
+    per_run_errors = pd.DataFrame(error_rows)
+    metric_columns = [
+        "NMI",
+        "ARI",
+        "ACC",
+        "BalancedACC",
+        "F1Macro",
+        "RareACC",
+        "UltraRareACC",
+        "n_eval",
+        "n_rare_cells",
+        "n_ultrarare_cells",
+        "min_class_support",
+    ]
+    metrics = (
+        per_run_metrics.groupby(["mode_key", "mode", "algorithm_key", "Methode"], sort=False)[metric_columns]
+        .mean()
+        .reset_index()
+    )
+    errors = (
+        per_run_errors.groupby(["mode_key", "mode", "algorithm_key", "Methode", "cell_type"], sort=False)
+        .agg(
+            error_rate=("error_rate", "mean"),
+            support_mean=("support", "mean"),
+            support_min=("support", "min"),
+            support_max=("support", "max"),
+        )
+        .reset_index()
+    )
+
+    mode_order = {"inductive": 0, "transductive": 1}
+    algorithm_order = {key: order for order, (key, _) in enumerate(PANCREAS_ALGORITHMS)}
+    for frame in (metrics, errors):
+        frame["_mode_order"] = frame["mode_key"].map(mode_order)
+        frame["_algorithm_order"] = frame["algorithm_key"].map(algorithm_order)
+        frame.sort_values(["_mode_order", "_algorithm_order"], inplace=True)
+        frame.drop(columns=["_mode_order", "_algorithm_order"], inplace=True)
+
+    per_run_metrics.to_csv(OUT_DIR / "pancreas_inductive_transductive_metrics_per_run.csv", index=False)
+    metrics.to_csv(OUT_DIR / "pancreas_inductive_transductive_metrics_table.csv", index=False)
+    errors.to_csv(OUT_DIR / "pancreas_inductive_transductive_error_rates.csv", index=False)
+    return metrics, errors
+
+
+def format_metric(value: float) -> str:
+    if pd.isna(value):
+        return "NA"
+    return f"{float(value):.3f}"
+
+
+def draw_pancreas_metric_table(ax: plt.Axes, metrics: pd.DataFrame, mode_name: str, title: str) -> None:
+    ax.axis("off")
+    data = metrics[metrics["mode"] == mode_name].copy()
+    data["_algorithm_order"] = data["algorithm_key"].map(
+        {key: order for order, (key, _) in enumerate(PANCREAS_ALGORITHMS)}
+    )
+    data.sort_values("_algorithm_order", inplace=True)
+    table_cols = ["Methode", "NMI", "ARI", "ACC", "BalancedACC", "RareACC", "UltraRareACC", "n_eval"]
+    headers = ["Methode", "NMI", "ARI", "ACC", "Bal.\nACC", "Rare\nACC", "Ultra\nRare", "n"]
+    display = data[table_cols].copy()
+    for col in table_cols[1:-1]:
+        display[col] = display[col].map(format_metric)
+    display["n_eval"] = display["n_eval"].round().astype(int).astype(str)
+
+    ax.set_title(title, loc="left", fontsize=10.5, fontweight="bold", pad=4)
+    table = ax.table(
+        cellText=display.values,
+        colLabels=headers,
+        loc="center",
+        cellLoc="center",
+        colLoc="center",
+        colWidths=[0.18, 0.117, 0.117, 0.117, 0.117, 0.117, 0.117, 0.118],
+        bbox=[0.0, 0.0, 1.0, 0.88],
+    )
+    table.auto_set_font_size(False)
+    table.set_fontsize(6.7)
+    for (row, col), cell in table.get_celld().items():
+        cell.set_edgecolor("#d9dee3")
+        cell.set_linewidth(0.6)
+        if row == 0:
+            cell.set_facecolor("#22313f")
+            cell.get_text().set_color("white")
+            cell.get_text().set_fontweight("bold")
+            cell.set_height(0.095)
+        else:
+            if col == 0:
+                cell.set_facecolor("#f8f9fa")
+                cell.get_text().set_fontweight("bold")
+            elif col == len(headers) - 1:
+                cell.set_facecolor("#f1f3f5")
+            else:
+                value = float(data.iloc[row - 1][table_cols[col]])
+                cell.set_facecolor(score_color(value))
+
+
+def draw_error_heatmap(
+    ax: plt.Axes,
+    errors: pd.DataFrame,
+    mode_name: str,
+    cell_order: list[str],
+    full_support: pd.Series,
+    title: str,
+    show_ylabels: bool,
+) -> plt.AxesImage:
+    method_order = [name for _, name in PANCREAS_ALGORITHMS]
+    matrix = (
+        errors[errors["mode"] == mode_name]
+        .pivot(index="cell_type", columns="Methode", values="error_rate")
+        .reindex(index=cell_order, columns=method_order)
+    )
+    cmap = plt.get_cmap("RdYlGn_r").copy()
+    cmap.set_bad("#f1f3f5")
+    image = ax.imshow(np.ma.masked_invalid(matrix.to_numpy(dtype=float)), cmap=cmap, vmin=0, vmax=1, aspect="auto")
+    ax.set_title(title, loc="left", fontsize=11, fontweight="bold", pad=6)
+    ax.set_xticks(np.arange(len(method_order)))
+    ax.set_xticklabels(method_order, rotation=35, ha="right", fontsize=7.8)
+    ax.set_yticks(np.arange(len(cell_order)))
+    if show_ylabels:
+        labels = [
+            f"{display_label(label).replace(chr(10), ' ')} (n={int(round(full_support.get(label, 0)))})"
+            for label in cell_order
+        ]
+        ax.set_yticklabels(labels, fontsize=7.4)
+        ax.set_ylabel("Type cellulaire (effectif complet)", fontsize=8.5)
+    else:
+        ax.set_yticklabels([])
+    ax.tick_params(axis="both", length=0)
+
+    for i, _ in enumerate(cell_order):
+        for j, _ in enumerate(method_order):
+            value = matrix.iloc[i, j]
+            if pd.isna(value):
+                continue
+            color = "white" if value <= 0.16 or value >= 0.72 else "#343a40"
+            ax.text(j, i, f"{float(value):.2f}", ha="center", va="center", fontsize=6.2, color=color)
+    for spine in ax.spines.values():
+        spine.set_visible(False)
+    return image
+
+
+def plot_pancreas_inductive_transductive_error_panel() -> None:
+    metrics, errors = collect_pancreas_panel_data()
+    full_support = (
+        errors[errors["mode"] == "Transductif"]
+        .groupby("cell_type")["support_mean"]
+        .mean()
+        .sort_values()
+    )
+    cell_order = full_support.index.tolist()
+
+    fig = plt.figure(figsize=(15.0, 9.8), facecolor="white")
+    grid = GridSpec(
+        3,
+        2,
+        height_ratios=[0.11, 0.57, 0.32],
+        hspace=0.43,
+        wspace=0.12,
+        figure=fig,
+    )
+
+    ax_title = fig.add_subplot(grid[0, :])
+    ax_title.axis("off")
+    ax_title.text(
+        0.0,
+        0.72,
+        "Pancreas - taux d'erreur par type cellulaire et scores globaux",
+        transform=ax_title.transAxes,
+        fontsize=15,
+        fontweight="bold",
+        color="#1f2933",
+    )
+    ax_title.text(
+        0.0,
+        0.25,
+        "Erreur = 1 - rappel apres appariement hongrois ; valeurs moyennes sur 5 seeds. "
+        "Les lignes sont ordonnees des types les plus rares aux plus frequents dans le jeu complet.",
+        transform=ax_title.transAxes,
+        fontsize=9.2,
+        color="#495057",
+    )
+
+    ax_inductive = fig.add_subplot(grid[1, 0])
+    ax_transductive = fig.add_subplot(grid[1, 1])
+    image = draw_error_heatmap(
+        ax_inductive,
+        errors,
+        "Inductif",
+        cell_order,
+        full_support,
+        "A. Inductif - split balanced reinjected, evaluation test",
+        show_ylabels=True,
+    )
+    draw_error_heatmap(
+        ax_transductive,
+        errors,
+        "Transductif",
+        cell_order,
+        full_support,
+        "B. Transductif - jeu complet",
+        show_ylabels=False,
+    )
+    cbar = fig.colorbar(image, ax=[ax_inductive, ax_transductive], fraction=0.023, pad=0.012)
+    cbar.set_label("Taux d'erreur", fontsize=8.5)
+    cbar.ax.tick_params(labelsize=8)
+
+    ax_table_inductive = fig.add_subplot(grid[2, 0])
+    ax_table_transductive = fig.add_subplot(grid[2, 1])
+    draw_pancreas_metric_table(
+        ax_table_inductive,
+        metrics,
+        "Inductif",
+        "C. Metriques inductives (test)",
+    )
+    draw_pancreas_metric_table(
+        ax_table_transductive,
+        metrics,
+        "Transductif",
+        "D. Metriques transductives (jeu complet)",
+    )
+
+    fig.text(
+        0.015,
+        0.012,
+        "Note : l'evaluation inductive porte sur environ 1022 cellules par seed contre 14908 en transductif ; "
+        "pour les classes tres rares, un petit denominateur rend le taux d'erreur beaucoup plus variable.",
+        fontsize=8.3,
+        color="#495057",
+    )
+    fig.savefig(OUT_DIR / "pancreas_inductive_transductive_error_panel.png", dpi=220, bbox_inches="tight")
+    plt.close(fig)
+
+
 def main() -> None:
     metrics = collect_metrics()
     plot_metrics_table(metrics)
     plot_confusion_matrix(metrics)
     plot_inductive_transductive_panel()
+    plot_pancreas_inductive_transductive_error_panel()
 
 
 if __name__ == "__main__":
