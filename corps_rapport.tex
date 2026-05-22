@@ -300,14 +300,17 @@ Dans les formules suivantes, \(y_i\) désigne l'annotation biologique de la cell
 Les métriques globales comme l'ARI, le NMI ou l'ACC donnent une vision générale de la qualité du regroupement, mais elles peuvent rester élevées même si une petite population est mal retrouvée. Les métriques BalancedACC, RareACC et UltraRareACC complètent donc cette lecture en donnant davantage de poids à chaque type cellulaire, indépendamment de sa taille. Elles sont particulièrement importantes dans notre cadre, car l'objectif n'est pas seulement de retrouver les grandes populations pancréatiques, mais aussi de vérifier que les cellules rares ne sont pas absorbées dans des groupes majoritaires.
 
 \subsubsection{Résultats}
-{\color{gray}\itshape
-\begin{itemize}
-  \item Présenter un tableau global des scores par méthode, par dataset et par types cellulaires. Montrer les UMAP comparatifs, matrices de confusion (et temps de calcul).
-  \item Comparer performance globale et performance rare pour montrer les compromis.
-  \item Identifier les familles qui fonctionnent bien globalement et celles qui préservent mieux les populations rares.
-  \item Conclure sur les limites observées qui motivent le développement de scRAW.
-\end{itemize}
-}
+
+Les premiers résultats sur le jeu de données humain de Baron montrent que les métriques globales seules ne suffisent pas à caractériser la qualité biologique du clustering. La figure~\ref{fig:existant_inductive_transductive_panel} rassemble deux situations complémentaires. La partie inductive correspond au scénario H123$\rightarrow$H4 : les modèles sont entraînés sur trois donneurs humains et évalués sur un donneur non vu. Dans ce cadre, scMAE conserve par exemple de bons scores globaux sur le test (NMI=0,831 et ARI=0,834), mais sa RareACC tombe à 0,483. La partie transductive utilise au contraire l'ensemble du jeu de données humain de Baron ; le cas PCA+Leiden montre alors un ARI très élevé (0,913), tout en confondant plusieurs populations rares ou ultra-rares avec des classes plus fréquentes ou biologiquement proches.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\textwidth]{SCRBenchmark/existant_inductive_transductive_panel.png}
+    \caption{Panel de résultats sur le jeu de données humain de Baron. A : comparaison inductive H123$\rightarrow$H4 sur le donneur H4 jamais vu pendant l'entraînement. B : confusion des classes rares et ultra-rares en transductif sur le jeu de données complet pour PCA+Leiden. Les scores globaux NMI/ARI peuvent rester élevés alors que l'identification des populations minoritaires reste fragile.}
+    \label{fig:existant_inductive_transductive_panel}
+\end{figure}
+
+Ces observations motivent directement le développement de scRAW : l'objectif n'est pas seulement d'améliorer un score moyen, mais de construire une représentation dans laquelle les populations minoritaires conservent assez d'influence pour ne pas être noyées dans les classes dominantes.
 
 \section{scRAW}
 
