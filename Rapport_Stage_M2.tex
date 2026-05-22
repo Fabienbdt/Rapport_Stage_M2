@@ -1,1 +1,147 @@
-\input{main.tex}
+\documentclass[11pt,a4paper,oneside]{article}
+
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[french]{babel}
+\usepackage{lmodern}
+\usepackage{microtype}
+\usepackage{geometry}
+\geometry{margin=2.5cm, bindingoffset=0.5cm}
+\usepackage{setspace}
+\onehalfspacing
+\usepackage{graphicx}
+\usepackage{subcaption}
+\usepackage{tikz}
+\usetikzlibrary{shapes.geometric, arrows, positioning}
+\usepackage{booktabs}
+\usepackage{tabularx}
+\usepackage{array}
+\usepackage{multirow}
+\usepackage{enumitem}
+\usepackage{xcolor}
+\usepackage{hyperref}
+\usepackage{fancyhdr}
+\usepackage{csquotes}
+\usepackage{float}
+\usepackage[backend=biber,style=numeric,sorting=none,url=false]{biblatex}
+
+\addbibresource{bibliographie/references.bib}
+\graphicspath{{Images/}{Images/page_de_garde/}{figures/}}
+
+\newcommand{\StageInstitution}{Universit\'e de Bordeaux}
+\newcommand{\StageMaster}{Master Bio-informatique, 2\textsuperscript{e} ann\'ee}
+\newcommand{\StageParcours}{Computational Biology}
+\newcommand{\StagePromotion}{2024-2026}
+\newcommand{\StageType}{Rapport de stage}
+\newcommand{\StageTitle}{Benchmarking interactif, d\'eveloppement de scRAW et \'evaluation inductive pour le clustering scRNA-seq}
+\newcommand{\StageStudent}{Fabien Bidet}
+\newcommand{\StageDate}{Avril 2026}
+\newcommand{\StagePeriod}{Janvier-Juin 2026}
+\newcommand{\StageHost}{LaBRI}
+
+\definecolor{ubblue}{HTML}{0969DA}
+\definecolor{softgray}{HTML}{F6F8FA}
+
+\hypersetup{
+  colorlinks=true,
+  linkcolor=ubblue,
+  urlcolor=ubblue,
+  citecolor=ubblue
+}
+
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[L]{\small \StageStudent}
+\fancyhead[R]{\small Rapport de stage}
+\fancyfoot[C]{\thepage}
+\setlength{\headheight}{14pt}
+
+\setlist[itemize]{itemsep=0.25em, topsep=0.35em}
+\setlist[enumerate]{itemsep=0.25em, topsep=0.35em}
+
+\begin{document}
+
+\pagenumbering{gobble}
+\begin{titlepage}
+\thispagestyle{empty}
+
+% Logos header
+\begin{minipage}{0.28\textwidth}
+  \centering
+  \IfFileExists{Images/page_de_garde/logo_univ_bordeaux.png}
+    {\includegraphics[width=\linewidth,height=1.8cm,keepaspectratio]{Images/page_de_garde/logo_univ_bordeaux.png}}
+    {\fbox{\parbox[c][1.8cm][c]{\linewidth}{\centering Logo\\Univ}}}
+\end{minipage}
+\hfill
+\begin{minipage}{0.44\textwidth}
+  \centering
+  {\Large \textbf{\StageInstitution}}\\
+  \textbf{\StageMaster}\\
+  {\small Parcours : \StageParcours}\\
+  {\small Promotion \StagePromotion}
+\end{minipage}
+\hfill
+\begin{minipage}{0.22\textwidth}
+  \centering
+  \IfFileExists{Images/page_de_garde/logo_labri.png}
+    {\includegraphics[width=\linewidth,height=1.8cm,keepaspectratio]{Images/page_de_garde/logo_labri.png}}
+    {\IfFileExists{Images/page_de_garde/logo_labri.jpg}
+      {\includegraphics[width=\linewidth,height=1.8cm,keepaspectratio]{Images/page_de_garde/logo_labri.jpg}}
+      {\fbox{\parbox[c][1.8cm][c]{\linewidth}{\centering Logo\\LaBRI}}}}
+\end{minipage}
+
+\vspace{1.5cm}
+\begin{center}
+  {\LARGE \textbf{\StageType}}
+\end{center}
+
+\vspace{0.7cm}
+\hrule height 1pt
+\vspace{0.7cm}
+\begin{center}
+  {\LARGE \textbf{\StageTitle}}
+\end{center}
+\vspace{0.7cm}
+\hrule height 1pt
+
+\vspace{1.5cm}
+\begin{center}
+  {\Large \textbf{\StageStudent}}\\[0.4cm]
+  {\large \StageDate}
+\end{center}
+
+\vspace{2.0cm}
+\noindent\textbf{P\'eriode de stage :} \StagePeriod \\
+\noindent\textbf{Organisme d'accueil :} \StageHost~(Laboratoire Bordelais de Recherche en Informatique) \\
+
+\vspace{0.5cm}
+\noindent\textbf{Responsables de stage :}
+\begin{itemize}[leftmargin=1.5em, label=\textbullet, itemsep=0.3em]
+  \item \textbf{Ad\'ela\"ide Raguin} -- Charg\'ee de recherche CNRS, chercheuse au LaBRI (Tutrice de stage)
+  \item \textbf{Victoria Bourgeais} -- Ma\^\i tre de Conf\'erences, chercheuse au LaBRI, Universit\'e de Bordeaux (Encadrante universitaire)
+  \item \textbf{Loann Giovannangeli} -- Ma\^\i tre de Conf\'erences, chercheur au LaBRI, Universit\'e de Bordeaux (Encadrant universitaire)
+  \item \textbf{Patricia Th\'ebault} -- Professeure des Universit\'es, chercheuse au LaBRI, Universit\'e de Bordeaux (Encadrante universitaire)
+\end{itemize}
+
+\vfill
+\end{titlepage}
+
+\cleardoublepage
+\pagenumbering{arabic}
+\pagestyle{fancy}
+\setcounter{page}{1}
+
+\tableofcontents
+
+\cleardoublepage
+\input{corps_rapport}
+
+\cleardoublepage
+\appendix
+\input{annexes}
+
+\cleardoublepage
+\nocite{*}
+\printbibliography[title={Bibliographie}]
+
+\end{document}
