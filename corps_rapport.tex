@@ -333,15 +333,15 @@ Le pipeline général de scRAW est présenté dans la figure~\ref{fig:scraw_pipe
     \label{fig:scraw_pipeline}
 \end{figure}
 
-La matrice prétraitée est ensuite utilisée comme entrée d'un autoencodeur symétrique. Dans la configuration par défaut, l'encodeur comporte trois couches cachées de tailles 512, 256 et 128, puis projette chaque cellule dans un espace latent de dimension 256. Le décodeur suit la structure inverse afin de reconstruire le profil d'expression. Le modèle est entraîné pendant 120 époques, avec un \textit{batch size} de 192, un dropout de 0,3 et un taux d'apprentissage de \(1{,}64 \times 10^{-3}\). Les valeurs complètes sont données en Annexe~\ref{annexe:hyperparametres_scraw}.
+La matrice prétraitée est ensuite utilisée comme entrée d'un autoencodeur symétrique. Dans la configuration par défaut, l'encodeur comporte trois couches cachées de tailles 512, 256 et 128, puis projette chaque cellule dans un espace latent de dimension 256. Le décodeur suit la structure inverse afin de reconstruire le profil d'expression. Le modèle est entraîné pendant 120 époques, avec une taille de mini-lot de 192, un dropout de 0,3 et un taux d'apprentissage de \(1{,}64 \times 10^{-3}\). Les valeurs complètes sont données en Annexe~\ref{annexe:hyperparametres_scraw}.
 
 L'entraînement est divisé en deux phases. Pendant les 55 premières époques, toutes les cellules contribuent de manière uniforme à la reconstruction. Cette phase sert à stabiliser l'espace latent avant d'introduire la pondération. À partir de l'époque 55, scRAW recalcule périodiquement des pseudo-labels et des poids cellulaires à partir de l'espace latent courant. Dans la configuration par défaut, les pseudo-labels sont obtenus avec Leiden et les poids sont mis à jour toutes les 20 époques. Les poids déjà présents sont lissés par une moyenne mobile, avec un momentum de 0,688, afin d'éviter des changements trop brusques au cours de l'apprentissage.
 
-À la fin de l'entraînement, l'encodeur produit l'embedding final de chaque cellule. Le clustering final est ensuite réalisé avec HDBSCAN dans cet espace latent, avec \texttt{min\_cluster\_size}=8, \texttt{min\_samples}=6 et la stratégie de sélection \texttt{eom}. Les points considérés comme bruit par HDBSCAN ne sont pas réassignés dans cette configuration. Les sorties principales de scRAW sont donc l'espace latent, les labels de clusters prédits, les poids cellulaires finaux, le modèle entraîné, l'historique des pertes et les métriques calculées par le pipeline d'évaluation.
+À la fin de l'entraînement, l'encodeur produit l'embedding final de chaque cellule. Le clustering final est ensuite réalisé avec HDBSCAN dans cet espace latent, en demandant des groupes d'au moins 8 cellules et une estimation locale fondée sur 6 voisins. Les points considérés comme bruit par HDBSCAN ne sont pas réassignés dans cette configuration. Les sorties principales de scRAW sont donc l'espace latent, les labels de clusters prédits, les poids cellulaires finaux, le modèle entraîné, l'historique des pertes et les métriques calculées par le pipeline d'évaluation.
 
 \subsection{Fonctions de perte et variantes}
 
-Dans la configuration \texttt{stable\_default} de \texttt{scRAW\_EXPERIMENTAL}, l'objectif optimisé combine trois termes de perte :
+Dans la configuration par défaut, l'objectif optimisé combine trois termes de perte :
 \[
   \mathcal{L}_{\mathrm{total}}
   =
@@ -351,11 +351,11 @@ Dans la configuration \texttt{stable\_default} de \texttt{scRAW\_EXPERIMENTAL}, 
   +
   \lambda_{\mathrm{batch}}\mathcal{L}_{\mathrm{batch}}.
 \]
-Le premier terme reconstruit les profils d'expression, le deuxième contraint localement l'espace latent autour des cellules rares ou isolées, et le troisième réduit l'information de batch visible dans la représentation lorsque plusieurs lots sont présents. Le facteur \(\rho(e)\) augmente progressivement le poids effectif du terme triplet au début de son activation.
+Le premier terme reconstruit les profils d'expression, le deuxième structure localement l'espace latent autour des cellules rares ou isolées, et le troisième réduit l'information de batch visible dans la représentation lorsque plusieurs lots sont présents. Le facteur \(\rho(e)\) augmente progressivement le poids effectif du terme triplet au début de son activation.
 
 \subsubsection*{Reconstruction pondérée}
 
-La perte de reconstruction est le terme principal de scRAW. Dans \texttt{stable\_default}, il s'agit d'une erreur quadratique moyenne (MSE) calculée entre la matrice prétraitée \(X\) et sa reconstruction \(\hat{X}\). Pour une cellule \(i\), on peut l'écrire simplement :
+La perte de reconstruction est le terme principal de scRAW. Dans cette configuration, il s'agit d'une erreur quadratique moyenne (MSE) calculée entre la matrice prétraitée \(X\) et sa reconstruction \(\hat{X}\). Pour une cellule \(i\), on peut l'écrire simplement :
 \[
   \mathcal{L}_{\mathrm{recon},i}
   =
@@ -380,9 +380,19 @@ Pendant la phase initiale, \(\omega_i=1\) pour toutes les cellules. Pendant la p
 \]
 Le résultat est normalisé pour avoir une moyenne proche de 1, puis limité entre 0,385 et 10. Cette borne évite qu'une cellule domine entièrement la perte, tout en empêchant les cellules très fréquentes de disparaître de l'apprentissage.
 
-\subsubsection*{Contrainte triplet rare-aware}
+\subsubsection*{Triplet loss rare-aware}
 
-Le terme \(\mathcal{L}_{\mathrm{triplet}}\) ajoute une contrainte locale dans l'espace latent. Il est activé à partir de l'époque 60, avec un poids \(\lambda_{\mathrm{triplet}}=0{,}0501\), une marge de 0,4 et une montée progressive contrôlée par \(\rho(e)\). Il utilise comme ancres les cellules dont le poids est supérieur ou égal à 1,2, dans la limite de 64 ancres par mini-batch. Pour chaque ancre, la méthode cherche une cellule positive dans le même pseudo-cluster et une cellule négative dans un autre pseudo-cluster. Cette perte encourage donc les cellules rares ou isolées à rester proches de cellules similaires, tout en s'éloignant des groupes voisins.
+La \textit{triplet loss} est une perte de comparaison relative dans l'espace latent. Elle ne cherche pas à reconstruire directement les profils d'expression ; elle agit plutôt sur l'organisation géométrique des embeddings. Pour un triplet composé d'une cellule ancre \(a\), d'une cellule positive \(p\) supposée similaire, et d'une cellule négative \(n\) supposée différente, elle pénalise le modèle lorsque l'ancre n'est pas suffisamment plus proche de \(p\) que de \(n\). Avec une distance \(d\), une marge \(m\) et un ensemble \(\mathcal{T}\) de triplets construits dans le mini-batch, on peut l'écrire :
+\[
+  \mathcal{L}_{\mathrm{triplet}}
+  =
+  \frac{1}{|\mathcal{T}|}
+  \sum_{(a,p,n)\in\mathcal{T}}
+  \max\left(0, d(z_a,z_p) - d(z_a,z_n) + m\right).
+\]
+Ce type de perte est utilisé en apprentissage métrique pour apprendre des représentations où la proximité a un sens, et il a aussi été adapté au clustering scRNA-seq ; par exemple, scHNTL utilise une triplet loss avec des voisins d'ordre élevé pour rapprocher les cellules considérées voisines et éloigner les cellules non voisines \cite{meng_schntl_2025}.
+
+Dans scRAW, ce principe est rendu rare-aware. Le terme est activé à partir de l'époque 60, avec un poids \(\lambda_{\mathrm{triplet}}=0{,}0501\), une marge de 0,4 et une montée progressive contrôlée par \(\rho(e)\). Les ancres sont les cellules dont le poids est supérieur ou égal à 1,2, dans la limite de 64 ancres par mini-batch. Pour chaque ancre, la méthode cherche une cellule positive dans le même pseudo-cluster et une cellule négative dans un autre pseudo-cluster. Cette perte rend donc les groupes rares plus visibles localement dans l'espace latent : elle les rapproche de cellules similaires sans dépendre uniquement du signal global de reconstruction, et les sépare mieux des grands groupes voisins.
 
 \subsubsection*{Correction adversariale de batch}
 
@@ -398,16 +408,16 @@ La recherche a été conduite avec Optuna \cite{akiba2019optuna}. Dans ce cadre,
 
 La première étape a été une recherche large sur le jeu de données Baron Human Pancreas. Cette recherche contient 450 essais Optuna, avec un échantillonneur TPE et 32 essais initiaux. Le score combinait ARI, NMI, F1 macro, BalancedACC et RareACC, avec les poids respectifs 0{,}30, 0{,}25, 0{,}20, 0{,}15 et 0{,}10. Cette phase a permis d'identifier une première configuration très performante, dont le score moyen Optuna est de 0{,}8978. Les dix meilleurs essais ont ensuite été relancés avec trois graines indépendantes pour limiter l'effet d'une initialisation favorable. Dans cette consolidation, cette même configuration reste le meilleur candidat, avec un score moyen de 0{,}8717 sur les trois répétitions. Elle constitue donc un bon point de départ, mais reste optimisée sur un seul jeu de données.
 
-La deuxième étape a cherché une configuration plus générale. L'espace de recherche a été restreint à partir des meilleurs essais sur Baron, puis évalué sur huit jeux de données d'entraînement : Baron Human Pancreas, Kang PBMC, Human testis GSE112013, Macaque retina bipolar, Paul15 bone marrow, Tabula Muris liver, BBAG094 Zeisel et BBAG094 spleen. Cette recherche contient 80 configurations Optuna, chacune évaluée sur les huit datasets d'entraînement, ce qui correspond à 80 évaluations par dataset dans la phase principale. Le score par dataset utilisait ARI, NMI, ACC, F1 macro, BalancedACC, RareACC et UltraRareACC, avec les poids 0{,}20, 0{,}17, 0{,}15, 0{,}13, 0{,}10, 0{,}10 et 0{,}15. Le score agrégé était calculé comme \(0{,}8\) fois la moyenne des scores et \(0{,}2\) fois la moyenne du quart inférieur. Ce choix pénalise les configurations qui fonctionnent bien en moyenne mais échouent sur quelques datasets. Les meilleurs candidats ont ensuite été réévalués sur plusieurs graines et sur des datasets de validation.
+La deuxième étape a cherché une configuration plus générale. L'espace de recherche a été restreint à partir des meilleurs essais sur Baron, puis évalué sur huit jeux de données d'entraînement : Baron Human Pancreas, Kang PBMC, Human testis GSE112013, Macaque retina bipolar, Paul15 bone marrow, Tabula Muris liver, BBAG094 Zeisel et BBAG094 spleen. Cette recherche contient 80 configurations Optuna, chacune évaluée sur les huit jeux de données d'entraînement, ce qui correspond à 80 évaluations par jeu de données dans la phase principale. Le score par jeu de données utilisait ARI, NMI, ACC, F1 macro, BalancedACC, RareACC et UltraRareACC, avec les poids 0{,}20, 0{,}17, 0{,}15, 0{,}13, 0{,}10, 0{,}10 et 0{,}15. Le score agrégé était calculé comme \(0{,}8\) fois la moyenne des scores et \(0{,}2\) fois la moyenne du quart inférieur. Ce choix pénalise les configurations qui fonctionnent bien en moyenne mais échouent sur quelques jeux de données. Les meilleurs candidats ont ensuite été réévalués sur plusieurs graines et sur des jeux de données de validation.
 
-La troisième étape a encore réduit l'espace de recherche autour des meilleurs comportements observés, en ne conservant que les familles de paramètres jugées stables : reconstruction MSE, transformation \texttt{log1p}, pseudo-labels Leiden, clustering final hybride, et une plage plus étroite pour les paramètres de pondération, de triplet loss, de DANN et de HDBSCAN. Elle comporte 19 essais, avec arrêt anticipé des candidats trop faibles. Le score utilisé combine le score moyen, l'écart moyen à la meilleure méthode de référence sur chaque dataset, le pire écart observé et le taux de datasets où notre méthode est au moins au niveau de cette référence.
+La troisième étape a encore réduit l'espace de recherche autour des meilleurs comportements observés, en ne conservant que les familles de paramètres jugées stables : reconstruction MSE, transformation logarithmique, pseudo-labels Leiden, clustering final hybride, et une plage plus étroite pour les paramètres de pondération, de triplet loss, de DANN et de HDBSCAN. Elle comporte 19 essais, avec arrêt anticipé des candidats trop faibles. Le score utilisé combine le score moyen, l'écart moyen à la meilleure méthode de référence sur chaque jeu de données, le pire écart observé et le taux de jeux de données où notre méthode est au moins au niveau de cette référence.
 
-Le meilleur candidat stable présente un score combiné de 0{,}6728 sur 13 datasets évalués. Cette configuration est ensuite devenue la configuration par défaut utilisée dans les expériences présentées ici. Les valeurs exactes sont données en Annexe~\ref{annexe:hyperparametres_scraw}. Les figures d'importance des paramètres sont regroupées en Annexe~\ref{annexe:figures_hyperparametres_scraw}. Elles montrent que les paramètres les plus déterminants changent selon l'échelle de recherche : la stratégie de clustering final et HDBSCAN dominent la recherche Baron, tandis que la recherche multi-datasets fait ressortir le poids minimal des cellules, le nombre d'époques et la correction adversariale. Dans la recherche finale, les paramètres les plus importants sont surtout \texttt{adversarial\_lambda}, \texttt{hdbscan\_min\_cluster\_size}, \texttt{adversarial\_start\_epoch}, \texttt{lr} et \texttt{min\_cell\_weight}. Cela confirme que la configuration finale dépend à la fois de la représentation apprise, de la pondération des cellules rares et de la stratégie de clustering finale.
+Le meilleur candidat stable présente un score combiné de 0{,}6728 sur 13 jeux de données évalués. Cette configuration est ensuite devenue la configuration par défaut utilisée dans les expériences présentées ici. Les valeurs exactes sont données en Annexe~\ref{annexe:hyperparametres_scraw}. Les figures d'importance des paramètres sont regroupées en Annexe~\ref{annexe:figures_hyperparametres_scraw}. Elles montrent que les paramètres les plus déterminants changent selon l'échelle de recherche : la stratégie de clustering final et HDBSCAN dominent la recherche Baron, tandis que la recherche sur plusieurs jeux de données fait ressortir le poids minimal des cellules, le nombre d'époques et la correction adversariale. Dans la recherche finale, les paramètres les plus importants sont surtout le poids de la correction adversariale, la taille minimale des clusters HDBSCAN, l'époque de démarrage de cette correction, le taux d'apprentissage et le poids minimal attribué aux cellules. Cela confirme que la configuration finale dépend à la fois de la représentation apprise, de la pondération des cellules rares et de la stratégie de clustering finale.
 
 \subsection{Résultats et discussion}
 {\color{gray}\itshape
 \begin{itemize}
-  \item Comparer scRAW aux meilleures méthodes de l'état de l'art sur les datasets retenus.
+  \item Comparer scRAW aux meilleures méthodes de l'état de l'art sur les jeux de données retenus.
   \item Montrer les gains et les limites : scores, UMAP, matrices de confusion, visualisation des poids cellulaires.
   \item Discuter le comportement sur classes rares, classes fréquentes et batchs difficiles.
   \item Présenter le coût de calcul et les difficultés rencontrées.
