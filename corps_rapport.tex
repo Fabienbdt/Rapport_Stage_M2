@@ -95,6 +95,8 @@ Bien que ces étapes soient standardisées, elles présentent un risque pour les
 L'effet de batch est un biais technique. Si l'on séquence le même tissu dans deux laboratoires différents, ou sur deux machines différentes, les cellules auront tendance à se regrouper par "laboratoire" plutôt que par "type cellulaire". 
 Il existe des méthodes dédiées pour corriger ce problème (présentées dans le tableau~\ref{tab:batch_correction}), comme ComBat \cite{johnson2007adjusting}, Harmony \cite{korsunsky2019fast}, Scanorama \cite{Hie2019}, ou scVI \cite{Lopez2018scVI}. L'objectif est d'aligner les différents lots pour effacer la signature technique. Cependant, la difficulté est de ne pas "sur-corriger" : en voulant effacer les différences techniques, on risque de gommer de vraies différences biologiques, en particulier celles des populations rares qui pourraient n'apparaître que dans un seul lot.
 
+Une stratégie plus récente, utilisée ensuite dans notre modèle, consiste à apprendre une représentation qui conserve l'information utile tout en rendant le batch difficile à reconnaître. C'est l'idée des DANN (\textit{Domain-Adversarial Neural Networks}) : un réseau principal apprend l'espace latent, tandis qu'un second réseau essaie de prédire le domaine ou le lot expérimental à partir de cet espace. Grâce à une couche d'inversion de gradient, l'encodeur est pénalisé lorsque le batch reste trop facile à prédire, ce qui l'encourage à produire une représentation moins dépendante du lot \cite{ganin2016domain}. Cette logique a déjà été appliquée à des données biologiques, notamment avec scDGN pour aligner des données scRNA-seq entre expériences \cite{ge2021supervised}, puis avec D2AN pour associer correction de batch et annotation des types cellulaires \cite{zhu2024d2an}. Des approches proches, comme ABC, ajoutent également un discriminateur de batch à un autoencodeur afin de limiter l'information technique dans l'espace latent \cite{danino2024abc}. Le point de vigilance reste le même que pour les autres méthodes : si le batch est fortement corrélé à une différence biologique réelle, la correction adversariale peut aussi affaiblir ce signal.
+
 \begin{table}[H]
 \centering
 \renewcommand{\arraystretch}{1.3}
@@ -103,6 +105,7 @@ Il existe des méthodes dédiées pour corriger ce problème (présentées dans 
 \textbf{Outil} & \textbf{Méthodologie} & \textbf{Principe de correction} \\
 \midrule
 ComBat \cite{johnson2007adjusting} & Modèle bayésien empirique & Ajustement des moyennes et variances des gènes par lot \\
+DANN \cite{ganin2016domain} & Réseau de neurones adversarial & Inversion de gradient pour masquer l'information de lot dans l'espace latent \\
 Harmony \cite{korsunsky2019fast} & Soft K-Means itératif & Alignement des cellules similaires de lots différents en PCA \\
 Scanorama \cite{Hie2019} & Mutual Nearest Neighbors (MNN) & Identification des cellules "panoramas" communes entre les lots \\
 scVI \cite{Lopez2018scVI} & Autoencodeur Variationnel (VAE) & Modélisation probabiliste du bruit et des batchs dans l'espace latent \\
