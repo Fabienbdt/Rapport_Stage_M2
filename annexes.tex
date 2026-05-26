@@ -130,6 +130,156 @@ Cette section regroupe les définitions, formules mathématiques et interprétat
 \end{table}
 
 \newpage
+\section{Hyperparamètres de scRAW \texttt{stable\_default}}
+\label{annexe:hyperparametres_scraw}
+
+Cette annexe détaille les hyperparamètres du preset \texttt{stable\_default} utilisé pour décrire scRAW dans le rapport. Dans le code, ce preset est un alias du preset \texttt{default}, lui-même ancré sur \texttt{stable\_generalist\_trial\_0017}.
+
+{\scriptsize
+\setlength{\tabcolsep}{3pt}
+\renewcommand{\arraystretch}{1.15}
+\begin{longtable}{p{0.15\textwidth}p{0.27\textwidth}p{0.20\textwidth}p{0.30\textwidth}}
+\caption{Hyperparamètres du preset \texttt{stable\_default} de scRAW.}
+\label{tab:scraw_stable_default_hyperparams}\\
+\toprule
+\textbf{Bloc} & \textbf{Paramètre} & \textbf{Valeur} & \textbf{Rôle} \\
+\midrule
+\endfirsthead
+\toprule
+\textbf{Bloc} & \textbf{Paramètre} & \textbf{Valeur} & \textbf{Rôle} \\
+\midrule
+\endhead
+\midrule
+\multicolumn{4}{r}{\textit{Suite page suivante}}\\
+\endfoot
+\bottomrule
+\endlastfoot
+
+Prétraitement & \texttt{n\_top\_genes} & 2000 & Nombre de gènes hautement variables conservés. \\
+Prétraitement & \texttt{min\_genes\_per\_cell} & 200 & Filtrage des cellules de mauvaise qualité. \\
+Prétraitement & \texttt{max\_genes\_per\_cell} & \texttt{None} & Pas de borne supérieure sur le nombre de gènes détectés. \\
+Prétraitement & \texttt{min\_cells\_per\_gene} & 3 & Filtrage des gènes très peu détectés. \\
+Prétraitement & \texttt{target\_sum} & 20000 & Normalisation des comptes par cellule. \\
+Prétraitement & \texttt{scale\_max\_value} & 10.0 & Seuil appliqué après standardisation. \\
+Prétraitement & \texttt{hvg\_flavor} & \texttt{seurat} & Méthode de sélection des HVG. \\
+Prétraitement & \texttt{hvg\_strategy} & \texttt{train\_only} & Sélection des HVG sur les données d'entraînement. \\
+Prétraitement & \texttt{dropout\_method} & \texttt{none} & Pas de correction spécifique des zéros. \\
+Prétraitement & \texttt{noise\_level} & 0.0 & Pas de bruit ajouté au prétraitement. \\
+
+Architecture & \texttt{input\_type} & \texttt{processed} & Entrée utilisée par l'autoencodeur. \\
+Architecture & \texttt{hidden\_layers} & \texttt{512,256,128} & Tailles des couches cachées de l'encodeur. \\
+Architecture & \texttt{z\_dim} & 256 & Dimension de l'espace latent. \\
+Architecture & \texttt{dropout} & 0.3 & Dropout dans l'encodeur et le décodeur. \\
+
+Entraînement & \texttt{epochs} & 120 & Nombre total d'époques. \\
+Entraînement & \texttt{warmup\_epochs} & 55 & Phase sans pondération dynamique. \\
+Entraînement & \texttt{lr} & 0.00164076083297036 & Taux d'apprentissage initial. \\
+Entraînement & \texttt{batch\_size} & 192 & Taille des mini-batchs. \\
+Entraînement & \texttt{seed} & 64 & Graine utilisée pour l'entraînement. \\
+Entraînement & \texttt{random\_state} & 64 & Graine de compatibilité pour les étapes non neurales. \\
+
+Reconstruction & \texttt{reconstruction\_distribution} & \texttt{mse} & Perte de reconstruction utilisée. \\
+Reconstruction & \texttt{masking\_rate} & 0.1 & Fraction d'entrées masquées aléatoirement. \\
+Reconstruction & \texttt{masking\_value} & 0.0 & Valeur utilisée pour les entrées masquées. \\
+Reconstruction & \texttt{masked\_recon\_weight} & 0.8 & Poids interne des positions masquées. \\
+Reconstruction & \texttt{masking\_apply\_weighted} & \texttt{True} & Masquage aussi actif pendant la phase pondérée. \\
+Reconstruction & \texttt{nb\_input\_transform} & \texttt{log1p} & Paramètre conservé pour le mode NB, non central ici car la loss est MSE. \\
+Reconstruction & \texttt{nb\_theta} & 19.237616208909103 & Paramètre NB conservé par compatibilité. \\
+Reconstruction & \texttt{nb\_mu\_clip\_max} & 1000000.0 & Borne de sécurité du mode NB. \\
+
+Pondération & \texttt{weight\_exponent} & 0.2 & Intensité de la pondération par taille de pseudo-cluster. \\
+Pondération & \texttt{density\_knn\_k} & 15 & Voisinage utilisé pour estimer la densité locale. \\
+Pondération & \texttt{density\_weight\_exponent} & 1.0 & Exposant de la composante densité. \\
+Pondération & \texttt{density\_weight\_clip} & 3.0 & Borne supérieure avant normalisation de la densité. \\
+Pondération & \texttt{weight\_fusion\_mode} & \texttt{multiplicative} & Fusion des composantes cluster et densité. \\
+Pondération & \texttt{cluster\_weight\_power} & 1.0 & Puissance appliquée à la composante cluster. \\
+Pondération & \texttt{density\_weight\_power} & 1.0 & Puissance appliquée à la composante densité. \\
+Pondération & \texttt{cluster\_density\_alpha} & 0.3483603718613933 & Paramètre de fusion additive, conservé mais non utilisé par la fusion multiplicative. \\
+Pondération & \texttt{dynamic\_weight\_momentum} & 0.6884621079434989 & Lissage des poids entre deux mises à jour. \\
+Pondération & \texttt{dynamic\_weight\_update\_interval} & 20 & Fréquence de recalcul des poids. \\
+Pondération & \texttt{min\_cell\_weight} & 0.3845423008053828 & Borne inférieure du poids cellulaire final. \\
+Pondération & \texttt{max\_cell\_weight} & 10.0 & Borne supérieure du poids cellulaire final. \\
+
+Pseudo-labels & \texttt{pseudo\_label\_method} & \texttt{leiden} & Méthode utilisée pour les pseudo-clusters. \\
+Pseudo-labels & \texttt{pseudo\_leiden\_resolution\_strategy} & \texttt{scraw\_default} & Recherche de résolution Leiden utilisée par scRAW. \\
+Pseudo-labels & \texttt{pseudo\_leiden\_target\_clusters} & 0 & Pas de cible explicite imposée. \\
+Pseudo-labels & \texttt{n\_clusters} & 0 & Pas de nombre de clusters fixé manuellement. \\
+Pseudo-labels & \texttt{unsupervised\_k\_fallback} & 0 & Pas de fallback manuel de \(K\). \\
+Pseudo-labels & \texttt{unsupervised\_k\_selection} & \texttt{heuristic} & Estimation heuristique de \(K\) si nécessaire. \\
+Pseudo-labels & \texttt{unsupervised\_k\_min} & 8 & Borne minimale de \(K\). \\
+Pseudo-labels & \texttt{unsupervised\_k\_max} & 30 & Borne maximale de \(K\). \\
+Pseudo-labels & \texttt{unsupervised\_k\_num\_candidates} & 12 & Nombre maximal de candidats \(K\). \\
+Pseudo-labels & \texttt{unsupervised\_k\_pca\_dim} & 32 & Dimension PCA éventuelle pour choisir \(K\). \\
+Pseudo-labels & \texttt{unsupervised\_k\_eval\_sample\_size} & 3000 & Taille d'échantillon pour les scores internes. \\
+Pseudo-labels & \texttt{unsupervised\_k\_stability\_runs} & 5 & Nombre de répétitions pour la stabilité. \\
+Pseudo-labels & \texttt{unsupervised\_k\_stability\_sample\_size} & 4000 & Taille d'échantillon pour la stabilité. \\
+Pseudo-labels & \texttt{unsupervised\_k\_weight\_stability} & 0.45 & Poids du score de stabilité. \\
+Pseudo-labels & \texttt{unsupervised\_k\_weight\_silhouette} & 0.25 & Poids du score de silhouette. \\
+Pseudo-labels & \texttt{unsupervised\_k\_weight\_ch} & 0.2 & Poids du score Calinski-Harabasz. \\
+Pseudo-labels & \texttt{unsupervised\_k\_weight\_db} & 0.1 & Poids du score Davies-Bouldin. \\
+Pseudo-labels & \texttt{unsupervised\_k\_weight\_tiny\_clusters} & 0.2 & Pénalité des très petits clusters. \\
+Pseudo-labels & \texttt{unsupervised\_k\_min\_cluster\_fraction} & 0.005 & Seuil définissant un très petit cluster. \\
+Pseudo-labels & \texttt{unsupervised\_k\_overseg\_penalty} & 0.25 & Pénalité de sur-segmentation. \\
+Pseudo-labels & \texttt{unsupervised\_k\_underseg\_penalty} & 0.05 & Pénalité de sous-segmentation. \\
+
+Triplet & \texttt{rare\_loss\_type} & \texttt{triplet} & Type de perte rare-aware. \\
+Triplet & \texttt{rare\_triplet\_weight} & 0.05007581780188212 & Poids de la triplet loss. \\
+Triplet & \texttt{rare\_triplet\_start\_epoch} & 60 & Début de la triplet loss. \\
+Triplet & \texttt{rare\_triplet\_margin} & 0.4 & Marge de séparation. \\
+Triplet & \texttt{rare\_triplet\_min\_weight} & 1.2 & Poids minimal pour choisir une ancre. \\
+Triplet & \texttt{max\_triplet\_anchors\_per\_batch} & 64 & Nombre maximal d'ancres par mini-batch. \\
+
+Batch & \texttt{use\_batch\_conditioning} & \texttt{True} & Activation de la branche batch si plusieurs lots existent. \\
+Batch & \texttt{batch\_correction\_key} & \texttt{batch} & Colonne de métadonnées utilisée pour le batch. \\
+Batch & \texttt{adversarial\_batch\_weight} & 0.11763398875166495 & Poids de la perte adversariale batch. \\
+Batch & \texttt{adversarial\_lambda} & 1.0 & Intensité de l'inversion de gradient. \\
+Batch & \texttt{adversarial\_start\_epoch} & 30 & Début de la branche adversariale. \\
+Batch & \texttt{adversarial\_ramp\_epochs} & 30 & Durée de montée progressive du signal adversarial. \\
+Batch & \texttt{mmd\_batch\_weight} & 0.0 & Terme MMD batch désactivé. \\
+
+Clustering final & \texttt{clustering\_method} & \texttt{hdbscan} & Méthode de clustering finale. \\
+Clustering final & \texttt{hdbscan\_min\_cluster\_size} & 8 & Taille minimale d'un cluster HDBSCAN. \\
+Clustering final & \texttt{hdbscan\_min\_samples} & 6 & Nombre minimal d'échantillons HDBSCAN. \\
+Clustering final & \texttt{hdbscan\_cluster\_selection\_method} & \texttt{eom} & Stratégie de sélection des clusters. \\
+Clustering final & \texttt{hdbscan\_reassign\_noise} & \texttt{False} & Pas de réassignation des points bruit. \\
+Clustering final & \texttt{final\_target\_k} & 0 & Pas de nombre final de clusters imposé. \\
+Clustering final & \texttt{hdbscan\_scan\_enabled} & \texttt{False} & Pas de grille finale HDBSCAN. \\
+Clustering final & \texttt{hdbscan\_scan\_eval\_sample\_size} & 3000 & Paramètre conservé pour compatibilité. \\
+Clustering final & \texttt{hdbscan\_scan\_include\_alternative\_method} & \texttt{True} & Paramètre conservé pour compatibilité. \\
+
+Suivi & \texttt{capture\_embedding\_snapshots} & \texttt{False} & Pas de capture systématique d'embeddings intermédiaires. \\
+Suivi & \texttt{snapshot\_interval\_epochs} & 10 & Intervalle théorique de snapshots si activés. \\
+\end{longtable}
+}
+
+\newpage
+\section{Figures de recherche d'hyperparamètres scRAW}
+\label{annexe:figures_hyperparametres_scraw}
+
+Cette annexe regroupe les sorties Optuna d'importance moyenne des hyperparamètres pour les trois recherches utilisées dans la construction de \texttt{stable\_default}.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\textwidth,height=0.72\textheight,keepaspectratio]{hyperparametres_scraw/baron_param_importances_mean5_top30.png}
+    \caption{Importance des hyperparamètres pour la recherche large sur Baron Human Pancreas.}
+    \label{fig:scraw_hparam_importance_baron}
+\end{figure}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\textwidth,height=0.72\textheight,keepaspectratio]{hyperparametres_scraw/generalist8_param_importances_mean5_top30.png}
+    \caption{Importance des hyperparamètres pour la recherche généraliste sur huit jeux de données.}
+    \label{fig:scraw_hparam_importance_generalist8}
+\end{figure}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\textwidth,height=0.72\textheight,keepaspectratio]{hyperparametres_scraw/stable_generalist_param_importances_mean5_top30.png}
+    \caption{Importance des hyperparamètres pour la recherche restreinte \texttt{stable\_generalist}.}
+    \label{fig:scraw_hparam_importance_stable_generalist}
+\end{figure}
+
+\newpage
 \section{Screenshots de l'interface graphique SCRBenchmark}
 \label{annexe:screenshots}
 

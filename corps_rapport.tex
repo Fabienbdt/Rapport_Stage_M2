@@ -315,44 +315,86 @@ Ces observations motivent directement le développement de scRAW : l'objectif n'
 \section{scRAW}
 
 \subsection{Positionnement et motivation}
-{\color{gray}\itshape
-\begin{itemize}
-  \item Présenter scRAW comme une réponse aux limites observées dans la comparaison de l'existant.
-  \item Expliquer l'objectif : apprendre un espace latent qui conserve les structures globales tout en donnant plus d'importance aux populations rares ou peu denses tout en prévenant l'effet batch de manière interne à l'algorithme.
-  \item Distinguer scRAW des méthodes classiques et des autoencodeurs standards : pondération dynamique, objectif rare-aware, possibilité d'intégrer d'autres pertes.
-  \item Formuler clairement l'hypothèse : si les cellules minoritaires pèsent davantage pendant l'apprentissage, elles ont plus de chances de rester séparables dans l'espace latent.
-\end{itemize}
-}
+
+scRAW a été développé à partir du constat présenté dans la section précédente : les méthodes de clustering peuvent obtenir de bons scores globaux tout en retrouvant mal les populations cellulaires les plus petites. L'objectif n'est donc pas seulement de construire un nouvel autoencodeur, mais de modifier la manière dont les cellules contribuent à l'apprentissage. Les cellules situées dans de petits groupes ou dans des zones peu denses de l'espace latent reçoivent un poids plus élevé dans la fonction de perte. Elles influencent ainsi davantage la représentation apprise.
+
+La méthode conserve une structure volontairement simple. Elle repose sur un autoencodeur MLP, une pondération dynamique des cellules, une contrainte locale de type triplet loss et une correction adversariale de l'effet de batch lorsque plusieurs lots sont présents. Dans la suite, la description correspond uniquement à la configuration \texttt{stable\_default} du code \texttt{scRAW\_EXPERIMENTAL}. Cette configuration est l'alias stable du preset \texttt{default}, ancré sur \texttt{stable\_generalist\_trial\_0017}. Les autres presets présents dans le dépôt ne sont pas détaillés ici.
 
 \subsection{Pipeline}
-{\color{gray}\itshape
-\begin{itemize}
-  \item Décrire les étapes : prétraitement, autoencodeur, espace latent, estimation de rareté ou de densité, pondération, pertes d'apprentissage, clustering final = MON SCHÉMA
-  \item Expliquer le rôle de chaque bloc dans le pipeline et les paramètres importants.
-  \item Présenter les sorties : embeddings, labels prédits, poids cellulaires, modèle entraîné, figures, métriques.
-\end{itemize}
-}
+
+Le pipeline général de scRAW est présenté dans la figure~\ref{fig:scraw_pipeline}. Il commence par un prétraitement standard des données scRNA-seq. Les cellules ayant moins de 200 gènes détectés sont retirées, les gènes présents dans moins de 3 cellules sont filtrés, puis les comptes sont normalisés à 20\,000 par cellule et transformés par \(\log(1+x)\). La configuration \texttt{stable\_default} conserve ensuite les 2\,000 gènes les plus variables selon la méthode Seurat, puis applique une standardisation gène par gène avec un seuillage dans l'intervalle \([-10,10]\). Aucune correction de batch séparée n'est appliquée à cette étape ; la prise en compte du batch intervient ensuite dans le modèle.
+
+\begin{figure}[H]
+    \centering
+    \IfFileExists{Images/SCRAW_PIPELINE/scraw_FR.pdf}
+      {\includegraphics[width=\textwidth,height=0.72\textheight,keepaspectratio]{Images/SCRAW_PIPELINE/scraw_FR.pdf}}
+      {\includesvg[inkscapelatex=false,width=\textwidth,height=0.72\textheight,keepaspectratio]{Images/SCRAW_PIPELINE/scraw_FR}}
+    \caption{Pipeline général de scRAW. Le modèle apprend un espace latent par autoencodeur, met à jour des poids cellulaires à partir de pseudo-clusters et de la densité locale, puis réalise le clustering final dans l'espace latent.}
+    \label{fig:scraw_pipeline}
+\end{figure}
+
+La matrice prétraitée est ensuite utilisée comme entrée d'un autoencodeur symétrique. Dans la configuration \texttt{stable\_default}, l'encodeur comporte trois couches cachées de tailles 512, 256 et 128, puis projette chaque cellule dans un espace latent de dimension 256. Le décodeur suit la structure inverse afin de reconstruire le profil d'expression. Le modèle est entraîné pendant 120 époques, avec un \textit{batch size} de 192, un dropout de 0,3 et un taux d'apprentissage de \(1{,}64 \times 10^{-3}\). Les valeurs complètes sont données en Annexe~\ref{annexe:hyperparametres_scraw}.
+
+L'entraînement est divisé en deux phases. Pendant les 55 premières époques, toutes les cellules contribuent de manière uniforme à la reconstruction. Cette phase sert à stabiliser l'espace latent avant d'introduire la pondération. À partir de l'époque 55, scRAW recalcule périodiquement des pseudo-labels et des poids cellulaires à partir de l'espace latent courant. Dans \texttt{stable\_default}, les pseudo-labels sont obtenus avec Leiden et les poids sont mis à jour toutes les 20 époques. Les poids déjà présents sont lissés par une moyenne mobile, avec un momentum de 0,688, afin d'éviter des changements trop brusques au cours de l'apprentissage.
+
+À la fin de l'entraînement, l'encodeur produit l'embedding final de chaque cellule. Le clustering final est ensuite réalisé avec HDBSCAN dans cet espace latent, avec \texttt{min\_cluster\_size}=8, \texttt{min\_samples}=6 et la stratégie de sélection \texttt{eom}. Les points considérés comme bruit par HDBSCAN ne sont pas réassignés dans cette configuration. Les sorties principales de scRAW sont donc l'espace latent, les labels de clusters prédits, les poids cellulaires finaux, le modèle entraîné, l'historique des pertes et les métriques calculées par le pipeline d'évaluation.
 
 \subsection{Fonctions de perte et variantes}
-{\color{gray}\itshape
-\begin{itemize}
-  \item Décrire la pondération de la loss et son lien avec les populations rares.
-  \item Présenter les variantes testées : pondération dynamique, DANN, triplet loss, fine-tuning ou autres variantes effectivement retenues.
-  \item Expliquer quand les poids cellulaires sont calculés ou mis à jour.
-  \item Discuter les compromis : amélioration des rares, stabilité globale, sensibilité aux hyperparamètres.
-\end{itemize}
-}
+
+La perte principale de scRAW est une perte de reconstruction. Dans la configuration \texttt{stable\_default}, il s'agit d'une MSE calculée entre la matrice prétraitée \(X\) et sa reconstruction \(\hat{X}\). Pour une cellule \(i\), on peut l'écrire simplement :
+\[
+  \mathcal{L}_{\mathrm{recon},i}
+  =
+  \frac{1}{G}\sum_{g=1}^{G}(\hat{X}_{i,g}-X_{i,g})^2,
+\]
+où \(G\) est le nombre de gènes conservés après prétraitement. Une fraction de 10\,\% des entrées est masquée aléatoirement pendant l'entraînement, avec une valeur de masquage fixée à 0. Les positions masquées reçoivent un poids interne de 0,8 dans le calcul de la reconstruction. Ce masquage est aussi actif pendant la phase pondérée.
+
+La différence principale avec un autoencodeur standard vient du facteur \(\omega_i\), qui module la contribution de chaque cellule :
+\[
+  \mathcal{L}_{\mathrm{recon,ponderee}}
+  =
+  \frac{1}{N}\sum_{i=1}^{N}
+  \omega_i\,\mathcal{L}_{\mathrm{recon},i}.
+\]
+Pendant la phase initiale, \(\omega_i=1\) pour toutes les cellules. Pendant la phase pondérée, \(\omega_i\) est recalculé à partir de deux informations. La première est la taille du pseudo-cluster Leiden auquel appartient la cellule : plus le pseudo-cluster est petit, plus le poids augmente. La seconde est la densité locale dans l'espace latent, estimée par la distance au 15\textsuperscript{e} plus proche voisin : une cellule plus isolée reçoit un poids plus élevé. Dans \texttt{stable\_default}, ces deux composantes sont fusionnées de manière multiplicative :
+\[
+  \tilde{\omega}_i
+  =
+  \omega^{\mathrm{cluster}}_i
+  \times
+  \omega^{\mathrm{densite}}_i.
+\]
+Le résultat est normalisé pour avoir une moyenne proche de 1, puis limité entre 0,385 et 10. Cette borne évite qu'une cellule domine entièrement la perte, tout en empêchant les cellules très fréquentes de disparaître de l'apprentissage.
+
+La perte totale ajoute deux termes à cette reconstruction pondérée :
+\[
+  \mathcal{L}_{\mathrm{total}}
+  =
+  \mathcal{L}_{\mathrm{recon,ponderee}}
+  +
+  \rho(e)\lambda_{\mathrm{triplet}}\mathcal{L}_{\mathrm{triplet}}
+  +
+  \lambda_{\mathrm{batch}}\mathcal{L}_{\mathrm{batch}}.
+\]
+Le facteur \(\rho(e)\) augmente progressivement le poids effectif du terme triplet au début de son activation. Ce terme est activé à partir de l'époque 60, avec un poids \(\lambda_{\mathrm{triplet}}=0{,}0501\). Il utilise comme ancres les cellules dont le poids est supérieur ou égal à 1,2, dans la limite de 64 ancres par mini-batch. Pour chaque ancre, la méthode cherche une cellule positive dans le même pseudo-cluster et une cellule négative dans un autre pseudo-cluster. Cette contrainte agit directement sur l'espace latent : elle encourage les cellules rares ou isolées à rester proches de cellules similaires, tout en s'éloignant des groupes voisins.
+
+Le terme \(\mathcal{L}_{\mathrm{batch}}\) correspond à la correction adversariale de l'effet de lot. Une petite tête de classification essaie de prédire le batch à partir de l'embedding latent. Grâce à l'inversion de gradient, l'encodeur est poussé à produire une représentation dans laquelle le batch est moins reconnaissable. Dans \texttt{stable\_default}, cette branche est activée si au moins deux batchs sont disponibles, avec \(\lambda_{\mathrm{batch}}=0{,}1176\). Le signal adversarial commence à l'époque 30 et augmente progressivement sur 30 époques.
+
+La variante décrite ici correspond donc à la version complète retenue dans \texttt{stable\_default} : reconstruction MSE, pondération dynamique par rareté et densité, triplet loss centrée sur les cellules de fort poids, correction adversariale de batch et clustering final HDBSCAN. Le code permet d'isoler certaines de ces composantes pour des ablations, mais ces variantes ne sont pas utilisées pour définir la configuration stable décrite dans cette section.
 
 \subsection{Recherche d'hyperparamètres}
-{\color{gray}\itshape
-\begin{itemize}
-  \item Décrire ce qui a été exploré : architecture, dimension latente, epochs, force de pondération, clustering final, pertes, prétraitement latent.
-  \item Préciser la stratégie : recherche large, ablations ciblées, consolidation finale, répétitions avec plusieurs seeds.
-  \item Expliquer les critères de sélection : score global, RareACC, UltraRareACC, BalancedACC, stabilité.
-  \item Montrer les configurations qui améliorent les rares, celles qui échouent et celles qui créent un mauvais compromis.
-  \item Prévoir une figure Optuna ou un tableau d'ablation.
-\end{itemize}
-}
+
+La configuration \texttt{stable\_default} n'a pas été fixée à partir d'un seul essai. Elle provient d'une suite de recherches d'hyperparamètres réalisées dans \texttt{scRAW\_EXPERIMENTAL/results}. L'objectif était de conserver une bonne performance globale tout en évitant que les populations rares soient absorbées par les classes majoritaires. Les paramètres explorés concernaient l'architecture de l'autoencodeur, la dimension latente, le nombre d'époques, le taux d'apprentissage, la reconstruction, la pondération dynamique, la triplet loss, la correction adversariale de batch et le clustering final.
+
+La recherche a été conduite avec Optuna \cite{akiba2019optuna}. Dans ce cadre, chaque essai correspond à une configuration complète. Optuna propose d'abord des configurations initiales, puis utilise les résultats déjà observés pour privilégier les zones de l'espace de recherche qui semblent plus prometteuses. Pour scRAW, chaque essai est exécuté avec le même pipeline que les autres expériences : préparation de la configuration, entraînement du modèle, clustering final, calcul des métriques et sauvegarde des résultats. Le score optimisé est un score composite construit à partir des métriques de clustering, afin de ne pas sélectionner uniquement une configuration bonne sur l'ARI ou la NMI mais faible sur les classes rares.
+
+La première étape a été une recherche large sur le jeu de données Baron Human Pancreas. Cette recherche contient 450 essais Optuna, avec un échantillonneur TPE et 32 essais initiaux. Le score combinait ARI, NMI, F1 macro, BalancedACC et RareACC, avec les poids respectifs 0{,}30, 0{,}25, 0{,}20, 0{,}15 et 0{,}10. Cette phase a permis d'identifier une première configuration très performante, le \texttt{trial\_0206}, dont le score moyen Optuna est 0{,}8978. Les dix meilleurs essais ont ensuite été relancés avec trois graines indépendantes pour limiter l'effet d'une initialisation favorable. Dans cette consolidation, le \texttt{trial\_0206} reste le meilleur candidat, avec un score moyen de 0{,}8717 sur les trois répétitions. Cette configuration constitue donc un bon point de départ, mais elle reste optimisée sur un seul jeu de données.
+
+La deuxième étape a cherché une configuration plus générale. Elle correspond au dossier \texttt{generalist\_ultra\_search\_20260327\_154831}. L'espace de recherche a été restreint à partir des meilleurs essais Baron, puis évalué sur huit jeux de données d'entraînement : Baron Human Pancreas, Kang PBMC, Human testis GSE112013, Macaque retina bipolar, Paul15 bone marrow, Tabula Muris liver, BBAG094 Zeisel et BBAG094 spleen. Cette recherche contient 80 configurations Optuna, chacune évaluée sur les huit datasets d'entraînement, ce qui correspond à 80 évaluations par dataset dans la phase principale. Le score par dataset utilisait ARI, NMI, ACC, F1 macro, BalancedACC, RareACC et UltraRareACC, avec les poids 0{,}20, 0{,}17, 0{,}15, 0{,}13, 0{,}10, 0{,}10 et 0{,}15. Le score agrégé était calculé comme \(0{,}8\) fois la moyenne des scores et \(0{,}2\) fois la moyenne du quart inférieur. Ce choix pénalise les configurations qui fonctionnent bien en moyenne mais échouent sur quelques datasets. Les meilleurs candidats ont ensuite été réévalués sur plusieurs graines et sur des datasets de validation.
+
+La troisième étape a encore réduit l'espace de recherche autour des meilleurs comportements observés. Elle correspond à la branche \texttt{stable\_generalist} du dossier \texttt{trial206\_default\_v6\_search\_20260415\_161134}. Cette recherche ne conserve que les familles de paramètres jugées stables : reconstruction MSE, transformation \texttt{log1p}, pseudo-labels Leiden, clustering final en mode \texttt{best\_of\_both}, et une plage plus étroite pour les paramètres de pondération, de triplet loss, de DANN et de HDBSCAN. Elle comporte 19 essais, avec arrêt anticipé des candidats trop faibles. Le score utilisé, appelé \texttt{dominance\_mix} dans le code, combine le score moyen, l'écart moyen à la meilleure méthode non-scRAW sur chaque dataset, le pire écart observé et le taux de datasets où scRAW est au moins au niveau de cette référence.
+
+Le meilleur candidat stable est \texttt{stable\_generalist\_trial\_0017}, avec un score \texttt{dominance\_mix} de 0{,}6728 sur 13 datasets évalués. Cette configuration est ensuite devenue le preset \texttt{default}, et \texttt{stable\_default} en est l'alias utilisé dans les expériences présentées ici. Les valeurs exactes sont données en Annexe~\ref{annexe:hyperparametres_scraw}. Les figures d'importance des paramètres sont regroupées en Annexe~\ref{annexe:figures_hyperparametres_scraw}. Elles montrent que les paramètres les plus déterminants changent selon l'échelle de recherche : le clustering final et HDBSCAN dominent la recherche Baron, tandis que la recherche multi-datasets fait ressortir le poids minimal des cellules, le nombre d'époques et la correction adversariale. Dans la recherche finale, les paramètres les plus importants sont surtout \texttt{adversarial\_lambda}, \texttt{hdbscan\_min\_cluster\_size}, \texttt{adversarial\_start\_epoch}, \texttt{lr} et \texttt{min\_cell\_weight}. Cela confirme que la configuration finale dépend à la fois de la représentation apprise, de la pondération des cellules rares et de la stratégie de clustering finale.
 
 \subsection{Résultats et discussion}
 {\color{gray}\itshape
