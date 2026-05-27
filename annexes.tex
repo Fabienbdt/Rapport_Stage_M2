@@ -170,6 +170,65 @@ Les tableaux suivants présentent les résultats bruts détaillés par jeu de do
 Ces résultats détaillés permettent d'analyser le comportement individuel de chaque méthode sur chacun des jeux de données, offrant ainsi une vision plus fine et contrastée que les seules moyennes globales.
 
 \newpage
+\section{Étude d'ablation de scRAW}
+\label{annexe:ablation_scraw}
+
+Cette section présente l'étude d'ablation menée pour valider l'apport individuel de chaque composante de \textbf{scRAW} (la pondération dynamique, la perte triplet rare-aware et la correction adversariale de batch DANN). Toutes les variantes ont été entraînées sur le jeu de données Baron Human Pancreas en utilisant HDBSCAN comme algorithme de clustering final.
+
+Le Tableau~\ref{tab:scraw_ablation} détaille les scores obtenus pour les variantes suivantes :
+\begin{itemize}
+    \item \textbf{MSE} : Autoencodeur classique avec une perte MSE standard sans pondération, sans triplet loss et sans correction adversariale.
+    \item \textbf{Weighted MSE} : Variante incluant la pondération dynamique des cellules par taille de pseudo-cluster et densité locale, mais sans triplet loss ni correction adversariale.
+    \item \textbf{Weighted + triplet} : Autoencodeur pondéré avec triplet loss rare-aware, sans correction de batch adversariale.
+    \item \textbf{Weighted + DANN} : Autoencodeur pondéré avec correction adversariale (DANN), sans triplet loss.
+    \item \textbf{Full (scRAW)} : Modèle complet associant la pondération dynamique, la triplet loss et la branche adversariale.
+    \item \textbf{Full single update} : Modèle scRAW complet, mais où la mise à jour des poids cellulaires n'est effectuée qu'une seule fois au lieu d'être actualisée périodiquement.
+    \item \textbf{Full density-only} : Modèle scRAW complet, mais où la pondération des cellules repose uniquement sur la densité locale (la composante liée à la taille des pseudo-clusters est désactivée).
+    \item \textbf{Full cluster-size-only} : Modèle scRAW complet, mais où la pondération repose uniquement sur la taille des pseudo-clusters Leiden (la composante liée à la densité locale est désactivée).
+\end{itemize}
+
+\begin{table}[H]
+\centering
+\small
+\renewcommand{\arraystretch}{1.15}
+\begin{tabularx}{\textwidth}{X c c c c c c c r}
+\toprule
+\textbf{Variante} & \textbf{ARI} & \textbf{NMI} & \textbf{ACC} & \textbf{B. ACC} & \textbf{Rare} & \textbf{U. Rare} & \textbf{scIB-E} & \textbf{Temps (s)} \\
+\midrule
+MSE & 0,189 & 0,397 & 0,407 & 0,427 & 0,350 & 0,695 & 0,427 & 70,8 \\
+Weighted MSE & 0,269 & 0,455 & 0,456 & 0,520 & 0,390 & 0,686 & 0,426 & 518,2 \\
+Weighted + triplet & 0,851 & 0,871 & 0,885 & 0,813 & 0,809 & 0,805 & 0,431 & 454,9 \\
+Weighted + DANN & 0,246 & 0,560 & 0,545 & 0,611 & 0,491 & 0,653 & 0,574 & 279,7 \\
+\midrule
+\textbf{Full (scRAW)} & \textbf{0,916} & \textbf{0,884} & \textbf{0,934} & \textbf{0,870} & \textbf{0,896} & \textbf{0,814} & \textbf{0,590} & \textbf{337,9} \\
+Full single update & 0,900 & 0,873 & 0,913 & 0,747 & 0,793 & 0,686 & 0,599 & 285,9 \\
+Full density-only & 0,920 & 0,888 & 0,926 & 0,753 & 0,796 & 0,703 & 0,587 & 334,4 \\
+Full cluster-size-only & 0,723 & 0,777 & 0,800 & 0,869 & 0,897 & 0,949 & 0,596 & 347,2 \\
+\bottomrule
+\end{tabularx}
+\caption{Résultats de l'étude d'ablation des composantes de scRAW sur le jeu de données Baron Human Pancreas (clustering final HDBSCAN). B. ACC : BalancedACC ; Rare : RareACC ; U. Rare : UltraRareACC ; scIB-E : score d'intégration de batch scIB (entropie de mélange).}
+\label{tab:scraw_ablation}
+\end{table}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.9\textwidth]{stable_default_mse_ablations_20260526_210436/figures/stable_default_mse_ablation_key_metrics_barplot.png}
+    \caption{Comparaison graphique des performances des variantes d'ablation de scRAW pour les métriques de clustering global (ARI, NMI, ACC), la détection des classes rares (RareACC, UltraRareACC) et le score d'intégration de batch (scIB-E).}
+    \label{fig:scraw_ablation_barplot}
+\end{figure}
+
+\subsection*{Discussion des résultats}
+
+L'analyse de ces résultats d'ablation permet de tirer plusieurs enseignements essentiels sur l'architecture de scRAW :
+\begin{itemize}
+    \item \textbf{Importance de la pondération de la reconstruction} : L'autoencodeur classique (\textit{MSE}) obtient des scores très limités (ARI $= 0{,}189$ et NMI $= 0{,}397$). L'activation de la pondération dynamique (\textit{Weighted MSE}) augmente nettement ces scores (ARI $= 0{,}269$ et NMI $= 0{,}455$) ainsi que la BalancedACC ($0{,}520$ contre $0{,}427$), ce qui confirme que moduler l'importance des cellules selon leur rareté et leur densité locale aide à structurer l'espace latent de manière plus équitable.
+    \item \textbf{Rôle fondamental de la triplet loss rare-aware} : L'ajout de la perte triplet (\textit{Weighted + triplet}) engendre une amélioration spectaculaire sur l'ensemble des critères. L'ARI bondit à $0{,}851$, la BalancedACC à $0{,}813$, et les exactitudes sur les populations rares et ultra-rares dépassent $0{,}80$. Cela montre que guider explicitement l'organisation géométrique des embeddings en rapprochant les cellules similaires et en isolant les petits groupes est indispensable pour obtenir une partition biologique claire et robuste.
+    \item \textbf{Synergie avec la correction adversariale} : L'utilisation de DANN seul avec la pondération (\textit{Weighted + DANN}) améliore considérablement le score de correction de batch (l'entropie scIB-E grimpe à $0{,}574$) mais reste inefficace pour former des groupes biologiquement cohérents sans le terme de triplet loss. Le modèle complet (\textit{Full}) réunit le meilleur des deux aspects : il maintient une performance de clustering très élevée (ARI $= 0{,}916$, ACC $= 0{,}934$) tout en garantissant un excellent niveau d'intégration de batch (scIB-E $= 0{,}590$).
+    \item \textbf{Rythme de mise à jour des poids} : Dans la variante \textit{Full single update}, recalculer les poids une seule fois plutôt que périodiquement dégrade la détection des populations les plus petites (l'Ultra-rare ACC chute de $0{,}814$ à $0{,}686$). L'actualisation continue des poids au fil de l'apprentissage est donc cruciale pour s'adapter à l'évolution de la topologie de l'espace latent.
+    \item \textbf{Complémentarité des composantes de pondération} : Se restreindre à la seule densité locale (\textit{Full density-only}) offre la meilleure ARI globale ($0{,}920$) mais diminue la préservation des classes ultra-rares (Ultra-rare ACC $= 0{,}703$). Inversement, la pondération par taille de pseudo-cluster seule (\textit{Full cluster-size-only}) favorise massivement les populations très petites (Ultra-rare ACC $= 0{,}949$) mais dégrade le partitionnement global (ARI $= 0{,}723$). La combinaison multiplicative des deux termes (modèle complet \textit{Full}) permet d'atteindre le compromis le plus équilibré et le plus robuste.
+\end{itemize}
+
+\newpage
 \section{Hyperparamètres de la configuration de référence scRAW}
 \label{annexe:hyperparametres_scraw}
 

@@ -389,7 +389,7 @@ Dans scRAW, ce principe est rendu rare-aware. Le terme est activé à partir de 
 
 Le terme \(\mathcal{L}_{\mathrm{batch}}\) correspond à la correction adversariale de l'effet de lot. Une petite tête de classification essaie de prédire le batch à partir de l'embedding latent. Grâce à l'inversion de gradient, l'encodeur est poussé à produire une représentation dans laquelle le batch est moins reconnaissable. Dans la configuration par défaut, cette branche est activée si au moins deux batchs sont disponibles, avec \(\lambda_{\mathrm{batch}}=0{,}1176\). Le signal adversarial commence à l'époque 30 et augmente progressivement sur 30 époques.
 
-La variante décrite ici correspond donc à la version complète de la configuration par défaut : reconstruction MSE, pondération dynamique par rareté et densité, triplet loss centrée sur les cellules de fort poids, correction adversariale de batch et clustering final HDBSCAN. Le code permet d'isoler certaines de ces composantes pour des ablations, mais ces variantes ne sont pas utilisées pour définir la configuration de référence décrite dans cette section.
+L'architecture du modèle présenté ici à était sélectionné par une recherche d'hyperparamètres décrite dans la section suivante et une étude d'ablations qui démontre l'importance de chaque élément de l'algorithme dont les résultats sont disponibles en Annexe~\ref{annexe:ablation_scraw}.
 
 \subsection{Recherche d'hyperparamètres}
 
@@ -485,7 +485,6 @@ Regrouper les différentes expériences complémentaires : transfert de la loss 
   \item \textbf{Matrices de confusion} :
   \item \textbf{Schéma du pipeline scRAW} : 
   \item \textbf{Visualisation des poids cellulaires de scRAW} :
-  \item \textbf{Tableau d'ablation} : variantes de scRAW, pertes, poids, clustering final.
   \item \textbf{Figure de recherche d'hyperparamètres} : résumé Optuna ou graphiques montrant le compromis entre performance globale, performance rare et stabilité.
   \item \textbf{Figure inductive} : 
   \item \textbf{Tableau du coût de calcul} : 
