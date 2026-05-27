@@ -1,0 +1,24 @@
+\begin{table}[H]
+  \centering
+  \fontsize{5.5pt}{7.0pt}\selectfont
+  \setlength{\tabcolsep}{1.0pt}
+  \begin{tabular}{l|c|ccccc|cccc|cccc}
+    \toprule
+    \textbf{Jeu de données} & \multicolumn{1}{c|}{\textbf{scRAW}} & \multicolumn{5}{c|}{\textbf{Rare Specific}} & \multicolumn{4}{c|}{\textbf{Traditionnelles}} & \multicolumn{4}{c}{\textbf{Correction Batch}} \\
+    & \textbf{scRAW} & scAIDE & CellSIUS & DeepScena & scCAD & GiniClust & scVI & scMAE & PCA+Leiden & scNAME & Harmony & ComBat & DESC & Scanorama \\
+    \midrule
+    Zeisel & 0,430 & \underline{0,696} & 0,572 & 0,316 & 0,358 & 0,036 & 0,513 & 0,692 & 0,632 & 0,645 & 0,388 & 0,000 & \textbf{0,752} & 0,632 \\
+    Spleen & 0,870 & \textbf{0,934} & 0,465 & 0,517 & 0,416 & 0,141 & 0,572 & \underline{0,920} & 0,433 & 0,689 & 0,518 & 0,580 & 0,336 & 0,448 \\
+    Baron Pancreas & \underline{0,916} & 0,794 & 0,666 & 0,572 & 0,605 & 0,052 & 0,621 & 0,770 & 0,666 & 0,708 & 0,851 & 0,653 & \textbf{0,918} & 0,621 \\
+    Human Testis & 0,611 & 0,611 & 0,581 & 0,492 & 0,399 & 0,043 & 0,594 & 0,651 & 0,626 & 0,631 & \underline{0,652} & 0,569 & \textbf{0,668} & 0,471 \\
+    Kang PBMC & 0,546 & \textbf{0,811} & 0,775 & 0,773 & 0,428 & 0,052 & \underline{0,805} & 0,779 & 0,774 & 0,751 & 0,774 & 0,773 & 0,533 & 0,782 \\
+    Macaque Retina & 0,924 & 0,873 & 0,497 & 0,046 & 0,425 & 0,023 & \underline{0,965} & 0,801 & 0,497 & 0,556 & 0,941 & \textbf{0,971} & 0,805 & 0,351 \\
+    Bone Marrow & 0,283 & 0,328 & 0,341 & 0,277 & 0,224 & 0,007 & 0,283 & \textbf{0,386} & 0,311 & \underline{0,359} & 0,312 & 0,313 & 0,282 & 0,311 \\
+    TM Liver & 0,683 & 0,627 & 0,365 & \textbf{0,824} & 0,443 & 0,103 & 0,519 & 0,491 & 0,554 & 0,589 & 0,535 & 0,554 & \underline{0,700} & 0,554 \\
+    \midrule
+    \textbf{Moyenne} & 0,658 & \textbf{0,709} & 0,533 & 0,477 & 0,412 & 0,057 & 0,609 & \underline{0,686} & 0,562 & 0,616 & 0,621 & 0,552 & 0,624 & 0,521 \\
+    \bottomrule
+  \end{tabular}
+  \caption{Résultats bruts de Rand Index Ajusté (ARI) pour les méthodes principales sur les 8 jeux de données communs. La meilleure performance par jeu de données est en gras, et la deuxième est soulignée.}
+  \label{tab:common8_primary_raw_ARI}
+\end{table}

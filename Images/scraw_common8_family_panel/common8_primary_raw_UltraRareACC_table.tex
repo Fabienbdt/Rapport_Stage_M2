@@ -1,0 +1,24 @@
+\begin{table}[H]
+  \centering
+  \fontsize{5.5pt}{7.0pt}\selectfont
+  \setlength{\tabcolsep}{1.0pt}
+  \begin{tabular}{l|c|ccccc|cccc|cccc}
+    \toprule
+    \textbf{Jeu de données} & \multicolumn{1}{c|}{\textbf{scRAW}} & \multicolumn{5}{c|}{\textbf{Rare Specific}} & \multicolumn{4}{c|}{\textbf{Traditionnelles}} & \multicolumn{4}{c}{\textbf{Correction Batch}} \\
+    & \textbf{scRAW} & scAIDE & CellSIUS & DeepScena & scCAD & GiniClust & scVI & scMAE & PCA+Leiden & scNAME & Harmony & ComBat & DESC & Scanorama \\
+    \midrule
+    Zeisel & 0,556 & \underline{0,667} & 0,593 & 0,000 & 0,593 & 0,037 & 0,556 & 0,556 & 0,556 & \textbf{0,704} & 0,556 & 0,000 & 0,556 & 0,556 \\
+    Spleen & \underline{0,976} & 0,000 & \textbf{1,000} & 0,000 & \textbf{1,000} & 0,024 & \textbf{1,000} & 0,000 & \underline{0,976} & 0,786 & \underline{0,976} & \underline{0,976} & 0,000 & \textbf{1,000} \\
+    Baron Pancreas & \underline{0,814} & 0,627 & 0,636 & 0,000 & \textbf{0,915} & 0,576 & 0,466 & 0,695 & 0,797 & 0,432 & 0,788 & 0,788 & 0,466 & 0,754 \\
+    Human Testis & 0,643 & \underline{0,929} & 0,607 & \textbf{0,964} & 0,571 & 0,000 & 0,000 & 0,000 & 0,000 & 0,000 & \underline{0,929} & 0,000 & 0,000 & 0,857 \\
+    Kang PBMC & \underline{0,817} & 0,058 & 0,596 & -- & 0,274 & 0,000 & 0,037 & 0,043 & 0,562 & 0,000 & 0,540 & 0,544 & \textbf{0,870} & 0,093 \\
+    Macaque Retina & 0,680 & 0,007 & 0,020 & 0,095 & 0,667 & 0,000 & 0,000 & 0,000 & 0,034 & 0,007 & 0,007 & \textbf{0,844} & 0,000 & \underline{0,762} \\
+    Bone Marrow & 0,000 & 0,226 & 0,581 & 0,032 & \underline{0,677} & 0,000 & 0,000 & \textbf{0,742} & 0,000 & 0,032 & 0,000 & 0,000 & 0,000 & 0,000 \\
+    TM Liver & -- & -- & -- & -- & -- & -- & -- & -- & -- & -- & -- & -- & -- & -- \\
+    \midrule
+    \textbf{Moyenne} & \underline{0,641} & 0,359 & 0,576 & 0,182 & \textbf{0,671} & 0,091 & 0,294 & 0,291 & 0,418 & 0,280 & 0,542 & 0,450 & 0,270 & 0,575 \\
+    \bottomrule
+  \end{tabular}
+  \caption{Résultats bruts de Précision sur Classes Ultra-Rares (UltraRareACC) pour les méthodes principales sur les 8 jeux de données communs. La meilleure performance par jeu de données est en gras, et la deuxième est soulignée.}
+  \label{tab:common8_primary_raw_UltraRareACC}
+\end{table}

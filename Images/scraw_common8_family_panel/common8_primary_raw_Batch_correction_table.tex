@@ -1,0 +1,24 @@
+\begin{table}[H]
+  \centering
+  \fontsize{5.5pt}{7.0pt}\selectfont
+  \setlength{\tabcolsep}{1.0pt}
+  \begin{tabular}{l|c|ccccc|cccc|cccc}
+    \toprule
+    \textbf{Jeu de données} & \multicolumn{1}{c|}{\textbf{scRAW}} & \multicolumn{5}{c|}{\textbf{Rare Specific}} & \multicolumn{4}{c|}{\textbf{Traditionnelles}} & \multicolumn{4}{c}{\textbf{Correction Batch}} \\
+    & \textbf{scRAW} & scAIDE & CellSIUS & DeepScena & scCAD & GiniClust & scVI & scMAE & PCA+Leiden & scNAME & Harmony & ComBat & DESC & Scanorama \\
+    \midrule
+    Zeisel & 0,400 & 0,356 & 0,379 & \textbf{0,448} & 0,379 & 0,379 & \underline{0,442} & 0,408 & 0,379 & 0,382 & 0,254 & 0,058 & 0,292 & 0,378 \\
+    Spleen & 0,791 & 0,690 & 0,564 & 0,645 & 0,565 & 0,556 & \textbf{0,837} & 0,551 & 0,554 & 0,675 & \underline{0,811} & 0,778 & 0,542 & 0,514 \\
+    Baron Pancreas & 0,575 & 0,614 & 0,550 & 0,602 & 0,549 & 0,550 & 0,630 & 0,498 & 0,548 & 0,493 & \textbf{0,737} & 0,566 & \underline{0,697} & 0,530 \\
+    Human Testis & 0,730 & \underline{0,782} & 0,667 & 0,775 & 0,667 & 0,667 & 0,775 & 0,699 & 0,662 & 0,679 & \textbf{0,797} & 0,562 & 0,778 & 0,634 \\
+    Kang PBMC & 0,684 & 0,501 & 0,523 & 0,504 & 0,523 & 0,526 & 0,662 & 0,561 & \underline{0,726} & 0,545 & \underline{0,726} & \underline{0,726} & \textbf{0,795} & \underline{0,726} \\
+    Macaque Retina & 0,637 & 0,451 & 0,508 & 0,517 & 0,508 & 0,513 & \textbf{0,683} & 0,382 & 0,510 & 0,366 & \underline{0,677} & 0,596 & 0,666 & 0,344 \\
+    Bone Marrow & 0,683 & 0,726 & 0,642 & 0,664 & 0,642 & 0,642 & \textbf{0,908} & \underline{0,752} & 0,642 & 0,513 & 0,642 & 0,642 & 0,564 & 0,642 \\
+    TM Liver & 0,871 & 0,798 & 0,874 & 0,842 & 0,874 & 0,874 & \textbf{0,938} & \underline{0,877} & 0,874 & 0,609 & 0,874 & 0,874 & 0,584 & 0,874 \\
+    \midrule
+    \textbf{Moyenne} & 0,671 & 0,615 & 0,588 & 0,625 & 0,588 & 0,588 & \textbf{0,734} & 0,591 & 0,612 & 0,533 & \underline{0,690} & 0,600 & 0,615 & 0,580 \\
+    \bottomrule
+  \end{tabular}
+  \caption{Résultats bruts de Correction de Batch pour les méthodes principales sur les 8 jeux de données communs. La meilleure performance par jeu de données est en gras, et la deuxième est soulignée.}
+  \label{tab:common8_primary_raw_Batch_correction}
+\end{table}

@@ -141,8 +141,12 @@ Cette annexe présente les résultats complets utilisés pour construire la figu
     \caption{Résultats complets par famille sur les huit jeux de données communs. Les boîtes représentent la distribution des scores disponibles par méthode sur les jeux de données ; pour l'UltraRareACC, les jeux sans classe ultra-rare ne contribuent pas à la distribution. Les méthodes sont ordonnées par moyenne croissante dans chaque sous-panneau. \textbf{scRAW} est ajouté comme repère dans chaque famille.}
     \label{fig:common8_family_all_methods}
 \end{figure}
-
-\input{Images/scraw_common8_family_panel/common8_primary_all_methods_means_table.tex}
+Les tableaux suivants présentent les résultats bruts détaillés par jeu de données pour chaque métrique d'évaluation pour les méthodes principales :
+\input{Images/scraw_common8_family_panel/common8_primary_raw_ARI_table.tex}
+\input{Images/scraw_common8_family_panel/common8_primary_raw_ACC_table.tex}
+\input{Images/scraw_common8_family_panel/common8_primary_raw_RareACC_table.tex}
+\input{Images/scraw_common8_family_panel/common8_primary_raw_UltraRareACC_table.tex}
+\input{Images/scraw_common8_family_panel/common8_primary_raw_Batch_correction_table.tex}
 
 \begin{figure}[H]
     \centering
@@ -151,15 +155,20 @@ Cette annexe présente les résultats complets utilisés pour construire la figu
     \label{fig:common8_harmony_complement}
 \end{figure}
 
-\input{Images/scraw_common8_family_panel/common8_harmony_complement_all_methods_means_table.tex}
+Les tableaux suivants présentent les résultats bruts détaillés par jeu de données pour chaque métrique d'évaluation pour les expériences complémentaires avec Harmony :
+\input{Images/scraw_common8_family_panel/common8_harmony_complement_raw_ARI_table.tex}
+\input{Images/scraw_common8_family_panel/common8_harmony_complement_raw_ACC_table.tex}
+\input{Images/scraw_common8_family_panel/common8_harmony_complement_raw_RareACC_table.tex}
+\input{Images/scraw_common8_family_panel/common8_harmony_complement_raw_UltraRareACC_table.tex}
+\input{Images/scraw_common8_family_panel/common8_harmony_complement_raw_Batch_correction_table.tex}
 
-Les valeurs brutes exactes par jeu de données, algorithme et métrique sont également exportées sous forme de fichiers CSV dans \texttt{Images/scraw\_common8\_family\_panel/}. Le fichier \texttt{common8\_primary\_raw\_by\_dataset\_long.csv} contient les familles principales au format long, avec une ligne par couple méthode--métrique--jeu de données. Le fichier \texttt{common8\_primary\_raw\_by\_dataset.csv} fournit la même information au format large. Les fichiers \texttt{common8\_harmony\_complement\_raw\_by\_dataset\_long.csv} et \texttt{common8\_harmony\_complement\_raw\_by\_dataset.csv} regroupent les expériences complémentaires avec Harmony. Enfin, \texttt{common8\_scraw\_first\_counts.csv} récapitule, pour chaque métrique, le nombre de jeux de données sur lesquels \textbf{scRAW} obtient le meilleur score.
+Ces résultats détaillés permettent d'analyser le comportement individuel de chaque méthode sur chacun des jeux de données, offrant ainsi une vision plus fine et contrastée que les seules moyennes globales.
 
 \newpage
-\section{Hyperparamètres de scRAW \texttt{stable\_default}}
+\section{Hyperparamètres de la configuration de référence scRAW}
 \label{annexe:hyperparametres_scraw}
 
-Cette annexe détaille les hyperparamètres du preset \texttt{stable\_default} utilisé pour décrire scRAW dans le rapport. Dans le code, ce preset est un alias du preset \texttt{default}, lui-même ancré sur \texttt{stable\_generalist\_trial\_0017}.
+Cette annexe détaille les hyperparamètres de la configuration par défaut utilisée pour décrire scRAW dans le rapport.
 
 {\scriptsize
 \setlength{\tabcolsep}{3pt}

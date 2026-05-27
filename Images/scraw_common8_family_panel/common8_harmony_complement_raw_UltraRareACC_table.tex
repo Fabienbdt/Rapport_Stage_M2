@@ -1,0 +1,24 @@
+\begin{table}[H]
+  \centering
+  \scriptsize
+  \setlength{\tabcolsep}{1.5pt}
+  \begin{tabular}{l|c|ccccc|cccc}
+    \toprule
+    \textbf{Jeu de données} & \multicolumn{1}{c|}{\textbf{scRAW}} & \multicolumn{5}{c|}{\textbf{Rare + Harmony}} & \multicolumn{4}{c}{\textbf{Trad. + Harmony}} \\
+    & \textbf{scRAW} & scAIDE & CellSIUS & scCAD & DeepScena & GiniClust & Harmony & scVI & scMAE & scNAME \\
+    \midrule
+    Zeisel & \underline{0,556} & 0,519 & 0,296 & \textbf{0,593} & 0,370 & 0,037 & \underline{0,556} & \underline{0,556} & 0,519 & 0,185 \\
+    Spleen & \underline{0,976} & 0,000 & \textbf{1,000} & \textbf{1,000} & 0,286 & 0,024 & \underline{0,976} & \textbf{1,000} & 0,000 & 0,833 \\
+    Baron Pancreas & \underline{0,814} & 0,780 & 0,627 & \textbf{0,915} & 0,466 & 0,576 & 0,788 & 0,466 & 0,678 & 0,458 \\
+    Human Testis & 0,643 & \textbf{0,929} & \underline{0,893} & 0,571 & \underline{0,893} & 0,000 & \textbf{0,929} & 0,000 & 0,000 & 0,000 \\
+    Kang PBMC & \textbf{0,817} & 0,058 & \underline{0,788} & 0,274 & -- & 0,000 & 0,540 & 0,037 & 0,038 & 0,308 \\
+    Macaque Retina & \underline{0,680} & \textbf{0,878} & 0,007 & 0,667 & 0,000 & 0,000 & 0,007 & 0,000 & 0,000 & 0,000 \\
+    Bone Marrow & 0,000 & 0,194 & 0,581 & \underline{0,677} & 0,097 & 0,000 & 0,000 & 0,000 & \textbf{0,742} & \textbf{0,742} \\
+    TM Liver & -- & -- & -- & -- & -- & -- & -- & -- & -- & -- \\
+    \midrule
+    \textbf{Moyenne} & \underline{0,641} & 0,479 & 0,599 & \textbf{0,671} & 0,352 & 0,091 & 0,542 & 0,294 & 0,282 & 0,361 \\
+    \bottomrule
+  \end{tabular}
+  \caption{Résultats bruts complémentaires de Précision sur Classes Ultra-Rares (UltraRareACC) avec Harmony pour les 8 jeux de données communs. La meilleure performance par jeu de données est en gras, et la deuxième est soulignée.}
+  \label{tab:common8_harmony_complement_raw_UltraRareACC}
+\end{table}
