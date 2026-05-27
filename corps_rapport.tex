@@ -326,9 +326,7 @@ Le pipeline général de scRAW est présenté dans la figure~\ref{fig:scraw_pipe
 
 \begin{figure}[H]
     \centering
-    \IfFileExists{Images/SCRAW_PIPELINE/scraw_FR.pdf}
-      {\includegraphics[width=\textwidth,height=0.72\textheight,keepaspectratio]{Images/SCRAW_PIPELINE/scraw_FR.pdf}}
-      {\includesvg[inkscapelatex=false,width=\textwidth,height=0.72\textheight,keepaspectratio]{Images/SCRAW_PIPELINE/scraw_FR}}
+    \includegraphics[width=\textwidth,height=0.9\textheight,keepaspectratio]{Images/SCRAW_PIPELINE/scRAW_FR.pdf}
     \caption{Pipeline général de scRAW. Le modèle apprend un espace latent par autoencodeur, met à jour des poids cellulaires à partir de pseudo-clusters et de la densité locale, puis réalise le clustering final dans l'espace latent.}
     \label{fig:scraw_pipeline}
 \end{figure}
