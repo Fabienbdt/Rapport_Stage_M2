@@ -283,9 +283,9 @@ Ces métriques comparent directement la structure de la partition prédite avec 
 \paragraph{Métriques de classification (après appariement optimal)}
 Pour calculer des taux de réussite ou d'exactitude par type cellulaire, il faut associer chaque cluster à une étiquette biologique. Nous appliquons l'algorithme hongrois \cite{kuhn1955hungarian} pour résoudre le problème d'affectation linéaire : il détermine l'appariement optimal entre clusters prédits et classes biologiques qui maximise le nombre total de cellules correctement attribuées. Cette approche, couramment adoptée dans des benchmarks comme scCluBench \cite{xu_scclubench_2026}, permet ensuite d'évaluer :
 \begin{itemize}
-    \item \textbf{L'exactitude globale (ACC) :} Proportion brute de cellules correctement affectées après appariement. Très sensible aux classes majoritaires, elle ne reflète pas la qualité sur les populations minoritaires.
-    \item \textbf{L'exactitude équilibrée (BalancedACC) :} Moyenne des exactitudes (ou rappels) par classe biologique, attribuant un poids identique à chaque type cellulaire indépendamment de sa taille.
-    \item \textbf{L'exactitude des classes rares (RareACC) et ultra-rares (UltraRareACC) :} Exactitudes équilibrées calculées spécifiquement sur les sous-populations représentant respectivement moins de 5\,\% et moins de 1\,\% de l'effectif total. Elles permettent de vérifier si les cellules rares ne sont pas confondues ou absorbées dans des groupes dominants.
+    \item \textbf{L'accuracy (ACC) :} Proportion brute de cellules correctement affectées après appariement. Très sensible aux classes majoritaires, elle ne reflète pas la qualité sur les populations minoritaires.
+    \item \textbf{La balanced accuracy (Bal ACC) :} Moyenne des rappels par classe biologique, attribuant un poids identique à chaque type cellulaire indépendamment de sa taille.
+    \item \textbf{L'accuracy sur les classes rares (RareACC) et ultra-rares (UltraRareACC) :} Même principe que l'accuracy mais spécifique à certaines classes de cellules, les plus rares (<5\%) et les ultra-rares (<1\%).
 \end{itemize}
 
 \subsubsection{Résultats}
