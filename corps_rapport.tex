@@ -409,7 +409,7 @@ L'évaluation finale de scRAW a été conduite sur le même ensemble de huit jeu
 
 Pour faciliter la lecture, la figure~\ref{fig:scraw_common8_family_top3_plus_scraw} affiche \textbf{scRAW} ainsi que les meilleures méthodes observées pour chaque métrique. Les résultats complets, incluant les méthodes non affichées et les variantes avec correction de batch externe, sont fournis en Annexe~\ref{annexe:resultats_common8}. Ces variantes sont conservées comme analyses complémentaires, car elles ne correspondent pas toujours au protocole proposé dans les articles originaux des méthodes comparées.
 
-\begin{figure}[H]
+\begin{figure}[htbp]
     \centering
     \includegraphics[width=\textwidth,height=0.93\textheight,keepaspectratio]{scraw_common8_family_panel/common8_family_top3_plus_scraw_panel.pdf}
     \caption{Distribution des performances sur les huit jeux de données communs, par famille de méthodes. Chaque boîte correspond aux scores disponibles sur les jeux de données ; pour l'UltraRareACC, les jeux sans classe ultra-rare ne contribuent pas à la distribution. Les méthodes sont ordonnées par moyenne croissante dans chaque sous-panneau. Chaque sous-panneau affiche \textbf{scRAW} et les trois meilleures méthodes de la famille pour la métrique considérée.}
@@ -422,7 +422,7 @@ Par exemple, scAIDE obtient de très bons scores globaux en ARI ou en ACC, mais 
 
 \textbf{scRAW} n'est donc pas systématiquement la meilleure méthode pour chaque métrique prise séparément. En revanche, ses scores restent élevés sur l'ensemble des critères évalués : 0,658 en ARI, 0,741 en ACC, 0,636 en RareACC, 0,641 en UltraRareACC et 0,671 pour la correction de batch. Cette stabilité en fait le meilleur compromis observé dans ces expériences pour conserver les populations rares, limiter l'effet de batch et maintenir un clustering global précis.
 
-Enfin, scRAW reste plus coûteux que les pipelines classiques, avec un temps d'exécution moyen d'environ 794 secondes contre quelques secondes pour PCA+Leiden ou Harmony. Ces résultats soutiennent l'hypothèse principale de scRAW : augmenter l'influence des cellules rares pendant l'apprentissage permet de mieux préserver les populations minoritaires sans sacrifier fortement la performance globale. La méthode reste cependant à consolider par davantage de répétitions, une analyse plus fine des erreurs par type cellulaire et une validation biologique par marqueurs.
+Enfin, scRAW reste plus coûteux que les pipelines classiques, avec un temps d'exécution moyen d'environ 794 secondes contre quelques secondes pour PCA+Leiden ou Harmony. Ces résultats soutiennent l'hypothèse principale de scRAW : augmenter l'influence des cellules rares pendant l'apprentissage permet de mieux préserver les populations minoritaires sans sacrifier fortement la performance globale. La méthode reste cependant à consolider par davantage de répétitions, de nouveaux datasets, une analyse plus fine des erreurs par type cellulaire et une validation biologique complète.
 
 \section{Travaux complémentaires}
 
