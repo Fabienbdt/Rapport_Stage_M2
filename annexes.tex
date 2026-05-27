@@ -74,33 +74,36 @@ L'organigramme structurel simplifié correspondant est présenté dans la Figure
 \section{Détails des datasets de l'état de l'art}
 \label{annexe:datasets}
 
-Cette section fournit les détails des différents jeux de données scRNA-seq de référence utilisés dans l'étude, y compris l'espèce, les tailles (cellules et gènes), le nombre de lots et la quantité de populations cellulaires rares.
+Cette section fournit les détails des huit jeux de données scRNA-seq du sous-ensemble commun (``common-8'') utilisés dans l'étude, y compris l'espèce, les tailles (cellules et gènes), le nombre de lots (batchs), le nombre de populations cellulaires rares, ainsi que leur niveau d'effet de lot (mesuré par PCR sur PCA) et de déséquilibre de classe (mesuré par l'indice de Gini).
 
 \begin{table}[H]
 \centering
-\small
-\begin{tabular}{l l c c c c}
+\footnotesize
+\setlength{\tabcolsep}{4pt}
+\begin{tabular}{l l c c c c c c}
 \toprule
-\textbf{Nom du Dataset} & \textbf{Espèce} & \textbf{Cellules} & \textbf{Gènes} & \textbf{Batchs} & \textbf{ClassesRares ($<5\%$)} \\
+\textbf{Dataset} & \textbf{Espèce} & \textbf{Cellules} & \textbf{Gènes} & \textbf{Lots} & \textbf{Rares ($<5\%$)} & \textbf{PCR/PCA} & \textbf{Gini} \\
 \midrule
-BBAG094 Zeisel & Souris & 3 006 & 19 972 & 10 & 4 \\
-BBAG094 spleen & Souris & 9 552 & 23 341 & 2 & 3 \\
-Baron Human Pancreas & Humain & 8 569 & 20 125 & 4 & 9 \\
-Human testis GSE112013 & Humain & 6 490 & 27 477 & 6 & 4 \\
-Kang PBMC & Humain & 24 679 & 35 635 & 16 & 1 \\
-Macaque retina bipolar & Macaque & 30 302 & 36 162 & 30 & 4 \\
-Human Pancreas & Humain & 16 400 & 14 813 & 9 & 9 \\
-Pancreas w/o Baron & Humain & 6 339 & 14 813 & 4 & 7 \\
-Paul15 bone marrow & Souris & 2 730 & 3 451 & 1 & 9 \\
-SCIB Human Pancreas 1 & Humain & 1 937 & 20 125 & 1 & 8 \\
-SCIB Human Pancreas 2 & Humain & 1 724 & 20 125 & 1 & 10 \\
-SCIB Mouse Pancreas 1 & Souris & 822 & 14 878 & 1 & 9 \\
-Tabula Muris liver & Souris & 2 859 & 22 966 & 1 & 5 \\
+BBAG094 Zeisel & Souris & 3 006 & 19 972 & 10 & 4 & 0,499 & 0,543 \\
+BBAG094 spleen & Souris & 9 552 & 23 341 & 2 & 3 & 0,022 & 0,644 \\
+Baron Human Pancreas & Humain & 8 569 & 20 125 & 4 & 9 & 0,048 & 0,644 \\
+Human testis GSE112013 & Humain & 6 490 & 27 477 & 6 & 4 & 0,025 & 0,304 \\
+Kang PBMC & Humain & 24 679 & 35 635 & 16 & 1 & 0,069 & 0,500 \\
+Macaque retina bipolar & Macaque & 30 302 & 36 162 & 30 & 4 & 0,184 & 0,388 \\
+Paul15 bone marrow & Souris & 2 730 & 3 451 & 1 & 9 & 0,000 & 0,410 \\
+Tabula Muris liver & Souris & 2 859 & 22 966 & 1 & 5 & 0,000 & 0,578 \\
 \bottomrule
 \end{tabular}
-\caption{Récapitulatif des jeux de données utilisés dans nos expériences.}
+\caption{Récapitulatif des huit jeux de données du sous-ensemble commun (common-8) utilisés dans nos expériences.}
 \label{tab:datasets}
 \end{table}
+
+\subsection*{Description des métriques de caractérisation des jeux de données}
+
+\begin{itemize}
+    \item \textbf{PCR sur PCA (Principal Component Regression on PCA) :} Cette métrique quantifie l'importance globale de l'effet de lot dans un jeu de données en mesurant la part de variance expliquée par la variable de lot (batch) dans l'espace des composantes principales. Une analyse en composantes principales (PCA) est d'abord réalisée sur la matrice d'expression. Pour chaque composante principale, une régression linéaire est ajustée en utilisant le lot comme variable explicative afin d'obtenir un coefficient de détermination $R^2$. La métrique finale est la somme de ces $R^2$ pondérée par la variance expliquée par chaque composante. Un score proche de 0 indique l'absence d'effet de lot, tandis qu'un score proche de 1 indique que l'effet de lot domine la variance des données.
+    \item \textbf{Indice de Gini des classes :} Cette métrique mesure le déséquilibre de la distribution des tailles des populations cellulaires (les classes de la vérité terrain) dans le jeu de données. Issu de la théorie économique pour mesurer les inégalités de richesse, cet indice est adapté ici pour mesurer la dispersion statistique des effectifs des différents types cellulaires. Un indice de 0 correspond à une répartition parfaitement équilibrée (toutes les classes ont le même nombre de cellules), tandis qu'un indice proche de 1 traduit un déséquilibre extrême (une classe ultra-majoritaire face à de nombreuses classes très minoritaires).
+\end{itemize}
 
 \newpage
 \section{Tableau des métriques d'évaluation}
