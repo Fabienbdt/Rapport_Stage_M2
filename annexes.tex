@@ -130,6 +130,32 @@ Cette section regroupe les définitions, formules mathématiques et interprétat
 \end{table}
 
 \newpage
+\section{Résultats complets sur les huit jeux de données communs}
+\label{annexe:resultats_common8}
+
+Cette annexe présente les résultats complets utilisés pour construire la figure principale de la section scRAW. Les huit jeux de données correspondent au sous-ensemble commun utilisé pendant l'évaluation généraliste : BBAG094 Zeisel, BBAG094 spleen, Baron Human Pancreas, Human testis GSE112013, Kang PBMC, Macaque retina bipolar, Paul15 bone marrow et Tabula Muris liver. La première figure reprend tous les algorithmes de chaque famille principale, avec \textbf{scRAW} ajouté comme repère dans chaque colonne ; la seconde ajoute les expériences complémentaires où Harmony est appliqué en correction de batch.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\textwidth,height=0.93\textheight,keepaspectratio]{scraw_common8_family_panel/common8_family_all_methods_panel.pdf}
+    \caption{Résultats complets par famille sur les huit jeux de données communs. Les boîtes représentent la distribution des scores disponibles par méthode sur les jeux de données ; pour l'UltraRareACC, les jeux sans classe ultra-rare ne contribuent pas à la distribution. Les méthodes sont ordonnées par moyenne croissante dans chaque sous-panneau. \textbf{scRAW} est ajouté comme repère dans chaque famille.}
+    \label{fig:common8_family_all_methods}
+\end{figure}
+
+\input{Images/scraw_common8_family_panel/common8_primary_all_methods_means_table.tex}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\textwidth,height=0.93\textheight,keepaspectratio]{scraw_common8_family_panel/common8_harmony_complement_panel.pdf}
+    \caption{Résultats complémentaires avec Harmony. Les méthodes \textit{Rare Specific}+Harmony sont indiquées à titre exploratoire, car cette association n'est pas documentée comme usage standard par les auteurs. Pour les méthodes de deep learning traditionnelles, Harmony est appliqué sur l'espace latent avant le clustering final. La ligne Harmony correspond au pipeline PCA+Harmony avant clustering ; scVI est conservé comme méthode native intégrant l'information de batch.}
+    \label{fig:common8_harmony_complement}
+\end{figure}
+
+\input{Images/scraw_common8_family_panel/common8_harmony_complement_all_methods_means_table.tex}
+
+Les valeurs brutes exactes par jeu de données, algorithme et métrique sont également exportées sous forme de fichiers CSV dans \texttt{Images/scraw\_common8\_family\_panel/}. Le fichier \texttt{common8\_primary\_raw\_by\_dataset\_long.csv} contient les familles principales au format long, avec une ligne par couple méthode--métrique--jeu de données. Le fichier \texttt{common8\_primary\_raw\_by\_dataset.csv} fournit la même information au format large. Les fichiers \texttt{common8\_harmony\_complement\_raw\_by\_dataset\_long.csv} et \texttt{common8\_harmony\_complement\_raw\_by\_dataset.csv} regroupent les expériences complémentaires avec Harmony. Enfin, \texttt{common8\_scraw\_first\_counts.csv} récapitule, pour chaque métrique, le nombre de jeux de données sur lesquels \textbf{scRAW} obtient le meilleur score.
+
+\newpage
 \section{Hyperparamètres de scRAW \texttt{stable\_default}}
 \label{annexe:hyperparametres_scraw}
 

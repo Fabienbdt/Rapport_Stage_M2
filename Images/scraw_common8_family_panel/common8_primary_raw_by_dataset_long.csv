@@ -1,0 +1,681 @@
+family,dataset,method,source_method,metric,value
+Correction batch,BBAG094 Zeisel,ComBat,ComBat,ACC,0.3153692614770459
+Correction batch,BBAG094 Zeisel,ComBat,ComBat,ARI,0.0
+Correction batch,BBAG094 Zeisel,ComBat,ComBat,Batch correction,0.0578811186339024
+Correction batch,BBAG094 Zeisel,ComBat,ComBat,RareACC,0.0
+Correction batch,BBAG094 Zeisel,ComBat,ComBat,UltraRareACC,0.0
+Correction batch,BBAG094 Zeisel,DESC,DESC,ACC,0.8343313373253493
+Correction batch,BBAG094 Zeisel,DESC,DESC,ARI,0.7522691340613057
+Correction batch,BBAG094 Zeisel,DESC,DESC,Batch correction,0.2916884237332118
+Correction batch,BBAG094 Zeisel,DESC,DESC,RareACC,0.4972972972972973
+Correction batch,BBAG094 Zeisel,DESC,DESC,UltraRareACC,0.5555555555555556
+Correction batch,BBAG094 Zeisel,Harmony,Harmony,ACC,0.6061210911510313
+Correction batch,BBAG094 Zeisel,Harmony,Harmony,ARI,0.3877432473485119
+Correction batch,BBAG094 Zeisel,Harmony,Harmony,Batch correction,0.2541259979715826
+Correction batch,BBAG094 Zeisel,Harmony,Harmony,RareACC,0.4
+Correction batch,BBAG094 Zeisel,Harmony,Harmony,UltraRareACC,0.5555555555555556
+Correction batch,BBAG094 Zeisel,Scanorama,Scanorama,ACC,0.7904191616766467
+Correction batch,BBAG094 Zeisel,Scanorama,Scanorama,ARI,0.6323066051146811
+Correction batch,BBAG094 Zeisel,Scanorama,Scanorama,Batch correction,0.3780963795935355
+Correction batch,BBAG094 Zeisel,Scanorama,Scanorama,RareACC,0.4864864864864865
+Correction batch,BBAG094 Zeisel,Scanorama,Scanorama,UltraRareACC,0.5555555555555556
+Correction batch,BBAG094 Zeisel,scRAW,scRAW (trial_0017),ACC,0.6407185628742516
+Correction batch,BBAG094 Zeisel,scRAW,scRAW (trial_0017),ARI,0.4301883295024661
+Correction batch,BBAG094 Zeisel,scRAW,scRAW (trial_0017),Batch correction,0.4000360971162749
+Correction batch,BBAG094 Zeisel,scRAW,scRAW (trial_0017),RareACC,0.6108108108108108
+Correction batch,BBAG094 Zeisel,scRAW,scRAW (trial_0017),UltraRareACC,0.5555555555555556
+Correction batch,BBAG094 Zeisel,scVI,scvi,ACC,0.7162341982701265
+Correction batch,BBAG094 Zeisel,scVI,scvi,ARI,0.5133594314543674
+Correction batch,BBAG094 Zeisel,scVI,scvi,Batch correction,0.4423447401311677
+Correction batch,BBAG094 Zeisel,scVI,scvi,RareACC,0.6270270270270271
+Correction batch,BBAG094 Zeisel,scVI,scvi,UltraRareACC,0.5555555555555556
+Correction batch,BBAG094 spleen,ComBat,ComBat,ACC,0.7329355108877722
+Correction batch,BBAG094 spleen,ComBat,ComBat,ARI,0.5799446467814835
+Correction batch,BBAG094 spleen,ComBat,ComBat,Batch correction,0.7778388996631098
+Correction batch,BBAG094 spleen,ComBat,ComBat,RareACC,0.9782608695652174
+Correction batch,BBAG094 spleen,ComBat,ComBat,UltraRareACC,0.9761904761904762
+Correction batch,BBAG094 spleen,DESC,DESC,ACC,0.5180067001675042
+Correction batch,BBAG094 spleen,DESC,DESC,ARI,0.3361022083228794
+Correction batch,BBAG094 spleen,DESC,DESC,Batch correction,0.5420230178008654
+Correction batch,BBAG094 spleen,DESC,DESC,RareACC,0.9334239130434784
+Correction batch,BBAG094 spleen,DESC,DESC,UltraRareACC,0.0
+Correction batch,BBAG094 spleen,Harmony,Harmony,ACC,0.6870812395309883
+Correction batch,BBAG094 spleen,Harmony,Harmony,ARI,0.5179008566834543
+Correction batch,BBAG094 spleen,Harmony,Harmony,Batch correction,0.8111773863951631
+Correction batch,BBAG094 spleen,Harmony,Harmony,RareACC,0.9904891304347826
+Correction batch,BBAG094 spleen,Harmony,Harmony,UltraRareACC,0.9761904761904762
+Correction batch,BBAG094 spleen,Scanorama,Scanorama,ACC,0.6413316582914573
+Correction batch,BBAG094 spleen,Scanorama,Scanorama,ARI,0.4483547162442923
+Correction batch,BBAG094 spleen,Scanorama,Scanorama,Batch correction,0.5136106612659674
+Correction batch,BBAG094 spleen,Scanorama,Scanorama,RareACC,0.7989130434782609
+Correction batch,BBAG094 spleen,Scanorama,Scanorama,UltraRareACC,1.0
+Correction batch,BBAG094 spleen,scRAW,scRAW (trial_0017),ACC,0.8291457286432161
+Correction batch,BBAG094 spleen,scRAW,scRAW (trial_0017),ARI,0.8700744463231944
+Correction batch,BBAG094 spleen,scRAW,scRAW (trial_0017),Batch correction,0.7909291345199329
+Correction batch,BBAG094 spleen,scRAW,scRAW (trial_0017),RareACC,0.5285326086956522
+Correction batch,BBAG094 spleen,scRAW,scRAW (trial_0017),UltraRareACC,0.9761904761904762
+Correction batch,BBAG094 spleen,scVI,scvi,ACC,0.7958542713567839
+Correction batch,BBAG094 spleen,scVI,scvi,ARI,0.5720050774011771
+Correction batch,BBAG094 spleen,scVI,scvi,Batch correction,0.8365897766791757
+Correction batch,BBAG094 spleen,scVI,scvi,RareACC,0.9334239130434784
+Correction batch,BBAG094 spleen,scVI,scvi,UltraRareACC,1.0
+Correction batch,Baron human pancreas,ComBat,ComBat,ACC,0.722488038277512
+Correction batch,Baron human pancreas,ComBat,ComBat,ARI,0.6534719573482087
+Correction batch,Baron human pancreas,ComBat,ComBat,Batch correction,0.565611491307011
+Correction batch,Baron human pancreas,ComBat,ComBat,RareACC,0.8123844731977818
+Correction batch,Baron human pancreas,ComBat,ComBat,UltraRareACC,0.788135593220339
+Correction batch,Baron human pancreas,DESC,DESC,ACC,0.9290465631929048
+Correction batch,Baron human pancreas,DESC,DESC,ARI,0.9182154796884484
+Correction batch,Baron human pancreas,DESC,DESC,Batch correction,0.6966085416564778
+Correction batch,Baron human pancreas,DESC,DESC,RareACC,0.7763401109057301
+Correction batch,Baron human pancreas,DESC,DESC,UltraRareACC,0.4661016949152542
+Correction batch,Baron human pancreas,Harmony,Harmony,ACC,0.8913525498891353
+Correction batch,Baron human pancreas,Harmony,Harmony,ARI,0.8506457118079013
+Correction batch,Baron human pancreas,Harmony,Harmony,Batch correction,0.7365166477963205
+Correction batch,Baron human pancreas,Harmony,Harmony,RareACC,0.8114602587800369
+Correction batch,Baron human pancreas,Harmony,Harmony,UltraRareACC,0.788135593220339
+Correction batch,Baron human pancreas,Scanorama,Scanorama,ACC,0.6865445209476018
+Correction batch,Baron human pancreas,Scanorama,Scanorama,ARI,0.620705451463
+Correction batch,Baron human pancreas,Scanorama,Scanorama,Batch correction,0.53044876637796
+Correction batch,Baron human pancreas,Scanorama,Scanorama,RareACC,0.7384473197781886
+Correction batch,Baron human pancreas,Scanorama,Scanorama,UltraRareACC,0.7542372881355932
+Correction batch,Baron human pancreas,scRAW,scRAW (trial_0017),ACC,0.9337145524565292
+Correction batch,Baron human pancreas,scRAW,scRAW (trial_0017),ARI,0.9158965181979905
+Correction batch,Baron human pancreas,scRAW,scRAW (trial_0017),Batch correction,0.5749552605057935
+Correction batch,Baron human pancreas,scRAW,scRAW (trial_0017),RareACC,0.8955637707948244
+Correction batch,Baron human pancreas,scRAW,scRAW (trial_0017),UltraRareACC,0.8135593220338984
+Correction batch,Baron human pancreas,scVI,scvi,ACC,0.7116349632395845
+Correction batch,Baron human pancreas,scVI,scvi,ARI,0.6211343823250206
+Correction batch,Baron human pancreas,scVI,scvi,Batch correction,0.6295033373683816
+Correction batch,Baron human pancreas,scVI,scvi,RareACC,0.9177449168207024
+Correction batch,Baron human pancreas,scVI,scvi,UltraRareACC,0.4661016949152542
+Correction batch,Human testis GSE112013,ComBat,ComBat,ACC,0.6419106317411403
+Correction batch,Human testis GSE112013,ComBat,ComBat,ARI,0.5689312456945296
+Correction batch,Human testis GSE112013,ComBat,ComBat,Batch correction,0.5622311952565553
+Correction batch,Human testis GSE112013,ComBat,ComBat,RareACC,0.6129032258064516
+Correction batch,Human testis GSE112013,ComBat,ComBat,UltraRareACC,0.0
+Correction batch,Human testis GSE112013,DESC,DESC,ACC,0.8198767334360555
+Correction batch,Human testis GSE112013,DESC,DESC,ARI,0.668399343098342
+Correction batch,Human testis GSE112013,DESC,DESC,Batch correction,0.7784449378644452
+Correction batch,Human testis GSE112013,DESC,DESC,RareACC,0.8647242455775234
+Correction batch,Human testis GSE112013,DESC,DESC,UltraRareACC,0.0
+Correction batch,Human testis GSE112013,Harmony,Harmony,ACC,0.7303543913713405
+Correction batch,Human testis GSE112013,Harmony,Harmony,ARI,0.6523338776655068
+Correction batch,Human testis GSE112013,Harmony,Harmony,Batch correction,0.7969653197013047
+Correction batch,Human testis GSE112013,Harmony,Harmony,RareACC,0.9063475546305932
+Correction batch,Human testis GSE112013,Harmony,Harmony,UltraRareACC,0.9285714285714286
+Correction batch,Human testis GSE112013,Scanorama,Scanorama,ACC,0.5624036979969184
+Correction batch,Human testis GSE112013,Scanorama,Scanorama,ARI,0.4705710682053854
+Correction batch,Human testis GSE112013,Scanorama,Scanorama,Batch correction,0.6343596589136683
+Correction batch,Human testis GSE112013,Scanorama,Scanorama,RareACC,0.5993756503642039
+Correction batch,Human testis GSE112013,Scanorama,Scanorama,UltraRareACC,0.8571428571428571
+Correction batch,Human testis GSE112013,scRAW,scRAW (trial_0017),ACC,0.7178736517719568
+Correction batch,Human testis GSE112013,scRAW,scRAW (trial_0017),ARI,0.6107002323051303
+Correction batch,Human testis GSE112013,scRAW,scRAW (trial_0017),Batch correction,0.7303536766041685
+Correction batch,Human testis GSE112013,scRAW,scRAW (trial_0017),RareACC,0.9667013527575442
+Correction batch,Human testis GSE112013,scRAW,scRAW (trial_0017),UltraRareACC,0.6428571428571429
+Correction batch,Human testis GSE112013,scVI,scvi,ACC,0.725115562403698
+Correction batch,Human testis GSE112013,scVI,scvi,ARI,0.5938167523297926
+Correction batch,Human testis GSE112013,scVI,scvi,Batch correction,0.7754604613797713
+Correction batch,Human testis GSE112013,scVI,scvi,RareACC,0.9146722164412072
+Correction batch,Human testis GSE112013,scVI,scvi,UltraRareACC,0.0
+Correction batch,Kang PBMC,ComBat,ComBat,ACC,0.7529703776041666
+Correction batch,Kang PBMC,ComBat,ComBat,ARI,0.7726902977217358
+Correction batch,Kang PBMC,ComBat,ComBat,Batch correction,0.7261262096182571
+Correction batch,Kang PBMC,ComBat,ComBat,RareACC,0.3276661514683153
+Correction batch,Kang PBMC,ComBat,ComBat,UltraRareACC,0.5441860465116279
+Correction batch,Kang PBMC,DESC,DESC,ACC,0.643310546875
+Correction batch,Kang PBMC,DESC,DESC,ARI,0.5329901729502926
+Correction batch,Kang PBMC,DESC,DESC,Batch correction,0.7952525456720301
+Correction batch,Kang PBMC,DESC,DESC,RareACC,0.2890262751159196
+Correction batch,Kang PBMC,DESC,DESC,UltraRareACC,0.8697674418604651
+Correction batch,Kang PBMC,Harmony,Harmony,ACC,0.7528483072916666
+Correction batch,Kang PBMC,Harmony,Harmony,ARI,0.773630664005735
+Correction batch,Kang PBMC,Harmony,Harmony,Batch correction,0.7261262096182571
+Correction batch,Kang PBMC,Harmony,Harmony,RareACC,0.3276661514683153
+Correction batch,Kang PBMC,Harmony,Harmony,UltraRareACC,0.5395348837209303
+Correction batch,Kang PBMC,Scanorama,Scanorama,ACC,0.7442626953125
+Correction batch,Kang PBMC,Scanorama,Scanorama,ARI,0.7821085126410068
+Correction batch,Kang PBMC,Scanorama,Scanorama,Batch correction,0.7261262096182571
+Correction batch,Kang PBMC,Scanorama,Scanorama,RareACC,0.1777434312210201
+Correction batch,Kang PBMC,Scanorama,Scanorama,UltraRareACC,0.0930232558139534
+Correction batch,Kang PBMC,scRAW,scRAW (trial_0017),ACC,0.7057650028499308
+Correction batch,Kang PBMC,scRAW,scRAW (trial_0017),ARI,0.5459843343891061
+Correction batch,Kang PBMC,scRAW,scRAW (trial_0017),Batch correction,0.6843171205513716
+Correction batch,Kang PBMC,scRAW,scRAW (trial_0017),RareACC,0.678125
+Correction batch,Kang PBMC,scRAW,scRAW (trial_0017),UltraRareACC,0.8173076923076923
+Correction batch,Kang PBMC,scVI,scvi,ACC,0.8142903645833334
+Correction batch,Kang PBMC,scVI,scvi,ARI,0.8047318184810032
+Correction batch,Kang PBMC,scVI,scvi,Batch correction,0.6617871605130773
+Correction batch,Kang PBMC,scVI,scvi,RareACC,0.1576506955177743
+Correction batch,Kang PBMC,scVI,scvi,UltraRareACC,0.0372093023255813
+Correction batch,Macaque retina bipolar,ComBat,ComBat,ACC,0.9850834928387564
+Correction batch,Macaque retina bipolar,ComBat,ComBat,ARI,0.97082643273994
+Correction batch,Macaque retina bipolar,ComBat,ComBat,Batch correction,0.5964707251055555
+Correction batch,Macaque retina bipolar,ComBat,ComBat,RareACC,0.969059405940594
+Correction batch,Macaque retina bipolar,ComBat,ComBat,UltraRareACC,0.8435374149659864
+Correction batch,Macaque retina bipolar,DESC,DESC,ACC,0.8060524057817966
+Correction batch,Macaque retina bipolar,DESC,DESC,ARI,0.8048055878978411
+Correction batch,Macaque retina bipolar,DESC,DESC,Batch correction,0.6661431378497795
+Correction batch,Macaque retina bipolar,DESC,DESC,RareACC,0.9249174917491748
+Correction batch,Macaque retina bipolar,DESC,DESC,UltraRareACC,0.0
+Correction batch,Macaque retina bipolar,Harmony,Harmony,ACC,0.9651178140056762
+Correction batch,Macaque retina bipolar,Harmony,Harmony,ARI,0.9412624306387202
+Correction batch,Macaque retina bipolar,Harmony,Harmony,Batch correction,0.6769074050934891
+Correction batch,Macaque retina bipolar,Harmony,Harmony,RareACC,0.9245049504950495
+Correction batch,Macaque retina bipolar,Harmony,Harmony,UltraRareACC,0.0068027210884353
+Correction batch,Macaque retina bipolar,Scanorama,Scanorama,ACC,0.3987195564649198
+Correction batch,Macaque retina bipolar,Scanorama,Scanorama,ARI,0.3508338377624355
+Correction batch,Macaque retina bipolar,Scanorama,Scanorama,Batch correction,0.343598315990992
+Correction batch,Macaque retina bipolar,Scanorama,Scanorama,RareACC,0.6258250825082509
+Correction batch,Macaque retina bipolar,Scanorama,Scanorama,UltraRareACC,0.7619047619047619
+Correction batch,Macaque retina bipolar,scRAW,scRAW (trial_0017),ACC,0.9366708468087916
+Correction batch,Macaque retina bipolar,scRAW,scRAW (trial_0017),ARI,0.9244654129213528
+Correction batch,Macaque retina bipolar,scRAW,scRAW (trial_0017),Batch correction,0.6374791031394675
+Correction batch,Macaque retina bipolar,scRAW,scRAW (trial_0017),RareACC,0.957920792079208
+Correction batch,Macaque retina bipolar,scRAW,scRAW (trial_0017),UltraRareACC,0.6802721088435374
+Correction batch,Macaque retina bipolar,scVI,scvi,ACC,0.973467097881328
+Correction batch,Macaque retina bipolar,scVI,scvi,ARI,0.9654759305347524
+Correction batch,Macaque retina bipolar,scVI,scvi,Batch correction,0.6828404179136567
+Correction batch,Macaque retina bipolar,scVI,scvi,RareACC,0.9179042904290428
+Correction batch,Macaque retina bipolar,scVI,scvi,UltraRareACC,0.0
+Correction batch,Paul15 bone marrow,ComBat,ComBat,ACC,0.4681318681318681
+Correction batch,Paul15 bone marrow,ComBat,ComBat,ARI,0.3131819439662315
+Correction batch,Paul15 bone marrow,ComBat,ComBat,Batch correction,0.6420492712853795
+Correction batch,Paul15 bone marrow,ComBat,ComBat,RareACC,0.3202614379084967
+Correction batch,Paul15 bone marrow,ComBat,ComBat,UltraRareACC,0.0
+Correction batch,Paul15 bone marrow,DESC,DESC,ACC,0.358974358974359
+Correction batch,Paul15 bone marrow,DESC,DESC,ARI,0.2816923202460899
+Correction batch,Paul15 bone marrow,DESC,DESC,Batch correction,0.5635174015429282
+Correction batch,Paul15 bone marrow,DESC,DESC,RareACC,0.130718954248366
+Correction batch,Paul15 bone marrow,DESC,DESC,UltraRareACC,0.0
+Correction batch,Paul15 bone marrow,Harmony,Harmony,ACC,0.4721611721611721
+Correction batch,Paul15 bone marrow,Harmony,Harmony,ARI,0.3121015375122115
+Correction batch,Paul15 bone marrow,Harmony,Harmony,Batch correction,0.6420492712853795
+Correction batch,Paul15 bone marrow,Harmony,Harmony,RareACC,0.2265795206971677
+Correction batch,Paul15 bone marrow,Harmony,Harmony,UltraRareACC,0.0
+Correction batch,Paul15 bone marrow,Scanorama,Scanorama,ACC,0.4725274725274725
+Correction batch,Paul15 bone marrow,Scanorama,Scanorama,ARI,0.3114619501326496
+Correction batch,Paul15 bone marrow,Scanorama,Scanorama,Batch correction,0.6420492712853795
+Correction batch,Paul15 bone marrow,Scanorama,Scanorama,RareACC,0.2265795206971677
+Correction batch,Paul15 bone marrow,Scanorama,Scanorama,UltraRareACC,0.0
+Correction batch,Paul15 bone marrow,scRAW,scRAW (trial_0017),ACC,0.4161172161172161
+Correction batch,Paul15 bone marrow,scRAW,scRAW (trial_0017),ARI,0.2832245907007426
+Correction batch,Paul15 bone marrow,scRAW,scRAW (trial_0017),Batch correction,0.6825639410339949
+Correction batch,Paul15 bone marrow,scRAW,scRAW (trial_0017),RareACC,0.1263616557734204
+Correction batch,Paul15 bone marrow,scRAW,scRAW (trial_0017),UltraRareACC,0.0
+Correction batch,Paul15 bone marrow,scVI,scvi,ACC,0.4029304029304029
+Correction batch,Paul15 bone marrow,scVI,scvi,ARI,0.2831814817193258
+Correction batch,Paul15 bone marrow,scVI,scvi,Batch correction,0.9081955387661014
+Correction batch,Paul15 bone marrow,scVI,scvi,RareACC,0.4989106753812636
+Correction batch,Paul15 bone marrow,scVI,scvi,UltraRareACC,0.0
+Correction batch,Tabula Muris liver,ComBat,ComBat,ACC,0.7191325638335082
+Correction batch,Tabula Muris liver,ComBat,ComBat,ARI,0.5543951034735616
+Correction batch,Tabula Muris liver,ComBat,ComBat,Batch correction,0.8735805104832238
+Correction batch,Tabula Muris liver,ComBat,ComBat,RareACC,0.1345291479820627
+Correction batch,Tabula Muris liver,ComBat,ComBat,UltraRareACC,
+Correction batch,Tabula Muris liver,DESC,DESC,ACC,0.757607555089192
+Correction batch,Tabula Muris liver,DESC,DESC,ARI,0.700039269062976
+Correction batch,Tabula Muris liver,DESC,DESC,Batch correction,0.5835571747765815
+Correction batch,Tabula Muris liver,DESC,DESC,RareACC,0.0
+Correction batch,Tabula Muris liver,DESC,DESC,UltraRareACC,
+Correction batch,Tabula Muris liver,Harmony,Harmony,ACC,0.7093389296956978
+Correction batch,Tabula Muris liver,Harmony,Harmony,ARI,0.5348378026118584
+Correction batch,Tabula Muris liver,Harmony,Harmony,Batch correction,0.8735805104832238
+Correction batch,Tabula Muris liver,Harmony,Harmony,RareACC,0.1345291479820627
+Correction batch,Tabula Muris liver,Harmony,Harmony,UltraRareACC,
+Correction batch,Tabula Muris liver,Scanorama,Scanorama,ACC,0.7191325638335082
+Correction batch,Tabula Muris liver,Scanorama,Scanorama,ARI,0.5543951034735616
+Correction batch,Tabula Muris liver,Scanorama,Scanorama,Batch correction,0.8735805104832238
+Correction batch,Tabula Muris liver,Scanorama,Scanorama,RareACC,0.1345291479820627
+Correction batch,Tabula Muris liver,Scanorama,Scanorama,UltraRareACC,
+Correction batch,Tabula Muris liver,scRAW,scRAW (trial_0017),ACC,0.745715285064708
+Correction batch,Tabula Muris liver,scRAW,scRAW (trial_0017),ARI,0.6827909308919632
+Correction batch,Tabula Muris liver,scRAW,scRAW (trial_0017),Batch correction,0.8705477948080688
+Correction batch,Tabula Muris liver,scRAW,scRAW (trial_0017),RareACC,0.3228699551569506
+Correction batch,Tabula Muris liver,scRAW,scRAW (trial_0017),UltraRareACC,
+Correction batch,Tabula Muris liver,scVI,scvi,ACC,0.6876530255334032
+Correction batch,Tabula Muris liver,scVI,scvi,ARI,0.5185440830144872
+Correction batch,Tabula Muris liver,scVI,scvi,Batch correction,0.937853056018573
+Correction batch,Tabula Muris liver,scVI,scvi,RareACC,0.1300448430493273
+Correction batch,Tabula Muris liver,scVI,scvi,UltraRareACC,
+Méthodes traditionnelles,BBAG094 Zeisel,PCA+Leiden,pca_leiden,ACC,0.7904191616766467
+Méthodes traditionnelles,BBAG094 Zeisel,PCA+Leiden,pca_leiden,ARI,0.6323066051146811
+Méthodes traditionnelles,BBAG094 Zeisel,PCA+Leiden,pca_leiden,Batch correction,0.3791070589542258
+Méthodes traditionnelles,BBAG094 Zeisel,PCA+Leiden,pca_leiden,RareACC,0.4864864864864865
+Méthodes traditionnelles,BBAG094 Zeisel,PCA+Leiden,pca_leiden,UltraRareACC,0.5555555555555556
+Méthodes traditionnelles,BBAG094 Zeisel,scMAE,scMAE,ACC,0.8320026613439787
+Méthodes traditionnelles,BBAG094 Zeisel,scMAE,scMAE,ARI,0.6915778760086706
+Méthodes traditionnelles,BBAG094 Zeisel,scMAE,scMAE,Batch correction,0.4079239860378605
+Méthodes traditionnelles,BBAG094 Zeisel,scMAE,scMAE,RareACC,0.772972972972973
+Méthodes traditionnelles,BBAG094 Zeisel,scMAE,scMAE,UltraRareACC,0.5555555555555555
+Méthodes traditionnelles,BBAG094 Zeisel,scNAME,scNAME,ACC,0.7791084497671324
+Méthodes traditionnelles,BBAG094 Zeisel,scNAME,scNAME,ARI,0.6446862569069801
+Méthodes traditionnelles,BBAG094 Zeisel,scNAME,scNAME,Batch correction,0.3819747280121182
+Méthodes traditionnelles,BBAG094 Zeisel,scNAME,scNAME,RareACC,0.8756756756756757
+Méthodes traditionnelles,BBAG094 Zeisel,scNAME,scNAME,UltraRareACC,0.7037037037037037
+Méthodes traditionnelles,BBAG094 Zeisel,scRAW,scRAW (trial_0017),ACC,0.6407185628742516
+Méthodes traditionnelles,BBAG094 Zeisel,scRAW,scRAW (trial_0017),ARI,0.4301883295024661
+Méthodes traditionnelles,BBAG094 Zeisel,scRAW,scRAW (trial_0017),Batch correction,0.4000360971162749
+Méthodes traditionnelles,BBAG094 Zeisel,scRAW,scRAW (trial_0017),RareACC,0.6108108108108108
+Méthodes traditionnelles,BBAG094 Zeisel,scRAW,scRAW (trial_0017),UltraRareACC,0.5555555555555556
+Méthodes traditionnelles,BBAG094 Zeisel,scVI,scvi,ACC,0.7162341982701265
+Méthodes traditionnelles,BBAG094 Zeisel,scVI,scvi,ARI,0.5133594314543674
+Méthodes traditionnelles,BBAG094 Zeisel,scVI,scvi,Batch correction,0.4423447401311677
+Méthodes traditionnelles,BBAG094 Zeisel,scVI,scvi,RareACC,0.6270270270270271
+Méthodes traditionnelles,BBAG094 Zeisel,scVI,scvi,UltraRareACC,0.5555555555555556
+Méthodes traditionnelles,BBAG094 spleen,PCA+Leiden,pca_leiden,ACC,0.6063651591289783
+Méthodes traditionnelles,BBAG094 spleen,PCA+Leiden,pca_leiden,ARI,0.4329535845203762
+Méthodes traditionnelles,BBAG094 spleen,PCA+Leiden,pca_leiden,Batch correction,0.5542372781112341
+Méthodes traditionnelles,BBAG094 spleen,PCA+Leiden,pca_leiden,RareACC,0.9918478260869564
+Méthodes traditionnelles,BBAG094 spleen,PCA+Leiden,pca_leiden,UltraRareACC,0.9761904761904762
+Méthodes traditionnelles,BBAG094 spleen,scMAE,scMAE,ACC,0.958856783919598
+Méthodes traditionnelles,BBAG094 spleen,scMAE,scMAE,ARI,0.9195723061274058
+Méthodes traditionnelles,BBAG094 spleen,scMAE,scMAE,Batch correction,0.5508830288905475
+Méthodes traditionnelles,BBAG094 spleen,scMAE,scMAE,RareACC,0.7092391304347826
+Méthodes traditionnelles,BBAG094 spleen,scMAE,scMAE,UltraRareACC,0.0
+Méthodes traditionnelles,BBAG094 spleen,scNAME,scNAME,ACC,0.8685092127303182
+Méthodes traditionnelles,BBAG094 spleen,scNAME,scNAME,ARI,0.6891157731172967
+Méthodes traditionnelles,BBAG094 spleen,scNAME,scNAME,Batch correction,0.6748795138601138
+Méthodes traditionnelles,BBAG094 spleen,scNAME,scNAME,RareACC,0.9130434782608696
+Méthodes traditionnelles,BBAG094 spleen,scNAME,scNAME,UltraRareACC,0.7857142857142857
+Méthodes traditionnelles,BBAG094 spleen,scRAW,scRAW (trial_0017),ACC,0.8291457286432161
+Méthodes traditionnelles,BBAG094 spleen,scRAW,scRAW (trial_0017),ARI,0.8700744463231944
+Méthodes traditionnelles,BBAG094 spleen,scRAW,scRAW (trial_0017),Batch correction,0.7909291345199329
+Méthodes traditionnelles,BBAG094 spleen,scRAW,scRAW (trial_0017),RareACC,0.5285326086956522
+Méthodes traditionnelles,BBAG094 spleen,scRAW,scRAW (trial_0017),UltraRareACC,0.9761904761904762
+Méthodes traditionnelles,BBAG094 spleen,scVI,scvi,ACC,0.7958542713567839
+Méthodes traditionnelles,BBAG094 spleen,scVI,scvi,ARI,0.5720050774011771
+Méthodes traditionnelles,BBAG094 spleen,scVI,scvi,Batch correction,0.8365897766791757
+Méthodes traditionnelles,BBAG094 spleen,scVI,scvi,RareACC,0.9334239130434784
+Méthodes traditionnelles,BBAG094 spleen,scVI,scvi,UltraRareACC,1.0
+Méthodes traditionnelles,Baron human pancreas,PCA+Leiden,pca_leiden,ACC,0.7271560275411366
+Méthodes traditionnelles,Baron human pancreas,PCA+Leiden,pca_leiden,ARI,0.6657082726176691
+Méthodes traditionnelles,Baron human pancreas,PCA+Leiden,pca_leiden,Batch correction,0.5484810301653094
+Méthodes traditionnelles,Baron human pancreas,PCA+Leiden,pca_leiden,RareACC,0.8123844731977818
+Méthodes traditionnelles,Baron human pancreas,PCA+Leiden,pca_leiden,UltraRareACC,0.7966101694915254
+Méthodes traditionnelles,Baron human pancreas,scMAE,scMAE,ACC,0.7307737192204458
+Méthodes traditionnelles,Baron human pancreas,scMAE,scMAE,ARI,0.7698534035042929
+Méthodes traditionnelles,Baron human pancreas,scMAE,scMAE,Batch correction,0.4983273460197106
+Méthodes traditionnelles,Baron human pancreas,scMAE,scMAE,RareACC,0.6155268022181146
+Méthodes traditionnelles,Baron human pancreas,scMAE,scMAE,UltraRareACC,0.6949152542372882
+Méthodes traditionnelles,Baron human pancreas,scNAME,scNAME,ACC,0.7387093009686078
+Méthodes traditionnelles,Baron human pancreas,scNAME,scNAME,ARI,0.708049479745054
+Méthodes traditionnelles,Baron human pancreas,scNAME,scNAME,Batch correction,0.493452522405769
+Méthodes traditionnelles,Baron human pancreas,scNAME,scNAME,RareACC,0.8927911275415896
+Méthodes traditionnelles,Baron human pancreas,scNAME,scNAME,UltraRareACC,0.4322033898305085
+Méthodes traditionnelles,Baron human pancreas,scRAW,scRAW (trial_0017),ACC,0.9337145524565292
+Méthodes traditionnelles,Baron human pancreas,scRAW,scRAW (trial_0017),ARI,0.9158965181979905
+Méthodes traditionnelles,Baron human pancreas,scRAW,scRAW (trial_0017),Batch correction,0.5749552605057935
+Méthodes traditionnelles,Baron human pancreas,scRAW,scRAW (trial_0017),RareACC,0.8955637707948244
+Méthodes traditionnelles,Baron human pancreas,scRAW,scRAW (trial_0017),UltraRareACC,0.8135593220338984
+Méthodes traditionnelles,Baron human pancreas,scVI,scvi,ACC,0.7116349632395845
+Méthodes traditionnelles,Baron human pancreas,scVI,scvi,ARI,0.6211343823250206
+Méthodes traditionnelles,Baron human pancreas,scVI,scvi,Batch correction,0.6295033373683816
+Méthodes traditionnelles,Baron human pancreas,scVI,scvi,RareACC,0.9177449168207024
+Méthodes traditionnelles,Baron human pancreas,scVI,scvi,UltraRareACC,0.4661016949152542
+Méthodes traditionnelles,Human testis GSE112013,PCA+Leiden,pca_leiden,ACC,0.7437596302003082
+Méthodes traditionnelles,Human testis GSE112013,PCA+Leiden,pca_leiden,ARI,0.6263413988607033
+Méthodes traditionnelles,Human testis GSE112013,PCA+Leiden,pca_leiden,Batch correction,0.6622977291899567
+Méthodes traditionnelles,Human testis GSE112013,PCA+Leiden,pca_leiden,RareACC,0.9209157127991676
+Méthodes traditionnelles,Human testis GSE112013,PCA+Leiden,pca_leiden,UltraRareACC,0.0
+Méthodes traditionnelles,Human testis GSE112013,scMAE,scMAE,ACC,0.7203389830508474
+Méthodes traditionnelles,Human testis GSE112013,scMAE,scMAE,ARI,0.651134476247592
+Méthodes traditionnelles,Human testis GSE112013,scMAE,scMAE,Batch correction,0.6988296443165273
+Méthodes traditionnelles,Human testis GSE112013,scMAE,scMAE,RareACC,0.8470343392299687
+Méthodes traditionnelles,Human testis GSE112013,scMAE,scMAE,UltraRareACC,0.0
+Méthodes traditionnelles,Human testis GSE112013,scNAME,scNAME,ACC,0.7086286594761171
+Méthodes traditionnelles,Human testis GSE112013,scNAME,scNAME,ARI,0.6310878412219612
+Méthodes traditionnelles,Human testis GSE112013,scNAME,scNAME,Batch correction,0.6788287964074947
+Méthodes traditionnelles,Human testis GSE112013,scNAME,scNAME,RareACC,0.8345473465140478
+Méthodes traditionnelles,Human testis GSE112013,scNAME,scNAME,UltraRareACC,0.0
+Méthodes traditionnelles,Human testis GSE112013,scRAW,scRAW (trial_0017),ACC,0.7178736517719568
+Méthodes traditionnelles,Human testis GSE112013,scRAW,scRAW (trial_0017),ARI,0.6107002323051303
+Méthodes traditionnelles,Human testis GSE112013,scRAW,scRAW (trial_0017),Batch correction,0.7303536766041685
+Méthodes traditionnelles,Human testis GSE112013,scRAW,scRAW (trial_0017),RareACC,0.9667013527575442
+Méthodes traditionnelles,Human testis GSE112013,scRAW,scRAW (trial_0017),UltraRareACC,0.6428571428571429
+Méthodes traditionnelles,Human testis GSE112013,scVI,scvi,ACC,0.725115562403698
+Méthodes traditionnelles,Human testis GSE112013,scVI,scvi,ARI,0.5938167523297926
+Méthodes traditionnelles,Human testis GSE112013,scVI,scvi,Batch correction,0.7754604613797713
+Méthodes traditionnelles,Human testis GSE112013,scVI,scvi,RareACC,0.9146722164412072
+Méthodes traditionnelles,Human testis GSE112013,scVI,scvi,UltraRareACC,0.0
+Méthodes traditionnelles,Kang PBMC,PCA+Leiden,pca_leiden,ACC,0.7536438400781695
+Méthodes traditionnelles,Kang PBMC,PCA+Leiden,pca_leiden,ARI,0.7744139506266788
+Méthodes traditionnelles,Kang PBMC,PCA+Leiden,pca_leiden,Batch correction,0.7261262096182571
+Méthodes traditionnelles,Kang PBMC,PCA+Leiden,pca_leiden,RareACC,0.33125
+Méthodes traditionnelles,Kang PBMC,PCA+Leiden,pca_leiden,UltraRareACC,0.5625
+Méthodes traditionnelles,Kang PBMC,scMAE,scMAE,ACC,0.7444019216676167
+Méthodes traditionnelles,Kang PBMC,scMAE,scMAE,ARI,0.7791335568686983
+Méthodes traditionnelles,Kang PBMC,scMAE,scMAE,Batch correction,0.5612853889732877
+Méthodes traditionnelles,Kang PBMC,scMAE,scMAE,RareACC,0.215625
+Méthodes traditionnelles,Kang PBMC,scMAE,scMAE,UltraRareACC,0.0432692307692307
+Méthodes traditionnelles,Kang PBMC,scNAME,scNAME,ACC,0.74664115300057
+Méthodes traditionnelles,Kang PBMC,scNAME,scNAME,ARI,0.7514762274164204
+Méthodes traditionnelles,Kang PBMC,scNAME,scNAME,Batch correction,0.5453904486138368
+Méthodes traditionnelles,Kang PBMC,scNAME,scNAME,RareACC,0.003125
+Méthodes traditionnelles,Kang PBMC,scNAME,scNAME,UltraRareACC,0.0
+Méthodes traditionnelles,Kang PBMC,scRAW,scRAW (trial_0017),ACC,0.7057650028499308
+Méthodes traditionnelles,Kang PBMC,scRAW,scRAW (trial_0017),ARI,0.5459843343891061
+Méthodes traditionnelles,Kang PBMC,scRAW,scRAW (trial_0017),Batch correction,0.6843171205513716
+Méthodes traditionnelles,Kang PBMC,scRAW,scRAW (trial_0017),RareACC,0.678125
+Méthodes traditionnelles,Kang PBMC,scRAW,scRAW (trial_0017),UltraRareACC,0.8173076923076923
+Méthodes traditionnelles,Kang PBMC,scVI,scvi,ACC,0.8142903645833334
+Méthodes traditionnelles,Kang PBMC,scVI,scvi,ARI,0.8047318184810032
+Méthodes traditionnelles,Kang PBMC,scVI,scvi,Batch correction,0.6617871605130773
+Méthodes traditionnelles,Kang PBMC,scVI,scvi,RareACC,0.1576506955177743
+Méthodes traditionnelles,Kang PBMC,scVI,scvi,UltraRareACC,0.0372093023255813
+Méthodes traditionnelles,Macaque retina bipolar,PCA+Leiden,pca_leiden,ACC,0.524552834796383
+Méthodes traditionnelles,Macaque retina bipolar,PCA+Leiden,pca_leiden,ARI,0.4966672240383485
+Méthodes traditionnelles,Macaque retina bipolar,PCA+Leiden,pca_leiden,Batch correction,0.5095256903957548
+Méthodes traditionnelles,Macaque retina bipolar,PCA+Leiden,pca_leiden,RareACC,0.9253300330033004
+Méthodes traditionnelles,Macaque retina bipolar,PCA+Leiden,pca_leiden,UltraRareACC,0.0340136054421768
+Méthodes traditionnelles,Macaque retina bipolar,scMAE,scMAE,ACC,0.8129166391657316
+Méthodes traditionnelles,Macaque retina bipolar,scMAE,scMAE,ARI,0.8009215039657596
+Méthodes traditionnelles,Macaque retina bipolar,scMAE,scMAE,Batch correction,0.3820249376532039
+Méthodes traditionnelles,Macaque retina bipolar,scMAE,scMAE,RareACC,0.9146039603960396
+Méthodes traditionnelles,Macaque retina bipolar,scMAE,scMAE,UltraRareACC,0.0
+Méthodes traditionnelles,Macaque retina bipolar,scNAME,scNAME,ACC,0.6006864233383935
+Méthodes traditionnelles,Macaque retina bipolar,scNAME,scNAME,ARI,0.5560008671856864
+Méthodes traditionnelles,Macaque retina bipolar,scNAME,scNAME,Batch correction,0.3658574137446598
+Méthodes traditionnelles,Macaque retina bipolar,scNAME,scNAME,RareACC,0.6514026402640264
+Méthodes traditionnelles,Macaque retina bipolar,scNAME,scNAME,UltraRareACC,0.0068027210884353
+Méthodes traditionnelles,Macaque retina bipolar,scRAW,scRAW (trial_0017),ACC,0.9366708468087916
+Méthodes traditionnelles,Macaque retina bipolar,scRAW,scRAW (trial_0017),ARI,0.9244654129213528
+Méthodes traditionnelles,Macaque retina bipolar,scRAW,scRAW (trial_0017),Batch correction,0.6374791031394675
+Méthodes traditionnelles,Macaque retina bipolar,scRAW,scRAW (trial_0017),RareACC,0.957920792079208
+Méthodes traditionnelles,Macaque retina bipolar,scRAW,scRAW (trial_0017),UltraRareACC,0.6802721088435374
+Méthodes traditionnelles,Macaque retina bipolar,scVI,scvi,ACC,0.973467097881328
+Méthodes traditionnelles,Macaque retina bipolar,scVI,scvi,ARI,0.9654759305347524
+Méthodes traditionnelles,Macaque retina bipolar,scVI,scvi,Batch correction,0.6828404179136567
+Méthodes traditionnelles,Macaque retina bipolar,scVI,scvi,RareACC,0.9179042904290428
+Méthodes traditionnelles,Macaque retina bipolar,scVI,scvi,UltraRareACC,0.0
+Méthodes traditionnelles,Paul15 bone marrow,PCA+Leiden,pca_leiden,ACC,0.4725274725274725
+Méthodes traditionnelles,Paul15 bone marrow,PCA+Leiden,pca_leiden,ARI,0.3114619501326496
+Méthodes traditionnelles,Paul15 bone marrow,PCA+Leiden,pca_leiden,Batch correction,0.6420492712853795
+Méthodes traditionnelles,Paul15 bone marrow,PCA+Leiden,pca_leiden,RareACC,0.2265795206971677
+Méthodes traditionnelles,Paul15 bone marrow,PCA+Leiden,pca_leiden,UltraRareACC,0.0
+Méthodes traditionnelles,Paul15 bone marrow,scMAE,scMAE,ACC,0.5113553113553113
+Méthodes traditionnelles,Paul15 bone marrow,scMAE,scMAE,ARI,0.3855814252211918
+Méthodes traditionnelles,Paul15 bone marrow,scMAE,scMAE,Batch correction,0.751672302509221
+Méthodes traditionnelles,Paul15 bone marrow,scMAE,scMAE,RareACC,0.4335511982570806
+Méthodes traditionnelles,Paul15 bone marrow,scMAE,scMAE,UltraRareACC,0.7419354838709677
+Méthodes traditionnelles,Paul15 bone marrow,scNAME,scNAME,ACC,0.4919413919413919
+Méthodes traditionnelles,Paul15 bone marrow,scNAME,scNAME,ARI,0.3592682758043509
+Méthodes traditionnelles,Paul15 bone marrow,scNAME,scNAME,Batch correction,0.5128086808432537
+Méthodes traditionnelles,Paul15 bone marrow,scNAME,scNAME,RareACC,0.4248366013071895
+Méthodes traditionnelles,Paul15 bone marrow,scNAME,scNAME,UltraRareACC,0.032258064516129
+Méthodes traditionnelles,Paul15 bone marrow,scRAW,scRAW (trial_0017),ACC,0.4161172161172161
+Méthodes traditionnelles,Paul15 bone marrow,scRAW,scRAW (trial_0017),ARI,0.2832245907007426
+Méthodes traditionnelles,Paul15 bone marrow,scRAW,scRAW (trial_0017),Batch correction,0.6825639410339949
+Méthodes traditionnelles,Paul15 bone marrow,scRAW,scRAW (trial_0017),RareACC,0.1263616557734204
+Méthodes traditionnelles,Paul15 bone marrow,scRAW,scRAW (trial_0017),UltraRareACC,0.0
+Méthodes traditionnelles,Paul15 bone marrow,scVI,scvi,ACC,0.4029304029304029
+Méthodes traditionnelles,Paul15 bone marrow,scVI,scvi,ARI,0.2831814817193258
+Méthodes traditionnelles,Paul15 bone marrow,scVI,scvi,Batch correction,0.9081955387661014
+Méthodes traditionnelles,Paul15 bone marrow,scVI,scvi,RareACC,0.4989106753812636
+Méthodes traditionnelles,Paul15 bone marrow,scVI,scvi,UltraRareACC,0.0
+Méthodes traditionnelles,Tabula Muris liver,PCA+Leiden,pca_leiden,ACC,0.7191325638335082
+Méthodes traditionnelles,Tabula Muris liver,PCA+Leiden,pca_leiden,ARI,0.5543951034735616
+Méthodes traditionnelles,Tabula Muris liver,PCA+Leiden,pca_leiden,Batch correction,0.8735805104832238
+Méthodes traditionnelles,Tabula Muris liver,PCA+Leiden,pca_leiden,RareACC,0.1345291479820627
+Méthodes traditionnelles,Tabula Muris liver,PCA+Leiden,pca_leiden,UltraRareACC,
+Méthodes traditionnelles,Tabula Muris liver,scMAE,scMAE,ACC,0.60265827212312
+Méthodes traditionnelles,Tabula Muris liver,scMAE,scMAE,ARI,0.4905798474289589
+Méthodes traditionnelles,Tabula Muris liver,scMAE,scMAE,Batch correction,0.8770284504132945
+Méthodes traditionnelles,Tabula Muris liver,scMAE,scMAE,RareACC,0.1300448430493273
+Méthodes traditionnelles,Tabula Muris liver,scMAE,scMAE,UltraRareACC,
+Méthodes traditionnelles,Tabula Muris liver,scNAME,scNAME,ACC,0.7061909758656874
+Méthodes traditionnelles,Tabula Muris liver,scNAME,scNAME,ARI,0.5891148190905894
+Méthodes traditionnelles,Tabula Muris liver,scNAME,scNAME,Batch correction,0.6091181766721063
+Méthodes traditionnelles,Tabula Muris liver,scNAME,scNAME,RareACC,0.2690582959641255
+Méthodes traditionnelles,Tabula Muris liver,scNAME,scNAME,UltraRareACC,
+Méthodes traditionnelles,Tabula Muris liver,scRAW,scRAW (trial_0017),ACC,0.745715285064708
+Méthodes traditionnelles,Tabula Muris liver,scRAW,scRAW (trial_0017),ARI,0.6827909308919632
+Méthodes traditionnelles,Tabula Muris liver,scRAW,scRAW (trial_0017),Batch correction,0.8705477948080688
+Méthodes traditionnelles,Tabula Muris liver,scRAW,scRAW (trial_0017),RareACC,0.3228699551569506
+Méthodes traditionnelles,Tabula Muris liver,scRAW,scRAW (trial_0017),UltraRareACC,
+Méthodes traditionnelles,Tabula Muris liver,scVI,scvi,ACC,0.6876530255334032
+Méthodes traditionnelles,Tabula Muris liver,scVI,scvi,ARI,0.5185440830144872
+Méthodes traditionnelles,Tabula Muris liver,scVI,scvi,Batch correction,0.937853056018573
+Méthodes traditionnelles,Tabula Muris liver,scVI,scvi,RareACC,0.1300448430493273
+Méthodes traditionnelles,Tabula Muris liver,scVI,scvi,UltraRareACC,
+Rare Specific,BBAG094 Zeisel,CellSIUS,CellSIUS,ACC,0.6250831669993346
+Rare Specific,BBAG094 Zeisel,CellSIUS,CellSIUS,ARI,0.5721813494355713
+Rare Specific,BBAG094 Zeisel,CellSIUS,CellSIUS,Batch correction,0.3791070390860109
+Rare Specific,BBAG094 Zeisel,CellSIUS,CellSIUS,RareACC,0.4864864864864865
+Rare Specific,BBAG094 Zeisel,CellSIUS,CellSIUS,UltraRareACC,0.5925925925925926
+Rare Specific,BBAG094 Zeisel,DeepScena,DeepScena,ACC,0.5518962075848304
+Rare Specific,BBAG094 Zeisel,DeepScena,DeepScena,ARI,0.3161856193622164
+Rare Specific,BBAG094 Zeisel,DeepScena,DeepScena,Batch correction,0.4478486727467957
+Rare Specific,BBAG094 Zeisel,DeepScena,DeepScena,RareACC,0.7351351351351352
+Rare Specific,BBAG094 Zeisel,DeepScena,DeepScena,UltraRareACC,0.0
+Rare Specific,BBAG094 Zeisel,GiniClust,GiniClust,ACC,0.2967398536260812
+Rare Specific,BBAG094 Zeisel,GiniClust,GiniClust,ARI,0.0356671566103591
+Rare Specific,BBAG094 Zeisel,GiniClust,GiniClust,Batch correction,0.3791070390860109
+Rare Specific,BBAG094 Zeisel,GiniClust,GiniClust,RareACC,0.1243243243243243
+Rare Specific,BBAG094 Zeisel,GiniClust,GiniClust,UltraRareACC,0.037037037037037
+Rare Specific,BBAG094 Zeisel,scAIDE,scAIDE,ACC,0.8349966733200266
+Rare Specific,BBAG094 Zeisel,scAIDE,scAIDE,ARI,0.6955293827796469
+Rare Specific,BBAG094 Zeisel,scAIDE,scAIDE,Batch correction,0.3563781659048055
+Rare Specific,BBAG094 Zeisel,scAIDE,scAIDE,RareACC,0.8108108108108109
+Rare Specific,BBAG094 Zeisel,scAIDE,scAIDE,UltraRareACC,0.6666666666666666
+Rare Specific,BBAG094 Zeisel,scCAD,scCAD,ACC,0.3426480372588157
+Rare Specific,BBAG094 Zeisel,scCAD,scCAD,ARI,0.3575497552887321
+Rare Specific,BBAG094 Zeisel,scCAD,scCAD,Batch correction,0.3791070390860109
+Rare Specific,BBAG094 Zeisel,scCAD,scCAD,RareACC,0.2810810810810811
+Rare Specific,BBAG094 Zeisel,scCAD,scCAD,UltraRareACC,0.5925925925925926
+Rare Specific,BBAG094 Zeisel,scRAW,scRAW (trial_0017),ACC,0.6407185628742516
+Rare Specific,BBAG094 Zeisel,scRAW,scRAW (trial_0017),ARI,0.4301883295024661
+Rare Specific,BBAG094 Zeisel,scRAW,scRAW (trial_0017),Batch correction,0.4000360971162749
+Rare Specific,BBAG094 Zeisel,scRAW,scRAW (trial_0017),RareACC,0.6108108108108108
+Rare Specific,BBAG094 Zeisel,scRAW,scRAW (trial_0017),UltraRareACC,0.5555555555555556
+Rare Specific,BBAG094 spleen,CellSIUS,CellSIUS,ACC,0.6865577889447236
+Rare Specific,BBAG094 spleen,CellSIUS,CellSIUS,ARI,0.465211490129131
+Rare Specific,BBAG094 spleen,CellSIUS,CellSIUS,Batch correction,0.5635786119930313
+Rare Specific,BBAG094 spleen,CellSIUS,CellSIUS,RareACC,0.6942934782608695
+Rare Specific,BBAG094 spleen,CellSIUS,CellSIUS,UltraRareACC,1.0
+Rare Specific,BBAG094 spleen,DeepScena,DeepScena,ACC,0.7292713567839196
+Rare Specific,BBAG094 spleen,DeepScena,DeepScena,ARI,0.5166828129022619
+Rare Specific,BBAG094 spleen,DeepScena,DeepScena,Batch correction,0.6454709506622498
+Rare Specific,BBAG094 spleen,DeepScena,DeepScena,RareACC,0.9157608695652174
+Rare Specific,BBAG094 spleen,DeepScena,DeepScena,UltraRareACC,0.0
+Rare Specific,BBAG094 spleen,GiniClust,GiniClust,ACC,0.6734715242881072
+Rare Specific,BBAG094 spleen,GiniClust,GiniClust,ARI,0.1407501351877176
+Rare Specific,BBAG094 spleen,GiniClust,GiniClust,Batch correction,0.5555178698377947
+Rare Specific,BBAG094 spleen,GiniClust,GiniClust,RareACC,0.0788043478260869
+Rare Specific,BBAG094 spleen,GiniClust,GiniClust,UltraRareACC,0.0238095238095238
+Rare Specific,BBAG094 spleen,scAIDE,scAIDE,ACC,0.9567629815745392
+Rare Specific,BBAG094 spleen,scAIDE,scAIDE,ARI,0.9336405125695943
+Rare Specific,BBAG094 spleen,scAIDE,scAIDE,Batch correction,0.6896961162538213
+Rare Specific,BBAG094 spleen,scAIDE,scAIDE,RareACC,0.6820652173913043
+Rare Specific,BBAG094 spleen,scAIDE,scAIDE,UltraRareACC,0.0
+Rare Specific,BBAG094 spleen,scCAD,scCAD,ACC,0.5570561139028476
+Rare Specific,BBAG094 spleen,scCAD,scCAD,ARI,0.4160899891303404
+Rare Specific,BBAG094 spleen,scCAD,scCAD,Batch correction,0.5647690881835075
+Rare Specific,BBAG094 spleen,scCAD,scCAD,RareACC,0.264945652173913
+Rare Specific,BBAG094 spleen,scCAD,scCAD,UltraRareACC,1.0
+Rare Specific,BBAG094 spleen,scRAW,scRAW (trial_0017),ACC,0.8291457286432161
+Rare Specific,BBAG094 spleen,scRAW,scRAW (trial_0017),ARI,0.8700744463231944
+Rare Specific,BBAG094 spleen,scRAW,scRAW (trial_0017),Batch correction,0.7909291345199329
+Rare Specific,BBAG094 spleen,scRAW,scRAW (trial_0017),RareACC,0.5285326086956522
+Rare Specific,BBAG094 spleen,scRAW,scRAW (trial_0017),UltraRareACC,0.9761904761904762
+Rare Specific,Baron human pancreas,CellSIUS,CellSIUS,ACC,0.7306570194888552
+Rare Specific,Baron human pancreas,CellSIUS,CellSIUS,ARI,0.6655984842183298
+Rare Specific,Baron human pancreas,CellSIUS,CellSIUS,Batch correction,0.5497402004745524
+Rare Specific,Baron human pancreas,CellSIUS,CellSIUS,RareACC,0.7846580406654344
+Rare Specific,Baron human pancreas,CellSIUS,CellSIUS,UltraRareACC,0.635593220338983
+Rare Specific,Baron human pancreas,DeepScena,DeepScena,ACC,0.6601703816081222
+Rare Specific,Baron human pancreas,DeepScena,DeepScena,ARI,0.5721115848745495
+Rare Specific,Baron human pancreas,DeepScena,DeepScena,Batch correction,0.601989293980998
+Rare Specific,Baron human pancreas,DeepScena,DeepScena,RareACC,0.6062846580406654
+Rare Specific,Baron human pancreas,DeepScena,DeepScena,UltraRareACC,0.0
+Rare Specific,Baron human pancreas,GiniClust,GiniClust,ACC,0.3097210876414984
+Rare Specific,Baron human pancreas,GiniClust,GiniClust,ARI,0.0518010893412266
+Rare Specific,Baron human pancreas,GiniClust,GiniClust,Batch correction,0.5497250205305556
+Rare Specific,Baron human pancreas,GiniClust,GiniClust,RareACC,0.0757855822550831
+Rare Specific,Baron human pancreas,GiniClust,GiniClust,UltraRareACC,0.576271186440678
+Rare Specific,Baron human pancreas,scAIDE,scAIDE,ACC,0.749912475201307
+Rare Specific,Baron human pancreas,scAIDE,scAIDE,ARI,0.7944032035035324
+Rare Specific,Baron human pancreas,scAIDE,scAIDE,Batch correction,0.61426277412671
+Rare Specific,Baron human pancreas,scAIDE,scAIDE,RareACC,0.6349353049907579
+Rare Specific,Baron human pancreas,scAIDE,scAIDE,UltraRareACC,0.6271186440677966
+Rare Specific,Baron human pancreas,scCAD,scCAD,ACC,0.5372855642432023
+Rare Specific,Baron human pancreas,scCAD,scCAD,ARI,0.6049868988016032
+Rare Specific,Baron human pancreas,scCAD,scCAD,Batch correction,0.549390550124902
+Rare Specific,Baron human pancreas,scCAD,scCAD,RareACC,0.3493530499075785
+Rare Specific,Baron human pancreas,scCAD,scCAD,UltraRareACC,0.9152542372881356
+Rare Specific,Baron human pancreas,scRAW,scRAW (trial_0017),ACC,0.9337145524565292
+Rare Specific,Baron human pancreas,scRAW,scRAW (trial_0017),ARI,0.9158965181979905
+Rare Specific,Baron human pancreas,scRAW,scRAW (trial_0017),Batch correction,0.5749552605057935
+Rare Specific,Baron human pancreas,scRAW,scRAW (trial_0017),RareACC,0.8955637707948244
+Rare Specific,Baron human pancreas,scRAW,scRAW (trial_0017),UltraRareACC,0.8135593220338984
+Rare Specific,Human testis GSE112013,CellSIUS,CellSIUS,ACC,0.6642526964560863
+Rare Specific,Human testis GSE112013,CellSIUS,CellSIUS,ARI,0.5809163003977524
+Rare Specific,Human testis GSE112013,CellSIUS,CellSIUS,Batch correction,0.6667543334823619
+Rare Specific,Human testis GSE112013,CellSIUS,CellSIUS,RareACC,0.8126951092611863
+Rare Specific,Human testis GSE112013,CellSIUS,CellSIUS,UltraRareACC,0.6071428571428571
+Rare Specific,Human testis GSE112013,DeepScena,DeepScena,ACC,0.5955315870570108
+Rare Specific,Human testis GSE112013,DeepScena,DeepScena,ARI,0.4917144181437786
+Rare Specific,Human testis GSE112013,DeepScena,DeepScena,Batch correction,0.7745639644874889
+Rare Specific,Human testis GSE112013,DeepScena,DeepScena,RareACC,0.3579604578563995
+Rare Specific,Human testis GSE112013,DeepScena,DeepScena,UltraRareACC,0.9642857142857144
+Rare Specific,Human testis GSE112013,GiniClust,GiniClust,ACC,0.2172573189522342
+Rare Specific,Human testis GSE112013,GiniClust,GiniClust,ARI,0.0426811935236182
+Rare Specific,Human testis GSE112013,GiniClust,GiniClust,Batch correction,0.6665141540078618
+Rare Specific,Human testis GSE112013,GiniClust,GiniClust,RareACC,0.1103017689906347
+Rare Specific,Human testis GSE112013,GiniClust,GiniClust,UltraRareACC,0.0
+Rare Specific,Human testis GSE112013,scAIDE,scAIDE,ACC,0.7263482280431433
+Rare Specific,Human testis GSE112013,scAIDE,scAIDE,ARI,0.611075044980888
+Rare Specific,Human testis GSE112013,scAIDE,scAIDE,Batch correction,0.7822467538882234
+Rare Specific,Human testis GSE112013,scAIDE,scAIDE,RareACC,0.8439125910509886
+Rare Specific,Human testis GSE112013,scAIDE,scAIDE,UltraRareACC,0.9285714285714286
+Rare Specific,Human testis GSE112013,scCAD,scCAD,ACC,0.3151001540832049
+Rare Specific,Human testis GSE112013,scCAD,scCAD,ARI,0.3990881900976668
+Rare Specific,Human testis GSE112013,scCAD,scCAD,Batch correction,0.6667543334823619
+Rare Specific,Human testis GSE112013,scCAD,scCAD,RareACC,0.291363163371488
+Rare Specific,Human testis GSE112013,scCAD,scCAD,UltraRareACC,0.5714285714285714
+Rare Specific,Human testis GSE112013,scRAW,scRAW (trial_0017),ACC,0.7178736517719568
+Rare Specific,Human testis GSE112013,scRAW,scRAW (trial_0017),ARI,0.6107002323051303
+Rare Specific,Human testis GSE112013,scRAW,scRAW (trial_0017),Batch correction,0.7303536766041685
+Rare Specific,Human testis GSE112013,scRAW,scRAW (trial_0017),RareACC,0.9667013527575442
+Rare Specific,Human testis GSE112013,scRAW,scRAW (trial_0017),UltraRareACC,0.6428571428571429
+Rare Specific,Kang PBMC,CellSIUS,CellSIUS,ACC,0.7504682029150721
+Rare Specific,Kang PBMC,CellSIUS,CellSIUS,ARI,0.7754337594247781
+Rare Specific,Kang PBMC,CellSIUS,CellSIUS,Batch correction,0.5233528215257864
+Rare Specific,Kang PBMC,CellSIUS,CellSIUS,RareACC,0.19375
+Rare Specific,Kang PBMC,CellSIUS,CellSIUS,UltraRareACC,0.5961538461538461
+Rare Specific,Kang PBMC,DeepScena,DeepScena,ACC,0.7494225860042951
+Rare Specific,Kang PBMC,DeepScena,DeepScena,ARI,0.7727101413307176
+Rare Specific,Kang PBMC,DeepScena,DeepScena,Batch correction,0.5043353781506493
+Rare Specific,Kang PBMC,DeepScena,DeepScena,RareACC,0.2630057803468208
+Rare Specific,Kang PBMC,DeepScena,DeepScena,UltraRareACC,
+Rare Specific,Kang PBMC,GiniClust,GiniClust,ACC,0.4205276443286377
+Rare Specific,Kang PBMC,GiniClust,GiniClust,ARI,0.0519078632910351
+Rare Specific,Kang PBMC,GiniClust,GiniClust,Batch correction,0.5258722051292675
+Rare Specific,Kang PBMC,GiniClust,GiniClust,RareACC,0.00625
+Rare Specific,Kang PBMC,GiniClust,GiniClust,UltraRareACC,0.0
+Rare Specific,Kang PBMC,scAIDE,scAIDE,ACC,0.7320657926878918
+Rare Specific,Kang PBMC,scAIDE,scAIDE,ARI,0.8112042439517504
+Rare Specific,Kang PBMC,scAIDE,scAIDE,Batch correction,0.5008472926355257
+Rare Specific,Kang PBMC,scAIDE,scAIDE,RareACC,0.2203125
+Rare Specific,Kang PBMC,scAIDE,scAIDE,UltraRareACC,0.0576923076923076
+Rare Specific,Kang PBMC,scCAD,scCAD,ACC,0.4081508020519501
+Rare Specific,Kang PBMC,scCAD,scCAD,ARI,0.4276674551464887
+Rare Specific,Kang PBMC,scCAD,scCAD,Batch correction,0.5233528215257864
+Rare Specific,Kang PBMC,scCAD,scCAD,RareACC,0.2203125
+Rare Specific,Kang PBMC,scCAD,scCAD,UltraRareACC,0.2740384615384615
+Rare Specific,Kang PBMC,scRAW,scRAW (trial_0017),ACC,0.7057650028499308
+Rare Specific,Kang PBMC,scRAW,scRAW (trial_0017),ARI,0.5459843343891061
+Rare Specific,Kang PBMC,scRAW,scRAW (trial_0017),Batch correction,0.6843171205513716
+Rare Specific,Kang PBMC,scRAW,scRAW (trial_0017),RareACC,0.678125
+Rare Specific,Kang PBMC,scRAW,scRAW (trial_0017),UltraRareACC,0.8173076923076923
+Rare Specific,Macaque retina bipolar,CellSIUS,CellSIUS,ACC,0.5243548280641542
+Rare Specific,Macaque retina bipolar,CellSIUS,CellSIUS,ARI,0.4966767713999813
+Rare Specific,Macaque retina bipolar,CellSIUS,CellSIUS,Batch correction,0.5082633237081394
+Rare Specific,Macaque retina bipolar,CellSIUS,CellSIUS,RareACC,0.9253300330033004
+Rare Specific,Macaque retina bipolar,CellSIUS,CellSIUS,UltraRareACC,0.0204081632653061
+Rare Specific,Macaque retina bipolar,DeepScena,DeepScena,ACC,0.2729192792554947
+Rare Specific,Macaque retina bipolar,DeepScena,DeepScena,ARI,0.0463661543699029
+Rare Specific,Macaque retina bipolar,DeepScena,DeepScena,Batch correction,0.517319398896821
+Rare Specific,Macaque retina bipolar,DeepScena,DeepScena,RareACC,0.0255775577557755
+Rare Specific,Macaque retina bipolar,DeepScena,DeepScena,UltraRareACC,0.0952380952380952
+Rare Specific,Macaque retina bipolar,GiniClust,GiniClust,ACC,0.2203154907266847
+Rare Specific,Macaque retina bipolar,GiniClust,GiniClust,ARI,0.0231803810422315
+Rare Specific,Macaque retina bipolar,GiniClust,GiniClust,Batch correction,0.5128376800863568
+Rare Specific,Macaque retina bipolar,GiniClust,GiniClust,RareACC,0.0383663366336633
+Rare Specific,Macaque retina bipolar,GiniClust,GiniClust,UltraRareACC,0.0
+Rare Specific,Macaque retina bipolar,scAIDE,scAIDE,ACC,0.8999735991023695
+Rare Specific,Macaque retina bipolar,scAIDE,scAIDE,ARI,0.8734328229419214
+Rare Specific,Macaque retina bipolar,scAIDE,scAIDE,Batch correction,0.4506611362064868
+Rare Specific,Macaque retina bipolar,scAIDE,scAIDE,RareACC,0.9220297029702972
+Rare Specific,Macaque retina bipolar,scAIDE,scAIDE,UltraRareACC,0.0068027210884353
+Rare Specific,Macaque retina bipolar,scCAD,scCAD,ACC,0.5600290409873936
+Rare Specific,Macaque retina bipolar,scCAD,scCAD,ARI,0.4250527897674626
+Rare Specific,Macaque retina bipolar,scCAD,scCAD,Batch correction,0.5082633237081394
+Rare Specific,Macaque retina bipolar,scCAD,scCAD,RareACC,0.6497524752475248
+Rare Specific,Macaque retina bipolar,scCAD,scCAD,UltraRareACC,0.6666666666666666
+Rare Specific,Macaque retina bipolar,scRAW,scRAW (trial_0017),ACC,0.9366708468087916
+Rare Specific,Macaque retina bipolar,scRAW,scRAW (trial_0017),ARI,0.9244654129213528
+Rare Specific,Macaque retina bipolar,scRAW,scRAW (trial_0017),Batch correction,0.6374791031394675
+Rare Specific,Macaque retina bipolar,scRAW,scRAW (trial_0017),RareACC,0.957920792079208
+Rare Specific,Macaque retina bipolar,scRAW,scRAW (trial_0017),UltraRareACC,0.6802721088435374
+Rare Specific,Paul15 bone marrow,CellSIUS,CellSIUS,ACC,0.4875457875457875
+Rare Specific,Paul15 bone marrow,CellSIUS,CellSIUS,ARI,0.3405759360259529
+Rare Specific,Paul15 bone marrow,CellSIUS,CellSIUS,Batch correction,0.6420492712853795
+Rare Specific,Paul15 bone marrow,CellSIUS,CellSIUS,RareACC,0.3289760348583878
+Rare Specific,Paul15 bone marrow,CellSIUS,CellSIUS,UltraRareACC,0.5806451612903226
+Rare Specific,Paul15 bone marrow,DeepScena,DeepScena,ACC,0.3157509157509157
+Rare Specific,Paul15 bone marrow,DeepScena,DeepScena,ARI,0.2768069073927794
+Rare Specific,Paul15 bone marrow,DeepScena,DeepScena,Batch correction,0.6641744309262727
+Rare Specific,Paul15 bone marrow,DeepScena,DeepScena,RareACC,0.1111111111111111
+Rare Specific,Paul15 bone marrow,DeepScena,DeepScena,UltraRareACC,0.032258064516129
+Rare Specific,Paul15 bone marrow,GiniClust,GiniClust,ACC,0.1534798534798535
+Rare Specific,Paul15 bone marrow,GiniClust,GiniClust,ARI,0.0071314773024026
+Rare Specific,Paul15 bone marrow,GiniClust,GiniClust,Batch correction,0.6420492712853795
+Rare Specific,Paul15 bone marrow,GiniClust,GiniClust,RareACC,0.008714596949891
+Rare Specific,Paul15 bone marrow,GiniClust,GiniClust,UltraRareACC,0.0
+Rare Specific,Paul15 bone marrow,scAIDE,scAIDE,ACC,0.4655677655677656
+Rare Specific,Paul15 bone marrow,scAIDE,scAIDE,ARI,0.3280714585627989
+Rare Specific,Paul15 bone marrow,scAIDE,scAIDE,Batch correction,0.7262129136897707
+Rare Specific,Paul15 bone marrow,scAIDE,scAIDE,RareACC,0.3638344226579521
+Rare Specific,Paul15 bone marrow,scAIDE,scAIDE,UltraRareACC,0.2258064516129032
+Rare Specific,Paul15 bone marrow,scCAD,scCAD,ACC,0.2871794871794871
+Rare Specific,Paul15 bone marrow,scCAD,scCAD,ARI,0.2243167105067877
+Rare Specific,Paul15 bone marrow,scCAD,scCAD,Batch correction,0.6420492712853795
+Rare Specific,Paul15 bone marrow,scCAD,scCAD,RareACC,0.2788671023965142
+Rare Specific,Paul15 bone marrow,scCAD,scCAD,UltraRareACC,0.6774193548387096
+Rare Specific,Paul15 bone marrow,scRAW,scRAW (trial_0017),ACC,0.4161172161172161
+Rare Specific,Paul15 bone marrow,scRAW,scRAW (trial_0017),ARI,0.2832245907007426
+Rare Specific,Paul15 bone marrow,scRAW,scRAW (trial_0017),Batch correction,0.6825639410339949
+Rare Specific,Paul15 bone marrow,scRAW,scRAW (trial_0017),RareACC,0.1263616557734204
+Rare Specific,Paul15 bone marrow,scRAW,scRAW (trial_0017),UltraRareACC,0.0
+Rare Specific,Tabula Muris liver,CellSIUS,CellSIUS,ACC,0.4966771598461
+Rare Specific,Tabula Muris liver,CellSIUS,CellSIUS,ARI,0.3648315181321307
+Rare Specific,Tabula Muris liver,CellSIUS,CellSIUS,Batch correction,0.8735805104832238
+Rare Specific,Tabula Muris liver,CellSIUS,CellSIUS,RareACC,0.5426008968609866
+Rare Specific,Tabula Muris liver,CellSIUS,CellSIUS,UltraRareACC,
+Rare Specific,Tabula Muris liver,DeepScena,DeepScena,ACC,0.8219657222805177
+Rare Specific,Tabula Muris liver,DeepScena,DeepScena,ARI,0.8235452463351149
+Rare Specific,Tabula Muris liver,DeepScena,DeepScena,Batch correction,0.8417060560172545
+Rare Specific,Tabula Muris liver,DeepScena,DeepScena,RareACC,0.0269058295964125
+Rare Specific,Tabula Muris liver,DeepScena,DeepScena,UltraRareACC,
+Rare Specific,Tabula Muris liver,GiniClust,GiniClust,ACC,0.3871983210912906
+Rare Specific,Tabula Muris liver,GiniClust,GiniClust,ARI,0.1030496281895809
+Rare Specific,Tabula Muris liver,GiniClust,GiniClust,Batch correction,0.8735805104832238
+Rare Specific,Tabula Muris liver,GiniClust,GiniClust,RareACC,0.0807174887892376
+Rare Specific,Tabula Muris liver,GiniClust,GiniClust,UltraRareACC,
+Rare Specific,Tabula Muris liver,scAIDE,scAIDE,ACC,0.695697796432319
+Rare Specific,Tabula Muris liver,scAIDE,scAIDE,ARI,0.6267091866347666
+Rare Specific,Tabula Muris liver,scAIDE,scAIDE,Batch correction,0.7976624282847742
+Rare Specific,Tabula Muris liver,scAIDE,scAIDE,RareACC,0.1345291479820627
+Rare Specific,Tabula Muris liver,scAIDE,scAIDE,UltraRareACC,
+Rare Specific,Tabula Muris liver,scCAD,scCAD,ACC,0.4008394543546694
+Rare Specific,Tabula Muris liver,scCAD,scCAD,ARI,0.4429350003113112
+Rare Specific,Tabula Muris liver,scCAD,scCAD,Batch correction,0.8735805104832238
+Rare Specific,Tabula Muris liver,scCAD,scCAD,RareACC,0.4080717488789238
+Rare Specific,Tabula Muris liver,scCAD,scCAD,UltraRareACC,
+Rare Specific,Tabula Muris liver,scRAW,scRAW (trial_0017),ACC,0.745715285064708
+Rare Specific,Tabula Muris liver,scRAW,scRAW (trial_0017),ARI,0.6827909308919632
+Rare Specific,Tabula Muris liver,scRAW,scRAW (trial_0017),Batch correction,0.8705477948080688
+Rare Specific,Tabula Muris liver,scRAW,scRAW (trial_0017),RareACC,0.3228699551569506
+Rare Specific,Tabula Muris liver,scRAW,scRAW (trial_0017),UltraRareACC,
