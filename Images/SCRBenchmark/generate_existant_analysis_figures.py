@@ -3,9 +3,7 @@
 
 from __future__ import annotations
 
-import json
 from pathlib import Path
-from typing import Any
 
 import matplotlib
 
@@ -30,9 +28,9 @@ BARON_FULL_ROOT = Path(
     "/data2/fbidet/SCRBenchmark/results/"
     "baron_full_existing_algorithms_5seeds_20260522_162936"
 )
-BARON_INDUCTIVE_ROOT = Path(
-    "/data2/fbidet/scRAW_Inductif/results/"
-    "inductive_baron_h123_to_h4_all_baselines_loss_metrics_20260511"
+BARON_SPLIT_ROOT = Path(
+    "/data2/fbidet/SCRBenchmark/results/"
+    "baron_split_70_10_20_existing_algorithms_5seeds_20260526_103715"
 )
 
 ALGORITHMS = [
@@ -45,9 +43,12 @@ ALGORITHMS = [
 ]
 
 INDUCTIVE_ALGORITHMS = [
-    ("sc_mae", "scMAE", BARON_INDUCTIVE_ROOT / "sc_mae_h123_to_h4" / "metrics.json"),
-    ("scdeepcluster", "scDeepCluster", BARON_INDUCTIVE_ROOT / "scdeepcluster_h123_to_h4" / "metrics.json"),
-    ("scname", "scNAME", BARON_INDUCTIVE_ROOT / "scname_h123_to_h4" / "metrics.json"),
+    ("pca_kmeans", "PCA+KMeans", BARON_SPLIT_ROOT / "gpu2_scname_classic"),
+    ("pca_leiden", "PCA+Leiden", BARON_SPLIT_ROOT / "gpu2_scname_classic"),
+    ("sc_mae", "scMAE", BARON_SPLIT_ROOT / "gpu1_deep_core"),
+    ("scdeepcluster", "scDeepCluster", BARON_SPLIT_ROOT / "gpu1_deep_core"),
+    ("scname", "scNAME", BARON_SPLIT_ROOT / "gpu2_scname_classic"),
+    ("sccdcg", "scCDCG", BARON_SPLIT_ROOT / "gpu1_deep_core"),
 ]
 
 CELL_ORDER = [
@@ -143,6 +144,11 @@ def transductive_label_path(algorithm_key: str, run_id: int) -> Path:
     return root / "results" / "labels" / f"labels_{algorithm_key}_run{run_id}.csv"
 
 
+def inductive_label_path(algorithm_key: str, run_id: int) -> Path:
+    root = {key: path for key, _, path in INDUCTIVE_ALGORITHMS}[algorithm_key]
+    return root / "results" / "labels" / f"benchmark_{algorithm_key}_run{run_id}_test.csv"
+
+
 def evaluate_label_file(
     path: Path,
     rare: set[str],
@@ -191,28 +197,6 @@ def evaluate_label_file(
     return metrics, errors
 
 
-def weighted_recall(classwise: dict[str, dict[str, float]], classes: set[str]) -> tuple[float, int]:
-    support = 0
-    correct = 0.0
-    for cell_type in classes:
-        row = classwise.get(cell_type)
-        if not row:
-            continue
-        row_support = int(row.get("Support", 0))
-        support += row_support
-        correct += row_support * float(row.get("Recall", 0.0))
-    if support == 0:
-        return float("nan"), 0
-    return float(correct / support), support
-
-
-def read_json(path: Path) -> dict[str, Any]:
-    if not path.exists():
-        raise FileNotFoundError(path)
-    with path.open(encoding="utf-8") as handle:
-        return json.load(handle)
-
-
 def collect_transductive(full_support: pd.Series) -> tuple[pd.DataFrame, pd.DataFrame]:
     rare, ultra = rare_sets(full_support)
     metric_rows: list[dict[str, float | int | str]] = []
@@ -252,52 +236,34 @@ def collect_inductive(full_support: pd.Series) -> tuple[pd.DataFrame, pd.DataFra
     rare, ultra = rare_sets(full_support)
     metric_rows: list[dict[str, float | int | str]] = []
     error_rows: list[dict[str, float | int | str]] = []
-    for algorithm_key, method_name, path in INDUCTIVE_ALGORITHMS:
-        metrics_json = read_json(path)
-        test_metrics = metrics_json["test_metrics"]
-        classwise = test_metrics["ClassWise"]
-        n_eval = int(test_metrics["n_samples_evaluated"])
-        rare_acc, n_rare = weighted_recall(classwise, rare)
-        ultra_acc, n_ultra = weighted_recall(classwise, ultra)
-        supports = [int(row.get("Support", 0)) for row in classwise.values()]
-
-        metric_rows.append(
-            {
-                "mode_key": "inductive",
-                "mode": "Inductif",
-                "algorithm_key": algorithm_key,
-                "Methode": method_name,
-                "seed": int(metrics_json.get("seed", 42)),
-                "NMI": float(test_metrics["NMI"]),
-                "ARI": float(test_metrics["ARI"]),
-                "ACC": float(test_metrics["ACC"]),
-                "BalancedACC": float(test_metrics["BalancedACC"]),
-                "F1Macro": float(test_metrics["F1_Macro"]),
-                "RareACC": rare_acc,
-                "UltraRareACC": ultra_acc,
-                "n_eval": float(n_eval),
-                "n_rare_cells": float(n_rare),
-                "n_ultrarare_cells": float(n_ultra),
-                "min_class_support": float(min(supports)),
-            }
-        )
-
-        for cell_type in CELL_ORDER:
-            row = classwise.get(cell_type, {})
-            recall = float(row.get("Recall", np.nan))
-            support = float(row.get("Support", 0))
-            error_rows.append(
+    for algorithm_key, method_name, _ in INDUCTIVE_ALGORITHMS:
+        for run_id in range(5):
+            metrics, errors = evaluate_label_file(
+                inductive_label_path(algorithm_key, run_id),
+                rare,
+                ultra,
+            )
+            metric_rows.append(
                 {
                     "mode_key": "inductive",
                     "mode": "Inductif",
                     "algorithm_key": algorithm_key,
                     "Methode": method_name,
-                    "seed": int(metrics_json.get("seed", 42)),
-                    "cell_type": cell_type,
-                    "support": support,
-                    "error_rate": 1.0 - recall if not pd.isna(recall) else float("nan"),
+                    "seed": run_id,
+                    **metrics,
                 }
             )
+            for row in errors:
+                error_rows.append(
+                    {
+                        "mode_key": "inductive",
+                        "mode": "Inductif",
+                        "algorithm_key": algorithm_key,
+                        "Methode": method_name,
+                        "seed": run_id,
+                        **row,
+                    }
+                )
     return pd.DataFrame(metric_rows), pd.DataFrame(error_rows)
 
 
@@ -463,8 +429,8 @@ def plot_baron_inductive_transductive_error_panel() -> None:
     ax_title.text(
         0.0,
         0.25,
-        "Erreur = 1 - rappel apres appariement hongrois ; transductif moyenne sur 5 seeds, "
-        "inductif sur le split H123 -> H4. Les lignes sont ordonnees des types les plus rares aux plus frequents.",
+        "Erreur = 1 - rappel apres appariement hongrois ; resultats moyennes sur 5 seeds. "
+        "L'inductif utilise un split stratifie 70/10/20, le transductif le jeu complet.",
         transform=ax_title.transAxes,
         fontsize=9.2,
         color="#495057",
@@ -478,7 +444,7 @@ def plot_baron_inductive_transductive_error_panel() -> None:
         "Inductif",
         inductive_methods,
         full_support,
-        "A. Inductif - entrainement H1-H3, test H4",
+        "A. Inductif - split 70/10/20, test 20%",
         show_ylabels=True,
     )
     draw_error_heatmap(
@@ -500,7 +466,7 @@ def plot_baron_inductive_transductive_error_panel() -> None:
         ax_table_inductive,
         metrics,
         "Inductif",
-        "C. Metriques inductives (test H4)",
+        "C. Metriques inductives (test 20%, 5 seeds)",
     )
     draw_metric_table(
         ax_table_transductive,
@@ -512,8 +478,8 @@ def plot_baron_inductive_transductive_error_panel() -> None:
     fig.text(
         0.015,
         0.012,
-        "Note : le test inductif ne contient que 1303 cellules ; les types ultra-rares peuvent n'y avoir qu'une cellule, "
-        "ce qui rend leur taux d'erreur tres sensible au hasard.",
+        "Note : le test inductif contient 1714 cellules ; les types ultra-rares restent tres peu representes "
+        "(schwann n=2, epsilon n=4, mast n=5, t_cell absent), ce qui rend leur taux d'erreur instable.",
         fontsize=8.3,
         color="#495057",
     )
