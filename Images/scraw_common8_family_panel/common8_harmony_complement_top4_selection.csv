@@ -1,0 +1,9 @@
+family,rank,method
+Rare Specific + Harmony,1,scAIDE+Harmony
+Rare Specific + Harmony,2,CellSIUS+Harmony
+Rare Specific + Harmony,3,scCAD+Harmony
+Rare Specific + Harmony,4,DeepScena+Harmony
+Traditionnelles + Harmony,1,Harmony
+Traditionnelles + Harmony,2,scvi
+Traditionnelles + Harmony,3,scMAE+Harmony
+Traditionnelles + Harmony,4,scNAME+Harmony

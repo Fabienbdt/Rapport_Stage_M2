@@ -32,10 +32,14 @@ BARON_SPLIT_ROOT = Path(
     "/data2/fbidet/SCRBenchmark/results/"
     "baron_split_70_10_20_existing_algorithms_5seeds_20260526_103715"
 )
+BARON_PCA_LEIDEN_K14_ROOT = Path(
+    "/data2/fbidet/SCRBenchmark/results/"
+    "baron_pca_leiden_k14_resolution_sweep_20260527"
+)
 
 ALGORITHMS = [
     ("pca_kmeans", "PCA+KMeans", BARON_FULL_ROOT / "gpu2_scname_classic"),
-    ("pca_leiden", "PCA+Leiden", BARON_FULL_ROOT / "gpu2_scname_classic"),
+    ("pca_leiden", "PCA+Leiden", BARON_PCA_LEIDEN_K14_ROOT / "transductive"),
     ("sc_mae", "scMAE", BARON_FULL_ROOT / "gpu1_deep_core"),
     ("scdeepcluster", "scDeepCluster", BARON_FULL_ROOT / "gpu1_deep_core"),
     ("scname", "scNAME", BARON_FULL_ROOT / "gpu2_scname_classic"),
@@ -44,7 +48,7 @@ ALGORITHMS = [
 
 INDUCTIVE_ALGORITHMS = [
     ("pca_kmeans", "PCA+KMeans", BARON_SPLIT_ROOT / "gpu2_scname_classic"),
-    ("pca_leiden", "PCA+Leiden", BARON_SPLIT_ROOT / "gpu2_scname_classic"),
+    ("pca_leiden", "PCA+Leiden", BARON_PCA_LEIDEN_K14_ROOT / "inductive"),
     ("sc_mae", "scMAE", BARON_SPLIT_ROOT / "gpu1_deep_core"),
     ("scdeepcluster", "scDeepCluster", BARON_SPLIT_ROOT / "gpu1_deep_core"),
     ("scname", "scNAME", BARON_SPLIT_ROOT / "gpu2_scname_classic"),

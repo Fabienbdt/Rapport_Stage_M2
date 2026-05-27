@@ -1,0 +1,61 @@
+family,metric,rank,method
+Rare Specific,ARI,1,scRAW (trial_0017)
+Rare Specific,ARI,2,scAIDE
+Rare Specific,ARI,3,CellSIUS
+Rare Specific,ARI,4,DeepScena
+Rare Specific,ACC,1,scRAW (trial_0017)
+Rare Specific,ACC,2,scAIDE
+Rare Specific,ACC,3,CellSIUS
+Rare Specific,ACC,4,DeepScena
+Rare Specific,RareACC,1,scRAW (trial_0017)
+Rare Specific,RareACC,2,CellSIUS
+Rare Specific,RareACC,3,scAIDE
+Rare Specific,RareACC,4,DeepScena
+Rare Specific,UltraRareACC,1,scRAW (trial_0017)
+Rare Specific,UltraRareACC,2,scCAD
+Rare Specific,UltraRareACC,3,CellSIUS
+Rare Specific,UltraRareACC,4,scAIDE
+Rare Specific,Batch correction,1,scRAW (trial_0017)
+Rare Specific,Batch correction,2,DeepScena
+Rare Specific,Batch correction,3,scAIDE
+Rare Specific,Batch correction,4,scCAD
+Methodes traditionnelles,ARI,1,scRAW (trial_0017)
+Methodes traditionnelles,ARI,2,scMAE
+Methodes traditionnelles,ARI,3,scNAME
+Methodes traditionnelles,ARI,4,scvi
+Methodes traditionnelles,ACC,1,scRAW (trial_0017)
+Methodes traditionnelles,ACC,2,scMAE
+Methodes traditionnelles,ACC,3,scvi
+Methodes traditionnelles,ACC,4,scNAME
+Methodes traditionnelles,RareACC,1,scRAW (trial_0017)
+Methodes traditionnelles,RareACC,2,scvi
+Methodes traditionnelles,RareACC,3,scNAME
+Methodes traditionnelles,RareACC,4,pca_leiden
+Methodes traditionnelles,UltraRareACC,1,scRAW (trial_0017)
+Methodes traditionnelles,UltraRareACC,2,pca_leiden
+Methodes traditionnelles,UltraRareACC,3,scvi
+Methodes traditionnelles,UltraRareACC,4,scMAE
+Methodes traditionnelles,Batch correction,1,scRAW (trial_0017)
+Methodes traditionnelles,Batch correction,2,scvi
+Methodes traditionnelles,Batch correction,3,pca_leiden
+Methodes traditionnelles,Batch correction,4,scMAE
+Correction batch,ARI,1,scRAW (trial_0017)
+Correction batch,ARI,2,DESC
+Correction batch,ARI,3,Harmony
+Correction batch,ARI,4,scvi
+Correction batch,ACC,1,scRAW (trial_0017)
+Correction batch,ACC,2,scvi
+Correction batch,ACC,3,Harmony
+Correction batch,ACC,4,DESC
+Correction batch,RareACC,1,scRAW (trial_0017)
+Correction batch,RareACC,2,scvi
+Correction batch,RareACC,3,Harmony
+Correction batch,RareACC,4,DESC
+Correction batch,UltraRareACC,1,scRAW (trial_0017)
+Correction batch,UltraRareACC,2,Scanorama
+Correction batch,UltraRareACC,3,Harmony
+Correction batch,UltraRareACC,4,ComBat
+Correction batch,Batch correction,1,scRAW (trial_0017)
+Correction batch,Batch correction,2,scvi
+Correction batch,Batch correction,3,Harmony
+Correction batch,Batch correction,4,DESC
