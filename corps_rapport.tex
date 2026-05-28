@@ -38,6 +38,10 @@ La question directrice du mémoire peut ainsi se formuler de la manière suivant
 
 \section{État de l'art}
 
+AJOUTER COURTE DESCRIPTION DE L'EFFET BATCH / AUTOENCODEUR
+
+
+
 L'objectif de cette section est de présenter les bases nécessaires à la compréhension du rapport pour mieux comprendre mes contributions et où elles se situent par rapport à la recherche actuelle. Nous commencerons par examiner les jeux de données utilisés, puis nous verrons comment ces données sont préparées. Enfin, nous ferons un présentation des algorithmes de clustering existants, en comprenant notamment pourquoi les modèles d'intelligence artificielle actuels ont souvent du mal à repérer les cellules rares.
 
 \subsection{Données}
@@ -125,13 +129,15 @@ Ces méthodes sont très rapides, faciles à utiliser et intégrées dans des ou
 
 \subsubsection{Approches Deep Learning (Apprentissage Profond)}
 Pour aller plus loin, les méthodes basées sur le Deep Learning (l'intelligence artificielle) apprennent à représenter les cellules dans un nouvel espace mathématique (l'espace latent) de manière beaucoup plus complexe et performante que la PCA.
-Ces méthodes, souvent basées sur des autoencodeurs, s'entraînent en essayant de minimiser une "fonction de perte" (ou \textit{loss}). Cette \textit{loss} est une information mathématique qui évalue la qualité de l'apprentissage et pénalise le modèle lorsqu'il commet des erreurs.
+Ces méthodes, souvent basées sur des autoencodeurs, s'entraînent en essayant de minimiser une "fonction de perte" (ou \textit{loss}) utilisé la même terminologie que les formules. Cette \textit{loss} est une information mathématique qui évalue la qualité de l'apprentissage et pénalise le modèle lorsqu'il commet des erreurs.
 
 Pour bien comprendre, regardons sur quoi se base la perte totale (\textit{total loss}) de différents modèles de l'état de l'art :
 \begin{itemize}
     \item \textbf{La perte de reconstruction :} Des modèles comme scVI \cite{Lopez2018scVI} ou scMAE \cite{Fang2024scMAE} cherchent avant tout à bien reconstruire le profil d'expression initial de la cellule. Si le modèle compresse mal l'information et n'arrive pas à deviner les gènes de départ, sa perte augmente.
     \item \textbf{La perte de clustering :} Des méthodes comme DESC \cite{li2020deep}, scDeepCluster \cite{tian2019clustering} ou scNAME \cite{wan_scname_2022} ajoutent une contrainte supplémentaire. Elles mesurent les distances entre les cellules et forcent le modèle à regrouper les cellules qui se ressemblent de plus en plus au fil du temps (souvent en minimisant une mesure de différence appelée divergence KL).
-\end{itemize}
+  \item \textbf{La perte correction batch effet :}
+  \end{itemize}
+
 
 Le cœur du problème avec les populations rares vient précisément de la manière dont cette perte totale est calculée. Le modèle cherche à minimiser cette perte globale sur l'ensemble des données. Les populations majoritaires (qui contiennent des milliers de cellules) vont avoir un poids énorme dans ce calcul. À l'inverse, si le modèle se trompe sur un type cellulaire rare (qui ne contient que quelques dizaines de cellules), cela fera à peine bouger la perte globale. Le réseau de neurones va donc avoir tendance à "ignorer" la précision sur les cellules rares pour optimiser sa représentation mathématique globale.
 
@@ -422,7 +428,7 @@ La figure~\ref{fig:scraw_common8_family_top3_plus_scraw} montre surtout que les 
 
 Par exemple, scAIDE obtient de très bons scores globaux en ARI ou en ACC, mais ses scores sur les populations ultra-rares restent plus faibles que ceux de \textbf{scRAW}. À l'inverse, scCAD atteint une UltraRareACC légèrement supérieure, mais ses scores globaux en ARI et en ACC sont nettement plus bas. Le même type de compromis apparaît pour la correction de batch : scVI et Harmony corrigent mieux l'effet de batch, mais scVI retrouve moins bien les populations ultra-rares, tandis que Harmony reste plus faible sur les métriques centrées sur les classes rares.
 
-\textbf{scRAW} n'est donc pas systématiquement la meilleure méthode pour chaque métrique prise séparément. En revanche, ses scores restent élevés sur l'ensemble des critères évalués : 0,658 en ARI, 0,741 en ACC, 0,636 en RareACC, 0,641 en UltraRareACC et 0,671 pour la correction de batch. Cette stabilité en fait le meilleur compromis observé dans ces expériences pour conserver les populations rares, limiter l'effet de batch et maintenir un clustering global précis.
+\textbf{scRAW} n'est donc pas systématiquement la meilleure méthode pour chaque métrique prise séparément. En revanche, ses scores restent élevés sur l'ensemble des critères évalués : 0,658 en ARI, 0,741 en ACC, 0,636 en RareACC, 0,641 en UltraRareACC et 0,671 pour la correction de batch. Cette stabilité en fait le meilleur compromis observé dans ces expériences pour conserver les populations rares, limiter l'effet de batch et maintenir un clustering global précis. On a remarqué que en ajoutant soit en préprocessing soit au niveau de l'espace latent des méthodes de deep learning un outil de batch correction, nous parvenons, sur certaines métriques à améliorer les résultats de certaines méthodes.
 
 Enfin, scRAW reste plus coûteux que les pipelines classiques, avec un temps d'exécution moyen d'environ 794 secondes contre quelques secondes pour PCA+Leiden ou Harmony. Ces résultats soutiennent l'hypothèse principale de scRAW : augmenter l'influence des cellules rares pendant l'apprentissage permet de mieux préserver les populations minoritaires sans sacrifier fortement la performance globale. La méthode reste cependant à consolider par davantage de répétitions, de nouveaux datasets, une analyse plus fine des erreurs par type cellulaire et une validation biologique complète.
 
@@ -475,19 +481,4 @@ Regrouper les différentes expériences complémentaires : transfert de la loss 
   \item Ouvrir sur les perspectives : stabilisation de l'inductif, transfert de loss, validation par marqueurs, intégration dans un workflow utilisateur.
 \end{itemize}
 }
-
-\section*{Figures et tableaux restants à préparer}
-\addcontentsline{toc}{section}{Figures et tableaux restants à préparer}
-{\color{gray}\itshape
-\begin{itemize}
-  \item \textbf{Tableau ou figures principal des performances} :
-  \item \textbf{UMAP comparatifs} :
-  \item \textbf{Matrices de confusion} :
-  \item \textbf{Schéma du pipeline scRAW} : 
-  \item \textbf{Visualisation des poids cellulaires de scRAW} :
-  \item \textbf{Figure de recherche d'hyperparamètres} : résumé Optuna ou graphiques montrant le compromis entre performance globale, performance rare et stabilité.
-  \item \textbf{Figure inductive} : 
-  \item \textbf{Tableau du coût de calcul} : 
-  \item \textbf{Figure ou tableau d'analyse biologique} :
-\end{itemize}
-}
+\section{GLOSSAIRE / ABBÉRVIATIONS  }
