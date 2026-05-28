@@ -255,6 +255,41 @@ def make_figure(df: pd.DataFrame) -> None:
                 tick.set_fontweight("bold")
                 tick.set_color(SCRAW_COLOR)
 
+        # -- Annotate top-2 methods (all families, including scRAW) ---------
+        # Build means using first occurrence of each method (scVI may appear twice)
+        seen_methods: set[str] = set()
+        global_means: dict[str, float] = {}
+        for (m, _, _), v in zip(ordered, data):
+            if m not in seen_methods and len(v) > 0:
+                global_means[m] = float(np.nanmean(v))
+                seen_methods.add(m)
+        top2_methods = sorted(global_means, key=global_means.get, reverse=True)[:2]
+
+        annotated: set[str] = set()
+        for idx, (m, fam, col) in enumerate(ordered):
+            if m not in top2_methods or m in annotated:
+                continue
+            annotated.add(m)
+            mean_val = global_means[m]
+            pos_x    = positions[idx]
+            # y position: just above the top whisker cap
+            whisker_top = max(
+                (line.get_ydata()[1] for line in bp["whiskers"][2 * idx : 2 * idx + 2]),
+                default=mean_val,
+            )
+            y_annot = min(whisker_top + 0.03, 1.02)
+            ax.text(
+                pos_x,
+                y_annot,
+                f"{mean_val:.2f}",
+                ha="center",
+                va="bottom",
+                fontsize=8.5,
+                fontweight="bold",
+                color=col,
+                zorder=5,
+            )
+
         # Family name annotations — shown only on the first (top) subplot
         if metric == METRICS[0]:
             cursor_x = 1  # scRAW
