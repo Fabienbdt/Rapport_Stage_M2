@@ -123,7 +123,7 @@ def load_data() -> pd.DataFrame:
 
 
 def top3_per_family(df: pd.DataFrame, metric: str) -> dict[str, list[str]]:
-    """Return top-3 methods per family sorted ascending (worst→best left→right)."""
+    """Return top-3 methods per family sorted descending (best→worst, left→right)."""
     result: dict[str, list[str]] = {}
     for family, methods in PRIMARY_FAMILIES.items():
         sub = df[df["method"].isin(methods)]
@@ -131,13 +131,9 @@ def top3_per_family(df: pd.DataFrame, metric: str) -> dict[str, list[str]]:
             sub.groupby("method")[metric]
             .mean()
             .dropna()
-            .sort_values(ascending=True)  # worst on left, best on right
         )
-        # Keep only the 3 methods with the HIGHEST mean (but display worst→best)
-        # First pick the top-3 by mean, then re-sort ascending for display
-        top3_methods = means.sort_values(ascending=False).head(3).index.tolist()
-        # Re-sort the selected 3 ascending (worst→best)
-        top3_sorted = means.loc[means.index.isin(top3_methods)].sort_values(ascending=True).index.tolist()
+        # Pick the 3 best methods, then sort descending (best on left)
+        top3_sorted = means.sort_values(ascending=False).head(3).index.tolist()
         result[family] = top3_sorted
     return result
 
