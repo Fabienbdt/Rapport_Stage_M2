@@ -1,0 +1,50 @@
+{
+  "description": "Self-contained final figure bundle with scRAW values replaced by exact trial0017 results.",
+  "figures_dir": "/data2/fbidet/scRAW_Inductif/results/inductive_multidataset_top4_representative_20260428/04_figures",
+  "scraw_label_source": "scRAW points use trial0017 exact rerun, not the older default scRAW run.",
+  "trial_source_run": "/data2/fbidet/scRAW_Inductif/results/inductive_scraw_trial0017_exact_all_datasets_20260507_145430",
+  "source_table": "/data2/fbidet/scRAW_EXPERIMENTAL/results/00_inductif_comparaison_algorithmes_scraw/15_scraw_trial0017_exact_comparison/tables/per_split_values_with_trial0017.csv",
+  "n_rows": 52,
+  "datasets": [
+    "baron_human_pancreas",
+    "bbag094_spleen",
+    "gse112013_human_testis_raw_counts",
+    "kang_pbmc_gse96583_singlets_raw_counts",
+    "macaque_retina_gse118480_bipolar_raw_counts",
+    "pancreas_raw_counts_four_batches_celseq_celseq2_fluidigmc1_smartseq2"
+  ],
+  "metrics": [
+    "ACC",
+    "BalancedACC",
+    "ARI",
+    "NMI",
+    "RareACC",
+    "UltraRareACC"
+  ],
+  "algorithms": [
+    "scraw",
+    "scname",
+    "sc_mae",
+    "scdeepcluster"
+  ],
+  "generated_outputs": [
+    "inductive_metrics_boxplots_ari_acc_rare_ultrarare.png",
+    "inductive_metrics_by_dataset_heatmap.png",
+    "inductive_dataset_metric_values_table.tex",
+    "inductive_dataset_level_metric_summary_selected.csv",
+    "inductive_per_split_combined_summary_source.csv"
+  ],
+  "selected_metrics": [
+    "ARI",
+    "ACC",
+    "RareACC",
+    "UltraRareACC"
+  ],
+  "selected_algorithms": [
+    "scraw",
+    "scname",
+    "sc_mae",
+    "scdeepcluster"
+  ],
+  "plot_granularity": "Each dot/boxplot observation is one dataset-level mean over available inductive splits."
+}

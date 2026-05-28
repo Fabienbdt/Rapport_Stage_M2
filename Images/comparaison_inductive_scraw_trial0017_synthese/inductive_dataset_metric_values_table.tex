@@ -1,0 +1,40 @@
+\begin{table}[H]
+\centering
+\small
+\renewcommand{\arraystretch}{1.08}
+\begin{tabularx}{\textwidth}{l X c c c c}
+\toprule
+\textbf{Métrique} & \textbf{Jeu de données} & \textbf{scRAW} & \textbf{scNAME} & \textbf{scMAE} & \textbf{scDeepCluster} \\
+\midrule
+ARI & Baron pancreas & \textbf{0,910} & 0,659 & 0,864 & 0,703 \\
+ & BBAG094 spleen & \textbf{0,894} & 0,669 & 0,565 & 0,417 \\
+ & Human testis & 0,581 & 0,575 & 0,593 & \textbf{0,597} \\
+ & Kang PBMC & \textbf{0,708} & 0,699 & 0,634 & 0,458 \\
+ & Macaque retina & 0,801 & 0,463 & \textbf{0,954} & 0,645 \\
+ & Pancreas 4 batches & \textbf{0,826} & 0,714 & 0,688 & 0,553 \\
+\addlinespace[0.25em]
+ACC & Baron pancreas & \textbf{0,908} & 0,724 & 0,844 & 0,726 \\
+ & BBAG094 spleen & \textbf{0,918} & 0,859 & 0,772 & 0,598 \\
+ & Human testis & 0,669 & 0,666 & 0,678 & \textbf{0,748} \\
+ & Kang PBMC & \textbf{0,798} & 0,726 & 0,706 & 0,591 \\
+ & Macaque retina & 0,813 & 0,646 & \textbf{0,972} & 0,706 \\
+ & Pancreas 4 batches & \textbf{0,851} & 0,781 & 0,767 & 0,684 \\
+\addlinespace[0.25em]
+Rare ACC & Baron pancreas & 0,734 & \textbf{0,762} & 0,624 & 0,745 \\
+ & BBAG094 spleen & \textbf{0,971} & 0,885 & 0,808 & 0,817 \\
+ & Human testis & 0,917 & 0,923 & \textbf{0,939} & 0,911 \\
+ & Kang PBMC & 0,269 & 0,311 & 0,163 & \textbf{0,336} \\
+ & Macaque retina & 0,740 & 0,561 & \textbf{0,872} & 0,563 \\
+ & Pancreas 4 batches & \textbf{0,879} & 0,706 & 0,873 & 0,354 \\
+\addlinespace[0.25em]
+Ultra Rare ACC & Baron pancreas & \textbf{0,737} & 0,590 & 0,603 & 0,614 \\
+ & BBAG094 spleen & \textbf{0,950} & 0,600 & 0,000 & 0,050 \\
+ & Human testis & \textbf{1,000} & 0,350 & 0,875 & 0,350 \\
+ & Kang PBMC & \textbf{0,900} & 0,000 & 0,400 & 0,500 \\
+ & Macaque retina & \textbf{0,765} & 0,254 & 0,443 & 0,426 \\
+ & Pancreas 4 batches & \textbf{0,386} & \textbf{0,386} & 0,341 & 0,050 \\
+\bottomrule
+\end{tabularx}
+\caption{Moyennes par jeu de données des expériences inductives pour les quatre métriques principales. Chaque valeur correspond à la moyenne des splits inductifs disponibles pour un couple jeu de données--algorithme ; la meilleure valeur de chaque ligne est en gras.}
+\label{tab:inductive_dataset_metric_values}
+\end{table}

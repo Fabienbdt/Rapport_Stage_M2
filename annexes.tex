@@ -173,6 +173,60 @@ Les tableaux suivants présentent les résultats bruts détaillés par jeu de do
 Ces résultats détaillés permettent d'analyser le comportement individuel de chaque méthode sur chacun des jeux de données, offrant ainsi une vision plus fine et contrastée que les seules moyennes globales.
 
 \newpage
+\section{Résultats complets du transfert de loss pondérée}
+\label{annexe:loss_transfer_details}
+
+Cette annexe présente les résultats complets de l'expérience d'intégration de la loss pondérée de \textbf{scRAW} dans scMAE, scDeepCluster et DESC. Les résultats proviennent de la matrice \texttt{scraw\_loss\_integration\_matrix\_stable\_default}. Les valeurs correspondent à la phase complète, avec cinq seeds par configuration lorsque les runs étaient disponibles.
+
+La baseline correspond à l'algorithme sans pondération ajoutée. Les autres lignes correspondent aux variantes où une pondération rare-aware est ajoutée à la loss de reconstruction. La pondération est activée après une phase de warm-up, à l'époque 55, comme dans la configuration par défaut de scRAW. Les variantes avec triplet loss activent cette composante à partir de l'époque 60.
+
+Pour résumer les performances, les seeds sont d'abord moyennées pour chaque jeu de données, puis les jeux de données sont moyennés avec le même poids. Le score utilisé pour sélectionner la meilleure configuration non-baseline est la moyenne de ARI, RareACC et UltraRareACC. L'UltraRareACC a été reprise des fichiers de résultats détaillés lorsqu'elle était disponible, ou recalculée à partir des rappels par type cellulaire lorsque seule la colonne \texttt{ClassWise} était exportée.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\textwidth,height=0.60\textheight,keepaspectratio]{scraw_loss_transfer_synthesis/loss_transfer_all_configurations_boxplot.pdf}
+    \caption{Distribution des scores pour toutes les configurations testées lors du transfert de la loss pondérée scRAW. Les boîtes représentent la distribution des scores moyens (moyenne de l'ARI, de la RareACC et de l'UltraRareACC) sur l'ensemble des jeux de données.}
+    \label{fig:loss_transfer_all_configurations_boxplots}
+\end{figure}
+
+\input{Images/scraw_loss_transfer_synthesis/loss_transfer_all_configurations_table.tex}
+
+\newpage
+\section{Détails de l'évaluation inductive}
+\label{annexe:inductif_details}
+
+Cette annexe détaille les résultats utilisés pour la figure inductive synthétique du rapport. Les valeurs correspondent aux moyennes par jeu de données sur les splits inductifs disponibles. Les points \textbf{scRAW} proviennent des reruns exacts de la configuration \texttt{trial0017}, tandis que scNAME, scMAE et scDeepCluster proviennent des runs inductifs de comparaison.
+
+\begin{table}[H]
+\centering
+\small
+\renewcommand{\arraystretch}{1.08}
+\begin{tabularx}{\textwidth}{l X X}
+\toprule
+\textbf{Jeu de données} & \textbf{Groupes d'entraînement} & \textbf{Groupe(s) test non vus} \\
+\midrule
+Baron pancreas & Trois donneurs parmi \texttt{human1}, \texttt{human2}, \texttt{human3}, \texttt{human4} & Un donneur laissé de côté ; quatre splits au total \\
+BBAG094 spleen & Donneur \texttt{3-F-56} & Donneur \texttt{3-M-8} \\
+Human testis & Réplicats des donneurs 1 et 2 & Deux réplicats du donneur 3, évalués séparément \\
+Kang PBMC & Tous les donneurs sauf le donneur test & Donneurs \texttt{1039} et \texttt{107}, évalués séparément \\
+Macaque retina & Individus \texttt{M1} et \texttt{M2} & Individus \texttt{M3} et \texttt{M4}, évalués séparément \\
+Pancreas 4 batches & Technologies \texttt{smartseq2} et \texttt{celseq2} & Technologies \texttt{celseq} et \texttt{fluidigmc1}, évaluées séparément \\
+\bottomrule
+\end{tabularx}
+\caption{Définition des splits inductifs utilisés dans la comparaison. Chaque split simule l'application d'un modèle entraîné sur des groupes connus à un groupe non observé pendant l'entraînement.}
+\label{tab:inductive_split_design}
+\end{table}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\textwidth,height=0.72\textheight,keepaspectratio]{comparaison_inductive_scraw_trial0017_synthese/inductive_metrics_boxplots_ari_acc_rare_ultrarare.pdf}
+    \caption{Distribution des performances inductives pour ARI, ACC, RareACC et UltraRareACC. Les boîtes représentent la distribution des moyennes par jeu de données et split inductif pour chaque algorithme testé.}
+    \label{fig:inductive_metrics_dataset_boxplots}
+\end{figure}
+
+\input{Images/comparaison_inductive_scraw_trial0017_synthese/inductive_dataset_metric_values_table.tex}
+
+\newpage
 \section{Étude d'ablation de scRAW}
 \label{annexe:ablation_scraw}
 

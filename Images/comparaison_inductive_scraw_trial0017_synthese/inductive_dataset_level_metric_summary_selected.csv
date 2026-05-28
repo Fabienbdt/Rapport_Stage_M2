@@ -1,0 +1,97 @@
+dataset_key,dataset_label,algorithm,algorithm_label,metric,metric_label,n_splits,mean,std,min,max,dataset_short
+baron_human_pancreas,Baron pancreas,scraw,scRAW,ACC,ACC,4,0.9079098586080344,0.0244467714455838,0.8733691481197237,0.9306518723994452,Baron pancreas
+baron_human_pancreas,Baron pancreas,scraw,scRAW,ARI,ARI,4,0.9102019141574615,0.0390542087518671,0.856040827725743,0.9474137804725348,Baron pancreas
+baron_human_pancreas,Baron pancreas,scraw,scRAW,RareACC,Rare ACC,4,0.7343516667995749,0.1595966030850392,0.5174825174825175,0.8725099601593626,Baron pancreas
+baron_human_pancreas,Baron pancreas,scraw,scRAW,UltraRareACC,Ultra Rare ACC,4,0.7369727047146402,0.1369050819328366,0.5476190476190477,0.8709677419354839,Baron pancreas
+baron_human_pancreas,Baron pancreas,scname,scNAME,ACC,ACC,4,0.72381267293825,0.0997371979663487,0.595548733691,0.836893203883,Baron pancreas
+baron_human_pancreas,Baron pancreas,scname,scNAME,ARI,ARI,4,0.65918596579025,0.1105868342589813,0.518515373579,0.787691320249,Baron pancreas
+baron_human_pancreas,Baron pancreas,scname,scNAME,RareACC,Rare ACC,4,0.7618144886105,0.1410111681357527,0.557768924303,0.869936034115,Baron pancreas
+baron_human_pancreas,Baron pancreas,scname,scNAME,UltraRareACC,Ultra Rare ACC,4,0.58959588798325,0.1892432856456882,0.309523809524,0.714285714286,Baron pancreas
+baron_human_pancreas,Baron pancreas,sc_mae,scMAE,ACC,ACC,4,0.843665451115,0.0460503874812259,0.805832693784,0.905963938974,Baron pancreas
+baron_human_pancreas,Baron pancreas,sc_mae,scMAE,ARI,ARI,4,0.86354440190575,0.032493654029559,0.833887192496,0.908948965916,Baron pancreas
+baron_human_pancreas,Baron pancreas,sc_mae,scMAE,RareACC,Rare ACC,4,0.62371579994425,0.1531254154369198,0.482517482517,0.837953091684,Baron pancreas
+baron_human_pancreas,Baron pancreas,sc_mae,scMAE,UltraRareACC,Ultra Rare ACC,4,0.60336169207125,0.2725124258814463,0.354838709677,0.857142857143,Baron pancreas
+baron_human_pancreas,Baron pancreas,scdeepcluster,scDeepCluster,ACC,ACC,4,0.7260541326745,0.1071515544840577,0.580966999233,0.810540915395,Baron pancreas
+baron_human_pancreas,Baron pancreas,scdeepcluster,scDeepCluster,ARI,ARI,4,0.70252336110975,0.1240217293413001,0.5745896434,0.847487661653,Baron pancreas
+baron_human_pancreas,Baron pancreas,scdeepcluster,scDeepCluster,RareACC,Rare ACC,4,0.74537529321775,0.2641835322195911,0.34965034965,0.892430278884,Baron pancreas
+baron_human_pancreas,Baron pancreas,scdeepcluster,scDeepCluster,UltraRareACC,Ultra Rare ACC,4,0.61382636181025,0.1993807100737236,0.404761904762,0.821428571429,Baron pancreas
+bbag094_spleen,BBAG094 spleen,scraw,scRAW,ACC,ACC,1,0.9177086362314626,0.0,0.9177086362314626,0.9177086362314626,BBAG094 spleen
+bbag094_spleen,BBAG094 spleen,scraw,scRAW,ARI,ARI,1,0.894023652669759,0.0,0.894023652669759,0.894023652669759,BBAG094 spleen
+bbag094_spleen,BBAG094 spleen,scraw,scRAW,RareACC,Rare ACC,1,0.971153846153846,0.0,0.971153846153846,0.971153846153846,BBAG094 spleen
+bbag094_spleen,BBAG094 spleen,scraw,scRAW,UltraRareACC,Ultra Rare ACC,1,0.95,0.0,0.95,0.95,BBAG094 spleen
+bbag094_spleen,BBAG094 spleen,scname,scNAME,ACC,ACC,1,0.858679848793,0.0,0.858679848793,0.858679848793,BBAG094 spleen
+bbag094_spleen,BBAG094 spleen,scname,scNAME,ARI,ARI,1,0.669368710262,0.0,0.669368710262,0.669368710262,BBAG094 spleen
+bbag094_spleen,BBAG094 spleen,scname,scNAME,RareACC,Rare ACC,1,0.884615384615,0.0,0.884615384615,0.884615384615,BBAG094 spleen
+bbag094_spleen,BBAG094 spleen,scname,scNAME,UltraRareACC,Ultra Rare ACC,1,0.6,0.0,0.6,0.6,BBAG094 spleen
+bbag094_spleen,BBAG094 spleen,sc_mae,scMAE,ACC,ACC,1,0.772317534167,0.0,0.772317534167,0.772317534167,BBAG094 spleen
+bbag094_spleen,BBAG094 spleen,sc_mae,scMAE,ARI,ARI,1,0.5645200476,0.0,0.5645200476,0.5645200476,BBAG094 spleen
+bbag094_spleen,BBAG094 spleen,sc_mae,scMAE,RareACC,Rare ACC,1,0.807692307692,0.0,0.807692307692,0.807692307692,BBAG094 spleen
+bbag094_spleen,BBAG094 spleen,sc_mae,scMAE,UltraRareACC,Ultra Rare ACC,1,0.0,0.0,0.0,0.0,BBAG094 spleen
+bbag094_spleen,BBAG094 spleen,scdeepcluster,scDeepCluster,ACC,ACC,1,0.597557429485,0.0,0.597557429485,0.597557429485,BBAG094 spleen
+bbag094_spleen,BBAG094 spleen,scdeepcluster,scDeepCluster,ARI,ARI,1,0.416966362408,0.0,0.416966362408,0.416966362408,BBAG094 spleen
+bbag094_spleen,BBAG094 spleen,scdeepcluster,scDeepCluster,RareACC,Rare ACC,1,0.817307692308,0.0,0.817307692308,0.817307692308,BBAG094 spleen
+bbag094_spleen,BBAG094 spleen,scdeepcluster,scDeepCluster,UltraRareACC,Ultra Rare ACC,1,0.05,0.0,0.05,0.05,BBAG094 spleen
+gse112013_human_testis_raw_counts,Human testis,scraw,scRAW,ACC,ACC,2,0.6686376762035031,0.0086175196650929,0.6625441696113075,0.6747311827956989,Human testis
+gse112013_human_testis_raw_counts,Human testis,scraw,scRAW,ARI,ARI,2,0.5806911015922525,0.0100476707225532,0.5735863254892055,0.5877958776952993,Human testis
+gse112013_human_testis_raw_counts,Human testis,scraw,scRAW,RareACC,Rare ACC,2,0.9170731707317072,0.1172762466358177,0.8341463414634146,1.0,Human testis
+gse112013_human_testis_raw_counts,Human testis,scraw,scRAW,UltraRareACC,Ultra Rare ACC,2,1.0,0.0,1.0,1.0,Human testis
+gse112013_human_testis_raw_counts,Human testis,scname,scNAME,ACC,ACC,2,0.6659874995249999,0.0123654354669429,0.657243816254,0.674731182796,Human testis
+gse112013_human_testis_raw_counts,Human testis,scname,scNAME,ARI,ARI,2,0.5749009897390001,0.0119541212287851,0.566448149555,0.583353829923,Human testis
+gse112013_human_testis_raw_counts,Human testis,scname,scNAME,RareACC,Rare ACC,2,0.923280350781,0.0846629083864016,0.863414634146,0.983146067416,Human testis
+gse112013_human_testis_raw_counts,Human testis,scname,scNAME,UltraRareACC,Ultra Rare ACC,2,0.35,0.4949747468305832,0.0,0.7,Human testis
+gse112013_human_testis_raw_counts,Human testis,sc_mae,scMAE,ACC,ACC,2,0.678487974467,0.021298639796281,0.663427561837,0.693548387097,Human testis
+gse112013_human_testis_raw_counts,Human testis,sc_mae,scMAE,ARI,ARI,2,0.5926663163970001,0.0233835780294092,0.576131629804,0.60920100299,Human testis
+gse112013_human_testis_raw_counts,Human testis,sc_mae,scMAE,RareACC,Rare ACC,2,0.93865442587,0.0788107229130052,0.882926829268,0.994382022472,Human testis
+gse112013_human_testis_raw_counts,Human testis,sc_mae,scMAE,UltraRareACC,Ultra Rare ACC,2,0.875,0.1767766952966369,0.75,1.0,Human testis
+gse112013_human_testis_raw_counts,Human testis,scdeepcluster,scDeepCluster,ACC,ACC,2,0.7482902085945,0.0138229582780954,0.73851590106,0.758064516129,Human testis
+gse112013_human_testis_raw_counts,Human testis,scdeepcluster,scDeepCluster,ARI,ARI,2,0.597235094094,0.0196965267715706,0.583307546448,0.61116264174,Human testis
+gse112013_human_testis_raw_counts,Human testis,scdeepcluster,scDeepCluster,RareACC,Rare ACC,2,0.91108522883,0.1019094152442996,0.839024390244,0.983146067416,Human testis
+gse112013_human_testis_raw_counts,Human testis,scdeepcluster,scDeepCluster,UltraRareACC,Ultra Rare ACC,2,0.35,0.4949747468305832,0.0,0.7,Human testis
+kang_pbmc_gse96583_singlets_raw_counts,Kang PBMC,scraw,scRAW,ACC,ACC,2,0.7977244056095598,0.0404057499705557,0.7691532258064516,0.8262955854126679,Kang PBMC
+kang_pbmc_gse96583_singlets_raw_counts,Kang PBMC,scraw,scRAW,ARI,ARI,2,0.7076056076962203,0.0466894697260204,0.6745911670429473,0.7406200483494934,Kang PBMC
+kang_pbmc_gse96583_singlets_raw_counts,Kang PBMC,scraw,scRAW,RareACC,Rare ACC,2,0.2691117582817619,0.085074186815491,0.208955223880597,0.3292682926829268,Kang PBMC
+kang_pbmc_gse96583_singlets_raw_counts,Kang PBMC,scraw,scRAW,UltraRareACC,Ultra Rare ACC,1,0.9,0.0,0.9,0.9,Kang PBMC
+kang_pbmc_gse96583_singlets_raw_counts,Kang PBMC,scname,scNAME,ACC,ACC,2,0.7262921026565,0.0078668967707614,0.720729366603,0.73185483871,Kang PBMC
+kang_pbmc_gse96583_singlets_raw_counts,Kang PBMC,scname,scNAME,ARI,ARI,2,0.699435451969,0.0313603454782168,0.677260339021,0.721610564917,Kang PBMC
+kang_pbmc_gse96583_singlets_raw_counts,Kang PBMC,scname,scNAME,RareACC,Rare ACC,2,0.311066618129,0.2499456441690852,0.134328358209,0.487804878049,Kang PBMC
+kang_pbmc_gse96583_singlets_raw_counts,Kang PBMC,scname,scNAME,UltraRareACC,Ultra Rare ACC,1,0.0,0.0,0.0,0.0,Kang PBMC
+kang_pbmc_gse96583_singlets_raw_counts,Kang PBMC,sc_mae,scMAE,ACC,ACC,2,0.706013753018,0.000904351089558,0.70537428023,0.706653225806,Kang PBMC
+kang_pbmc_gse96583_singlets_raw_counts,Kang PBMC,sc_mae,scMAE,ARI,ARI,2,0.634159180111,0.0363614154666363,0.608447776661,0.659870583561,Kang PBMC
+kang_pbmc_gse96583_singlets_raw_counts,Kang PBMC,sc_mae,scMAE,RareACC,Rare ACC,2,0.163360029123,0.0621646478545131,0.119402985075,0.207317073171,Kang PBMC
+kang_pbmc_gse96583_singlets_raw_counts,Kang PBMC,sc_mae,scMAE,UltraRareACC,Ultra Rare ACC,1,0.4,0.0,0.4,0.4,Kang PBMC
+kang_pbmc_gse96583_singlets_raw_counts,Kang PBMC,scdeepcluster,scDeepCluster,ACC,ACC,2,0.5913033635685,0.036457251869713,0.565524193548,0.617082533589,Kang PBMC
+kang_pbmc_gse96583_singlets_raw_counts,Kang PBMC,scdeepcluster,scDeepCluster,ARI,ARI,2,0.4577942827915,0.0538391075795049,0.419724284729,0.495864280854,Kang PBMC
+kang_pbmc_gse96583_singlets_raw_counts,Kang PBMC,scdeepcluster,scDeepCluster,RareACC,Rare ACC,2,0.3360939206408,0.3697702552511941,0.0746268656716,0.59756097561,Kang PBMC
+kang_pbmc_gse96583_singlets_raw_counts,Kang PBMC,scdeepcluster,scDeepCluster,UltraRareACC,Ultra Rare ACC,1,0.5,0.0,0.5,0.5,Kang PBMC
+macaque_retina_gse118480_bipolar_raw_counts,Macaque retina,scraw,scRAW,ACC,ACC,2,0.8129560924958956,0.0468774720366466,0.7798087141339001,0.8461034708578913,Macaque retina
+macaque_retina_gse118480_bipolar_raw_counts,Macaque retina,scraw,scRAW,ARI,ARI,2,0.8012020529623045,0.0369387751807488,0.7750823945432717,0.8273217113813375,Macaque retina
+macaque_retina_gse118480_bipolar_raw_counts,Macaque retina,scraw,scRAW,RareACC,Rare ACC,2,0.7404052936311001,0.0153820581846205,0.7295285359801489,0.7512820512820513,Macaque retina
+macaque_retina_gse118480_bipolar_raw_counts,Macaque retina,scraw,scRAW,UltraRareACC,Ultra Rare ACC,2,0.7653688524590163,0.1550418557109848,0.6557377049180327,0.875,Macaque retina
+macaque_retina_gse118480_bipolar_raw_counts,Macaque retina,scname,scNAME,ACC,ACC,2,0.645764687624,0.0749406510811271,0.592773645058,0.69875573019,Macaque retina
+macaque_retina_gse118480_bipolar_raw_counts,Macaque retina,scname,scNAME,ARI,ARI,2,0.463179138327,0.2459207968606994,0.289286875232,0.637071401422,Macaque retina
+macaque_retina_gse118480_bipolar_raw_counts,Macaque retina,scname,scNAME,RareACC,Rare ACC,2,0.560959470637,0.0914735323220381,0.496277915633,0.625641025641,Macaque retina
+macaque_retina_gse118480_bipolar_raw_counts,Macaque retina,scname,scNAME,UltraRareACC,Ultra Rare ACC,2,0.2540983606555,0.3593493478157781,0.0,0.508196721311,Macaque retina
+macaque_retina_gse118480_bipolar_raw_counts,Macaque retina,sc_mae,scMAE,ACC,ACC,2,0.971875540078,0.0209425088529779,0.957066950053,0.986684130103,Macaque retina
+macaque_retina_gse118480_bipolar_raw_counts,Macaque retina,sc_mae,scMAE,ARI,ARI,2,0.9538133624875,0.034273572623406,0.92957828687,0.978048438105,Macaque retina
+macaque_retina_gse118480_bipolar_raw_counts,Macaque retina,sc_mae,scMAE,RareACC,Rare ACC,2,0.8715880893300001,0.1272090363170615,0.781637717122,0.961538461538,Macaque retina
+macaque_retina_gse118480_bipolar_raw_counts,Macaque retina,sc_mae,scMAE,UltraRareACC,Ultra Rare ACC,2,0.4426229508195,0.6259633800665363,0.0,0.885245901639,Macaque retina
+macaque_retina_gse118480_bipolar_raw_counts,Macaque retina,scdeepcluster,scDeepCluster,ACC,ACC,2,0.706443237686,0.0801985131649291,0.649734325186,0.763152150186,Macaque retina
+macaque_retina_gse118480_bipolar_raw_counts,Macaque retina,scdeepcluster,scDeepCluster,ARI,ARI,2,0.6450939068020001,0.113247849734415,0.5650155843,0.725172229304,Macaque retina
+macaque_retina_gse118480_bipolar_raw_counts,Macaque retina,scdeepcluster,scDeepCluster,RareACC,Rare ACC,2,0.5626137303555,0.2341816006510819,0.397022332506,0.728205128205,Macaque retina
+macaque_retina_gse118480_bipolar_raw_counts,Macaque retina,scdeepcluster,scDeepCluster,UltraRareACC,Ultra Rare ACC,2,0.4262295081965,0.6027795511751046,0.0,0.852459016393,Macaque retina
+pancreas_raw_counts_four_batches_celseq_celseq2_fluidigmc1_smartseq2,Pancreas 4 batches,scraw,scRAW,ACC,ACC,2,0.850658494548452,0.049386377962638,0.8157370517928287,0.8855799373040752,Pancreas 4 batches
+pancreas_raw_counts_four_batches_celseq_celseq2_fluidigmc1_smartseq2,Pancreas 4 batches,scraw,scRAW,ARI,ARI,2,0.8255501920709855,0.0176745885776583,0.8130523706330409,0.83804801350893,Pancreas 4 batches
+pancreas_raw_counts_four_batches_celseq_celseq2_fluidigmc1_smartseq2,Pancreas 4 batches,scraw,scRAW,RareACC,Rare ACC,2,0.8789887088856161,0.0982382027863489,0.8095238095238095,0.9484536082474226,Pancreas 4 batches
+pancreas_raw_counts_four_batches_celseq_celseq2_fluidigmc1_smartseq2,Pancreas 4 batches,scraw,scRAW,UltraRareACC,Ultra Rare ACC,2,0.3863636363636363,0.1607060866333062,0.2727272727272727,0.5,Pancreas 4 batches
+pancreas_raw_counts_four_batches_celseq_celseq2_fluidigmc1_smartseq2,Pancreas 4 batches,scname,scNAME,ACC,ACC,2,0.7805158675645,0.0178015273596692,0.767928286853,0.793103448276,Pancreas 4 batches
+pancreas_raw_counts_four_batches_celseq_celseq2_fluidigmc1_smartseq2,Pancreas 4 batches,scname,scNAME,ARI,ARI,2,0.7140136135805,0.0539675570081013,0.675852788056,0.752174439105,Pancreas 4 batches
+pancreas_raw_counts_four_batches_celseq_celseq2_fluidigmc1_smartseq2,Pancreas 4 batches,scname,scNAME,RareACC,Rare ACC,2,0.705645557192,0.0955305774096076,0.638095238095,0.773195876289,Pancreas 4 batches
+pancreas_raw_counts_four_batches_celseq_celseq2_fluidigmc1_smartseq2,Pancreas 4 batches,scname,scNAME,UltraRareACC,Ultra Rare ACC,2,0.3863636363635,0.1607060866334991,0.272727272727,0.5,Pancreas 4 batches
+pancreas_raw_counts_four_batches_celseq_celseq2_fluidigmc1_smartseq2,Pancreas 4 batches,sc_mae,scMAE,ACC,ACC,2,0.7670353070475,0.1100148962352788,0.689243027888,0.844827586207,Pancreas 4 batches
+pancreas_raw_counts_four_batches_celseq_celseq2_fluidigmc1_smartseq2,Pancreas 4 batches,sc_mae,scMAE,ARI,ARI,2,0.688458603616,0.1331641062033013,0.594297361109,0.782619846123,Pancreas 4 batches
+pancreas_raw_counts_four_batches_celseq_celseq2_fluidigmc1_smartseq2,Pancreas 4 batches,sc_mae,scMAE,RareACC,Rare ACC,2,0.8730486008835,0.0629002203003426,0.828571428571,0.917525773196,Pancreas 4 batches
+pancreas_raw_counts_four_batches_celseq_celseq2_fluidigmc1_smartseq2,Pancreas 4 batches,sc_mae,scMAE,UltraRareACC,Ultra Rare ACC,2,0.340909090909,0.2249885212867573,0.181818181818,0.5,Pancreas 4 batches
+pancreas_raw_counts_four_batches_celseq_celseq2_fluidigmc1_smartseq2,Pancreas 4 batches,scdeepcluster,scDeepCluster,ACC,ACC,2,0.6838180194579999,0.26981799084411,0.493027888446,0.87460815047,Pancreas 4 batches
+pancreas_raw_counts_four_batches_celseq_celseq2_fluidigmc1_smartseq2,Pancreas 4 batches,scdeepcluster,scDeepCluster,ARI,ARI,2,0.5528077494785,0.3674342106103436,0.292992527516,0.812622971441,Pancreas 4 batches
+pancreas_raw_counts_four_batches_celseq_celseq2_fluidigmc1_smartseq2,Pancreas 4 batches,scdeepcluster,scDeepCluster,RareACC,Rare ACC,2,0.35395189003455,0.4422454782680838,0.0412371134021,0.666666666667,Pancreas 4 batches
+pancreas_raw_counts_four_batches_celseq_celseq2_fluidigmc1_smartseq2,Pancreas 4 batches,scdeepcluster,scDeepCluster,UltraRareACC,Ultra Rare ACC,2,0.05,0.0707106781186547,0.0,0.1,Pancreas 4 batches

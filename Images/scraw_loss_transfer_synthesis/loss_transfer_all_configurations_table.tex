@@ -1,0 +1,36 @@
+\begin{table}[H]
+\centering
+\scriptsize
+\renewcommand{\arraystretch}{1.04}
+\begin{tabularx}{\textwidth}{l X c c c c}
+\toprule
+\textbf{Algorithme} & \textbf{Configuration} & \textbf{ARI} & \textbf{RareACC} & \textbf{UltraRareACC} & \textbf{Score} \\
+\midrule
+scMAE & Baseline & 0,665 & 0,562 & 0,492 & 0,573 \\
+ & Pondération densité & 0,636 & 0,581 & 0,527 & 0,581 \\
+ & \textbf{Pondération complète Leiden} & 0,648 & 0,589 & 0,518 & \textbf{0,585} \\
+ & Pondération complète KMeans & 0,612 & 0,603 & 0,505 & 0,573 \\
+ & Pondération complète Leiden + triplet & 0,483 & 0,640 & 0,317 & 0,480 \\
+ & Pondération complète KMeans + triplet & 0,549 & 0,614 & 0,325 & 0,496 \\
+ & Pondération densité + triplet KMeans & 0,552 & 0,615 & 0,343 & 0,503 \\
+\addlinespace[0.25em]
+scDeepCluster & Baseline & 0,422 & 0,622 & 0,222 & 0,422 \\
+ & Pondération densité & 0,471 & 0,644 & 0,313 & 0,476 \\
+ & \textbf{Pondération complète Leiden} & 0,451 & 0,645 & 0,344 & \textbf{0,480} \\
+ & Pondération complète KMeans & 0,461 & 0,619 & 0,284 & 0,455 \\
+ & Pondération complète Leiden + triplet & 0,484 & 0,464 & 0,289 & 0,412 \\
+ & Pondération complète KMeans + triplet & 0,498 & 0,508 & 0,264 & 0,424 \\
+ & Pondération densité + triplet KMeans & 0,502 & 0,510 & 0,197 & 0,403 \\
+\addlinespace[0.25em]
+DESC & Baseline & 0,585 & 0,631 & 0,429 & 0,548 \\
+ & Pondération densité & 0,592 & 0,596 & 0,355 & 0,514 \\
+ & Pondération complète Leiden & 0,593 & 0,606 & 0,411 & 0,537 \\
+ & Pondération complète KMeans & 0,595 & 0,635 & 0,371 & 0,534 \\
+ & Pondération complète Leiden + triplet & 0,580 & 0,633 & 0,389 & 0,534 \\
+ & \textbf{Pondération complète KMeans + triplet} & 0,576 & 0,662 & 0,414 & \textbf{0,551} \\
+ & Pondération densité + triplet KMeans & 0,573 & 0,630 & 0,383 & 0,529 \\
+\bottomrule
+\end{tabularx}
+\caption{Résultats moyens de toutes les configurations expérimentées pour l'intégration de la loss pondérée scRAW. Le score correspond à la moyenne de ARI, RareACC et UltraRareACC ; la meilleure configuration non-baseline de chaque algorithme est en gras.}
+\label{tab:loss_transfer_all_configurations}
+\end{table}
