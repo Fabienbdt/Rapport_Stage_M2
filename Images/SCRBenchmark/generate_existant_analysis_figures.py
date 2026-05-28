@@ -4,6 +4,7 @@
 from __future__ import annotations
 
 from pathlib import Path
+import json
 
 import matplotlib
 
@@ -24,35 +25,26 @@ from sklearn.metrics import (
 
 OUT_DIR = Path(__file__).resolve().parent
 
-BARON_FULL_ROOT = Path(
+BARON_PAPER_LOGIC_ROOT = Path(
     "/data2/fbidet/SCRBenchmark/results/"
-    "baron_full_existing_algorithms_5seeds_20260522_162936"
+    "baron_paper_logic_existing_algorithms_3seeds_20260527"
 )
-BARON_SPLIT_ROOT = Path(
-    "/data2/fbidet/SCRBenchmark/results/"
-    "baron_split_70_10_20_existing_algorithms_5seeds_20260526_103715"
-)
-BARON_PCA_LEIDEN_K14_ROOT = Path(
-    "/data2/fbidet/SCRBenchmark/results/"
-    "baron_pca_leiden_k14_resolution_sweep_20260527"
-)
+N_RUNS = 3
 
 ALGORITHMS = [
-    ("pca_kmeans", "PCA+KMeans", BARON_FULL_ROOT / "gpu2_scname_classic"),
-    ("pca_leiden", "PCA+Leiden", BARON_PCA_LEIDEN_K14_ROOT / "transductive"),
-    ("sc_mae", "scMAE", BARON_FULL_ROOT / "gpu1_deep_core"),
-    ("scdeepcluster", "scDeepCluster", BARON_FULL_ROOT / "gpu1_deep_core"),
-    ("scname", "scNAME", BARON_FULL_ROOT / "gpu2_scname_classic"),
-    ("sccdcg", "scCDCG", BARON_FULL_ROOT / "gpu1_deep_core"),
+    ("pca_kmeans", "PCA+KMeans", BARON_PAPER_LOGIC_ROOT / "core"),
+    ("pca_leiden", "PCA+Leiden", BARON_PAPER_LOGIC_ROOT / "core"),
+    ("sc_mae", "scMAE", BARON_PAPER_LOGIC_ROOT / "core"),
+    ("scdeepcluster", "scDeepCluster", BARON_PAPER_LOGIC_ROOT / "core"),
+    ("scname", "scNAME", BARON_PAPER_LOGIC_ROOT / "scname"),
 ]
 
 INDUCTIVE_ALGORITHMS = [
-    ("pca_kmeans", "PCA+KMeans", BARON_SPLIT_ROOT / "gpu2_scname_classic"),
-    ("pca_leiden", "PCA+Leiden", BARON_PCA_LEIDEN_K14_ROOT / "inductive"),
-    ("sc_mae", "scMAE", BARON_SPLIT_ROOT / "gpu1_deep_core"),
-    ("scdeepcluster", "scDeepCluster", BARON_SPLIT_ROOT / "gpu1_deep_core"),
-    ("scname", "scNAME", BARON_SPLIT_ROOT / "gpu2_scname_classic"),
-    ("sccdcg", "scCDCG", BARON_SPLIT_ROOT / "gpu1_deep_core"),
+    ("pca_kmeans", "PCA+KMeans", BARON_PAPER_LOGIC_ROOT / "inductive_core"),
+    ("pca_leiden", "PCA+Leiden", BARON_PAPER_LOGIC_ROOT / "inductive_core"),
+    ("sc_mae", "scMAE", BARON_PAPER_LOGIC_ROOT / "inductive_core"),
+    ("scdeepcluster", "scDeepCluster", BARON_PAPER_LOGIC_ROOT / "inductive_core"),
+    ("scname", "scNAME", BARON_PAPER_LOGIC_ROOT / "inductive_scname"),
 ]
 
 CELL_ORDER = [
@@ -86,6 +78,7 @@ METRIC_COLUMNS = [
     "F1Macro",
     "RareACC",
     "UltraRareACC",
+    "BatchCorrection",
     "n_eval",
     "n_rare_cells",
     "n_ultrarare_cells",
@@ -131,7 +124,7 @@ def restricted_accuracy(y_true: pd.Series, y_pred: pd.Series, classes: set[str])
 
 
 def load_baron_support() -> pd.Series:
-    path = BARON_FULL_ROOT / "gpu1_deep_core" / "results" / "labels" / "labels_sc_mae_run0.csv"
+    path = BARON_PAPER_LOGIC_ROOT / "core" / "results" / "labels" / "labels_sc_mae_run0.csv"
     labels = pd.read_csv(path)
     return labels["true_label"].astype(str).value_counts().reindex(CELL_ORDER)
 
@@ -181,6 +174,7 @@ def evaluate_label_file(
         ),
         "RareACC": restricted_accuracy(y_true, y_aligned, rare),
         "UltraRareACC": restricted_accuracy(y_true, y_aligned, ultra),
+        "BatchCorrection": float("nan"),
         "n_eval": float(len(y_true)),
         "n_rare_cells": float(y_true.isin(rare).sum()),
         "n_ultrarare_cells": float(y_true.isin(ultra).sum()),
@@ -201,17 +195,44 @@ def evaluate_label_file(
     return metrics, errors
 
 
+def load_transductive_extra_metrics(root: Path, algorithm_key: str, run_id: int) -> dict[str, float]:
+    path = root / "results" / "results.csv"
+    if not path.exists():
+        return {}
+    results = pd.read_csv(path)
+    row = results[(results["algorithm"] == algorithm_key) & (results["run_id"] == run_id)]
+    if row.empty or "Batch correction" not in row.columns:
+        return {}
+    value = row.iloc[0]["Batch correction"]
+    return {"BatchCorrection": float(value) if not pd.isna(value) else float("nan")}
+
+
+def load_inductive_extra_metrics(root: Path, algorithm_key: str, run_id: int) -> dict[str, float]:
+    path = root / "results" / "benchmark_results.json"
+    if not path.exists():
+        return {}
+    with path.open("r", encoding="utf-8") as handle:
+        payload = json.load(handle)
+    for row in payload.get("results", []):
+        if row.get("algorithm_name") == algorithm_key and int(row.get("run_id", -1)) == run_id:
+            value = row.get("test_metrics", {}).get("Batch correction", float("nan"))
+            return {"BatchCorrection": float(value) if not pd.isna(value) else float("nan")}
+    return {}
+
+
 def collect_transductive(full_support: pd.Series) -> tuple[pd.DataFrame, pd.DataFrame]:
     rare, ultra = rare_sets(full_support)
     metric_rows: list[dict[str, float | int | str]] = []
     error_rows: list[dict[str, float | int | str]] = []
     for algorithm_key, method_name, _ in ALGORITHMS:
-        for run_id in range(5):
+        for run_id in range(N_RUNS):
+            root = {key: path for key, _, path in ALGORITHMS}[algorithm_key]
             metrics, errors = evaluate_label_file(
                 transductive_label_path(algorithm_key, run_id),
                 rare,
                 ultra,
             )
+            metrics.update(load_transductive_extra_metrics(root, algorithm_key, run_id))
             metric_rows.append(
                 {
                     "mode_key": "transductive",
@@ -241,12 +262,14 @@ def collect_inductive(full_support: pd.Series) -> tuple[pd.DataFrame, pd.DataFra
     metric_rows: list[dict[str, float | int | str]] = []
     error_rows: list[dict[str, float | int | str]] = []
     for algorithm_key, method_name, _ in INDUCTIVE_ALGORITHMS:
-        for run_id in range(5):
+        for run_id in range(N_RUNS):
+            root = {key: path for key, _, path in INDUCTIVE_ALGORITHMS}[algorithm_key]
             metrics, errors = evaluate_label_file(
                 inductive_label_path(algorithm_key, run_id),
                 rare,
                 ultra,
             )
+            metrics.update(load_inductive_extra_metrics(root, algorithm_key, run_id))
             metric_rows.append(
                 {
                     "mode_key": "inductive",
@@ -322,8 +345,18 @@ def draw_metric_table(ax: plt.Axes, metrics: pd.DataFrame, mode_name: str, title
         {key: order for order, (key, _, _) in enumerate(ALGORITHMS)}
     )
     data.sort_values("_algorithm_order", inplace=True)
-    table_cols = ["Methode", "NMI", "ARI", "ACC", "BalancedACC", "RareACC", "UltraRareACC", "n_eval"]
-    headers = ["Methode", "NMI", "ARI", "ACC", "Bal.\nACC", "Rare\nACC", "Ultra\nRare", "n"]
+    table_cols = [
+        "Methode",
+        "NMI",
+        "ARI",
+        "ACC",
+        "BalancedACC",
+        "RareACC",
+        "UltraRareACC",
+        "BatchCorrection",
+        "n_eval",
+    ]
+    headers = ["Methode", "NMI", "ARI", "ACC", "Bal.\nACC", "Rare\nACC", "Ultra\nRare", "Batch\ncorr.", "n"]
     display = data[table_cols].copy()
     for col in table_cols[1:-1]:
         display[col] = display[col].map(format_metric)
@@ -336,11 +369,11 @@ def draw_metric_table(ax: plt.Axes, metrics: pd.DataFrame, mode_name: str, title
         loc="center",
         cellLoc="center",
         colLoc="center",
-        colWidths=[0.18, 0.117, 0.117, 0.117, 0.117, 0.117, 0.117, 0.118],
+        colWidths=[0.17, 0.095, 0.095, 0.095, 0.095, 0.095, 0.095, 0.12, 0.085],
         bbox=[0.0, 0.0, 1.0, 0.88],
     )
     table.auto_set_font_size(False)
-    table.set_fontsize(6.7)
+    table.set_fontsize(6.2)
     for (row, col), cell in table.get_celld().items():
         cell.set_edgecolor("#d9dee3")
         cell.set_linewidth(0.6)
@@ -433,8 +466,8 @@ def plot_baron_inductive_transductive_error_panel() -> None:
     ax_title.text(
         0.0,
         0.25,
-        "Erreur = 1 - rappel apres appariement hongrois ; resultats moyennes sur 5 seeds. "
-        "L'inductif utilise un split stratifie 70/10/20, le transductif le jeu complet.",
+        "Erreur = 1 - rappel apres appariement hongrois ; resultats moyennes sur 3 seeds. "
+        "Meme pretraitement que le papier scRAW : filtrage 200/3, normalisation 20000, 2000 HVG Seurat.",
         transform=ax_title.transAxes,
         fontsize=9.2,
         color="#495057",
@@ -470,20 +503,20 @@ def plot_baron_inductive_transductive_error_panel() -> None:
         ax_table_inductive,
         metrics,
         "Inductif",
-        "C. Metriques inductives (test 20%, 5 seeds)",
+        "C. Metriques inductives (test 20%, 3 seeds)",
     )
     draw_metric_table(
         ax_table_transductive,
         metrics,
         "Transductif",
-        "D. Metriques transductives (Baron complet, 5 seeds)",
+        "D. Metriques transductives (Baron complet, 3 seeds)",
     )
 
     fig.text(
         0.015,
         0.012,
-        "Note : le test inductif contient 1714 cellules ; les types ultra-rares restent tres peu representes "
-        "(schwann n=2, epsilon n=4, mast n=5, t_cell absent), ce qui rend leur taux d'erreur instable.",
+        "Note : PCA+Leiden reprend la selection de resolution par silhouette du papier, sans forcer 14 clusters. "
+        "La metrique Batch corr. est affichee lorsqu'elle est disponible ; elle n'a pas ete calculee dans le split inductif.",
         fontsize=8.3,
         color="#495057",
     )
