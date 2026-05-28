@@ -434,12 +434,6 @@ Enfin, scRAW reste plus coûteux que les pipelines classiques, avec un temps d'e
 
 \section{Travaux complémentaires}
 
-{\color{gray}\itshape
-\subsection*{Idée de la section}
-Regrouper les différentes expériences complémentaires : transfert de la loss et passage à un mode inductif.
-}
-
-\setcounter{subsection}{-1}
 
 \subsection{Transfert de loss}
 
@@ -471,7 +465,7 @@ La figure a été générée à partir des métriques par split en deux étapes.
 \begin{figure}[htbp]
     \centering
     \includegraphics[width=\textwidth,height=0.72\textheight,keepaspectratio]{comparaison_inductive_scraw_trial0017_synthese/inductive_metrics_boxplots_ari_acc_rare_ultrarare.pdf}
-    \caption{Comparaison inductive de \textbf{scRAW} \texttt{trial0017} avec scNAME, scMAE et scDeepCluster sur six jeux de données. Chaque boîte représente la distribution des moyennes par jeu de données, et chaque point correspond à un jeu de données. Les losanges indiquent la moyenne globale de l'algorithme pour la métrique considérée.}
+    \caption{Comparaison inductive de \textbf{scRAW} avec scNAME, scMAE et scDeepCluster sur six jeux de données. Chaque boîte représente la distribution des moyennes par jeu de données, et chaque point correspond à un jeu de données. Les losanges indiquent la moyenne globale de l'algorithme pour la métrique considérée.}
     \label{fig:inductive_metrics_boxplots_trial0017}
 \end{figure}
 
@@ -479,9 +473,9 @@ Sur ces moyennes par jeu de données, \textbf{scRAW} obtient une moyenne de $0{,
 
 \subsection{Interprétation biologique}
 
-Une première analyse biologique post-hoc a été réalisée sur Baron Human Pancreas avec la configuration \textbf{scRAW} \texttt{trial0017/default}. L'objectif n'est pas seulement de vérifier l'accord numérique avec les annotations, mais aussi de regarder si les clusters prédits conservent une cohérence biologique au niveau des gènes marqueurs. Inspiré des protocoles de caractérisation biologique de scCluBench \cite{xu_scclubench_2026} et de scAIDE \cite{scAIDE2020}, ce protocole de validation extrait et compare les signatures d'expression des clusters prédits avec les types cellulaires de référence. Pour chaque type cellulaire de la vérité terrain et pour chaque cluster prédit, les 100 meilleurs gènes différentiellement exprimés (DEG) sont extraits à l'aide d'un test de Wilcoxon bilatéral. Ce calcul statistique est effectué après avoir filtré les gènes exprimés dans moins de 3 cellules, normalisé la somme des comptes par cellule à une cible de 10\,000 (\texttt{target\_sum=1e4}) et appliqué une transformation logarithmique ($\log(x+1)$). Les clusters sont ensuite annotés en les affectant au type cellulaire qui maximise le recouvrement (l'intersection) de leurs gènes marqueurs respectifs, en complément de l'assignation hongroise classique.
+Une première analyse biologique post-hoc a été réalisée sur Baron Human Pancreas avec la configuration scRAW . L'objectif n'est pas seulement de vérifier l'accord numérique avec les annotations, mais aussi de regarder si les clusters prédits conservent une cohérence biologique au niveau des gènes marqueurs. Inspiré des protocoles de caractérisation biologique de scCluBench \cite{xu_scclubench_2026} et de scAIDE \cite{scAIDE2020}, ce protocole de validation extrait et compare les signatures d'expression des clusters prédits avec les types cellulaires de référence. Pour chaque type cellulaire de la vérité terrain et pour chaque cluster prédit, les 100 meilleurs gènes différentiellement exprimés (DEG) sont extraits à l'aide d'un test de Wilcoxon bilatéral. Ce calcul statistique est effectué après avoir filtré les gènes exprimés dans moins de 3 cellules, normalisé la somme des comptes par cellule à une cible de 10\,000 (\texttt{target\_sum=1e4}) et appliqué une transformation logarithmique ($\log(x+1)$). Les clusters sont ensuite annotés en les affectant au type cellulaire qui maximise le recouvrement (l'intersection) de leurs gènes marqueurs respectifs, en complément de l'assignation hongroise classique.
 
-Sur Baron, cette annotation par recouvrement atteint une exactitude de $94{,}8\,\%$ et une balanced accuracy de $88{,}9\,\%$, contre $93{,}4\,\%$ et $87{,}0\,\%$ pour le mapping hongrois. Les deux annotations concordent pour $97{,}4\,\%$ des cellules, ce qui indique que la partition apprise par \textbf{scRAW} est globalement compatible avec les marqueurs de référence, tout en autorisant la fragmentation biologique plausible d'un même type cellulaire en plusieurs clusters prédits. Les artefacts sources de cette analyse sont conservés dans \texttt{Images/analyse\_biologique\_scraw\_baron\_trial0017/}, avec le fichier \texttt{manifest.json} et le résumé \texttt{annotation\_metrics\_summary.csv}.
+Sur Baron, cette annotation par recouvrement atteint une exactitude de $94{,}8\,\%$ et une balanced accuracy de $88{,}9\,\%$, contre $93{,}4\,\%$ et $87{,}0\,\%$ pour le mapping hongrois. Les deux annotations concordent pour $97{,}4\,\%$ des cellules, ce qui indique que la partition apprise par \textbf{scRAW} est globalement compatible avec les marqueurs de référence, tout en autorisant la fragmentation biologique plausible d'un même type cellulaire en plusieurs clusters prédits.
 
 \begin{figure}[H]
     \centering
@@ -504,7 +498,7 @@ Sur Baron, cette annotation par recouvrement atteint une exactitude de $94{,}8\,
         \caption{Similarités cosinus entre embeddings.}
     \end{subfigure}
     \vspace{-0.4em}
-    \caption{Analyse biologique compacte de \textbf{scRAW} \texttt{trial0017/default} sur Baron Human Pancreas. Les panneaux combinent la structure latente, la concordance des marqueurs différentiels et la distribution des similarités de représentation afin d'évaluer la cohérence biologique du clustering sans dépasser une demi-page.}
+    \caption{Analyse biologique compacte de scRAW sur Baron Human Pancreas. Les panneaux combinent la structure latente, la concordance des marqueurs différentiels et la distribution des similarités de représentation afin d'évaluer la cohérence biologique du clustering sans dépasser une demi-page.}
     \label{fig:baron_scraw_bio_interpretation}
 \end{figure}
 
