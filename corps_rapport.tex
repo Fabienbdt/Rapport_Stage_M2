@@ -420,7 +420,19 @@ Pour faciliter la lecture, la figure~\ref{fig:scraw_common8_family_top3_plus_scr
 \begin{figure}[htbp]
     \centering
     \includegraphics[width=\textwidth,height=0.93\textheight,keepaspectratio]{scraw_common8_family_panel/common8_family_top3_plus_scraw_panel.pdf}
-    \caption{Distribution des performances sur les huit jeux de données communs, par famille de méthodes. Chaque boîte correspond aux scores disponibles sur les jeux de données ; pour l'UltraRareACC, les jeux sans classe ultra-rare ne contribuent pas à la distribution. Les méthodes sont ordonnées par moyenne croissante dans chaque sous-panneau. Chaque sous-panneau affiche \textbf{scRAW} et les trois meilleures méthodes de la famille pour la métrique considérée.}
+    \caption{%
+        \textbf{Distribution des performances sur les huit jeux de données communs, par famille de méthodes.}
+        Chaque panneau correspond à une métrique (de haut en bas~: ARI, ACC, Rare ACC, Ultra Rare ACC, Correction batch).
+        Pour chaque métrique, \textbf{scRAW} (rouge) est affiché en premier, puis les trois meilleures méthodes
+        de chaque famille~: \textcolor[HTML]{2563eb}{\textbf{Rare Specific}} (bleu),
+        \textcolor[HTML]{ea580c}{\textbf{Méthodes traditionnelles}} (orange) et
+        \textcolor[HTML]{16a34a}{\textbf{Correction batch}} (vert).
+        Au sein de chaque groupe, les méthodes sont triées par moyenne décroissante (meilleure à gauche).
+        Chaque boîte à moustaches représente la distribution des scores sur les huit jeux de données~;
+        pour l'Ultra Rare ACC, les jeux sans cellules ultra-rares ne contribuent pas à la distribution.
+        Le losange (\(\diamond\)) indique la moyenne.
+        La valeur en gras annotée au-dessus de certaines boîtes indique la moyenne des \textbf{deux meilleurs algorithmes toutes familles confondues} pour la métrique considérée.%
+    }
     \label{fig:scraw_common8_family_top3_plus_scraw}
 \end{figure}
 
