@@ -56,6 +56,10 @@ FAMILIES = [
     "Correction batch",
 ]
 
+FAMILY_ALLOWED_METHODS = {
+    "Correction batch": {"Harmony", "ComBat", "DESC", "Scanorama"},
+}
+
 FAMILY_SHORT_LABELS = {
     "scRAW": "scRAW",
     "Rare Specific": "Rare Specific",
@@ -123,6 +127,11 @@ def select_methods(df: pd.DataFrame) -> tuple[dict[str, list[dict]], pd.DataFram
                 & (df["family"] == family)
                 & (df["source_method"] != SCRAW_SOURCE_METHOD)
             ].copy()
+            allowed_methods = FAMILY_ALLOWED_METHODS.get(family)
+            if allowed_methods is not None:
+                family_values = family_values[
+                    family_values["source_method"].isin(allowed_methods)
+                ].copy()
             if family_values.empty:
                 raise ValueError(f"No values found for family {family} and metric {metric}")
 

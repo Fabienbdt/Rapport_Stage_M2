@@ -56,6 +56,10 @@ FAMILIES = [
     "Correction batch",
 ]
 
+FAMILY_ALLOWED_METHODS = {
+    "Correction batch": {"Harmony", "ComBat", "DESC", "Scanorama"},
+}
+
 COLORS = {
     "scRAW": "#dc2626",
     "Rare Specific": "#2563eb",
@@ -126,6 +130,9 @@ def select_metric_rows(df: pd.DataFrame, metric: str) -> list[dict]:
             (metric_df["family"] == family)
             & (metric_df["source_method"] != SCRAW_SOURCE_METHOD)
         ].copy()
+        allowed_methods = FAMILY_ALLOWED_METHODS.get(family)
+        if allowed_methods is not None:
+            family_df = family_df[family_df["source_method"].isin(allowed_methods)].copy()
         if family_df.empty:
             raise ValueError(f"No values found for {family} / {metric}")
 
