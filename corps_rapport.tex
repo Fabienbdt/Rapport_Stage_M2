@@ -417,21 +417,17 @@ L'évaluation finale de scRAW a été conduite sur le même ensemble de huit jeu
 
 Pour faciliter la lecture, la figure~\ref{fig:scraw_common8_family_top3_plus_scraw} affiche \textbf{scRAW} ainsi que les meilleures méthodes observées pour chaque métrique. Les résultats complets, incluant les méthodes non affichées et les variantes avec correction de batch externe, sont fournis en Annexe~\ref{annexe:resultats_common8}. Ces variantes sont conservées comme analyses complémentaires, car elles ne correspondent pas toujours au protocole proposé dans les articles originaux des méthodes comparées.
 
-\begin{figure}[p]
+\begin{figure}[htbp]
     \centering
-    \includegraphics[width=\textwidth,height=0.82\textheight,keepaspectratio]{scraw_common8_family_panel/common8_family_top3_plus_scraw_panel.pdf}
+    \includegraphics[width=\textwidth,height=0.82\textheight,keepaspectratio]{Images/PresentationOrale/common8_top3_family_sorted_barplots.png}
     \caption{%
-        \textbf{Distribution des performances sur les huit jeux de données communs, par famille de méthodes.}
+        \textbf{Performances moyennes sur les huit jeux de données communs pour scRAW et le top 3 de chaque famille de méthodes.}
         Chaque panneau correspond à une métrique (de haut en bas~: ARI, ACC, Rare ACC, Ultra Rare ACC, Correction batch).
-        Pour chaque métrique, \textbf{scRAW} (rouge) est affiché en premier, puis les trois meilleures méthodes
-        de chaque famille~: \textbf{Rare Specific} (bleu),
-        \textbf{Méthodes traditionnelles} (orange) et
-        \textbf{Correction batch} (vert).
-        Au sein de chaque groupe, les méthodes sont triées par moyenne décroissante (meilleure à gauche).
-        Chaque boîte à moustaches représente la distribution des scores sur les huit jeux de données~;
-        pour l'Ultra Rare ACC, les jeux sans cellules ultra-rares ne contribuent pas à la distribution.
-        Le losange (\(\diamond\)) indique la moyenne.
-        La valeur en gras annotée au-dessus de certaines boîtes indique la moyenne des \textbf{deux meilleurs algorithmes toutes familles confondues} pour la métrique considérée.%
+        Les couleurs identifient les familles de méthodes~: \textbf{scRAW} (rouge), \textbf{Rare Specific} (bleu),
+        \textbf{Méthodes traditionnelles} (orange) et \textbf{Correction batch} (vert).
+        Pour chaque métrique, les méthodes représentées (scRAW et les trois meilleures de chaque famille) sont triées globalement par moyenne décroissante (meilleure à gauche).
+        Les barres représentent le score moyen sur les jeux de données communs (la valeur est indiquée au-dessus de chaque barre), et les barres d'erreur représentent l'écart type~;
+        pour l'Ultra Rare ACC, les jeux sans cellules ultra-rares ne contribuent pas au calcul.%
     }
     \label{fig:scraw_common8_family_top3_plus_scraw}
 \end{figure}
@@ -444,12 +440,13 @@ Par exemple, scAIDE obtient de très bons scores globaux en ARI ou en ACC, mais 
 
 Enfin, scRAW reste plus coûteux que les pipelines classiques, avec un temps d'exécution moyen d'environ 794 secondes contre quelques secondes pour PCA+Leiden ou Harmony. Ces résultats soutiennent l'hypothèse principale de scRAW : augmenter l'influence des cellules rares pendant l'apprentissage permet de mieux préserver les populations minoritaires sans sacrifier fortement la performance globale. La méthode reste cependant à consolider par davantage de répétitions, de nouveaux datasets, une analyse plus fine des erreurs par type cellulaire et une validation biologique complète.
 
+\clearpage
 \section{Travaux complémentaires}
 
 
 \subsection{Transfert de loss}
 
-Cette expérience vise à tester si la loss pondérée utilisée dans \textbf{scRAW} peut être intégrée à d'autres algorithmes de clustering profond. L'objectif est de distinguer l'effet de la pondération rare-aware de l'architecture complète de scRAW. Les méthodes testées sont scMAE, scDeepCluster et DESC.
+Cette expérience vise à tester si la pondération de la loss de reconstruvtion, utilisée dans \textbf{scRAW} peut être intégrée à d'autres algorithmes de deep learning. L'objectif est de distinguer l'effet de la pondération rare-aware de l'architecture complète de scRAW. Les méthodes testées sont scMAE, scDeepCluster et DESC.
 
 Pour chaque méthode, la baseline correspond à l'algorithme de base avec ses hyperparamètres auteur. Les variantes pondérées conservent cette base, mais ajoutent une pondération dans la loss de reconstruction. Comme dans la configuration par défaut de scRAW, cette pondération n'est pas activée dès le début de l'entraînement : une phase de warm-up est conservée, puis la pondération démarre à l'époque 55. Pour les variantes avec triplet loss, cette composante est activée à partir de l'époque 60.
 
@@ -468,9 +465,9 @@ Les résultats montrent un effet dépendant de l'algorithme. Pour scDeepCluster,
 
 \subsection{Induction}
 
-Le passage à un cadre inductif permet d'évaluer si une représentation apprise sur une partie des cellules peut être appliquée à un batch non vu, sans réentraîner entièrement le modèle. Cette situation se rapproche d'un usage réel : on peut imaginer entraîner un modèle sur plusieurs patients déjà caractérisés, conserver ce modèle, puis l'appliquer directement à un nouveau patient inconnu. Dans le cas de Baron Human Pancreas, par exemple, les quatre splits correspondent à une logique \textit{leave-one-patient-out} : le modèle est entraîné sur trois des quatre donneurs \texttt{human1}, \texttt{human2}, \texttt{human3} et \texttt{human4}, puis évalué sur le donneur laissé de côté. Cette logique est particulièrement utile dans un contexte applicatif, où réentraîner un modèle à chaque nouveau patient ou nouveau batch serait coûteux et moins reproductible.
+Le passage à un cadre inductif permet d'évaluer si une représentation apprise sur une partie des cellules peut être appliquée à un batch non vu, sans réentraîner entièrement le modèle. Cette situation se rapproche d'un usage réel : on peut imaginer entraîner un modèle sur plusieurs patients déjà caractérisés, conserver ce modèle, puis l'appliquer directement à un nouveau patient inconnu. Dans le cas de Baron Human Pancreas, par exemple, les quatre splits correspondent à une logique \textit{leave-one-patient-out} : le modèle est entraîné sur trois des quatre donneurs \texttt{human1}, \texttt{human2}, \texttt{human3} et \texttt{human4}, puis évalué sur le donneur laissé de côté. Cette logique est particulièrement utile dans un contexte applicatif, où réentraîner un modèle à chaque nouveau patient ou nouveau batch serait coûteux et moins reproductible. La différence avec la section comparaison de l'existant est qu'ici nous voulons évaluer notre modèle dans ce cas précis d'évaluation, la section précédente visait à évaluer les algorithmes dans un cadre inductif simple, dans le simple but de voir si ils étaient capable de généraliser sans perdre de leur efficacité.
 
-Le protocole général suit cette même idée de séparation par groupe biologique ou technique : patient, donneur, individu macaque, batch ou technologie selon le jeu de données. Pour chaque split, les méthodes sont entraînées uniquement sur les groupes d'entraînement, puis les métriques sont calculées sur le groupe test non vu. La figure~\ref{fig:inductive_metrics_boxplots_trial0017} compare \textbf{scRAW} en mode inductif aux trois méthodes profondes retenues dans cette expérience : scNAME, scMAE et scDeepCluster.
+Ici, le protocole général suit l'idée de séparation par groupe biologique ou technique : patient, donneur, individu macaque, batch ou technologie selon le jeu de données. Pour chaque split, les méthodes sont entraînées uniquement sur les groupes d'entraînement, puis les métriques sont calculées sur le groupe test non vu. La figure~\ref{fig:inductive_metrics_boxplots_trial0017} compare \textbf{scRAW} en mode inductif aux trois méthodes profondes retenues dans cette expérience : scNAME, scMAE et scDeepCluster.
 
 La figure a été générée à partir des métriques par split en deux étapes. D'abord, pour chaque couple jeu de données--algorithme--métrique, les splits disponibles ont été moyennés afin d'obtenir une seule valeur par jeu de données. Ensuite, les boxplots ont été construits à partir de ces moyennes par dataset : chaque point noir correspond donc à un jeu de données, la boîte représente la distribution des six moyennes disponibles pour un algorithme, et le losange blanc indique la moyenne globale de l'algorithme. Cette agrégation évite qu'un jeu de données avec davantage de splits, comme Baron, pèse plus fortement qu'un jeu avec un seul split. Les résultats détaillés par jeu de données et la liste des splits sont fournis en Annexe~\ref{annexe:inductif_details}.
 
@@ -481,33 +478,26 @@ La figure a été générée à partir des métriques par split en deux étapes.
     \label{fig:inductive_metrics_boxplots_trial0017}
 \end{figure}
 
-Sur ces moyennes par jeu de données, \textbf{scRAW} obtient une moyenne de $0{,}787$ en ARI, $0{,}826$ en ACC, $0{,}752$ en RareACC et $0{,}790$ en UltraRareACC. Le gain est surtout marqué sur l'UltraRareACC, où les autres méthodes restent plus instables et nettement plus basses en moyenne. La RareACC est plus contrastée : certains jeux de données restent difficiles, notamment Kang PBMC, mais scRAW conserve une distribution globalement élevée. Ces résultats suggèrent que la logique rare-aware apprise par scRAW se transfère partiellement au cadre inductif, tout en rappelant que l'évaluation reste sensible au contenu du batch test et aux effectifs parfois très faibles des classes ultra-rares.
+Sur ces moyennes par jeu de données, \textbf{scRAW} obtient une moyenne de $0{,}787$ en ARI, $0{,}826$ en ACC, $0{,}752$ en RareACC et $0{,}790$ en UltraRareACC. La différence par rapport aux autres méthodes est surout marqué sur l'UltraRareACC où ces dernières restent plus instables et nettement plus basses en moyenne. La RareACC est plus contrastée : certains jeux de données restent difficiles, notamment Kang PBMC, mais scRAW conserve une distribution globalement élevée. Ces résultats suggère que notre algorithme reste efficace dans un cadre inductif et qu'il garde sa fiabilité sur l'identification de populations rares et ultra-rares sur les jeux de données déséquilibrés.
 
 \subsection{Interprétation biologique}
 
-Une première analyse biologique post-hoc a été réalisée sur Baron Human Pancreas avec la configuration scRAW . L'objectif n'est pas seulement de vérifier l'accord numérique avec les annotations, mais aussi de regarder si les clusters prédits conservent une cohérence biologique au niveau des gènes marqueurs. Inspiré des protocoles de caractérisation biologique de scCluBench \cite{xu_scclubench_2026} et de scAIDE \cite{scAIDE2020}, ce protocole de validation extrait et compare les signatures d'expression des clusters prédits avec les types cellulaires de référence. Pour chaque type cellulaire de la vérité terrain et pour chaque cluster prédit, les 100 meilleurs gènes différentiellement exprimés (DEG) sont extraits à l'aide d'un test de Wilcoxon bilatéral. Ce calcul statistique est effectué après avoir filtré les gènes exprimés dans moins de 3 cellules, normalisé la somme des comptes par cellule à une cible de 10\,000 (\texttt{target\_sum=1e4}) et appliqué une transformation logarithmique ($\log(x+1)$). Les clusters sont ensuite annotés en les affectant au type cellulaire qui maximise le recouvrement (l'intersection) de leurs gènes marqueurs respectifs, en complément de l'assignation hongroise classique.
+Une analyse biologique a été réalisée sur Baron Human Pancreas avec la configuration scRAW. L'objectif est de vérifier la cohérence des clusters prédits par scRAW avec les types cellulaires de référence en s'appuyant sur les gènes marqueurs. Inspiré des protocoles de caractérisation biologique de scCluBench \cite{xu_scclubench_2026} et de scAIDE \cite{scAIDE2020}, ce protocole de validation extrait et compare les signatures d'expression des clusters prédits avec les types cellulaires de référence. Pour chaque type cellulaire de la vérité terrain et pour chaque cluster prédit, les 100 meilleurs gènes différentiellement exprimés (DEG) sont extraits à l'aide d'un test de Wilcoxon bilatéral. Ce calcul statistique est effectué après avoir filtré les gènes exprimés dans moins de 3 cellules, normalisé la somme des comptes par cellule à une cible de 10\,000 (\texttt{target\_sum=1e4}) et appliqué une transformation logarithmique ($\log(x+1)$). Les clusters sont ensuite annotés en les affectant au type cellulaire qui maximise le recouvrement (l'intersection) de leurs gènes marqueurs respectifs, en complément de l'assignation hongroise classique.
 
-Sur Baron, cette annotation par recouvrement atteint une exactitude de $94{,}8\,\%$ et une balanced accuracy de $88{,}9\,\%$, contre $93{,}4\,\%$ et $87{,}0\,\%$ pour le mapping hongrois. Les deux annotations concordent pour $97{,}4\,\%$ des cellules, ce qui indique que la partition apprise par \textbf{scRAW} est globalement compatible avec les marqueurs de référence, tout en autorisant la fragmentation biologique plausible d'un même type cellulaire en plusieurs clusters prédits.
-
+Sur Baron, cette annotation par recouvrement atteint une exactitude de $94{,}8\,\%$ et une balanced accuracy de $88{,}9\,\%$, contre $93{,}4\,\%$ et $87{,}0\,\%$ pour le mapping hongrois. Les deux annotations concordent pour $97{,}4\,\%$ des cellules, ce qui indique que la clustering fait par \textbf{scRAW} est globalement en accord avec les marqueurs de référence, tout en fragmentant parfois certains types cellulaires en deux sous clusters, comme nous le voyons sur la figure~\ref{fig:baron_scraw_bio_interpretation}.
 \begin{figure}[H]
     \centering
     \captionsetup{font=small}
     \begin{subfigure}[t]{0.49\textwidth}
         \centering
-        \includegraphics[width=\linewidth,height=0.145\textheight,keepaspectratio]{Images/analyse_biologique_scraw_baron_trial0017/tsne_qualitative_panel.png}
+        \includegraphics[width=\linewidth,height=0.22\textheight,keepaspectratio]{Images/analyse_biologique_scraw_baron_trial0017/tsne_qualitative_panel.png}
         \caption{Projection t-SNE des embeddings.}
     \end{subfigure}
     \hfill
     \begin{subfigure}[t]{0.49\textwidth}
         \centering
-        \includegraphics[width=\linewidth,height=0.145\textheight,keepaspectratio]{Images/analyse_biologique_scraw_baron_trial0017/marker_overlap_heatmap.png}
+        \includegraphics[width=\linewidth,height=0.22\textheight,keepaspectratio]{Images/analyse_biologique_scraw_baron_trial0017/marker_overlap_heatmap.png}
         \caption{Recouvrement des marqueurs.}
-    \end{subfigure}
-    \vspace{-0.4em}
-    \begin{subfigure}[t]{0.62\textwidth}
-        \centering
-        \includegraphics[width=\linewidth,height=0.105\textheight,keepaspectratio]{Images/analyse_biologique_scraw_baron_trial0017/representation_similarity_distributions.png}
-        \caption{Similarités cosinus entre embeddings.}
     \end{subfigure}
     \vspace{-0.4em}
     \caption{Analyse biologique compacte de scRAW sur Baron Human Pancreas. Les panneaux combinent la structure latente, la concordance des marqueurs différentiels et la distribution des similarités de représentation afin d'évaluer la cohérence biologique du clustering sans dépasser une demi-page.}

@@ -7,13 +7,13 @@
 \textbf{Algorithme} & \textbf{Configuration} & \textbf{ARI} & \textbf{RareACC} & \textbf{UltraRareACC} \\
 \midrule
 scMAE & Baseline & 0,665 & 0,562 & 0,492 \\
- & \textbf{Meilleure pondérée : Pondération complète Leiden} & 0,648 & 0,589 & 0,518 \\
+ & \textbf{Meilleure pondérée : Pseudo clustering Leiden} & 0,648 & 0,589 & 0,518 \\
 \addlinespace[0.2em]
 scDeepCluster & Baseline & 0,422 & 0,622 & 0,222 \\
- & \textbf{Meilleure pondérée : Pondération complète Leiden} & 0,451 & 0,645 & 0,344 \\
+ & \textbf{Meilleure pondérée : Pseudo clustering Leiden} & 0,451 & 0,645 & 0,344 \\
 \addlinespace[0.2em]
 DESC & Baseline & 0,585 & 0,631 & 0,429 \\
- & \textbf{Meilleure pondérée : Pondération complète KMeans + triplet} & 0,576 & 0,662 & 0,414 \\
+ & \textbf{Meilleure pondérée : Pseudo clustering KMeans + triplet} & 0,576 & 0,662 & 0,414 \\
 \bottomrule
 \end{tabularx}
 \caption{Comparaison entre chaque algorithme de base et sa meilleure variante avec loss pondérée scRAW. Les valeurs sont des moyennes par jeu de données ; la meilleure variante est sélectionnée par la moyenne des trois métriques.}
