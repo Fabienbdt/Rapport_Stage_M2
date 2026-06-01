@@ -59,17 +59,17 @@ Ces méthodes sont efficaces et largement utilisées. Toutefois, elles dépenden
 
 Les méthodes basées sur le deep learning apprennent une représentation latente des cellules au lieu de s'appuyer uniquement sur une projection linéaire comme la PCA. Elles sont souvent fondées sur des autoencodeurs. Un autoencodeur est un réseau de neurones composé de deux parties : un encodeur et un décodeur. L'encodeur transforme le profil d'expression d'une cellule, initialement décrit par des milliers de gènes, en un vecteur plus compact appelé espace latent. Le décodeur tente ensuite de reconstruire le profil d'expression initial à partir de ce vecteur latent. Si la reconstruction est correcte, cela signifie que l'espace latent conserve une partie importante de l'information biologique utile.
 
-Dans ce cadre, l'apprentissage consiste à minimiser une \textit{loss}. Cette loss pénalise le modèle lorsqu'il reconstruit mal les données, regroupe mal les cellules ou conserve trop d'information technique. La loss totale peut être vue comme une somme pondérée de plusieurs objectifs, de la même façon qu'une pénalisation de type L2 ajoute un terme d'optimisation à l'objectif principal.
+Dans ce cadre, l'apprentissage consiste à minimiser une \textit{loss} notée \(\mathcal{L}\). Cette loss pénalise le modèle lorsqu'il reconstruit mal les données, regroupe mal les cellules ou conserve trop d'information technique. La loss totale \(\mathcal{L}_{\mathrm{total}}\) peut être vue comme une somme pondérée de plusieurs objectifs, de la même façon qu'une pénalisation de type L2 ajoute un terme d'optimisation à l'objectif principal.
 
-Pour bien comprendre, regardons sur quoi se base la loss totale (\textit{total loss}) de différents modèles de l'état de l'art :
+Pour bien comprendre, regardons sur quoi se base la loss totale \(\mathcal{L}_{\mathrm{total}}\) (\textit{total loss}) de différents modèles de l'état de l'art :
 \begin{itemize}
-    \item \textbf{La loss de reconstruction :} Des modèles comme scVI \cite{Lopez2018scVI} ou scMAE \cite{Fang2024scMAE} cherchent avant tout à bien reconstruire le profil d'expression initial de la cellule. Si le modèle compresse mal l'information et n'arrive pas à deviner les gènes de départ, sa loss augmente.
-    \item \textbf{La loss de clustering :} Des méthodes comme DESC \cite{li2020deep}, scDeepCluster \cite{tian2019clustering} ou scNAME \cite{wan_scname_2022} ajoutent une contrainte supplémentaire. Elles mesurent les distances entre les cellules et forcent le modèle à regrouper les cellules qui se ressemblent de plus en plus au fil du temps, souvent en minimisant une mesure de différence appelée divergence KL.
-    \item \textbf{La loss de correction de batch :} Certaines architectures adversariales, comme D2AN \cite{zhu2024d2an} ou ABC \cite{danino2024abc}, ajoutent un terme adverse (via un discriminateur) qui cherche à rendre le batch difficile à prédire à partir de l'espace latent, forçant ainsi l'alignement des données durant l'apprentissage.
-    \item \textbf{Les autres loss ou régularisations :} D'autres modèles ajoutent des contraintes de voisinage, de contraste ou de graphe afin de stabiliser l'espace latent. Ces termes ne sont pas toujours détaillés ici, mais ils reposent sur la même idée générale : orienter l'apprentissage vers une représentation plus utile pour le clustering.
+    \item \textbf{La loss de reconstruction \(\mathcal{L}_{\mathrm{recon}}\) :} Des modèles comme scVI \cite{Lopez2018scVI} ou scMAE \cite{Fang2024scMAE} cherchent avant tout à bien reconstruire le profil d'expression initial de la cellule. Si le modèle compresse mal l'information et n'arrive pas à deviner les gènes de départ, cette loss augmente.
+    \item \textbf{La loss de clustering \(\mathcal{L}_{\mathrm{cluster}}\) :} Des méthodes comme DESC \cite{li2020deep}, scDeepCluster \cite{tian2019clustering} ou scNAME \cite{wan_scname_2022} ajoutent une contrainte supplémentaire. Elles mesurent les distances entre les cellules et forcent le modèle à regrouper les cellules qui se ressemblent de plus en plus au fil du temps, souvent en minimisant une mesure de différence appelée divergence KL.
+    \item \textbf{La loss de correction de batch \(\mathcal{L}_{\mathrm{batch}}\) :} Certaines architectures adversariales, comme D2AN \cite{zhu2024d2an} ou ABC \cite{danino2024abc}, ajoutent un terme adverse (via un discriminateur) qui cherche à rendre le batch difficile à prédire à partir de l'espace latent, forçant ainsi l'alignement des données durant l'apprentissage.
+    \item \textbf{Les autres loss ou régularisations \(\mathcal{L}_{\mathrm{reg}}\) :} D'autres modèles ajoutent des contraintes de voisinage, de contraste ou de graphe afin de stabiliser l'espace latent. Ces termes ne sont pas toujours détaillés ici, mais ils reposent sur la même idée générale : orienter l'apprentissage vers une représentation plus utile pour le clustering.
 \end{itemize}
 
-Le problème avec les populations rares vient de la manière dont cette loss totale est calculée. Le modèle cherche à minimiser cette loss globale sur l'ensemble des données. Les populations majoritaires, qui contiennent des milliers de cellules, ont un poids important dans ce calcul. À l'inverse, une erreur sur un type cellulaire rare contenant seulement quelques dizaines de cellules modifie très peu la loss globale. Le réseau de neurones peut donc apprendre une représentation globalement performante tout en négligeant les petites populations.
+Le problème avec les populations rares vient de la manière dont cette loss totale \(\mathcal{L}_{\mathrm{total}}\) est calculée. Le modèle cherche à minimiser cette loss globale sur l'ensemble des données. Les populations majoritaires, qui contiennent des milliers de cellules, ont un poids important dans ce calcul. À l'inverse, une erreur sur un type cellulaire rare contenant seulement quelques dizaines de cellules modifie très peu \(\mathcal{L}_{\mathrm{total}}\). Le réseau de neurones peut donc apprendre une représentation globalement performante tout en négligeant les petites populations.
 
 \begin{table}[H]
 \centering
@@ -112,7 +112,7 @@ Le problème avec les populations rares vient de la manière dont cette loss tot
 & scCAD & Détection d'anomalies & Décomposition de clusters pour isoler les types rares & \cite{Xu2024scCAD} & Nature Communications \\
 \bottomrule
 \end{tabularx}
-\caption{Synthèse des méthodes de clustering et de détection de populations rares citées dans l'état de l'art. AE : autoencodeur ; VAE : autoencodeur variationnel ; KL : divergence de Kullback-Leibler ; NB/ZINB : lois binomiale négative et binomiale négative à inflation de zéros.}
+\caption[Synthèse des méthodes de clustering et de détection de populations rares citées dans l'état de l'art.]{Synthèse des méthodes de clustering et de détection de populations rares citées dans l'état de l'art. AE : autoencodeur ; VAE : autoencodeur variationnel ; KL : divergence de Kullback-Leibler ; NB/ZINB : lois binomiale négative et binomiale négative à inflation de zéros.}
 \label{tab:algorithms_all}
 \end{table}
 
@@ -169,7 +169,7 @@ Cellule\_4 & 24 & 1  & 0  & & Batch\_B  & Cellule Beta \\
 Cellule\_5 & 0  & 0  & 8  & & Batch\_C  & Lymphocyte T \\
 \bottomrule
 \end{tabular}
-\caption{Structure conceptuelle d'un jeu de données scRNA-seq. La matrice d'expression à gauche est alignée ligne à ligne (par cellule) avec la table des métadonnées cellulaires à droite.}
+\caption[Structure conceptuelle d'un jeu de données scRNA-seq.]{Structure conceptuelle d'un jeu de données scRNA-seq. La matrice d'expression à gauche est alignée ligne à ligne (par cellule) avec la table des métadonnées cellulaires à droite.}
 \label{tab:sc_dataset_layout}
 \end{table}
 
@@ -202,7 +202,7 @@ Scanorama \cite{Hie2019} & Mutual Nearest Neighbors (MNN) & Identification de po
 scVI \cite{Lopez2018scVI} & Autoencodeur Variationnel (VAE) & Modélisation probabiliste du bruit et des batchs dans l'espace latent \\
 \bottomrule
 \end{tabularx}
-\caption{Principaux outils de correction de l'effet de batch.}
+\caption[Principaux outils de correction de l'effet de batch.]{Principaux outils de correction de l'effet de batch.}
 \label{tab:batch_correction}
 \end{table}
 
@@ -219,7 +219,7 @@ SCRBenchmark a été développé pour rendre les expériences de comparaison plu
 \begin{figure}[htbp]
     \centering
     \includegraphics[width=0.8\textwidth]{SCRBenchmark/OrganisationLogiciel.png}
-    \caption{Structure logique et flux de travail de la plateforme de benchmarking SCRBenchmark.}
+    \caption[Structure logique et flux de travail de la plateforme de benchmarking SCRBenchmark.]{Structure logique et flux de travail de la plateforme de benchmarking SCRBenchmark.}
     \label{fig:organisation_logiciel}
 \end{figure}
 
@@ -263,7 +263,7 @@ Après filtrage, les expériences sur Baron portent sur 8\,569 cellules réparti
         \textit{t\_cell} & 7 & 0,08\,\% & Ultra-rare \\
         \bottomrule
     \end{tabular}
-    \caption{Composition du jeu de données Baron après filtrage. Les classes rares correspondent aux types représentant moins de 5\,\% des cellules, et les classes ultra-rares à ceux représentant moins de 1\,\%.}
+    \caption[Composition du jeu de données Baron après filtrage.]{Composition du jeu de données Baron après filtrage. Les classes rares correspondent aux types représentant moins de 5\,\% des cellules, et les classes ultra-rares à ceux représentant moins de 1\,\%.}
     \label{tab:classes_baron}
 \end{table}
 
@@ -315,7 +315,7 @@ La métrique de correction de batch scIB-e a ensuite été calculée sur les emb
 \begin{figure}[H]
     \centering
     \includegraphics[width=\textwidth]{SCRBenchmark/baron_inductive_transductive_error_panel.png}
-    \caption{Panel de résultats sur le jeu de données Baron. A--B : taux d'erreur par type cellulaire et par méthode, en mode inductif sur le test du split stratifié 70/10/20 et en mode transductif sur le jeu complet. C--D : métriques globales associées. Les deux cadres sont moyennés sur trois graines et utilisent le prétraitement du protocole de comparaison. Pour PCA+Leiden, la résolution est sélectionnée par recherche de silhouette et le nombre de clusters n'est pas fixé à 14. La métrique de correction de batch correspond à l'agrégat scIB-e calculé sur les embeddings disponibles. Les scores NMI/ARI peuvent rester corrects alors que l'identification des populations rares dépend fortement du nombre de cellules évaluées.}
+    \caption[Panel de résultats sur le jeu de données Baron.]{Panel de résultats sur le jeu de données Baron. A--B : taux d'erreur par type cellulaire et par méthode, en mode inductif sur le test du split stratifié 70/10/20 et en mode transductif sur le jeu complet. C--D : métriques globales associées. Les deux cadres sont moyennés sur trois graines et utilisent le prétraitement du protocole de comparaison. Pour PCA+Leiden, la résolution est sélectionnée par recherche de silhouette et le nombre de clusters n'est pas fixé à 14. La métrique de correction de batch correspond à l'agrégat scIB-e calculé sur les embeddings disponibles. Les scores NMI/ARI peuvent rester corrects alors que l'identification des populations rares dépend fortement du nombre de cellules évaluées.}
     \label{fig:baron_inductive_transductive_error_panel}
 \end{figure}
 
@@ -325,9 +325,9 @@ Ces observations motivent directement le développement de scRAW : l'objectif n'
 
 \subsection{Positionnement et motivation}
 
-scRAW a été développé à partir du constat présenté dans la section précédente : les méthodes de clustering peuvent obtenir de bons scores globaux tout en retrouvant mal les populations cellulaires les plus petites. L'objectif n'est donc pas seulement de construire un nouvel autoencodeur, mais de modifier la manière dont les cellules contribuent à l'apprentissage. Les cellules situées dans de petits groupes ou dans des zones peu denses de l'espace latent reçoivent un poids plus élevé dans la loss. Elles influencent ainsi davantage la représentation apprise.
+scRAW a été développé à partir du constat présenté dans la section précédente : les méthodes de clustering peuvent obtenir de bons scores globaux tout en retrouvant mal les populations cellulaires les plus petites. L'objectif n'est donc pas seulement de construire un nouvel autoencodeur, mais de modifier la manière dont les cellules contribuent à l'apprentissage. Les cellules situées dans de petits groupes ou dans des zones peu denses de l'espace latent reçoivent un poids plus élevé dans la loss de reconstruction pondérée \(\mathcal{L}_{\mathrm{recon,ponderee}}\). Elles influencent ainsi davantage la représentation apprise.
 
-La méthode conserve une structure volontairement simple. Elle repose sur un autoencodeur MLP, une pondération dynamique des cellules, une contrainte locale de type triplet loss et une correction adversariale de l'information de batch lorsque plusieurs batchs sont renseignés. Dans la suite, la description correspond uniquement à la configuration par défaut de scRAW. Les autres variantes de configuration ne sont pas détaillées ici.
+La méthode conserve une structure volontairement simple. Elle repose sur un autoencodeur MLP, une pondération dynamique des cellules, une contrainte locale de type triplet loss \(\mathcal{L}_{\mathrm{triplet}}\) et une correction adversariale de l'information de batch \(\mathcal{L}_{\mathrm{batch}}\) lorsque plusieurs batchs sont renseignés. Dans la suite, la description correspond uniquement à la configuration par défaut de scRAW. Les autres variantes de configuration ne sont pas détaillées ici.
 
 \subsection{Pipeline}
 
@@ -335,8 +335,8 @@ Le pipeline général de scRAW est présenté dans la figure~\ref{fig:scraw_pipe
 
 \begin{figure}[H]
     \centering
-    \includegraphics[width=\textwidth,height=0.9\textheight,keepaspectratio]{Images/SCRAW_PIPELINE/scRAW_FR.pdf}
-    \caption{Pipeline général de scRAW. Le modèle apprend un espace latent par autoencodeur, met à jour des poids cellulaires à partir de pseudo-clusters et de la densité locale, puis réalise le clustering final dans l'espace latent.}
+    \includegraphics[width=\textwidth,height=0.9\textheight,keepaspectratio]{Images/SCRAW_PIPELINE/scRAW.png}
+    \caption[Pipeline général de scRAW.]{Pipeline général de scRAW. Le modèle apprend un espace latent par autoencodeur, met à jour des poids cellulaires à partir de pseudo-clusters et de la densité locale, puis réalise le clustering final dans l'espace latent.}
     \label{fig:scraw_pipeline}
 \end{figure}
 
@@ -344,11 +344,11 @@ La matrice prétraitée est ensuite utilisée comme entrée d'un autoencodeur sy
 
 L'entraînement est divisé en deux phases. Pendant les 55 premières époques, toutes les cellules contribuent de manière uniforme à la reconstruction. Cette phase de préentraînement sert à stabiliser l'espace latent avant d'introduire la pondération. À partir de l'époque 55, scRAW recalcule périodiquement des pseudo-labels et des poids cellulaires à partir de l'espace latent courant. Dans la configuration par défaut, les pseudo-labels sont obtenus avec Leiden et les poids sont mis à jour toutes les 20 époques. Les poids déjà présents sont lissés par une moyenne mobile, avec un momentum de 0,688, afin d'éviter des changements trop brusques au cours de l'apprentissage.
 
-À la fin de l'entraînement, l'encodeur produit l'embedding final de chaque cellule. Le clustering final est ensuite réalisé avec HDBSCAN dans cet espace latent, en demandant des groupes d'au moins 8 cellules et une estimation locale fondée sur 6 voisins. Les points considérés comme bruit par HDBSCAN ne sont pas réassignés dans cette configuration. Les sorties principales de scRAW sont donc l'espace latent, les labels de clusters prédits, les poids cellulaires finaux, le modèle entraîné, l'historique des loss et les métriques calculées par le pipeline d'évaluation.
+À la fin de l'entraînement, l'encodeur produit l'embedding final de chaque cellule. Le clustering final est ensuite réalisé avec HDBSCAN dans cet espace latent, en demandant des groupes d'au moins 8 cellules et une estimation locale fondée sur 6 voisins. Les points considérés comme bruit par HDBSCAN ne sont pas réassignés dans cette configuration. Les sorties principales de scRAW sont donc l'espace latent, les labels de clusters prédits, les poids cellulaires finaux, le modèle entraîné, l'historique des termes de loss \(\mathcal{L}\) et les métriques calculées par le pipeline d'évaluation.
 
-\subsection{Fonctions de loss et variantes}
+\subsection{\texorpdfstring{Fonctions de loss \(\mathcal{L}\) et variantes}{Fonctions de loss L et variantes}}
 
-Dans la configuration par défaut, l'objectif optimisé combine trois termes de loss :
+Dans la configuration par défaut, l'objectif optimisé combine trois termes de loss \(\mathcal{L}\) :
 \[
   \mathcal{L}_{\mathrm{total}}
   =
@@ -358,17 +358,17 @@ Dans la configuration par défaut, l'objectif optimisé combine trois termes de 
   +
   \lambda_{\mathrm{batch}}\mathcal{L}_{\mathrm{batch}}.
 \]
-Le premier terme reconstruit les profils d'expression, le deuxième structure localement l'espace latent autour des cellules rares ou isolées, et le troisième réduit l'information de batch visible dans la représentation lorsque plusieurs batchs sont présents. Le facteur \(\rho(e)\) augmente progressivement le poids effectif du terme triplet au début de son activation.
+Le terme \(\mathcal{L}_{\mathrm{recon,ponderee}}\) reconstruit les profils d'expression, \(\mathcal{L}_{\mathrm{triplet}}\) structure localement l'espace latent autour des cellules rares ou isolées, et \(\mathcal{L}_{\mathrm{batch}}\) réduit l'information de batch visible dans la représentation lorsque plusieurs batchs sont présents. Le facteur \(\rho(e)\) augmente progressivement le poids effectif de \(\mathcal{L}_{\mathrm{triplet}}\) au début de son activation.
 
-\subsubsection*{Reconstruction pondérée}
+\subsubsection*{\texorpdfstring{Reconstruction pondérée \(\mathcal{L}_{\mathrm{recon,ponderee}}\)}{Reconstruction pondérée L recon ponderee}}
 
-La loss de reconstruction est le terme principal de scRAW. Dans cette configuration, il s'agit d'une erreur quadratique moyenne (MSE) calculée entre la matrice prétraitée \(X\) et sa reconstruction \(\hat{X}\). Pour une cellule \(i\), on peut l'écrire simplement :
+La loss de reconstruction \(\mathcal{L}_{\mathrm{recon}}\) est le terme principal de scRAW. Dans cette configuration, il s'agit d'une erreur quadratique moyenne (MSE) calculée entre la matrice prétraitée \(X\) et sa reconstruction \(\hat{X}\). Pour une cellule \(i\), on peut l'écrire simplement :
 \[
   \mathcal{L}_{\mathrm{recon},i}
   =
   \frac{1}{G}\sum_{g=1}^{G}(\hat{X}_{i,g}-X_{i,g})^2,
 \]
-où \(G\) est le nombre de gènes conservés après prétraitement. Une fraction de 10\,\% des entrées est masquée aléatoirement pendant l'entraînement, avec une valeur de masquage fixée à 0. Les positions masquées reçoivent un poids interne de 0,8 dans le calcul de la reconstruction. Ce masquage est aussi actif pendant la phase pondérée.
+où \(G\) est le nombre de gènes conservés après prétraitement. Une fraction de 10\,\% des entrées est masquée aléatoirement pendant l'entraînement, avec une valeur de masquage fixée à 0. Les positions masquées reçoivent un poids interne de 0,8 dans le calcul de \(\mathcal{L}_{\mathrm{recon},i}\). Ce masquage est aussi actif pendant la phase pondérée.
 
 La différence principale avec un autoencodeur standard vient du facteur \(\omega_i\), qui module la contribution de chaque cellule :
 \[
@@ -385,25 +385,29 @@ Pendant la phase initiale, \(\omega_i=1\) pour toutes les cellules. Pendant la p
   \times
   \omega^{\mathrm{densite}}_i.
 \]
-Le résultat est normalisé pour avoir une moyenne proche de 1, puis limité entre 0,385 et 10. Cette borne évite qu'une cellule domine entièrement la loss, tout en empêchant les cellules très fréquentes de disparaître de l'apprentissage.
+Le résultat est normalisé pour avoir une moyenne proche de 1, puis limité entre 0,385 et 10. Cette borne évite qu'une cellule domine entièrement \(\mathcal{L}_{\mathrm{recon,ponderee}}\), tout en empêchant les cellules très fréquentes de disparaître de l'apprentissage.
 
-\subsubsection*{Triplet loss rare-aware}
+\subsubsection*{\texorpdfstring{Triplet loss rare-aware \(\mathcal{L}_{\mathrm{triplet}}\)}{Triplet loss rare-aware L triplet}}
 
-La \textit{triplet loss} est une loss de comparaison relative dans l'espace latent. Elle ne cherche pas à reconstruire directement les profils d'expression ; elle agit plutôt sur l'organisation géométrique des embeddings. Pour un triplet composé d'une cellule ancre \(a\), d'une cellule positive \(p\) supposée similaire, et d'une cellule négative \(n\) supposée différente, elle pénalise le modèle lorsque l'ancre n'est pas suffisamment plus proche de \(p\) que de \(n\).
+La \textit{triplet loss} \(\mathcal{L}_{\mathrm{triplet}}\) est une loss de comparaison relative dans l'espace latent. Elle ne cherche pas à reconstruire directement les profils d'expression ; elle agit plutôt sur l'organisation géométrique des embeddings. Pour un triplet composé d'une cellule ancre \(a\), d'une cellule positive \(p\) supposée similaire, et d'une cellule négative \(n\) supposée différente, elle pénalise le modèle lorsque l'ancre n'est pas suffisamment plus proche de \(p\) que de \(n\).
 
-Ce type de loss est utilisé pour apprendre des représentations où la proximité a un sens, et il a aussi été adapté au clustering scRNA-seq ; par exemple, scHNTL utilise une triplet loss avec des voisins d'ordre élevé pour rapprocher les cellules considérées voisines et éloigner les cellules non voisines \cite{meng_schntl_2025}.
+Ce type de loss \(\mathcal{L}_{\mathrm{triplet}}\) est utilisé pour apprendre des représentations où la proximité a un sens, et il a aussi été adapté au clustering scRNA-seq ; par exemple, scHNTL utilise une triplet loss avec des voisins d'ordre élevé pour rapprocher les cellules considérées voisines et éloigner les cellules non voisines \cite{meng_schntl_2025}.
 
-Dans scRAW, ce principe est appliqué uniquement aux cellules rares. Le terme est activé à partir de l'époque 60, avec un poids \(\lambda_{\mathrm{triplet}}=0{,}0501\), une marge de 0,4 et une montée progressive contrôlée par \(\rho(e)\). Les ancres sont les cellules dont le poids est supérieur ou égal à 1,2, dans la limite de 64 ancres par mini-batch. Pour chaque ancre, la méthode cherche une cellule positive dans le même pseudo-cluster et une cellule négative dans un autre pseudo-cluster. Cette loss rend donc les groupes rares plus visibles localement dans l'espace latent : elle les rapproche de cellules similaires sans dépendre uniquement du signal global de reconstruction, et les sépare mieux des grands groupes voisins.
+Dans scRAW, ce principe est appliqué uniquement aux cellules rares. Le terme \(\mathcal{L}_{\mathrm{triplet}}\) est activé à partir de l'époque 60, avec un poids \(\lambda_{\mathrm{triplet}}=0{,}0501\), une marge de 0,4 et une montée progressive contrôlée par \(\rho(e)\). Les ancres sont les cellules dont le poids est supérieur ou égal à 1,2, dans la limite de 64 ancres par mini-batch. Pour chaque ancre, la méthode cherche une cellule positive dans le même pseudo-cluster et une cellule négative dans un autre pseudo-cluster. Cette loss rend donc les groupes rares plus visibles localement dans l'espace latent : elle les rapproche de cellules similaires sans dépendre uniquement du signal global de reconstruction, et les sépare mieux des grands groupes voisins.
 
-\subsubsection*{Correction adversariale de batch}
+\subsubsection*{\texorpdfstring{Correction adversariale de batch \(\mathcal{L}_{\mathrm{batch}}\)}{Correction adversariale de batch L batch}}
 
-Le terme \(\mathcal{L}_{\mathrm{batch}}\) correspond à une pénalisation associée à l'origine du batch. Une étape de classification essaie de prédire le batch à partir de l'espace latent. Grâce à l'inversion de gradient, l'encodeur est poussé à produire une représentation dans laquelle l'origine du batch est moins reconnaissable. Dans la configuration par défaut, cette branche est utilisée lorsque la colonne de batch contient au moins deux modalités exploitables après filtrage, avec \(\lambda_{\mathrm{batch}}=0{,}1176\). Cette loss est activée à l'époque 30 et augmente progressivement sur 30 époques.
+Dans scRAW, la correction de batch suit le principe des DANN (\textit{Domain-Adversarial Neural Networks}) \cite{ganin2016domain}. Le modèle peut être vu comme deux objectifs branchés sur le même espace latent \(z_i = E(x_i)\). L'autoencodeur utilise cet espace pour reconstruire les profils d'expression et organiser les cellules, tandis qu'un petit classifieur de batch reçoit le même vecteur latent et essaie de prédire l'origine expérimentale \(b_i\) de la cellule.
+
+Le terme \(\mathcal{L}_{\mathrm{batch}}\) correspond donc à la pénalisation associée à cette prédiction de batch. Le classifieur est entraîné normalement : il minimise \(\mathcal{L}_{\mathrm{batch}}\) pour reconnaître au mieux les batchs. En revanche, entre l'espace latent et ce classifieur, une couche d'inversion de gradient laisse passer les valeurs sans changement lors de la propagation avant, mais inverse le signe du gradient lors de la rétropropagation. Ainsi, le classifieur apprend à détecter les batchs, tandis que l'encodeur reçoit le signal opposé et apprend à produire une représentation dans laquelle cette origine devient moins reconnaissable. L'objectif n'est donc pas d'appliquer une correction externe aux données d'entrée, mais d'apprendre un espace latent qui conserve l'information utile au clustering tout en réduisant les séparations dues au protocole, au donneur ou à la technologie.
+
+Dans la configuration par défaut, cette branche est utilisée lorsque la colonne de batch contient au moins deux modalités exploitables après filtrage, avec \(\lambda_{\mathrm{batch}}=0{,}1176\). La loss \(\mathcal{L}_{\mathrm{batch}}\) est activée à l'époque 30 et augmente progressivement sur 30 époques, afin de laisser d'abord l'autoencodeur apprendre une représentation de base avant d'imposer plus fortement l'invariance au batch.
 
 L'architecture du modèle présenté ici a été sélectionnée par la recherche d'hyperparamètres décrite dans la section suivante. Une étude d'ablations, dont les résultats sont disponibles en Annexe~\ref{annexe:ablation_scraw}, évalue ensuite l'importance des principaux éléments de l'algorithme.
 
 \subsection{Recherche d'hyperparamètres}
 
-La configuration par défaut de scRAW a été construite progressivement. L'objectif n'était pas de trouver le meilleur réglage sur un seul jeu de données, mais d'identifier une configuration assez stable pour être utilisée sans réajustement fin sur un nouveau dataset. Les paramètres explorés concernaient principalement l'architecture de l'autoencodeur, le rythme d'entraînement, la pondération des cellules, la triplet loss, la correction adversariale de batch et le clustering final.
+La configuration par défaut de scRAW a été construite progressivement. L'objectif n'était pas de trouver le meilleur réglage sur un seul jeu de données, mais d'identifier une configuration assez stable pour être utilisée sans réajustement fin sur un nouveau dataset. Les paramètres explorés concernaient principalement l'architecture de l'autoencodeur, le rythme d'entraînement, la pondération des cellules dans \(\mathcal{L}_{\mathrm{recon,ponderee}}\), la triplet loss \(\mathcal{L}_{\mathrm{triplet}}\), la correction adversariale de batch \(\mathcal{L}_{\mathrm{batch}}\) et le clustering final.
 
 Les recherches ont été conduites avec Optuna \cite{akiba2019optuna}. Chaque essai correspond à une configuration complète : Optuna propose un ensemble d'hyperparamètres, scRAW est entraîné avec cette configuration, puis les métriques de clustering sont calculées. Le score utilisé sert uniquement à guider la recherche. Il combine des métriques globales et des métriques sensibles aux classes rares, afin d'éviter de sélectionner une configuration qui améliore seulement les grands groupes cellulaires.
 
@@ -411,7 +415,7 @@ La première phase a été une recherche large sur Baron Human Pancreas. Elle a 
 
 La deuxième phase a donc évalué les configurations sur plusieurs jeux de données. L'espace de recherche a été réduit à partir des meilleurs comportements observés sur Baron, puis testé sur huit jeux de données d'entraînement. Ces jeux de données, présentés en détail dans l'Annexe~\ref{annexe:datasets}, ont été sélectionnés pour représenter une grande diversité biologique et technique, avec divers degrés de déséquilibre de classe (indice de Gini) et d'effets de batch (PCR sur PCA). Le score agrégé tenait compte à la fois de la performance moyenne et des datasets les moins bien résolus, afin de favoriser les réglages robustes plutôt que les réglages très bons sur quelques cas seulement.
 
-La dernière phase a encore resserré l'espace de recherche autour des configurations les plus stables. Elle a conservé les choix méthodologiques finalement retenus pour la configuration par défaut : reconstruction MSE, transformation logarithmique, pondération dynamique, triplet loss, correction adversariale de batch et clustering final hybride autour de HDBSCAN. Cette étape a permis de fixer la configuration utilisée dans les expériences du rapport. Les valeurs exactes des hyperparamètres sont données en Annexe~\ref{annexe:hyperparametres_scraw}, et les figures d'importance des paramètres sont regroupées en Annexe~\ref{annexe:figures_hyperparametres_scraw}.
+La dernière phase a encore resserré l'espace de recherche autour des configurations les plus stables. Elle a conservé les choix méthodologiques finalement retenus pour la configuration par défaut : reconstruction MSE \(\mathcal{L}_{\mathrm{recon}}\), transformation logarithmique, pondération dynamique \(\mathcal{L}_{\mathrm{recon,ponderee}}\), triplet loss \(\mathcal{L}_{\mathrm{triplet}}\), correction adversariale de batch \(\mathcal{L}_{\mathrm{batch}}\) et clustering final hybride autour de HDBSCAN. Cette étape a permis de fixer la configuration utilisée dans les expériences du rapport. Les valeurs exactes des hyperparamètres sont données en Annexe~\ref{annexe:hyperparametres_scraw}, et les figures d'importance des paramètres sont regroupées en Annexe~\ref{annexe:figures_hyperparametres_scraw}.
 
 \subsection{Résultats et discussion}
 
@@ -422,7 +426,7 @@ Pour faciliter la lecture, la figure~\ref{fig:scraw_common8_family_top3_plus_scr
 \begin{figure}[htbp]
     \centering
     \includegraphics[width=\textwidth,height=0.82\textheight,keepaspectratio]{Images/PresentationOrale/common8_top3_family_sorted_barplots.png}
-    \caption{%
+    \caption[\textbf{Distribution des performances sur les huit jeux de données communs pour scRAW et le top 3 de chaque famille de méthodes.}]{%
         \textbf{Distribution des performances sur les huit jeux de données communs pour scRAW et le top 3 de chaque famille de méthodes.}
         Chaque panneau correspond à une métrique (de haut en bas~: ARI, ACC, Rare ACC, Ultra Rare ACC, Correction batch).
         Les couleurs identifient les familles de méthodes~: \textbf{scRAW} (rouge), \textbf{Rare Specific} (bleu),
@@ -444,18 +448,18 @@ Enfin, scRAW reste plus coûteux que les pipelines classiques, avec un temps d'e
 \section{Travaux complémentaires}
 
 
-\subsection{Transfert de loss}
+\subsection{\texorpdfstring{Transfert de loss \(\mathcal{L}_{\mathrm{recon,ponderee}}\)}{Transfert de loss L recon ponderee}}
 
-Cette expérience vise à tester si la pondération de la loss de reconstruction utilisée dans \textbf{scRAW} peut être intégrée à d'autres algorithmes de deep learning disposant d'une loss de reconstruction compatible. L'objectif est de distinguer l'effet de la pondération rare-aware de l'architecture complète de scRAW. Les méthodes testées sont scMAE, scDeepCluster et DESC.
+Cette expérience vise à tester si la pondération de la loss de reconstruction \(\mathcal{L}_{\mathrm{recon,ponderee}}\) utilisée dans \textbf{scRAW} peut être intégrée à d'autres algorithmes de deep learning disposant d'une loss de reconstruction \(\mathcal{L}_{\mathrm{recon}}\) compatible. L'objectif est de distinguer l'effet de la pondération rare-aware de l'architecture complète de scRAW. Les méthodes testées sont scMAE, scDeepCluster et DESC.
 
-Pour chaque méthode, la baseline correspond à l'algorithme de base avec ses hyperparamètres auteur. Les variantes pondérées conservent cette base, mais ajoutent une pondération dans la loss de reconstruction. Comme dans la configuration par défaut de scRAW, cette pondération n'est pas activée dès le début de l'entraînement : une phase de warm-up est conservée, puis la pondération démarre à l'époque 55. Pour les variantes avec triplet loss, cette composante est activée à partir de l'époque 60.
+Pour chaque méthode, la baseline correspond à l'algorithme de base avec ses hyperparamètres auteur. Les variantes pondérées conservent cette base, mais ajoutent une pondération dans la loss de reconstruction \(\mathcal{L}_{\mathrm{recon}}\), ce qui donne une version \(\mathcal{L}_{\mathrm{recon,ponderee}}\). Comme dans la configuration par défaut de scRAW, cette pondération n'est pas activée dès le début de l'entraînement : une phase de warm-up est conservée, puis la pondération démarre à l'époque 55. Pour les variantes avec triplet loss \(\mathcal{L}_{\mathrm{triplet}}\), cette composante est activée à partir de l'époque 60.
 
-Plusieurs configurations ont été testées : pondération par densité seule, pondération complète avec pseudo-labels Leiden ou KMeans, et variantes ajoutant une triplet loss. La figure~\ref{fig:loss_transfer_baseline_vs_best} ne présente donc pas toutes les configurations, mais seulement la baseline et la meilleure variante pondérée pour chaque algorithme. Cette meilleure variante est choisie selon la moyenne de trois métriques : ARI, RareACC et UltraRareACC. Pour avoir des détails sur les configurations testées, la configuration retenue choisie et la table des résultats correspondante, voir l'Annexe~\ref{annexe:loss_transfer_details}.
+Plusieurs configurations ont été testées : pondération par densité seule, pondération complète avec pseudo-labels Leiden ou KMeans, et variantes ajoutant \(\mathcal{L}_{\mathrm{triplet}}\). La figure~\ref{fig:loss_transfer_baseline_vs_best} ne présente donc pas toutes les configurations, mais seulement la baseline et la meilleure variante pondérée pour chaque algorithme. Cette meilleure variante est choisie selon la moyenne de trois métriques : ARI, RareACC et UltraRareACC. Pour avoir des détails sur les configurations testées, la configuration retenue choisie et la table des résultats correspondante, voir l'Annexe~\ref{annexe:loss_transfer_details}.
 
 \begin{figure}[htbp]
     \centering
     \includegraphics[width=\textwidth,height=0.48\textheight,keepaspectratio]{scraw_loss_transfer_synthesis/loss_transfer_baseline_vs_best_weighted.pdf}
-    \caption{Comparaison entre les algorithmes de base et leur meilleure variante avec loss pondérée scRAW. Les scores sont des moyennes par jeu de données.}
+    \caption[Comparaison entre les algorithmes de base et leur meilleure variante avec loss pondérée scRAW.]{Comparaison entre les algorithmes de base et leur meilleure variante avec loss pondérée scRAW. Les scores sont des moyennes par jeu de données.}
     \label{fig:loss_transfer_baseline_vs_best}
 \end{figure}
 
@@ -472,7 +476,7 @@ La figure a été générée à partir des métriques par split en deux étapes.
 \begin{figure}[htbp]
     \centering
     \includegraphics[width=\textwidth,height=0.42\textheight,keepaspectratio]{comparaison_inductive_scraw_trial0017_synthese/inductive_metrics_boxplots_ari_acc_rare_ultrarare.pdf}
-    \caption{Comparaison inductive de \textbf{scRAW} avec scNAME, scMAE et scDeepCluster sur six jeux de données. Chaque boîte représente la distribution des moyennes par jeu de données, et chaque point correspond à un jeu de données. Les losanges indiquent la moyenne globale de l'algorithme pour la métrique considérée.}
+    \caption[Comparaison inductive de \textbf{scRAW} avec scNAME, scMAE et scDeepCluster sur six jeux de données.]{Comparaison inductive de \textbf{scRAW} avec scNAME, scMAE et scDeepCluster sur six jeux de données. Chaque boîte représente la distribution des moyennes par jeu de données, et chaque point correspond à un jeu de données. Les losanges indiquent la moyenne globale de l'algorithme pour la métrique considérée.}
     \label{fig:inductive_metrics_boxplots_trial0017}
 \end{figure}
 
@@ -498,7 +502,7 @@ Sur Baron, cette annotation par recouvrement atteint une accuracy de $94{,}8\,\%
         \caption{Recouvrement des marqueurs.}
     \end{subfigure}
     \vspace{-0.4em}
-    \caption{Analyse biologique compacte de scRAW sur Baron Human Pancreas. Les panneaux combinent la structure latente, la concordance des marqueurs différentiels et la distribution des similarités de représentation afin d'évaluer la cohérence biologique du clustering sans dépasser une demi-page.}
+    \caption[Analyse biologique compacte de scRAW sur Baron Human Pancreas.]{Analyse biologique compacte de scRAW sur Baron Human Pancreas. Les panneaux combinent la structure latente, la concordance des marqueurs différentiels et la distribution des similarités de représentation afin d'évaluer la cohérence biologique du clustering sans dépasser une demi-page.}
     \label{fig:baron_scraw_bio_interpretation}
 \end{figure}
 

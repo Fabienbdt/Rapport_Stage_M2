@@ -200,12 +200,12 @@ Les tableaux suivants présentent les résultats bruts détaillés par jeu de do
 Ces résultats détaillés permettent d'analyser le comportement individuel de chaque méthode sur chacun des jeux de données, offrant ainsi une vision plus fine et contrastée que les seules moyennes globales.
 
 \newpage
-\section{Résultats complets du transfert de loss pondérée}
+\section{\texorpdfstring{Résultats complets du transfert de loss pondérée \(\mathcal{L}_{\mathrm{recon,ponderee}}\)}{Résultats complets du transfert de loss pondérée L recon ponderee}}
 \label{annexe:loss_transfer_details}
 
-Cette annexe présente les résultats complets de l'expérience d'intégration de la loss pondérée de \textbf{scRAW} dans scMAE, scDeepCluster et DESC. Les résultats proviennent de la matrice \texttt{scraw\_loss\_integration\_matrix\_stable\_default}. Les valeurs correspondent à la phase complète, avec cinq seeds par configuration lorsque les runs étaient disponibles.
+Cette annexe présente les résultats complets de l'expérience d'intégration de la loss pondérée \(\mathcal{L}_{\mathrm{recon,ponderee}}\) de \textbf{scRAW} dans scMAE, scDeepCluster et DESC. Les résultats proviennent de la matrice \texttt{scraw\_loss\_integration\_matrix\_stable\_default}. Les valeurs correspondent à la phase complète, avec cinq seeds par configuration lorsque les runs étaient disponibles.
 
-La baseline correspond à l'algorithme sans pondération ajoutée. Les autres lignes correspondent aux variantes où une pondération rare-aware est ajoutée à la loss de reconstruction. La pondération est activée après une phase de warm-up, à l'époque 55, comme dans la configuration par défaut de scRAW. Les variantes avec triplet loss activent cette composante à partir de l'époque 60.
+La baseline correspond à l'algorithme sans pondération ajoutée. Les autres lignes correspondent aux variantes où une pondération rare-aware est ajoutée à la loss de reconstruction \(\mathcal{L}_{\mathrm{recon}}\), ce qui produit une version \(\mathcal{L}_{\mathrm{recon,ponderee}}\). La pondération est activée après une phase de warm-up, à l'époque 55, comme dans la configuration par défaut de scRAW. Les variantes avec triplet loss \(\mathcal{L}_{\mathrm{triplet}}\) activent cette composante à partir de l'époque 60.
 
 Le Tableau~\ref{tab:loss_transfer_baseline_vs_best} présente la comparaison synthétique entre chaque baseline et sa meilleure variante pondérée.
 
@@ -216,7 +216,7 @@ Pour résumer les performances, les seeds sont d'abord moyennées pour chaque je
 \begin{figure}[H]
     \centering
     \includegraphics[width=\textwidth,height=0.60\textheight,keepaspectratio]{scraw_loss_transfer_synthesis/loss_transfer_all_configurations_boxplot.pdf}
-    \caption{Distribution des scores pour toutes les configurations testées lors du transfert de la loss pondérée scRAW. Les boîtes représentent la distribution des scores moyens (moyenne de l'ARI, de la RareACC et de l'UltraRareACC) sur l'ensemble des jeux de données.}
+    \caption{Distribution des scores pour toutes les configurations testées lors du transfert de la loss pondérée \(\mathcal{L}_{\mathrm{recon,ponderee}}\) de scRAW. Les boîtes représentent la distribution des scores moyens (moyenne de l'ARI, de la RareACC et de l'UltraRareACC) sur l'ensemble des jeux de données.}
     \label{fig:loss_transfer_all_configurations_boxplots}
 \end{figure}
 
@@ -261,15 +261,15 @@ Pancreas 4 batches & Technologies \texttt{smartseq2} et \texttt{celseq2} & Techn
 \section{Étude d'ablation de scRAW}
 \label{annexe:ablation_scraw}
 
-Cette section présente l'étude d'ablation menée pour valider l'apport individuel de chaque composante de \textbf{scRAW} (la pondération dynamique, la triplet loss rare-aware et la correction adversariale de batch DANN). Toutes les variantes ont été entraînées sur le jeu de données Baron Human Pancreas en utilisant HDBSCAN comme algorithme de clustering final.
+Cette section présente l'étude d'ablation menée pour valider l'apport individuel de chaque composante de \textbf{scRAW} : la pondération dynamique \(\mathcal{L}_{\mathrm{recon,ponderee}}\), la triplet loss rare-aware \(\mathcal{L}_{\mathrm{triplet}}\) et la correction adversariale de batch DANN \(\mathcal{L}_{\mathrm{batch}}\). Toutes les variantes ont été entraînées sur le jeu de données Baron Human Pancreas en utilisant HDBSCAN comme algorithme de clustering final.
 
 Le Tableau~\ref{tab:scraw_ablation} détaille les scores obtenus pour les variantes suivantes :
 \begin{itemize}
-    \item \textbf{MSE} : Autoencodeur classique avec une loss MSE standard sans pondération, sans triplet loss et sans correction adversariale.
-    \item \textbf{Weighted MSE} : Variante incluant la pondération dynamique des cellules par taille de pseudo-cluster et densité locale, mais sans triplet loss ni correction adversariale.
-    \item \textbf{Weighted + triplet} : Autoencodeur pondéré avec triplet loss rare-aware, sans correction de batch adversariale.
-    \item \textbf{Weighted + DANN} : Autoencodeur pondéré avec correction adversariale (DANN), sans triplet loss.
-    \item \textbf{Full (scRAW)} : Modèle complet associant la pondération dynamique, la triplet loss et la branche adversariale.
+    \item \textbf{MSE} : Autoencodeur classique avec une loss MSE standard \(\mathcal{L}_{\mathrm{recon}}\), sans pondération, sans triplet loss \(\mathcal{L}_{\mathrm{triplet}}\) et sans correction adversariale \(\mathcal{L}_{\mathrm{batch}}\).
+    \item \textbf{Weighted MSE} : Variante incluant la pondération dynamique des cellules \(\mathcal{L}_{\mathrm{recon,ponderee}}\) par taille de pseudo-cluster et densité locale, mais sans triplet loss \(\mathcal{L}_{\mathrm{triplet}}\) ni correction adversariale \(\mathcal{L}_{\mathrm{batch}}\).
+    \item \textbf{Weighted + triplet} : Autoencodeur pondéré avec triplet loss rare-aware \(\mathcal{L}_{\mathrm{triplet}}\), sans correction de batch adversariale \(\mathcal{L}_{\mathrm{batch}}\).
+    \item \textbf{Weighted + DANN} : Autoencodeur pondéré avec correction adversariale (DANN) \(\mathcal{L}_{\mathrm{batch}}\), sans triplet loss \(\mathcal{L}_{\mathrm{triplet}}\).
+    \item \textbf{Full (scRAW)} : Modèle complet associant la pondération dynamique \(\mathcal{L}_{\mathrm{recon,ponderee}}\), la triplet loss \(\mathcal{L}_{\mathrm{triplet}}\) et la branche adversariale \(\mathcal{L}_{\mathrm{batch}}\).
     \item \textbf{Full single update} : Modèle scRAW complet, mais où la mise à jour des poids cellulaires n'est effectuée qu'une seule fois au lieu d'être actualisée périodiquement.
     \item \textbf{Full density-only} : Modèle scRAW complet, mais où la pondération des cellules repose uniquement sur la densité locale (la composante liée à la taille des pseudo-clusters est désactivée).
     \item \textbf{Full cluster-size-only} : Modèle scRAW complet, mais où la pondération repose uniquement sur la taille des pseudo-clusters Leiden (la composante liée à la densité locale est désactivée).
@@ -309,9 +309,9 @@ Full cluster-size-only & 0,723 & 0,777 & 0,800 & 0,869 & 0,897 & 0,949 & 0,596 &
 
 L'analyse de ces résultats d'ablation permet de tirer plusieurs enseignements essentiels sur l'architecture de scRAW :
 \begin{itemize}
-    \item \textbf{Importance de la pondération de la reconstruction} : L'autoencodeur classique (\textit{MSE}) obtient des scores très limités (ARI $= 0{,}189$ et NMI $= 0{,}397$). L'activation de la pondération dynamique (\textit{Weighted MSE}) augmente nettement ces scores (ARI $= 0{,}269$ et NMI $= 0{,}455$) ainsi que la BalancedACC ($0{,}520$ contre $0{,}427$), ce qui confirme que moduler l'importance des cellules selon leur rareté et leur densité locale aide à structurer l'espace latent de manière plus équitable.
-    \item \textbf{Rôle fondamental de la triplet loss rare-aware} : L'ajout de la triplet loss (\textit{Weighted + triplet}) engendre une amélioration spectaculaire sur l'ensemble des critères. L'ARI bondit à $0{,}851$, la BalancedACC à $0{,}813$, et les exactitudes sur les populations rares et ultra-rares dépassent $0{,}80$. Cela montre que guider explicitement l'organisation géométrique des embeddings en rapprochant les cellules similaires et en isolant les petits groupes est indispensable pour obtenir une partition biologique claire et robuste.
-    \item \textbf{Synergie avec la correction adversariale} : L'utilisation de DANN seul avec la pondération (\textit{Weighted + DANN}) améliore considérablement le score de correction de batch (l'entropie scIB-E grimpe à $0{,}574$) mais reste inefficace pour former des groupes biologiquement cohérents sans le terme de triplet loss. Le modèle complet (\textit{Full}) réunit le meilleur des deux aspects : il maintient une performance de clustering très élevée (ARI $= 0{,}916$, ACC $= 0{,}934$) tout en garantissant un excellent niveau d'intégration de batch (scIB-E $= 0{,}590$).
+    \item \textbf{Importance de la pondération de la reconstruction \(\mathcal{L}_{\mathrm{recon,ponderee}}\)} : L'autoencodeur classique (\textit{MSE}) obtient des scores très limités (ARI $= 0{,}189$ et NMI $= 0{,}397$). L'activation de la pondération dynamique (\textit{Weighted MSE}) augmente nettement ces scores (ARI $= 0{,}269$ et NMI $= 0{,}455$) ainsi que la BalancedACC ($0{,}520$ contre $0{,}427$), ce qui confirme que moduler l'importance des cellules selon leur rareté et leur densité locale aide à structurer l'espace latent de manière plus équitable.
+    \item \textbf{Rôle fondamental de la triplet loss rare-aware \(\mathcal{L}_{\mathrm{triplet}}\)} : L'ajout de \(\mathcal{L}_{\mathrm{triplet}}\) (\textit{Weighted + triplet}) engendre une amélioration spectaculaire sur l'ensemble des critères. L'ARI bondit à $0{,}851$, la BalancedACC à $0{,}813$, et les exactitudes sur les populations rares et ultra-rares dépassent $0{,}80$. Cela montre que guider explicitement l'organisation géométrique des embeddings en rapprochant les cellules similaires et en isolant les petits groupes est indispensable pour obtenir une partition biologique claire et robuste.
+    \item \textbf{Synergie avec la correction adversariale \(\mathcal{L}_{\mathrm{batch}}\)} : L'utilisation de DANN seul avec la pondération (\textit{Weighted + DANN}) améliore considérablement le score de correction de batch (l'entropie scIB-E grimpe à $0{,}574$) mais reste inefficace pour former des groupes biologiquement cohérents sans le terme \(\mathcal{L}_{\mathrm{triplet}}\). Le modèle complet (\textit{Full}) réunit le meilleur des deux aspects : il maintient une performance de clustering très élevée (ARI $= 0{,}916$, ACC $= 0{,}934$) tout en garantissant un excellent niveau d'intégration de batch (scIB-E $= 0{,}590$).
     \item \textbf{Rythme de mise à jour des poids} : Dans la variante \textit{Full single update}, recalculer les poids une seule fois plutôt que périodiquement dégrade la détection des populations les plus petites (l'Ultra-rare ACC chute de $0{,}814$ à $0{,}686$). L'actualisation continue des poids au fil de l'apprentissage est donc cruciale pour s'adapter à l'évolution de la topologie de l'espace latent.
     \item \textbf{Complémentarité des composantes de pondération} : Se restreindre à la seule densité locale (\textit{Full density-only}) offre la meilleure ARI globale ($0{,}920$) mais diminue la préservation des classes ultra-rares (Ultra-rare ACC $= 0{,}703$). Inversement, la pondération par taille de pseudo-cluster seule (\textit{Full cluster-size-only}) favorise massivement les populations très petites (Ultra-rare ACC $= 0{,}949$) mais dégrade le partitionnement global (ARI $= 0{,}723$). La combinaison multiplicative des deux termes (modèle complet \textit{Full}) permet d'atteindre le compromis le plus équilibré et le plus robuste.
 \end{itemize}
@@ -359,7 +359,7 @@ Entraînement & \texttt{lr} & 0.00164076083297036 & Taux d'apprentissage initial
 Entraînement & \texttt{batch\_size} & 192 & Taille des mini-batchs. \\
 Entraînement & \texttt{seed} & 64 & Graine utilisée pour l'entraînement. \\
 
-Reconstruction & \texttt{reconstruction\_distribution} & \texttt{mse} & Loss de reconstruction utilisée. \\
+Reconstruction & \texttt{reconstruction\_distribution} & \texttt{mse} & Loss de reconstruction \(\mathcal{L}_{\mathrm{recon}}\) utilisée. \\
 Reconstruction & \texttt{masking\_rate} & 0.1 & Fraction d'entrées masquées aléatoirement. \\
 Reconstruction & \texttt{masking\_value} & 0.0 & Valeur utilisée pour les entrées masquées. \\
 Reconstruction & \texttt{masked\_recon\_weight} & 0.8 & Poids interne des positions masquées. \\
@@ -383,15 +383,15 @@ Pseudo-labels & \texttt{unsupervised\_k\_selection} & \texttt{heuristic} & Estim
 Pseudo-labels & \texttt{unsupervised\_k\_min} & 8 & Borne minimale de \(K\). \\
 Pseudo-labels & \texttt{unsupervised\_k\_max} & 30 & Borne maximale de \(K\). \\
 
-Triplet & \texttt{rare\_triplet\_weight} & 0.05007581780188212 & Poids de la triplet loss. \\
-Triplet & \texttt{rare\_triplet\_start\_epoch} & 60 & Début de la triplet loss. \\
+Triplet & \texttt{rare\_triplet\_weight} & 0.05007581780188212 & Poids de la triplet loss \(\mathcal{L}_{\mathrm{triplet}}\). \\
+Triplet & \texttt{rare\_triplet\_start\_epoch} & 60 & Début de la triplet loss \(\mathcal{L}_{\mathrm{triplet}}\). \\
 Triplet & \texttt{rare\_triplet\_margin} & 0.4 & Marge de séparation. \\
 Triplet & \texttt{rare\_triplet\_min\_weight} & 1.2 & Poids minimal pour choisir une ancre. \\
 Triplet & \texttt{max\_triplet\_anchors\_per\_batch} & 64 & Nombre maximal d'ancres par mini-batch. \\
 
 Batch & \texttt{use\_batch\_conditioning} & \texttt{True} & Activation de la branche batch si plusieurs modalités de batch sont exploitables. \\
 Batch & \texttt{batch\_correction\_key} & \texttt{batch} & Colonne de métadonnées utilisée pour le batch. \\
-Batch & \texttt{adversarial\_batch\_weight} & 0.11763398875166495 & Poids de la loss adversariale batch. \\
+Batch & \texttt{adversarial\_batch\_weight} & 0.11763398875166495 & Poids de la loss adversariale batch \(\mathcal{L}_{\mathrm{batch}}\). \\
 Batch & \texttt{adversarial\_lambda} & 1.0 & Intensité de l'inversion de gradient. \\
 Batch & \texttt{adversarial\_start\_epoch} & 30 & Début de la branche adversariale. \\
 Batch & \texttt{adversarial\_ramp\_epochs} & 30 & Durée de montée progressive du signal adversarial. \\
