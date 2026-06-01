@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Generate the report figure 4 common-8 family barplots.
+"""Generate the report figure 4 common-8 family boxplots.
 
 The figure is rebuilt directly from the trial206 consolidated table. scRAW is
 the fixed `scRAW (trial_0017)` row, and the batch-correction metric is set to
@@ -210,7 +210,7 @@ def build_selection(long_df: pd.DataFrame) -> pd.DataFrame:
     return pd.DataFrame(rows)
 
 
-def draw_plot(selection: pd.DataFrame) -> None:
+def draw_plot(selection: pd.DataFrame, long_df: pd.DataFrame) -> None:
     plt.style.use("default")
     plt.rcParams.update(
         {
@@ -237,28 +237,67 @@ def draw_plot(selection: pd.DataFrame) -> None:
         positions = np.arange(len(sub), dtype=float)
         colors = [COLORS[family] for family in sub["family"]]
 
-        bars = ax.bar(
-            positions,
-            sub["mean"].to_numpy(),
-            yerr=sub["std"].to_numpy(),
-            width=0.68,
-            color=colors,
-            alpha=0.72,
-            edgecolor="#111827",
-            linewidth=0.9,
-            capsize=4.5,
-            error_kw={
-                "elinewidth": 1.15,
-                "ecolor": "#111827",
-                "capthick": 1.15,
+        values = []
+        for _, row in sub.iterrows():
+            method_values = (
+                long_df[
+                    (long_df["metric"] == metric)
+                    & (long_df["source_method"] == row["source_method"])
+                ]["value"]
+                .dropna()
+                .to_numpy(dtype=float)
+            )
+            values.append(method_values)
+
+        bp = ax.boxplot(
+            values,
+            positions=positions,
+            widths=0.62,
+            patch_artist=True,
+            showmeans=True,
+            meanprops={
+                "marker": "D",
+                "markerfacecolor": "white",
+                "markeredgecolor": "#111827",
+                "markersize": 4.2,
+                "linestyle": "none",
+            },
+            medianprops={"color": "#9A031E", "linewidth": 1.35},
+            boxprops={"linewidth": 1.0, "edgecolor": "#111827"},
+            whiskerprops={"linewidth": 1.0, "color": "#111827"},
+            capprops={"linewidth": 1.0, "color": "#111827"},
+            flierprops={
+                "marker": "o",
+                "markerfacecolor": "white",
+                "markeredgecolor": "#111827",
+                "markersize": 3.0,
+                "linestyle": "none",
             },
             zorder=3,
         )
+        for box, color in zip(bp["boxes"], colors):
+            box.set_facecolor(color)
+            box.set_alpha(0.72)
 
-        for bar, (_, row) in zip(bars, sub.iterrows()):
-            y_text = min(row["mean"] + row["std"] + 0.035, 1.045)
+        for position, method_values in zip(positions, values):
+            if len(method_values) == 0:
+                continue
+            offsets = np.linspace(-0.12, 0.12, len(method_values))
+            ax.scatter(
+                position + offsets,
+                method_values,
+                s=9,
+                color="#111827",
+                alpha=0.42,
+                linewidths=0,
+                zorder=4,
+            )
+
+        for position, (_, row), method_values in zip(positions, sub.iterrows(), values):
+            y_base = max(method_values) if len(method_values) else row["mean"]
+            y_text = min(y_base + 0.035, 1.075)
             ax.text(
-                bar.get_x() + bar.get_width() / 2,
+                position,
                 y_text,
                 f"{row['mean']:.2f}",
                 ha="center",
@@ -272,7 +311,7 @@ def draw_plot(selection: pd.DataFrame) -> None:
         ax.set_xticks(positions)
         ax.set_xticklabels(sub["method_display"].tolist(), rotation=35, ha="right")
         ax.set_xlim(-0.7, len(sub) - 0.3)
-        ax.set_ylim(0.0, 1.1)
+        ax.set_ylim(0.0, 1.12)
         ax.set_ylabel(METRIC_LABELS[metric], fontsize=10)
         ax.grid(axis="y", color="#d1d5db", linewidth=0.75, alpha=0.7, zorder=0)
         ax.set_axisbelow(True)
@@ -319,7 +358,7 @@ def draw_plot(selection: pd.DataFrame) -> None:
     fig.text(
         0.5,
         0.004,
-        "Barres : moyenne. Traits : écart type. Correction batch : Paul15 bone marrow et Tabula Muris liver = NA.",
+        "Boîtes : distribution par dataset. Points : datasets. Losanges : moyenne. Correction batch : Paul15 bone marrow et Tabula Muris liver = NA.",
         ha="center",
         va="bottom",
         fontsize=8,
@@ -344,7 +383,7 @@ def main() -> None:
     selection_path = ROOT / f"{OUTPUT_STEM}_selection.csv"
     selection.to_csv(selection_path, index=False)
     print(f"Saved: {selection_path}")
-    draw_plot(selection)
+    draw_plot(selection, long_df)
 
 
 if __name__ == "__main__":
