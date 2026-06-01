@@ -207,6 +207,10 @@ Cette annexe présente les résultats complets de l'expérience d'intégration d
 
 La baseline correspond à l'algorithme sans pondération ajoutée. Les autres lignes correspondent aux variantes où une pondération rare-aware est ajoutée à la loss de reconstruction. La pondération est activée après une phase de warm-up, à l'époque 55, comme dans la configuration par défaut de scRAW. Les variantes avec triplet loss activent cette composante à partir de l'époque 60.
 
+Le Tableau~\ref{tab:loss_transfer_baseline_vs_best} présente la comparaison synthétique entre chaque baseline et sa meilleure variante pondérée.
+
+\input{Images/scraw_loss_transfer_synthesis/loss_transfer_baseline_vs_best_table.tex}
+
 Pour résumer les performances, les seeds sont d'abord moyennées pour chaque jeu de données, puis les jeux de données sont moyennés avec le même poids. Le score utilisé pour sélectionner la meilleure configuration non-baseline est la moyenne de ARI, RareACC et UltraRareACC. L'UltraRareACC a été reprise des fichiers de résultats détaillés lorsqu'elle était disponible, ou recalculée à partir des rappels par type cellulaire lorsque seule la colonne \texttt{ClassWise} était exportée.
 
 \begin{figure}[H]

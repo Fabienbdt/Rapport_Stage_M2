@@ -450,7 +450,7 @@ Cette expérience vise à tester si la pondération de la loss de reconstruction
 
 Pour chaque méthode, la baseline correspond à l'algorithme de base avec ses hyperparamètres auteur. Les variantes pondérées conservent cette base, mais ajoutent une pondération dans la loss de reconstruction. Comme dans la configuration par défaut de scRAW, cette pondération n'est pas activée dès le début de l'entraînement : une phase de warm-up est conservée, puis la pondération démarre à l'époque 55. Pour les variantes avec triplet loss, cette composante est activée à partir de l'époque 60.
 
-Plusieurs configurations ont été testées : pondération par densité seule, pondération complète avec pseudo-labels Leiden ou KMeans, et variantes ajoutant une triplet loss. La figure~\ref{fig:loss_transfer_baseline_vs_best} ne présente donc pas toutes les configurations, mais seulement la baseline et la meilleure variante pondérée pour chaque algorithme. Cette meilleure variante est choisie selon la moyenne de trois métriques : ARI, RareACC et UltraRareACC. Les résultats complets de toutes les configurations sont donnés en Annexe~\ref{annexe:loss_transfer_details}.
+Plusieurs configurations ont été testées : pondération par densité seule, pondération complète avec pseudo-labels Leiden ou KMeans, et variantes ajoutant une triplet loss. La figure~\ref{fig:loss_transfer_baseline_vs_best} ne présente donc pas toutes les configurations, mais seulement la baseline et la meilleure variante pondérée pour chaque algorithme. Cette meilleure variante est choisie selon la moyenne de trois métriques : ARI, RareACC et UltraRareACC. Pour avoir des détails sur les configurations testées, la configuration retenue choisie et la table des résultats correspondante, voir l'Annexe~\ref{annexe:loss_transfer_details}.
 
 \begin{figure}[htbp]
     \centering
@@ -458,8 +458,6 @@ Plusieurs configurations ont été testées : pondération par densité seule, p
     \caption{Comparaison entre les algorithmes de base et leur meilleure variante avec loss pondérée scRAW. Les scores sont des moyennes par jeu de données.}
     \label{fig:loss_transfer_baseline_vs_best}
 \end{figure}
-
-\input{Images/scraw_loss_transfer_synthesis/loss_transfer_baseline_vs_best_table.tex}
 
 Les résultats montrent un effet dépendant de l'algorithme. Pour scDeepCluster, la variante pondérée améliore les trois métriques retenues, avec un gain marqué sur UltraRareACC. Pour scMAE, la pondération améliore RareACC et UltraRareACC, mais l'ARI diminue légèrement. Pour DESC, la meilleure variante améliore RareACC, tandis que l'ARI et UltraRareACC restent légèrement inférieurs à la baseline. Ces résultats indiquent que la pondération peut être transférée à d'autres modèles, mais que son effet dépend de l'architecture et du mode de clustering final.
 
