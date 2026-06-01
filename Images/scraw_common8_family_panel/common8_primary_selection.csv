@@ -19,26 +19,26 @@ Rare Specific,Batch correction,1,scRAW (trial_0017)
 Rare Specific,Batch correction,2,DeepScena
 Rare Specific,Batch correction,3,scAIDE
 Rare Specific,Batch correction,4,scCAD
-Methodes traditionnelles,ARI,1,scRAW (trial_0017)
-Methodes traditionnelles,ARI,2,scMAE
-Methodes traditionnelles,ARI,3,scNAME
-Methodes traditionnelles,ARI,4,scvi
-Methodes traditionnelles,ACC,1,scRAW (trial_0017)
-Methodes traditionnelles,ACC,2,scMAE
-Methodes traditionnelles,ACC,3,scvi
-Methodes traditionnelles,ACC,4,scNAME
-Methodes traditionnelles,RareACC,1,scRAW (trial_0017)
-Methodes traditionnelles,RareACC,2,scvi
-Methodes traditionnelles,RareACC,3,scNAME
-Methodes traditionnelles,RareACC,4,pca_leiden
-Methodes traditionnelles,UltraRareACC,1,scRAW (trial_0017)
-Methodes traditionnelles,UltraRareACC,2,pca_leiden
-Methodes traditionnelles,UltraRareACC,3,scvi
-Methodes traditionnelles,UltraRareACC,4,scMAE
-Methodes traditionnelles,Batch correction,1,scRAW (trial_0017)
-Methodes traditionnelles,Batch correction,2,scvi
-Methodes traditionnelles,Batch correction,3,pca_leiden
-Methodes traditionnelles,Batch correction,4,scMAE
+Methodes generalistes,ARI,1,scRAW (trial_0017)
+Methodes generalistes,ARI,2,scMAE
+Methodes generalistes,ARI,3,scNAME
+Methodes generalistes,ARI,4,scvi
+Methodes generalistes,ACC,1,scRAW (trial_0017)
+Methodes generalistes,ACC,2,scMAE
+Methodes generalistes,ACC,3,scvi
+Methodes generalistes,ACC,4,scNAME
+Methodes generalistes,RareACC,1,scRAW (trial_0017)
+Methodes generalistes,RareACC,2,scvi
+Methodes generalistes,RareACC,3,scNAME
+Methodes generalistes,RareACC,4,pca_leiden
+Methodes generalistes,UltraRareACC,1,scRAW (trial_0017)
+Methodes generalistes,UltraRareACC,2,pca_leiden
+Methodes generalistes,UltraRareACC,3,scvi
+Methodes generalistes,UltraRareACC,4,scMAE
+Methodes generalistes,Batch correction,1,scRAW (trial_0017)
+Methodes generalistes,Batch correction,2,scvi
+Methodes generalistes,Batch correction,3,pca_leiden
+Methodes generalistes,Batch correction,4,scNAME
 Correction batch,ARI,1,scRAW (trial_0017)
 Correction batch,ARI,2,DESC
 Correction batch,ARI,3,Harmony

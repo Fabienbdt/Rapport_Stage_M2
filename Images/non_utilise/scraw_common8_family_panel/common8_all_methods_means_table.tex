@@ -1,0 +1,42 @@
+{\scriptsize
+\setlength{\tabcolsep}{3pt}
+\renewcommand{\arraystretch}{1.12}
+\begin{longtable}{p{0.24\textwidth}p{0.19\textwidth}rrrrrr}
+\caption{Moyennes des performances sur les huit jeux de données communs, avec uniquement \textbf{scRAW} \texttt{trial\_0017}.}\label{tab:common8_all_methods_means}\\
+\toprule
+\textbf{Famille} & \textbf{Méthode} & \textbf{ARI} & \textbf{ACC} & \textbf{RareACC} & \textbf{UltraRareACC} & \textbf{Batch} & \textbf{Score} \\
+\midrule
+\endfirsthead
+\toprule
+\textbf{Famille} & \textbf{Méthode} & \textbf{ARI} & \textbf{ACC} & \textbf{RareACC} & \textbf{UltraRareACC} & \textbf{Batch} & \textbf{Score} \\
+\midrule
+\endhead
+\midrule
+\multicolumn{8}{r}{\textit{Suite page suivante}}\\
+\endfoot
+\bottomrule
+\endlastfoot
+Généralistes + correction batch & \textbf{scRAW} \texttt{trial\_0017} & 0,658 & 0,741 & 0,636 & 0,641 & 0,671 & 0,669 \\
+Généralistes + correction batch & Harmony & 0,621 & 0,727 & 0,590 & 0,542 & 0,690 & 0,634 \\
+Généralistes + correction batch & ComBat-seq & 0,568 & 0,682 & 0,644 & 0,408 & 0,603 & 0,581 \\
+Généralistes + correction batch & scMAE+Harmony & 0,631 & 0,708 & 0,556 & 0,282 & 0,649 & 0,565 \\
+Généralistes + correction batch & ComBat & 0,552 & 0,667 & 0,519 & 0,450 & 0,600 & 0,558 \\
+Généralistes + correction batch & Scanorama & 0,521 & 0,627 & 0,473 & 0,575 & 0,580 & 0,555 \\
+Généralistes + correction batch & scNAME+Harmony & 0,565 & 0,651 & 0,435 & 0,361 & 0,394 & 0,481 \\
+Méthodes généralistes & scVI & 0,609 & 0,728 & 0,637 & 0,294 & 0,734 & 0,601 \\
+Méthodes généralistes & scMAE & 0,686 & 0,739 & 0,580 & 0,291 & 0,591 & 0,577 \\
+Méthodes généralistes & PCA+Leiden & 0,562 & 0,667 & 0,604 & 0,418 & 0,612 & 0,572 \\
+Méthodes généralistes & DESC & 0,624 & 0,708 & 0,552 & 0,270 & 0,615 & 0,554 \\
+Méthodes généralistes & scNAME & 0,616 & 0,705 & 0,608 & 0,280 & 0,533 & 0,548 \\
+Méthodes orientées cellules rares & scAIDE+Harmony & 0,701 & 0,772 & 0,599 & 0,479 & 0,625 & 0,635 \\
+Méthodes orientées cellules rares & CellSIUS+Harmony & 0,611 & 0,695 & 0,579 & 0,599 & 0,676 & 0,632 \\
+Méthodes orientées cellules rares & scAIDE & 0,709 & 0,758 & 0,577 & 0,359 & 0,615 & 0,603 \\
+Méthodes orientées cellules rares & CellSIUS & 0,533 & 0,621 & 0,596 & 0,576 & 0,588 & 0,583 \\
+Méthodes orientées cellules rares & scCAD+Harmony & 0,412 & 0,426 & 0,343 & 0,671 & 0,676 & 0,506 \\
+Méthodes orientées cellules rares & DeepScena+Harmony & 0,452 & 0,562 & 0,468 & 0,352 & 0,656 & 0,498 \\
+Méthodes orientées cellules rares & scCAD & 0,412 & 0,426 & 0,343 & 0,671 & 0,588 & 0,488 \\
+Méthodes orientées cellules rares & DeepScena & 0,477 & 0,587 & 0,380 & 0,182 & 0,625 & 0,450 \\
+Méthodes orientées cellules rares & GiniClust+Harmony & 0,057 & 0,335 & 0,065 & 0,091 & 0,677 & 0,245 \\
+Méthodes orientées cellules rares & GiniClust & 0,057 & 0,335 & 0,065 & 0,091 & 0,588 & 0,227 \\
+\end{longtable}
+}

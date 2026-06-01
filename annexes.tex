@@ -206,11 +206,11 @@ Dans les formules ci-dessus, \(y_i\) désigne l'annotation biologique de la cell
 \textbf{Famille utilisée dans les figures} & \textbf{Algorithmes associés} \\
 \midrule
 \textbf{Rare Specific} & scAIDE, scCAD, GiniClust, DeepScena et CellSIUS. \\
-\textbf{Méthodes traditionnelles} & PCA+Leiden, scVI, scMAE et scNAME. \\
+\textbf{Méthodes généralistes} & PCA+Leiden, scVI, scMAE et scNAME. \\
 \textbf{Correction batch} & Harmony, ComBat, DESC et Scanorama. \\
 \bottomrule
 \end{tabularx}
-\caption{Synthèse des familles de méthodes utilisées pour organiser les résultats de la section scRAW. scVI est conservé dans la famille des méthodes traditionnelles pour les figures de synthèse, même si le modèle peut intégrer une information de batch.}
+\caption{Synthèse des familles de méthodes utilisées pour organiser les résultats de la section scRAW. scVI est conservé dans la famille des méthodes généralistes pour les figures de synthèse, même si le modèle peut intégrer une information de batch.}
 \label{tab:scraw_method_families}
 \end{table}
 
@@ -233,7 +233,7 @@ Les tableaux suivants présentent les résultats bruts détaillés par jeu de do
 \begin{figure}[H]
     \centering
     \includegraphics[width=\textwidth,height=0.93\textheight,keepaspectratio]{scraw_common8_family_panel/common8_harmony_complement_panel.pdf}
-    \caption{Résultats complémentaires avec Harmony. Les méthodes \textit{Rare Specific}+Harmony sont indiquées à titre exploratoire, car cette association n'est pas documentée comme usage standard par les auteurs. Pour les méthodes de deep learning traditionnelles, Harmony est appliqué sur l'espace latent avant le clustering final. La ligne Harmony correspond au pipeline PCA+Harmony avant clustering ; scVI est conservé comme méthode native intégrant l'information de batch.}
+    \caption{Résultats complémentaires avec Harmony. Les méthodes \textit{Rare Specific}+Harmony sont indiquées à titre exploratoire, car cette association n'est pas documentée comme usage standard par les auteurs. Pour les méthodes de deep learning généralistes, Harmony est appliqué sur l'espace latent avant le clustering final. La ligne Harmony correspond au pipeline PCA+Harmony avant clustering ; scVI est conservé comme méthode native intégrant l'information de batch.}
     \label{fig:common8_harmony_complement}
 \end{figure}
 

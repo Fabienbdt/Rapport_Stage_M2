@@ -430,10 +430,10 @@ Pour faciliter la lecture, la figure~\ref{fig:scraw_common8_family_top3_plus_scr
         \textbf{Distribution des performances sur les huit jeux de données communs pour scRAW et le top 3 de chaque famille de méthodes.}
         Chaque panneau correspond à une métrique (de haut en bas~: ARI, ACC, Rare ACC, Ultra Rare ACC, Correction batch).
         Les couleurs identifient les familles de méthodes~: \textbf{scRAW} (rouge), \textbf{Rare Specific} (bleu),
-        \textbf{Méthodes traditionnelles} (orange) et \textbf{Correction batch} (vert).
+        \textbf{Méthodes généralistes} (orange) et \textbf{Correction batch} (vert).
         Pour chaque métrique, les méthodes représentées (scRAW et les trois meilleures de chaque famille) sont triées globalement par moyenne décroissante (meilleure à gauche).
-        Les boîtes représentent la distribution des scores sur les jeux de données communs, le losange blanc indique la moyenne (dont la valeur est spécifiée au-dessus de chaque boîte)~;
-        pour l'Ultra Rare ACC, les jeux sans cellules ultra-rares ne contribuent pas au calcul.%
+        Les barres représentent la moyenne des scores sur les jeux de données communs et les traits indiquent l'écart type~;
+        pour l'Ultra Rare ACC, les jeux sans cellules ultra-rares ne contribuent pas au calcul, et pour la correction de batch, les jeux sans effet de batch exploitable sont indiqués comme NA et exclus du calcul.%
     }
     \label{fig:scraw_common8_family_top3_plus_scraw}
 \end{figure}
@@ -442,7 +442,7 @@ La figure~\ref{fig:scraw_common8_family_top3_plus_scraw} montre surtout que les 
 
 Par exemple, scAIDE obtient de très bons scores globaux en ARI ou en ACC, mais ses scores sur les populations ultra-rares restent plus faibles que ceux de \textbf{scRAW}. À l'inverse, scCAD atteint une UltraRareACC légèrement supérieure, mais ses scores globaux en ARI et en ACC sont nettement plus bas. Le même type de compromis apparaît pour la correction de batch : scVI et Harmony corrigent mieux l'effet de batch, mais scVI retrouve moins bien les populations ultra-rares, tandis que Harmony reste plus faible sur les métriques centrées sur les classes rares.
 
-\textbf{scRAW} n'est donc pas systématiquement la meilleure méthode pour chaque métrique prise séparément. En revanche, ses scores restent élevés sur l'ensemble des critères évalués : 0,658 en ARI, 0,741 en ACC, 0,636 en RareACC, 0,641 en UltraRareACC et 0,671 pour la correction de batch. Cette stabilité en fait le meilleur compromis observé dans ces expériences pour conserver les populations rares, limiter l'effet de batch et maintenir un clustering global précis. Les analyses complémentaires montrent aussi que l'ajout d'une correction de batch peut améliorer certaines méthodes, soit lorsqu'elle est appliquée en prétraitement, soit lorsqu'elle intervient après l'apprentissage dans l'espace latent.
+\textbf{scRAW} n'est donc pas systématiquement la meilleure méthode pour chaque métrique prise séparément. En revanche, ses scores restent élevés sur l'ensemble des critères évalués : 0,658 en ARI, 0,741 en ACC, 0,636 en RareACC, 0,641 en UltraRareACC et 0,636 pour la correction de batch calculée uniquement sur les jeux concernés par un effet de batch. Cette stabilité en fait le meilleur compromis observé dans ces expériences pour conserver les populations rares, limiter l'effet de batch et maintenir un clustering global précis. Les analyses complémentaires montrent aussi que l'ajout d'une correction de batch peut améliorer certaines méthodes, soit lorsqu'elle est appliquée en prétraitement, soit lorsqu'elle intervient après l'apprentissage dans l'espace latent.
 
 \subsubsection{Validation sur des jeux non vus pendant l'optimisation}
 
@@ -460,14 +460,14 @@ Le tableau~\ref{tab:scraw_holdout_pancreas_results} présente les résultats obt
 \textbf{Dataset} & \textbf{Méthode} & \textbf{ARI} & \textbf{ACC} & \textbf{RareACC} & \textbf{UltraRareACC} & \textbf{Batch} \\
 \midrule
 \multirow{14}{*}{Human Pancreas}
- & Harmony & 0,817 & \textbf{0,897} & 0,848 & 0,662 & \textbf{0,669} \\
- & ComBat & \textbf{0,839} & 0,892 & 0,832 & 0,628 & 0,587 \\
+ & Harmony & \underline{0,817} & \textbf{0,897} & 0,848 & 0,662 & \textbf{0,669} \\
+ & ComBat & \textbf{0,839} & \underline{0,892} & 0,832 & 0,628 & 0,587 \\
  & \textcolor{red}{\textbf{scRAW}} & \textcolor{red}{0,791} & \textcolor{red}{0,817} & \textcolor{red}{0,829} & \textcolor{red}{0,622} & \textcolor{red}{0,511} \\
  & scVI & 0,595 & 0,720 & 0,811 & 0,581 & 0,530 \\
- & Scanorama & 0,432 & 0,563 & 0,854 & \textbf{0,757} & 0,610 \\
+ & Scanorama & 0,432 & 0,563 & \underline{0,854} & \textbf{0,757} & \underline{0,610} \\
  & PCA+Leiden & 0,444 & 0,513 & \textbf{0,878} & 0,730 & 0,478 \\
  & DeepScena & 0,626 & 0,713 & 0,716 & 0,392 & 0,462 \\
- & CellSIUS & 0,444 & 0,519 & 0,665 & 0,750 & 0,485 \\
+ & CellSIUS & 0,444 & 0,519 & 0,665 & \underline{0,750} & 0,485 \\
  & scAIDE & 0,520 & 0,564 & 0,808 & 0,574 & 0,377 \\
  & scMAE & 0,502 & 0,543 & 0,817 & 0,595 & 0,353 \\
  & DESC & 0,474 & 0,511 & 0,784 & 0,622 & 0,304 \\
@@ -477,22 +477,22 @@ Le tableau~\ref{tab:scraw_holdout_pancreas_results} présente les résultats obt
 \midrule
 \multirow{14}{*}{SCIB Mouse Pancreas 1}
  & scMAE & 0,560 & 0,614 & 0,686 & \textbf{0,706} & NA \\
- & \textcolor{red}{\textbf{scRAW}} & \textcolor{red}{\textbf{0,821}} & \textcolor{red}{0,787} & \textcolor{red}{0,721} & \textcolor{red}{0,235} & \textcolor{red}{NA} \\
- & scCAD & 0,636 & 0,634 & 0,628 & 0,471 & NA \\
+ & \textcolor{red}{\textbf{scRAW}} & \textcolor{red}{\textbf{0,821}} & \textcolor{red}{\underline{0,787}} & \textcolor{red}{0,721} & \textcolor{red}{0,235} & \textcolor{red}{NA} \\
+ & scCAD & 0,636 & 0,634 & 0,628 & \underline{0,471} & NA \\
  & CellSIUS & 0,588 & 0,674 & \textbf{0,756} & 0,294 & NA \\
- & DESC & 0,781 & \textbf{0,839} & 0,558 & 0,000 & NA \\
- & scAIDE & 0,672 & 0,715 & 0,523 & 0,471 & NA \\
+ & DESC & \underline{0,781} & \textbf{0,839} & 0,558 & 0,000 & NA \\
+ & scAIDE & 0,672 & 0,715 & 0,523 & \underline{0,471} & NA \\
  & Harmony & 0,463 & 0,551 & \textbf{0,756} & 0,235 & NA \\
  & Scanorama & 0,463 & 0,551 & \textbf{0,756} & 0,235 & NA \\
  & PCA+Leiden & 0,463 & 0,551 & \textbf{0,756} & 0,235 & NA \\
  & ComBat & 0,462 & 0,550 & \textbf{0,756} & 0,235 & NA \\
  & scVI & 0,491 & 0,578 & 0,686 & 0,000 & NA \\
- & scNAME & 0,431 & 0,468 & 0,744 & 0,294 & NA \\
+ & scNAME & 0,431 & 0,468 & \underline{0,744} & 0,294 & NA \\
  & DeepScena & 0,233 & 0,393 & 0,128 & 0,176 & NA \\
  & GiniClust & 0,021 & 0,443 & 0,058 & 0,000 & NA \\
 \bottomrule
 \end{tabular}
-\caption{Résultats sur deux jeux de données non vus pendant l'optimisation des hyperparamètres. Les méthodes sont triées, dans chaque dataset, par moyenne décroissante des cinq métriques affichées. Les meilleures valeurs par métrique et par dataset sont indiquées en gras ; \textbf{scRAW} est affiché en rouge. Pour SCIB Mouse Pancreas 1, le score de correction de batch est conservé depuis les tables consolidées, mais le jeu ne contient qu'un batch explicite.}
+\caption{Résultats sur deux jeux de données non vus pendant l'optimisation des hyperparamètres. Les méthodes sont triées, dans chaque dataset, par moyenne décroissante des cinq métriques affichées. Les meilleures valeurs par métrique et par dataset sont indiquées en gras et les deuxièmes meilleures sont soulignées ; \textbf{scRAW} est affiché en rouge. Pour SCIB Mouse Pancreas 1, le score de correction de batch est conservé depuis les tables consolidées, mais le jeu ne contient qu'un batch explicite.}
 \label{tab:scraw_holdout_pancreas_results}
 \end{table}
 

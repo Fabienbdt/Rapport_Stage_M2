@@ -5,5 +5,5 @@ Batch correction,Baron human pancreas,0.5749552605057935,0.7365166477963205,6,Fa
 Batch correction,Human testis GSE112013,0.7303536766041685,0.7969653197013047,6,False
 Batch correction,Kang PBMC,0.6843171205513716,0.7952525456720301,6,False
 Batch correction,Macaque retina bipolar,0.6374791031394675,0.6828404179136567,4,False
-Batch correction,Paul15 bone marrow,0.6825639410339949,0.9081955387661014,4,False
-Batch correction,Tabula Muris liver,0.8705477948080688,0.937853056018573,10,False
+Batch correction,Paul15 bone marrow,,,,False
+Batch correction,Tabula Muris liver,,,,False

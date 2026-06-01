@@ -1,0 +1,5 @@
+algorithm,algorithm_label,n_balanced_acc
+scraw,scRAW,13
+scname,scNAME,13
+sc_mae,scMAE,13
+scdeepcluster,scDeepCluster,13
