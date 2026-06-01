@@ -504,6 +504,17 @@ Sur Baron, cette annotation par recouvrement atteint une accuracy de $94{,}8\,\%
     \label{fig:baron_scraw_bio_interpretation}
 \end{figure}
 
+\section{Limites méthodologiques et perspectives}
+\label{sec:limites_perspectives}
+
+Les résultats présentés dans ce rapport doivent être interprétés comme une validation expérimentale encourageante, mais encore limitée. Le nombre de répétitions reste faible, principalement à cause du coût de calcul des méthodes profondes. Certaines expériences ont été répétées sur plusieurs graines, mais pas à une échelle suffisante pour réaliser des analyses statistiques robustes sur la significativité des différences entre méthodes. Les comparaisons reposent donc surtout sur des tendances moyennes, des distributions par jeu de données et une lecture conjointe des métriques globales, rares et ultra-rares. Une perspective importante serait de répéter chaque configuration sur davantage de graines, de splits et de jeux de données, afin de pouvoir estimer des intervalles de confiance et appliquer des tests appariés ou des approches par bootstrap.
+
+Une seconde limite concerne la séparation entre optimisation et validation. Les hyperparamètres de scRAW ont été stabilisés à partir de Baron puis d'un panel de jeux de données communs ; l'évaluation finale utilise encore en partie ce même ensemble. Même si cela permet de vérifier la robustesse sur des contextes biologiques variés, cela ne remplace pas une validation externe stricte. La prochaine étape serait donc de figer complètement les hyperparamètres, puis de comparer scRAW à l'état de l'art sur un ensemble plus large de datasets totalement nouveaux, non vus pendant la recherche d'hyperparamètres, avec plusieurs répétitions indépendantes.
+
+Le caractère entièrement non supervisé de l'approche doit aussi être consolidé. Les annotations biologiques ne sont pas utilisées pour apprendre directement l'espace latent, mais certaines étapes du benchmark restent influencées par un nombre de groupes attendu. C'est le cas de K-Means, qui nécessite de fixer \(K\), et de plusieurs méthodes de comparaison qui utilisent le nombre de types cellulaires connus. De même, lorsqu'une résolution Leiden est choisie pour atteindre ou approcher un nombre de clusters attendu, l'expérience n'est plus strictement indépendante de la vérité terrain. Une perspective méthodologique importante est donc de proposer une version totalement non supervisée du protocole, où le nombre de clusters et les résolutions seraient sélectionnés uniquement à partir de critères internes, puis comparés aux annotations biologiques seulement après coup pour l'évaluation.
+
+Enfin, la validation biologique reste préliminaire. L'analyse par recouvrement de marqueurs sur Baron indique que les clusters scRAW sont cohérents avec les annotations de référence, mais elle ne suffit pas à démontrer que chaque population rare détectée correspond à un état cellulaire biologiquement interprétable. Des analyses plus poussées devraient combiner expression différentielle, enrichissement fonctionnel, comparaison à des bases de marqueurs, validation sur plusieurs tissus et contrôle par expertise biologique. Cette étape est essentielle pour distinguer les vrais sous-types cellulaires des fragments de clusters dus au bruit, à l'effet de batch ou aux choix de clustering.
+
 \section*{Conclusion}
 \addcontentsline{toc}{section}{Conclusion}
 
@@ -511,7 +522,7 @@ Ce stage a porté sur l'évaluation et l'amélioration du clustering de données
 
 La contribution principale du stage est \textbf{scRAW}, une méthode fondée sur un autoencodeur et une pondération dynamique des cellules rares ou isolées. Les expériences menées sur plusieurs jeux de données montrent que cette stratégie permet d'obtenir un compromis intéressant entre performance globale, identification des populations rares et prise en compte de l'effet de batch. Les analyses complémentaires suggèrent également que la logique de pondération peut être transférée à d'autres modèles et que scRAW conserve un comportement prometteur dans un cadre inductif.
 
-Ces résultats restent toutefois à consolider. Les performances dépendent encore du choix des jeux de données, de la qualité de la vérité terrain, des hyperparamètres et du coût de calcul des méthodes profondes. La validation biologique reste également une étape importante pour vérifier que les clusters identifiés correspondent à des populations interprétables. Les perspectives principales concernent donc la stabilisation de l'évaluation inductive, l'étude plus systématique du transfert de loss, l'approfondissement de la validation par marqueurs et l'intégration de scRAW dans un workflow utilisateur plus complet.
+Ces résultats restent toutefois à consolider par davantage de répétitions, une validation externe sur des jeux de données entièrement nouveaux, une version plus strictement non supervisée du protocole et une analyse biologique plus approfondie des clusters détectés. Ces limites constituent les perspectives principales pour transformer scRAW en méthode plus robuste et plus facilement transférable à des usages biologiques réels.
 
 \section*{Glossaire et abréviations}
 \addcontentsline{toc}{section}{Glossaire et abréviations}
