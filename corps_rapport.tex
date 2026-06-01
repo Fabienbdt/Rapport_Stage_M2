@@ -476,20 +476,20 @@ Le tableau~\ref{tab:scraw_holdout_pancreas_results} présente les résultats obt
  & GiniClust & 0,042 & 0,342 & 0,021 & 0,047 & 0,485 \\
 \midrule
 \multirow{14}{*}{SCIB Mouse Pancreas 1}
- & scMAE & 0,560 & 0,614 & 0,686 & \textbf{0,706} & 0,912 \\
- & \textcolor{red}{\textbf{scRAW}} & \textcolor{red}{\textbf{0,821}} & \textcolor{red}{0,787} & \textcolor{red}{0,721} & \textcolor{red}{0,235} & \textcolor{red}{0,803} \\
- & scCAD & 0,636 & 0,634 & 0,628 & 0,471 & 0,839 \\
- & CellSIUS & 0,588 & 0,674 & \textbf{0,756} & 0,294 & 0,839 \\
- & DESC & 0,781 & \textbf{0,839} & 0,558 & 0,000 & 0,830 \\
- & scAIDE & 0,672 & 0,715 & 0,523 & 0,471 & 0,606 \\
- & Harmony & 0,463 & 0,551 & \textbf{0,756} & 0,235 & 0,839 \\
- & Scanorama & 0,463 & 0,551 & \textbf{0,756} & 0,235 & 0,839 \\
- & PCA+Leiden & 0,463 & 0,551 & \textbf{0,756} & 0,235 & 0,839 \\
- & ComBat & 0,462 & 0,550 & \textbf{0,756} & 0,235 & 0,839 \\
- & scVI & 0,491 & 0,578 & 0,686 & 0,000 & \textbf{0,972} \\
- & scNAME & 0,431 & 0,468 & 0,744 & 0,294 & 0,712 \\
- & DeepScena & 0,233 & 0,393 & 0,128 & 0,176 & 0,491 \\
- & GiniClust & 0,021 & 0,443 & 0,058 & 0,000 & 0,839 \\
+ & scMAE & 0,560 & 0,614 & 0,686 & \textbf{0,706} & NA \\
+ & \textcolor{red}{\textbf{scRAW}} & \textcolor{red}{\textbf{0,821}} & \textcolor{red}{0,787} & \textcolor{red}{0,721} & \textcolor{red}{0,235} & \textcolor{red}{NA} \\
+ & scCAD & 0,636 & 0,634 & 0,628 & 0,471 & NA \\
+ & CellSIUS & 0,588 & 0,674 & \textbf{0,756} & 0,294 & NA \\
+ & DESC & 0,781 & \textbf{0,839} & 0,558 & 0,000 & NA \\
+ & scAIDE & 0,672 & 0,715 & 0,523 & 0,471 & NA \\
+ & Harmony & 0,463 & 0,551 & \textbf{0,756} & 0,235 & NA \\
+ & Scanorama & 0,463 & 0,551 & \textbf{0,756} & 0,235 & NA \\
+ & PCA+Leiden & 0,463 & 0,551 & \textbf{0,756} & 0,235 & NA \\
+ & ComBat & 0,462 & 0,550 & \textbf{0,756} & 0,235 & NA \\
+ & scVI & 0,491 & 0,578 & 0,686 & 0,000 & NA \\
+ & scNAME & 0,431 & 0,468 & 0,744 & 0,294 & NA \\
+ & DeepScena & 0,233 & 0,393 & 0,128 & 0,176 & NA \\
+ & GiniClust & 0,021 & 0,443 & 0,058 & 0,000 & NA \\
 \bottomrule
 \end{tabular}
 \caption{Résultats sur deux jeux de données non vus pendant l'optimisation des hyperparamètres. Les méthodes sont triées, dans chaque dataset, par moyenne décroissante des cinq métriques affichées. Les meilleures valeurs par métrique et par dataset sont indiquées en gras ; \textbf{scRAW} est affiché en rouge. Pour SCIB Mouse Pancreas 1, le score de correction de batch est conservé depuis les tables consolidées, mais le jeu ne contient qu'un batch explicite.}
@@ -502,7 +502,7 @@ Enfin, scRAW reste plus coûteux que les pipelines classiques, avec un temps d'e
 \section{Travaux complémentaires}
 
 
-\subsection{\texorpdfstring{Transfert de loss \(\mathcal{L}_{\mathrm{recon,ponderee}}\)}{Transfert de loss L recon ponderee}}
+\subsection{Transfert de loss}
 
 Cette expérience vise à tester si la pondération de la loss de reconstruction \(\mathcal{L}_{\mathrm{recon,ponderee}}\) utilisée dans \textbf{scRAW} peut être intégrée à d'autres algorithmes de deep learning disposant d'une loss de reconstruction \(\mathcal{L}_{\mathrm{recon}}\) compatible. L'objectif est de distinguer l'effet de la pondération rare-aware de l'architecture complète de scRAW. Les méthodes testées sont scMAE, scDeepCluster et DESC.
 

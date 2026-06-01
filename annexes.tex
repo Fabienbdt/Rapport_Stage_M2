@@ -107,33 +107,29 @@ Tabula Muris liver & Souris & 2 859 & 22 966 & 1 & 5 & 0,000 & 0,578 \\
 
 \subsection*{Provenance et traitement des jeux de données}
 
-Les scripts d'import convertissent les sources hétérogènes vers un format AnnData homogène (\texttt{.h5ad}) et harmonisent les colonnes utilisées par le benchmark (\texttt{cell\_type}/\texttt{label} et \texttt{batch}).
-
 \begin{table}[H]
 \centering
 \footnotesize
 \setlength{\tabcolsep}{4pt}
-\begin{tabularx}{\textwidth}{p{0.22\textwidth} p{0.35\textwidth} X}
+\begin{tabularx}{\textwidth}{p{0.3\textwidth} X}
 \toprule
-\textbf{Dataset} & \textbf{Origine} & \textbf{Traitement local} \\
+\textbf{Dataset} & \textbf{Origine} \\
 \midrule
-BBAG094 Zeisel & Collection BBAG094 associée au dépôt GitHub/article scSCCNIA \cite{wang_scsccnia_2026}; source Zeisel listée dans l'import local depuis Hemberg Lab. & Standardisation en \texttt{.h5ad}, conservation des annotations \texttt{label} et \texttt{batch}. \\
-BBAG094 spleen & Collection BBAG094 associée au dépôt GitHub/article scSCCNIA \cite{wang_scsccnia_2026}; fichier Spleen issu du dépôt GitHub \texttt{xuebaliang/scziDesk}, cité dans la disponibilité des données de l'article. & Conversion du fichier source en \texttt{.h5ad}, puis utilisation comme jeu statique pré-annoté. \\
-Baron Human Pancreas & Données Baron et al. 2016 / GSE84133, avec quatre donneurs humains. & Fusion des fichiers donneur locaux, harmonisation des colonnes \texttt{cell\_type}, \texttt{label} et \texttt{batch}. \\
-Human testis GSE112013 & Archive GEO GSE112013 : table UMI et matrice de métadonnées. & Lecture sparse, ajout donneur/réplicat/batch, puis annotation des types cellulaires depuis la Table S1 de Guo et al. \\
-Kang PBMC & Archive GEO GSE96583 : matrices MTX, table de gènes et métadonnées batch2. & Fusion des blocs, conservation des singlets, ajout des métadonnées donneur, condition et type cellulaire. \\
-Macaque retina bipolar & Données GSE118480 reprises depuis l'archive de reproduction scDML. & Reprise des comptes, normalisation des noms de colonnes, \texttt{cluster} utilisé comme \texttt{cell\_type}, \texttt{sample} comme batch. \\
-Paul15 bone marrow & Chargeur natif \texttt{scanpy.datasets.paul15()}. & Conversion en matrice sparse, labels issus de \texttt{paul15\_clusters}, batch unique. \\
-Tabula Muris liver & Sous-ensemble foie de Tabula Muris, technologie FACS/Smart-seq2. & Extraction de la matrice brute si disponible, labels issus de \texttt{cell\_ontology\_class}, batch unique. \\
+BBAG094 Zeisel & Collection BBAG094 associée au dépôt GitHub/article scSCCNIA \cite{wang_scsccnia_2026}; source Zeisel listée dans l'import local depuis Hemberg Lab. \\
+BBAG094 spleen & Collection BBAG094 associée au dépôt GitHub/article scSCCNIA \cite{wang_scsccnia_2026}; fichier Spleen issu du dépôt GitHub \texttt{xuebaliang/scziDesk}, cité dans la disponibilité des données de l'article. \\
+Baron Human Pancreas & Données Baron et al. 2016 / GSE84133, avec quatre donneurs humains. \\
+Human testis GSE112013 & Archive GEO GSE112013 : table UMI et matrice de métadonnées. \\
+Kang PBMC & Archive GEO GSE96583 : matrices MTX, table de gènes et métadonnées batch2. \\
+Macaque retina bipolar & Données GSE118480 reprises depuis l'archive de reproduction scDML. \\
+Paul15 bone marrow & Chargeur natif \texttt{scanpy.datasets.paul15()}. \\
+Tabula Muris liver & Sous-ensemble foie de Tabula Muris, technologie FACS/Smart-seq2. \\
 \bottomrule
 \end{tabularx}
-\caption{Résumé synthétique de l'origine et de la standardisation des huit jeux de données common-8.}
+\caption{Résumé synthétique de l'origine des huit jeux de données common-8.}
 \label{tab:datasets_provenance}
 \end{table}
 
 \subsection*{Jeux de données non vus pendant l'optimisation}
-
-Deux jeux de données supplémentaires ont été utilisés comme première validation externe de la configuration \textbf{scRAW} retenue. Ils ne font pas partie du sous-ensemble common-8 utilisé pour stabiliser les hyperparamètres. Le fichier consolidé des quatre batchs pancréatiques est appelé \textbf{Human Pancreas} dans le rapport afin de garder un nom plus lisible. Ce jeu provient d'OpenProblems\footnote{\url{https://openproblems.bio/datasets/openproblems_v1/pancreas}}.
 
 \begin{table}[H]
 \centering
@@ -155,15 +151,15 @@ SCIB Mouse Pancreas 1 & Souris & 822 & 14 878 & 1 & 9 & 5 & 0,000 & 0,711 \\
 \centering
 \footnotesize
 \setlength{\tabcolsep}{4pt}
-\begin{tabularx}{\textwidth}{p{0.22\textwidth} p{0.35\textwidth} X}
+\begin{tabularx}{\textwidth}{p{0.3\textwidth} X}
 \toprule
-\textbf{Dataset} & \textbf{Origine} & \textbf{Traitement local} \\
+\textbf{Dataset} & \textbf{Origine} \\
 \midrule
-Human Pancreas & Jeu \texttt{openproblems\_v1/pancreas} d'OpenProblems, dérivé des benchmarks scIB \cite{luecken_benchmarking_2022}. La source regroupe des cellules pancréatiques humaines issues de plusieurs technologies. & Conservation des quatre batchs \texttt{celseq}, \texttt{celseq2}, \texttt{fluidigmc1} et \texttt{smartseq2}. Les batchs communs avec Baron Human Pancreas (\texttt{inDrop}) et ceux issus de SMARTER-seq ont été retirés : le premier aurait rendu l'évaluation moins indépendante de Baron, et le second n'était pas compatible avec notre analyse car il ne correspondait pas aux comptes bruts utilisés dans le pipeline. Les colonnes \texttt{cell\_type} et \texttt{batch} sont ensuite utilisées par SCRBenchmark. \\
-SCIB Mouse Pancreas 1 & Jeu pancréas souris préparé depuis le fichier source mouse1 (\texttt{GSM2230761}) de \texttt{GSE84133\_RAW}, associé aux données Baron \cite{Baron2016}. & Préparation par le script \path{scripts/prepare_scclubench_table_rows_h5ads.py}. Les annotations \texttt{assigned\_cluster} sont recopiées dans les colonnes standardisées \texttt{cell\_type}, \texttt{Group}, \texttt{label} et \texttt{labels}. Le jeu est conservé comme un seul batch explicite (\texttt{single\_batch}). \\
+Human Pancreas & Jeu \texttt{openproblems\_v1/pancreas} d'OpenProblems, dérivé des benchmarks scIB \cite{luecken_benchmarking_2022}. La source regroupe des cellules pancréatiques humaines issues de plusieurs technologies. \\
+SCIB Mouse Pancreas 1 & Jeu pancréas souris préparé depuis le fichier source mouse1 (\texttt{GSM2230761}) de \texttt{GSE84133\_RAW}, associé aux données Baron \cite{Baron2016}. \\
 \bottomrule
 \end{tabularx}
-\caption{Origine et standardisation locale des deux jeux de données de validation externe.}
+\caption{Origine des deux jeux de données de validation externe. Pour le jeu de données Human Pancreas, seuls les batchs \texttt{celseq}, \texttt{celseq2}, \texttt{fluidigmc1} et \texttt{smartseq2} ont été conservés, tandis que les batchs communs avec Baron Human Pancreas (\texttt{inDrop}) et ceux issus de SMARTER-seq ont été retirés.}
 \label{tab:datasets_validation_externe_provenance}
 \end{table}
 
@@ -198,10 +194,8 @@ Cette section regroupe les définitions, formules mathématiques et interprétat
 Dans les formules ci-dessus, \(y_i\) désigne l'annotation biologique de la cellule \(i\), \(\hat{y}_i\) le cluster prédit par la méthode, \(n\) le nombre total de cellules, \(\mathcal{C}\) l'ensemble des classes biologiques et \(\pi\) l'appariement optimal obtenu par l'algorithme hongrois.
 
 \newpage
-\section{Résultats complets sur les huit jeux de données communs}
+\section{Résultats complets sur les huit jeux de données de l'annexe B}
 \label{annexe:resultats_common8}
-
-Cette annexe présente les résultats complets utilisés pour construire la figure principale de la section scRAW. Les huit jeux de données correspondent au sous-ensemble commun utilisé pendant l'évaluation généraliste : BBAG094 Zeisel, BBAG094 spleen, Baron Human Pancreas, Human testis GSE112013, Kang PBMC, Macaque retina bipolar, Paul15 bone marrow et Tabula Muris liver. La première figure reprend tous les algorithmes de chaque famille principale, avec \textbf{scRAW} ajouté comme repère dans chaque colonne ; la seconde ajoute les expériences complémentaires où Harmony est appliqué en correction de batch.
 
 \begin{table}[H]
 \centering
@@ -211,7 +205,6 @@ Cette annexe présente les résultats complets utilisés pour construire la figu
 \toprule
 \textbf{Famille utilisée dans les figures} & \textbf{Algorithmes associés} \\
 \midrule
-\textbf{scRAW} & scRAW, avec la configuration finale \texttt{trial\_0017}. \\
 \textbf{Rare Specific} & scAIDE, scCAD, GiniClust, DeepScena et CellSIUS. \\
 \textbf{Méthodes traditionnelles} & PCA+Leiden, scVI, scMAE et scNAME. \\
 \textbf{Correction batch} & Harmony, ComBat, DESC et Scanorama. \\
@@ -257,7 +250,7 @@ Ces résultats détaillés permettent d'analyser le comportement individuel de c
 \section{\texorpdfstring{Résultats complets du transfert de loss pondérée \(\mathcal{L}_{\mathrm{recon,ponderee}}\)}{Résultats complets du transfert de loss pondérée L recon ponderee}}
 \label{annexe:loss_transfer_details}
 
-Cette annexe présente les résultats complets de l'expérience d'intégration de la loss pondérée \(\mathcal{L}_{\mathrm{recon,ponderee}}\) de \textbf{scRAW} dans scMAE, scDeepCluster et DESC. Les résultats proviennent de la matrice \texttt{scraw\_loss\_integration\_matrix\_stable\_default}. Les valeurs correspondent à la phase complète, avec cinq seeds par configuration lorsque les runs étaient disponibles.
+Cette annexe présente les résultats complets de l'expérience d'intégration de la loss pondérée \(\mathcal{L}_{\mathrm{recon,ponderee}}\) de \textbf{scRAW} dans scMAE, scDeepCluster et DESC. Les valeurs correspondent à la phase complète, avec cinq seeds par configuration.
 
 La baseline correspond à l'algorithme sans pondération ajoutée. Les autres lignes correspondent aux variantes où une pondération rare-aware est ajoutée à la loss de reconstruction \(\mathcal{L}_{\mathrm{recon}}\), ce qui produit une version \(\mathcal{L}_{\mathrm{recon,ponderee}}\). La pondération est activée après une phase de warm-up, à l'époque 55, comme dans la configuration par défaut de scRAW. Les variantes avec triplet loss \(\mathcal{L}_{\mathrm{triplet}}\) activent cette composante à partir de l'époque 60.
 
@@ -280,7 +273,7 @@ Pour résumer les performances, les seeds sont d'abord moyennées pour chaque je
 \section{Détails de l'évaluation inductive}
 \label{annexe:inductif_details}
 
-Cette annexe détaille les résultats utilisés pour la figure inductive synthétique du rapport. Les valeurs correspondent aux moyennes par jeu de données sur les splits inductifs disponibles. Les points \textbf{scRAW} proviennent des reruns exacts de la configuration \texttt{trial0017}, tandis que scNAME, scMAE et scDeepCluster proviennent des runs inductifs de comparaison.
+Cette annexe détaille les résultats utilisés pour la figure inductive synthétique du rapport. Les valeurs correspondent aux moyennes par jeu de données sur les splits inductifs disponibles. 
 
 \begin{table}[H]
 \centering
@@ -359,16 +352,6 @@ Full cluster-size-only & 0,723 & 0,777 & 0,800 & 0,869 & 0,897 & 0,949 & 0,596 &
     \label{fig:scraw_ablation_barplot}
 \end{figure}
 
-\subsection*{Discussion des résultats}
-
-L'analyse de ces résultats d'ablation permet de tirer plusieurs enseignements essentiels sur l'architecture de scRAW :
-\begin{itemize}
-    \item \textbf{Importance de la pondération de la reconstruction \(\mathcal{L}_{\mathrm{recon,ponderee}}\)} : L'autoencodeur classique (\textit{MSE}) obtient des scores très limités (ARI $= 0{,}189$ et NMI $= 0{,}397$). L'activation de la pondération dynamique (\textit{Weighted MSE}) augmente nettement ces scores (ARI $= 0{,}269$ et NMI $= 0{,}455$) ainsi que la BalancedACC ($0{,}520$ contre $0{,}427$), ce qui confirme que moduler l'importance des cellules selon leur rareté et leur densité locale aide à structurer l'espace latent de manière plus équitable.
-    \item \textbf{Rôle fondamental de la triplet loss rare-aware \(\mathcal{L}_{\mathrm{triplet}}\)} : L'ajout de \(\mathcal{L}_{\mathrm{triplet}}\) (\textit{Weighted + triplet}) engendre une amélioration spectaculaire sur l'ensemble des critères. L'ARI bondit à $0{,}851$, la BalancedACC à $0{,}813$, et les exactitudes sur les populations rares et ultra-rares dépassent $0{,}80$. Cela montre que guider explicitement l'organisation géométrique des embeddings en rapprochant les cellules similaires et en isolant les petits groupes est indispensable pour obtenir une partition biologique claire et robuste.
-    \item \textbf{Synergie avec la correction adversariale \(\mathcal{L}_{\mathrm{batch}}\)} : L'utilisation de DANN seul avec la pondération (\textit{Weighted + DANN}) améliore considérablement le score de correction de batch (l'entropie scIB-E grimpe à $0{,}574$) mais reste inefficace pour former des groupes biologiquement cohérents sans le terme \(\mathcal{L}_{\mathrm{triplet}}\). Le modèle complet (\textit{Full}) réunit le meilleur des deux aspects : il maintient une performance de clustering très élevée (ARI $= 0{,}916$, ACC $= 0{,}934$) tout en garantissant un excellent niveau d'intégration de batch (scIB-E $= 0{,}590$).
-    \item \textbf{Rythme de mise à jour des poids} : Dans la variante \textit{Full single update}, recalculer les poids une seule fois plutôt que périodiquement dégrade la détection des populations les plus petites (l'Ultra-rare ACC chute de $0{,}814$ à $0{,}686$). L'actualisation continue des poids au fil de l'apprentissage est donc cruciale pour s'adapter à l'évolution de la topologie de l'espace latent.
-    \item \textbf{Complémentarité des composantes de pondération} : Se restreindre à la seule densité locale (\textit{Full density-only}) offre la meilleure ARI globale ($0{,}920$) mais diminue la préservation des classes ultra-rares (Ultra-rare ACC $= 0{,}703$). Inversement, la pondération par taille de pseudo-cluster seule (\textit{Full cluster-size-only}) favorise massivement les populations très petites (Ultra-rare ACC $= 0{,}949$) mais dégrade le partitionnement global (ARI $= 0{,}723$). La combinaison multiplicative des deux termes (modèle complet \textit{Full}) permet d'atteindre le compromis le plus équilibré et le plus robuste.
-\end{itemize}
 
 \newpage
 \section{Hyperparamètres de la configuration de référence scRAW}
@@ -461,7 +444,7 @@ Clustering final & \texttt{hdbscan\_reassign\_noise} & \texttt{False} & Pas de r
 \section{Figures de recherche d'hyperparamètres scRAW}
 \label{annexe:figures_hyperparametres_scraw}
 
-Cette annexe regroupe les sorties Optuna d'importance moyenne des hyperparamètres pour les trois recherches utilisées dans la construction de \texttt{stable\_default}.
+Cette annexe regroupe les sorties Optuna d'importance moyenne des hyperparamètres pour les trois recherches utilisées dans la construction de la version par défault de scRAW
 
 \begin{figure}[H]
     \centering
