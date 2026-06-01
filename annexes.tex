@@ -203,6 +203,24 @@ Dans les formules ci-dessus, \(y_i\) désigne l'annotation biologique de la cell
 
 Cette annexe présente les résultats complets utilisés pour construire la figure principale de la section scRAW. Les huit jeux de données correspondent au sous-ensemble commun utilisé pendant l'évaluation généraliste : BBAG094 Zeisel, BBAG094 spleen, Baron Human Pancreas, Human testis GSE112013, Kang PBMC, Macaque retina bipolar, Paul15 bone marrow et Tabula Muris liver. La première figure reprend tous les algorithmes de chaque famille principale, avec \textbf{scRAW} ajouté comme repère dans chaque colonne ; la seconde ajoute les expériences complémentaires où Harmony est appliqué en correction de batch.
 
+\begin{table}[H]
+\centering
+\small
+\renewcommand{\arraystretch}{1.15}
+\begin{tabularx}{\textwidth}{@{}p{0.26\textwidth}X@{}}
+\toprule
+\textbf{Famille utilisée dans les figures} & \textbf{Algorithmes associés} \\
+\midrule
+\textbf{scRAW} & scRAW, avec la configuration finale \texttt{trial\_0017}. \\
+\textbf{Rare Specific} & scAIDE, scCAD, GiniClust, DeepScena et CellSIUS. \\
+\textbf{Méthodes traditionnelles} & PCA+Leiden, scVI, scMAE et scNAME. \\
+\textbf{Correction batch} & Harmony, ComBat, DESC et Scanorama. \\
+\bottomrule
+\end{tabularx}
+\caption{Synthèse des familles de méthodes utilisées pour organiser les résultats de la section scRAW. scVI est conservé dans la famille des méthodes traditionnelles pour les figures de synthèse, même si le modèle peut intégrer une information de batch.}
+\label{tab:scraw_method_families}
+\end{table}
+
 \begin{figure}[H]
     \centering
     \includegraphics[width=\textwidth,height=0.93\textheight,keepaspectratio]{scraw_common8_family_panel/common8_family_all_methods_panel.pdf}

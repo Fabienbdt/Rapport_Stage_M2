@@ -421,7 +421,7 @@ La dernière phase a encore resserré l'espace de recherche autour des configura
 
 L'évaluation finale de scRAW a été conduite sur le même ensemble de huit jeux de données du sous-ensemble commun (détaillé en Annexe~\ref{annexe:datasets}). L'objectif était de vérifier si \textbf{scRAW}, avec une configuration stable sur plusieurs datasets, pouvait se comparer aux méthodes de l'état de l'art. La comparaison inclut des méthodes orientées vers les populations rares, des méthodes généralistes et des méthodes ou pipelines de correction de batch.
 
-Pour faciliter la lecture, la figure~\ref{fig:scraw_common8_family_top3_plus_scraw} affiche \textbf{scRAW} ainsi que les meilleures méthodes observées pour chaque métrique. Les résultats complets, incluant les méthodes non affichées et les variantes avec correction de batch externe, sont fournis en Annexe~\ref{annexe:resultats_common8}. Ces variantes sont conservées comme analyses complémentaires, car elles ne correspondent pas toujours au protocole proposé dans les articles originaux des méthodes comparées.
+Pour faciliter la lecture, la figure~\ref{fig:scraw_common8_family_top3_plus_scraw} affiche \textbf{scRAW} ainsi que les meilleures méthodes observées pour chaque métrique. Les résultats complets, incluant les méthodes non affichées et les variantes avec correction de batch externe, sont fournis en Annexe~\ref{annexe:resultats_common8}, avec une synthèse des familles utilisées dans le Tableau~\ref{tab:scraw_method_families}. Ces variantes sont conservées comme analyses complémentaires, car elles ne correspondent pas toujours au protocole proposé dans les articles originaux des méthodes comparées.
 
 \begin{figure}[htbp]
     \centering
@@ -448,14 +448,53 @@ Par exemple, scAIDE obtient de très bons scores globaux en ARI ou en ACC, mais 
 
 Afin de compléter cette évaluation, la configuration finale de \textbf{scRAW} a aussi été testée sur deux jeux de données qui n'ont pas été utilisés pendant la recherche d'hyperparamètres : \textbf{Human Pancreas}\footnote{\url{https://openproblems.bio/datasets/openproblems_v1/pancreas}}, issu d'OpenProblems, et \textbf{SCIB Mouse Pancreas 1}. Ces deux jeux conservent le même protocole de prétraitement et les mêmes métriques que l'évaluation principale. Human Pancreas présente un effet de batch technique marqué entre protocoles de séquençage, tandis que SCIB Mouse Pancreas 1 est un petit jeu de données sans batch explicite et avec plusieurs classes très faiblement représentées.
 
-La figure~\ref{fig:scraw_holdout_top3_plus_scraw_barplot} reprend la même organisation que la figure~\ref{fig:scraw_common8_family_top3_plus_scraw}. Pour chaque famille et chaque métrique, elle affiche \textbf{scRAW} avec la configuration \texttt{trial\_0017} et les trois meilleures méthodes de la famille, sélectionnées sur la moyenne des deux jeux de validation.
+Le tableau~\ref{tab:scraw_holdout_pancreas_results} présente les résultats obtenus par \textbf{scRAW} avec la configuration \texttt{trial\_0017} et par les méthodes de comparaison retenues. Dans chaque dataset, les méthodes sont triées par moyenne décroissante sur les cinq métriques affichées, afin de conserver une lecture synthétique des compromis entre performance globale, populations rares et correction de batch.
 
-\begin{figure}[H]
-    \centering
-    \includegraphics[width=\textwidth,height=0.82\textheight,keepaspectratio]{scraw_holdout_validation/holdout_top3_plus_scraw_barplot.pdf}
-    \caption[Validation externe de \textbf{scRAW} sur deux jeux de données non vus.]{Validation externe de \textbf{scRAW} sur deux jeux de données non vus pendant l'optimisation des hyperparamètres. Les panneaux suivent l'organisation de la figure~\ref{fig:scraw_common8_family_top3_plus_scraw} : les métriques sont en lignes, les familles de méthodes en colonnes, et les méthodes sont ordonnées par score moyen croissant dans chaque panneau. Les couleurs identifient les familles de méthodes, avec \textbf{scRAW} en rouge. Les barres pleines correspondent à Human Pancreas et les barres hachurées à SCIB Mouse Pancreas 1.}
-    \label{fig:scraw_holdout_top3_plus_scraw_barplot}
-\end{figure}
+\begin{table}[H]
+\centering
+\scriptsize
+\setlength{\tabcolsep}{4pt}
+\renewcommand{\arraystretch}{1.06}
+\begin{tabular}{llrrrrr}
+\toprule
+\textbf{Dataset} & \textbf{Méthode} & \textbf{ARI} & \textbf{ACC} & \textbf{RareACC} & \textbf{UltraRareACC} & \textbf{Batch} \\
+\midrule
+\multirow{14}{*}{Human Pancreas}
+ & Harmony & 0,817 & \textbf{0,897} & 0,848 & 0,662 & \textbf{0,669} \\
+ & ComBat & \textbf{0,839} & 0,892 & 0,832 & 0,628 & 0,587 \\
+ & \textcolor{red}{\textbf{scRAW}} & \textcolor{red}{0,791} & \textcolor{red}{0,817} & \textcolor{red}{0,829} & \textcolor{red}{0,622} & \textcolor{red}{0,511} \\
+ & scVI & 0,595 & 0,720 & 0,811 & 0,581 & 0,530 \\
+ & Scanorama & 0,432 & 0,563 & 0,854 & \textbf{0,757} & 0,610 \\
+ & PCA+Leiden & 0,444 & 0,513 & \textbf{0,878} & 0,730 & 0,478 \\
+ & DeepScena & 0,626 & 0,713 & 0,716 & 0,392 & 0,462 \\
+ & CellSIUS & 0,444 & 0,519 & 0,665 & 0,750 & 0,485 \\
+ & scAIDE & 0,520 & 0,564 & 0,808 & 0,574 & 0,377 \\
+ & scMAE & 0,502 & 0,543 & 0,817 & 0,595 & 0,353 \\
+ & DESC & 0,474 & 0,511 & 0,784 & 0,622 & 0,304 \\
+ & scCAD & 0,346 & 0,311 & 0,466 & 0,716 & 0,484 \\
+ & scNAME & 0,502 & 0,542 & 0,646 & 0,216 & 0,224 \\
+ & GiniClust & 0,042 & 0,342 & 0,021 & 0,047 & 0,485 \\
+\midrule
+\multirow{14}{*}{SCIB Mouse Pancreas 1}
+ & scMAE & 0,560 & 0,614 & 0,686 & \textbf{0,706} & 0,912 \\
+ & \textcolor{red}{\textbf{scRAW}} & \textcolor{red}{\textbf{0,821}} & \textcolor{red}{0,787} & \textcolor{red}{0,721} & \textcolor{red}{0,235} & \textcolor{red}{0,803} \\
+ & scCAD & 0,636 & 0,634 & 0,628 & 0,471 & 0,839 \\
+ & CellSIUS & 0,588 & 0,674 & \textbf{0,756} & 0,294 & 0,839 \\
+ & DESC & 0,781 & \textbf{0,839} & 0,558 & 0,000 & 0,830 \\
+ & scAIDE & 0,672 & 0,715 & 0,523 & 0,471 & 0,606 \\
+ & Harmony & 0,463 & 0,551 & \textbf{0,756} & 0,235 & 0,839 \\
+ & Scanorama & 0,463 & 0,551 & \textbf{0,756} & 0,235 & 0,839 \\
+ & PCA+Leiden & 0,463 & 0,551 & \textbf{0,756} & 0,235 & 0,839 \\
+ & ComBat & 0,462 & 0,550 & \textbf{0,756} & 0,235 & 0,839 \\
+ & scVI & 0,491 & 0,578 & 0,686 & 0,000 & \textbf{0,972} \\
+ & scNAME & 0,431 & 0,468 & 0,744 & 0,294 & 0,712 \\
+ & DeepScena & 0,233 & 0,393 & 0,128 & 0,176 & 0,491 \\
+ & GiniClust & 0,021 & 0,443 & 0,058 & 0,000 & 0,839 \\
+\bottomrule
+\end{tabular}
+\caption{Résultats sur deux jeux de données non vus pendant l'optimisation des hyperparamètres. Les méthodes sont triées, dans chaque dataset, par moyenne décroissante des cinq métriques affichées. Les meilleures valeurs par métrique et par dataset sont indiquées en gras ; \textbf{scRAW} est affiché en rouge. Pour SCIB Mouse Pancreas 1, le score de correction de batch est conservé depuis les tables consolidées, mais le jeu ne contient qu'un batch explicite.}
+\label{tab:scraw_holdout_pancreas_results}
+\end{table}
 
 Sur Human Pancreas, \textbf{scRAW} reste proche des meilleures méthodes sur les métriques globales et rares, sans dominer la correction de batch. Les meilleurs scores isolés sont obtenus par des méthodes différentes selon la métrique : ComBat pour l'ARI, Harmony pour l'ACC et la correction de batch, PCA+Leiden pour la RareACC, et Scanorama pour l'UltraRareACC. Sur SCIB Mouse Pancreas 1, \textbf{scRAW} obtient la meilleure ARI et une ACC élevée, mais l'UltraRareACC reste limitée. Ce résultat doit être lu avec prudence, car les populations ultra-rares y contiennent seulement quelques cellules. Ces deux validations externes confirment donc surtout que \textbf{scRAW} conserve un comportement compétitif sur des jeux non vus, tout en montrant que la meilleure méthode dépend encore fortement de la métrique et du jeu de données.
 
