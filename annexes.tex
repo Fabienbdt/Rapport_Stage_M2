@@ -71,10 +71,10 @@ L'organigramme structurel simplifié correspondant est présenté dans la Figure
 \end{figure}
 
 \newpage
-\section{Détails des datasets de l'état de l'art}
+\section{Détails des jeux de données}
 \label{annexe:datasets}
 
-Cette section fournit les détails des huit jeux de données scRNA-seq du sous-ensemble commun (``common-8'') utilisés dans l'étude, y compris l'espèce, les tailles (cellules et gènes), le nombre de batchs, le nombre de populations cellulaires rares, ainsi que leur niveau d'effet de batch (mesuré par PCR sur PCA) et de déséquilibre de classe (mesuré par l'indice de Gini).
+Cette section fournit d'abord les détails des huit jeux de données scRNA-seq du sous-ensemble commun (``common-8'') utilisés pour la construction et la comparaison principale, y compris l'espèce, les tailles (cellules et gènes), le nombre de batchs, le nombre de populations cellulaires rares, ainsi que leur niveau d'effet de batch (mesuré par PCR sur PCA) et de déséquilibre de classe (mesuré par l'indice de Gini). Elle décrit ensuite les deux jeux supplémentaires réservés à l'évaluation de scRAW sur des données non vues pendant l'optimisation des hyperparamètres.
 
 \begin{table}[H]
 \centering
@@ -228,7 +228,7 @@ Les tableaux suivants présentent les résultats bruts détaillés par jeu de do
 \input{Images/scraw_common8_family_panel/common8_primary_raw_Batch_correction_table.tex}
 
 \medskip
-\noindent Pour faciliter la lecture des résultats, chaque sous-panneau de la figure~\ref{fig:scraw_common8_family_top3_plus_scraw} affiche \textbf{scRAW} ainsi que les trois meilleures méthodes de la famille pour la métrique considérée (sur la base de la moyenne des huit datasets). Les méthodes restantes, ainsi que des résultats complémentaires avec les méthodes de correction de batch associées aux différents algorithmes, sont fournis dans cette annexe. Nous ne présentons pas dans le panneau principal les méthodes couplées à un outil de correction de batch, car les auteurs ne décrivent pas cet usage, ni comme prétraitement recommandé, ni comme composant du modèle. Ces variantes sont donc conservées uniquement comme analyses complémentaires. Pour les méthodes de deep learning généralistes, Harmony a été appliqué sur l'espace latent appris, avant le clustering final, car il s'agissait de la correction de batch la plus robuste dans les expériences de référence \cite{tran2020benchmark}. Cette pratique est justifiée par la conception même de Harmony : l'algorithme opère sur tout espace de faible dimension et ne suppose pas que celui-ci provienne d'une PCA obligatoirement. En revanche, aucun des papiers originaux des méthodes benchmarkées ici (scDeepCluster, scMAE, scNAME, scCDCG) ne propose ni n'évalue ce couplage de manière systématique : notre protocole comble ce manque en évaluant l'apport de Harmony sur l'espace latent de plusieurs architectures profondes avec des métriques globales et centrées sur les populations rares.
+\noindent Pour faciliter la lecture des résultats, chaque sous-panneau de la figure~\ref{fig:scraw_common8_family_top3_plus_scraw} affiche \textbf{scRAW} ainsi que les trois meilleures méthodes de la famille pour la métrique considérée (sur la base de la moyenne des huit jeux de données). Les méthodes restantes, ainsi que des résultats complémentaires avec les méthodes de correction de batch associées aux différents algorithmes, sont fournis dans cette annexe. Nous ne présentons pas dans le panneau principal les méthodes couplées à un outil de correction de batch, car les auteurs ne décrivent pas cet usage, ni comme prétraitement recommandé, ni comme composant du modèle. Ces variantes sont donc conservées uniquement comme analyses complémentaires. Pour les méthodes de deep learning généralistes, Harmony a été appliqué sur l'espace latent appris, avant le clustering final, car il s'agissait de la correction de batch la plus robuste dans les expériences de référence \cite{tran2020benchmark}. Cette pratique est justifiée par la conception même de Harmony : l'algorithme opère sur tout espace de faible dimension et ne suppose pas que celui-ci provienne d'une PCA obligatoirement. En revanche, aucun des papiers originaux des méthodes benchmarkées ici (scDeepCluster, scMAE, scNAME, scCDCG) ne propose ni n'évalue ce couplage de manière systématique : notre protocole comble ce manque en évaluant l'apport de Harmony sur l'espace latent de plusieurs architectures profondes avec des métriques globales et centrées sur les populations rares.
 
 \begin{figure}[H]
     \centering
@@ -444,7 +444,7 @@ Clustering final & \texttt{hdbscan\_reassign\_noise} & \texttt{False} & Pas de r
 \section{Figures de recherche d'hyperparamètres scRAW}
 \label{annexe:figures_hyperparametres_scraw}
 
-Cette annexe regroupe les sorties Optuna d'importance moyenne des hyperparamètres pour les trois recherches utilisées dans la construction de la version par défault de scRAW
+Cette annexe regroupe les sorties Optuna d'importance moyenne des hyperparamètres pour les trois recherches utilisées dans la construction de la version par défaut de scRAW
 
 \begin{figure}[H]
     \centering
