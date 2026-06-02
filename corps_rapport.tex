@@ -334,9 +334,9 @@ La méthode conserve une structure volontairement simple. Elle repose sur un aut
 
 Le pipeline général de scRAW est présenté dans la figure~\ref{fig:scraw_pipeline}. Nous appliquons aux données brutes les étapes de prétraitement standard, identiques à celles détaillées dans la comparaison de l'existant. De plus, aucune correction de batch séparée n'est appliquée à cette étape ; la prise en compte du batch intervient ensuite directement au sein du modèle.
 
-\begin{figure}[H]
+\begin{figure}[htbp]
     \centering
-    \includegraphics[width=\textwidth,height=0.9\textheight,keepaspectratio]{Images/SCRAW_PIPELINE/scRAW.png}
+    \includegraphics[width=0.8\textwidth,height=0.5\textheight,keepaspectratio]{Images/SCRAW_PIPELINE/scRAW.png}
     \caption[Pipeline général de scRAW.]{Pipeline général de scRAW. Le modèle apprend un espace latent par autoencodeur, met à jour des poids cellulaires à partir de pseudo-clusters et de la densité locale, puis réalise le clustering final dans l'espace latent.}
     \label{fig:scraw_pipeline}
 \end{figure}
