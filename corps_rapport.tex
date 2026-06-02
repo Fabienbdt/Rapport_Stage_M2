@@ -217,7 +217,7 @@ Le protocole de comparaison devait permettre de modifier les hyperparamètres de
 
 SCRBenchmark a été développé pour rendre les expériences de comparaison plus simples à construire, plus faciles à reproduire et plus lisibles pour des utilisateurs qui ne travaillent pas nécessairement dans le code au quotidien. Le logiciel regroupe dans un même environnement le chargement des données, le choix du protocole expérimental, le prétraitement, la sélection des méthodes, l'exécution des analyses et l'exploration des résultats. Sa structure logique est résumée dans la figure \ref{fig:organisation_logiciel}.
 
-\begin{figure}[htbp]
+\begin{figure}[!htbp]
     \centering
     \includegraphics[width=0.8\textwidth]{SCRBenchmark/OrganisationLogiciel.png}
     \caption[Structure logique et flux de travail de la plateforme de benchmarking SCRBenchmark.]{Structure logique et flux de travail de la plateforme de benchmarking SCRBenchmark.}
@@ -334,7 +334,7 @@ La méthode conserve une structure volontairement simple. Elle repose sur un aut
 
 Le pipeline général de scRAW est présenté dans la figure~\ref{fig:scraw_pipeline}. Nous appliquons aux données brutes les étapes de prétraitement standard, identiques à celles détaillées dans la comparaison de l'existant. De plus, aucune correction de batch séparée n'est appliquée à cette étape ; la prise en compte du batch intervient ensuite directement au sein du modèle.
 
-\begin{figure}[htbp]
+\begin{figure}[!htbp]
     \centering
     \includegraphics[width=0.8\textwidth,height=0.5\textheight,keepaspectratio]{Images/SCRAW_PIPELINE/scRAW.png}
     \caption[Pipeline général de scRAW.]{Pipeline général de scRAW. Le modèle apprend un espace latent par autoencodeur, met à jour des poids cellulaires à partir de pseudo-clusters et de la densité locale, puis réalise le clustering final dans l'espace latent.}
@@ -428,7 +428,7 @@ L'évaluation principale de scRAW a d'abord été conduite sur le même ensemble
 
 Pour faciliter la lecture, la figure~\ref{fig:scraw_common8_family_top3_plus_scraw} affiche \textbf{scRAW} ainsi que les meilleures méthodes observées pour chaque métrique. Les résultats complets, incluant les méthodes non affichées et les variantes avec correction de batch externe, sont fournis en Annexe~\ref{annexe:resultats_common8}, avec une synthèse des familles utilisées dans le Tableau~\ref{tab:scraw_method_families}. Ces variantes sont conservées comme analyses complémentaires, car elles ne correspondent pas toujours au protocole proposé dans les articles originaux des méthodes comparées.
 
-\begin{figure}[htbp]
+\begin{figure}[!htbp]
     \centering
     \includegraphics[width=\textwidth,height=0.82\textheight,keepaspectratio]{Images/PresentationOrale/common8_top3_family_sorted_barplots.png}
     \caption[\textbf{Distribution des performances sur les huit jeux de données communs pour scRAW et le top 3 de chaque famille de méthodes.}]{%
@@ -451,15 +451,15 @@ Par exemple, scAIDE obtient de très bons scores globaux en ARI ou en ACC, mais 
 
 \subsubsection{Validation sur des jeux non vus pendant l'optimisation}
 
-Afin de compléter cette évaluation, la configuration finale de \textbf{scRAW} a aussi été testée sur deux jeux de données qui n'ont pas été utilisés pendant la recherche d'hyperparamètres : \textbf{Human Pancreas}\footnote{\url{https://openproblems.bio/datasets/openproblems_v1/pancreas}}, issu d'OpenProblems, et \textbf{SCIB Mouse Pancreas 1}. Ces deux jeux conservent le même protocole de prétraitement et les mêmes métriques que l'évaluation principale. Human Pancreas présente un effet de batch technique marqué entre protocoles de séquençage, tandis que SCIB Mouse Pancreas 1 est un petit jeu de données sans batch explicite et avec plusieurs classes très faiblement représentées.
+Afin de compléter cette évaluation, la configuration finale de \textbf{scRAW} a aussi été testée sur deux jeux de données qui n'ont pas été utilisés pendant la recherche d'hyperparamètres : \textbf{Human Pancreas}, issu d'OpenProblems, et \textbf{SCIB Mouse Pancreas 1}. Ces deux jeux conservent le même protocole de prétraitement et les mêmes métriques que l'évaluation principale. Human Pancreas présente un effet de batch technique marqué entre protocoles de séquençage, tandis que SCIB Mouse Pancreas 1 est un petit jeu de données sans batch explicite et avec plusieurs classes très faiblement représentées.
 
 Le tableau~\ref{tab:scraw_holdout_pancreas_results} présente les résultats obtenus par \textbf{scRAW} avec la configuration par défaut, sans nouvelle recherche d'hyperparamètres spécifique à ces jeux de données, ainsi que par les méthodes de comparaison retenues. Pour chaque jeu de données, les méthodes sont triées par moyenne décroissante sur les cinq métriques affichées, afin de conserver une lecture synthétique des compromis entre performance globale, populations rares et correction de batch.
 
-\begin{table}[htbp]
+\begin{table}[!htbp]
 \centering
 \scriptsize
 \setlength{\tabcolsep}{4pt}
-\renewcommand{\arraystretch}{1.06}
+\renewcommand{\arraystretch}{0.96}
 \begin{tabular}{llrrrrr}
 \toprule
 \textbf{Dataset} & \textbf{Méthode} & \textbf{ARI} & \textbf{ACC} & \textbf{RareACC} & \textbf{UltraRareACC} & \textbf{Batch} \\
@@ -515,7 +515,7 @@ Pour chaque méthode, la baseline correspond à l'algorithme de base avec ses hy
 
 Plusieurs configurations ont été testées : pondération par densité seule, pondération complète avec pseudo-labels Leiden ou KMeans, et variantes ajoutant \(\mathcal{L}_{\mathrm{triplet}}\). La figure~\ref{fig:loss_transfer_baseline_vs_best} ne présente donc pas toutes les configurations, mais seulement la baseline et la meilleure variante pondérée pour chaque algorithme. Cette meilleure variante est choisie selon la moyenne de trois métriques : ARI, RareACC et UltraRareACC. Pour avoir des détails sur les configurations testées, la configuration retenue choisie et la table des résultats correspondante, voir l'Annexe~\ref{annexe:loss_transfer_details}.
 
-\begin{figure}[htbp]
+\begin{figure}[!htbp]
     \centering
     \includegraphics[width=\textwidth,height=0.48\textheight,keepaspectratio]{scraw_loss_transfer_synthesis/loss_transfer_baseline_vs_best_weighted.pdf}
     \caption[Comparaison entre les algorithmes de base et leur meilleure variante avec loss pondérée scRAW.]{Comparaison entre les algorithmes de base et leur meilleure variante avec loss pondérée scRAW. Les scores sont des moyennes par jeu de données.}
@@ -532,7 +532,7 @@ Ici, le protocole général suit une séparation par groupe biologique ou techni
 
 Les résultats sont agrégés par jeu de données : les splits disponibles sont d'abord moyennés, puis les boxplots sont construits à partir de ces moyennes. Chaque point noir correspond donc à un jeu de données, la boîte représente la distribution des moyennes disponibles pour un algorithme, et le losange blanc indique sa moyenne globale. Les résultats détaillés par jeu de données et la liste des splits sont fournis en Annexe~\ref{annexe:inductif_details}.
 
-\begin{figure}[htbp]
+\begin{figure}[!htbp]
     \centering
     \includegraphics[width=\textwidth,height=0.42\textheight,keepaspectratio]{comparaison_inductive_scraw_trial0017_synthese/inductive_metrics_boxplots_ari_acc_rare_ultrarare.pdf}
     \caption[Comparaison inductive de \textbf{scRAW} avec scNAME, scMAE et scDeepCluster sur six jeux de données.]{Comparaison inductive de \textbf{scRAW} avec scNAME, scMAE et scDeepCluster sur six jeux de données. Chaque boîte représente la distribution des moyennes par jeu de données, et chaque point correspond à un jeu de données. Les losanges indiquent la moyenne globale de l'algorithme pour la métrique considérée.}
@@ -546,7 +546,7 @@ Sur ces moyennes par jeu de données, \textbf{scRAW} obtient une moyenne de $0{,
 Une analyse biologique a été réalisée sur Baron Human Pancreas avec scRAW. L'objectif est de vérifier la cohérence des clusters prédits par scRAW avec les types cellulaires de référence en s'appuyant sur les gènes marqueurs, comme résumé dans la figure~\ref{fig:baron_scraw_bio_interpretation}. Inspiré des protocoles de caractérisation biologique de scCluBench \cite{xu_scclubench_2026} et de scAIDE \cite{scAIDE2020}, ce protocole de validation extrait et compare les signatures d'expression des clusters prédits avec les types cellulaires de référence. Pour chaque type cellulaire de la vérité terrain et pour chaque cluster prédit, les 100 meilleurs gènes différentiellement exprimés (DEG) sont extraits à l'aide d'un test de Wilcoxon bilatéral. Ce calcul statistique est effectué après avoir filtré les gènes exprimés dans moins de 3 cellules, normalisé la somme des comptes par cellule à une cible de 10\,000 et appliqué une transformation logarithmique ($\log(x+1)$). Les clusters sont ensuite annotés en les affectant au type cellulaire qui maximise le recouvrement (l'intersection) de leurs gènes marqueurs respectifs, en complément de l'assignation hongroise classique.
 
 Sur Baron, cette annotation par recouvrement atteint une accuracy de $94{,}8\,\%$ et une balanced accuracy de $88{,}9\,\%$, contre $93{,}4\,\%$ et $87{,}0\,\%$ pour le mapping hongrois. Les deux annotations concordent pour $97{,}4\,\%$ des cellules, ce qui indique que le clustering réalisé par \textbf{scRAW} est globalement en accord avec les marqueurs de référence. La projection t-SNE montre cependant que certains types cellulaires peuvent être fragmentés en deux sous-clusters (figure~\ref{fig:baron_scraw_bio_interpretation}\subref{fig:baron_scraw_bio_tsne}), tandis que la heatmap de recouvrement précise la correspondance entre clusters prédits et types annotés (figure~\ref{fig:baron_scraw_bio_interpretation}\subref{fig:baron_scraw_bio_marker_overlap}). Il convient de noter que cette heatmap indique la proportion de gènes marqueurs partagés et non un mélange de cellules : par exemple, le cluster 5 (lymphocytes T) partage $33\,\%$ de ses marqueurs avec les mastocytes en raison de leur signature immunitaire commune, bien que l'algorithme sépare parfaitement leurs cellules, comme le montre le panneau t-SNE de la figure~\ref{fig:baron_scraw_bio_interpretation}\subref{fig:baron_scraw_bio_tsne}.
-\begin{figure}[H]
+\begin{figure}[!htbp]
     \centering
     \captionsetup{font=small}
     \begin{subfigure}[t]{0.49\textwidth}
