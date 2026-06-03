@@ -94,20 +94,18 @@ Le problème avec les populations rares vient de la manière dont cette loss tot
 & Leiden \cite{Traag2019Leiden} & Clustering & Graphe de voisinage & Modularité avec communautés mieux connectées \\
 & HDBSCAN \cite{Campello2015HDBSCAN} & Clustering & Densité hiérarchique & Identification de groupes denses et de points bruit \\
 \midrule
-\multirow{5}{0.12\textwidth}{\centering\textbf{Deep Learning}}
+\multirow{6}{0.12\textwidth}{\centering\textbf{Deep Learning}}
 & scVI \cite{Lopez2018scVI} & Réduction de dimension & VAE probabiliste & Reconstruction NB/ZINB + divergence KL \\
-& scMAE \cite{Fang2024scMAE} & Réduction de dimension & Masked autoencoder & Reconstruction de gènes masqués \\
-& DESC \cite{li2020deep} & Les deux & Autoencodeur + clustering & Reconstruction + clustering par divergence KL \\
-& scDeepCluster \cite{tian2019clustering} & Les deux & Autoencodeur ZINB & Reconstruction ZINB + clustering par divergence KL \\
-& scNAME \cite{wan_scname_2022} & Les deux & Contrastive learning & Reconstruction + clustering + regroupement des cellules voisines \\
-\midrule
-\textbf{Graphes profonds}
+& scMAE \cite{Fang2024scMAE} & Réduction de dimension & Masked AE & Reconstruction de gènes masqués \\
+& DESC \cite{li2020deep} & Les deux & AE + clustering & Reconstruction + clustering par divergence KL \\
+& scDeepCluster \cite{tian2019clustering} & Les deux & AE ZINB & Reconstruction ZINB + clustering par divergence KL \\
+& scNAME \cite{wan_scname_2022} & Les deux & Self-supervised & Reconstruction + clustering + regroupement des cellules voisines \\
 & scCDCG \cite{xu_sccdcg_2025} & Les deux & AE + graph embedding & Reconstruction + clustering par structure de graphe et alignement \\
 \midrule
 \multirow{5}{0.12\textwidth}{\centering\textbf{Cellules rares}}
 & GiniClust \cite{Jiang2016} & Clustering & Indice de Gini & Détection de gènes marqueurs atypiques \\
 & CellSIUS \cite{Neri2019} & Clustering & Signatures locales & Identification de sous-populations minoritaires \\
-& scAIDE \cite{scAIDE2020} & Les deux & Autoencodeur & Débruitage + clustering orienté populations rares \\
+& scAIDE \cite{scAIDE2020} & Les deux & AE & Débruitage + clustering orienté populations rares \\
 & DeepScena \cite{Lei2023scHDR} & Les deux & Self-supervised & Raffinement des clusters rares \\
 & scCAD \cite{Xu2024scCAD} & Clustering & Détection d'anomalies & Décomposition de clusters pour isoler les types rares \\
 \bottomrule
