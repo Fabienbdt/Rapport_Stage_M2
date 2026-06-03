@@ -341,7 +341,7 @@ Le pipeline général de scRAW est présenté dans la figure~\ref{fig:scraw_pipe
     \label{fig:scraw_pipeline}
 \end{figure}
 
-La matrice prétraitée est ensuite utilisée comme entrée d'un autoencodeur symétrique. Dans la configuration par défaut, l'encodeur comporte trois couches cachées de tailles 512, 256 et 128, puis projette chaque cellule dans un espace latent de dimension 256. Le décodeur suit la structure inverse afin de reconstruire le profil d'expression. Le modèle est entraîné pendant 120 époques, avec une taille de mini-batch de 192, un dropout de 0,3 et un taux d'apprentissage de \(1{,}64 \times 10^{-3}\). Les valeurs complètes sont données en Annexe~\ref{annexe:hyperparametres_scraw}.
+La matrice prétraitée est ensuite utilisée comme entrée d'un autoencodeur symétrique. L'architecture par défaut et l'ensemble des hyperparamètres d'entraînement sont détaillés en Annexe~\ref{annexe:hyperparametres_scraw}.
 
 L'entraînement est divisé en deux phases. Pendant les 55 premières époques, toutes les cellules contribuent de manière uniforme à la reconstruction. Cette phase de préentraînement sert à stabiliser l'espace latent avant d'introduire la pondération. À partir de l'époque 55, scRAW recalcule périodiquement des pseudo-labels et des poids cellulaires à partir de l'espace latent courant. Dans la configuration par défaut, les pseudo-labels sont obtenus avec Leiden et les poids sont mis à jour toutes les 20 époques. Les poids déjà présents sont lissés par une moyenne mobile, avec un momentum de 0,688, afin d'éviter des changements trop brusques au cours de l'apprentissage.
 
