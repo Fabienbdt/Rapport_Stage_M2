@@ -25,13 +25,19 @@ import pandas as pd
 
 
 SOURCE_CSV = Path(
-    "/data2/fbidet/scRAW_EXPERIMENTAL/results/"
+    "/Users/fabienbidet/Documents/MASTER2/STAGE/"
     "presentation_trial206_nonbaron_20260324/00_source_tables/"
     "trial206_all_results_table.csv"
 )
+if not SOURCE_CSV.exists():
+    SOURCE_CSV = Path(
+        "/data2/fbidet/scRAW_EXPERIMENTAL/results/"
+        "presentation_trial206_nonbaron_20260324/00_source_tables/"
+        "trial206_all_results_table.csv"
+    )
 
 OUTPUT_STEM = "common8_top3_family_sorted_barplots"
-SCRAW_METHOD = "scRAW (trial_0017)"
+SCRAW_METHOD = "scRAW"
 
 COMMON8 = [
     "BBAG094 Zeisel",
@@ -279,19 +285,6 @@ def draw_plot(selection: pd.DataFrame, long_df: pd.DataFrame) -> None:
             box.set_facecolor(color)
             box.set_alpha(0.72)
 
-        for position, method_values in zip(positions, values):
-            if len(method_values) == 0:
-                continue
-            offsets = np.linspace(-0.12, 0.12, len(method_values))
-            ax.scatter(
-                position + offsets,
-                method_values,
-                s=9,
-                color="#111827",
-                alpha=0.42,
-                linewidths=0,
-                zorder=4,
-            )
 
         for position, (_, row), method_values in zip(positions, sub.iterrows(), values):
             y_base = max(method_values) if len(method_values) else row["mean"]
@@ -358,7 +351,7 @@ def draw_plot(selection: pd.DataFrame, long_df: pd.DataFrame) -> None:
     fig.text(
         0.5,
         0.004,
-        "Boîtes : distribution par dataset. Points : datasets. Losanges : moyenne. Correction batch : Paul15 bone marrow et Tabula Muris liver = NA.",
+        "Boîtes : distribution par dataset. Losanges : moyenne. Correction batch : Paul15 bone marrow et Tabula Muris liver = NA.",
         ha="center",
         va="bottom",
         fontsize=8,
