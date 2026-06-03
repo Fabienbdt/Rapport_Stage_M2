@@ -23,11 +23,22 @@ from sklearn.metrics import (
 )
 
 
-OUT_DIR = Path(__file__).resolve().parent
+SCRIPT_DIR = Path(__file__).resolve().parent
+OUT_DIR = SCRIPT_DIR.parents[1] / "SCRBenchmark"
 
 BARON_PAPER_LOGIC_ROOT = Path(
     "/data2/fbidet/SCRBenchmark/results/"
     "baron_paper_logic_existing_algorithms_3seeds_20260527"
+)
+SCCDCG_INDUCTIVE_ROOT = Path(
+    "/data2/fbidet/SCRBenchmark/results/"
+    "baron_split_70_10_20_existing_algorithms_5seeds_20260526_103715/"
+    "gpu1_deep_core"
+)
+SCCDCG_TRANSDUCTIVE_ROOT = Path(
+    "/data2/fbidet/SCRBenchmark/results/"
+    "baron_full_existing_algorithms_5seeds_20260522_162936/"
+    "gpu1_deep_core"
 )
 N_RUNS = 3
 
@@ -37,6 +48,7 @@ ALGORITHMS = [
     ("sc_mae", "scMAE", BARON_PAPER_LOGIC_ROOT / "core"),
     ("scdeepcluster", "scDeepCluster", BARON_PAPER_LOGIC_ROOT / "core"),
     ("scname", "scNAME", BARON_PAPER_LOGIC_ROOT / "scname"),
+    ("sccdcg", "scCDCG", SCCDCG_TRANSDUCTIVE_ROOT),
 ]
 
 INDUCTIVE_ALGORITHMS = [
@@ -45,6 +57,7 @@ INDUCTIVE_ALGORITHMS = [
     ("sc_mae", "scMAE", BARON_PAPER_LOGIC_ROOT / "inductive_core"),
     ("scdeepcluster", "scDeepCluster", BARON_PAPER_LOGIC_ROOT / "inductive_core"),
     ("scname", "scNAME", BARON_PAPER_LOGIC_ROOT / "inductive_scname"),
+    ("sccdcg", "scCDCG", SCCDCG_INDUCTIVE_ROOT),
 ]
 
 CELL_ORDER = [
