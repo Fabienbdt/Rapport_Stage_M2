@@ -341,9 +341,9 @@ Le pipeline général de scRAW est présenté dans la figure~\ref{fig:scraw_pipe
     \label{fig:scraw_pipeline}
 \end{figure}
 
-La matrice prétraitée est ensuite utilisée comme entrée d'un autoencodeur symétrique. L'architecture par défaut et l'ensemble des hyperparamètres d'entraînement sont détaillés en Annexe~\ref{annexe:hyperparametres_scraw}.
+La matrice prétraitée est ensuite utilisée comme entrée d'un autoencodeur symétrique. Les hyperparamètres du modèle et de son entraînement ont été sélectionnés par une recherche d'hyperparamètres Optuna, dont le protocole est décrit en section~\ref{subsec:recherche_hyperparametres}, et sont détaillés en Annexe~\ref{annexe:hyperparametres_scraw}.
 
-L'entraînement est divisé en deux phases. Pendant les 55 premières époques, toutes les cellules contribuent de manière uniforme à la reconstruction. Cette phase de préentraînement sert à stabiliser l'espace latent avant d'introduire la pondération. À partir de l'époque 55, scRAW recalcule périodiquement des pseudo-labels et des poids cellulaires à partir de l'espace latent courant. Dans la configuration par défaut, les pseudo-labels sont obtenus avec Leiden et les poids sont mis à jour toutes les 20 époques. Les poids déjà présents sont lissés par une moyenne mobile, avec un momentum de 0,688, afin d'éviter des changements trop brusques au cours de l'apprentissage.
+L'entraînement est divisé en deux phases. Pendant les premières époques ($E_{\mathrm{pre}}$), toutes les cellules contribuent de manière uniforme à la reconstruction. Cette phase de préentraînement sert à stabiliser l'espace latent avant d'introduire la pondération. À partir de l'époque $E_{\mathrm{pre}}$, scRAW recalcule périodiquement (toutes les $E_{\mathrm{upd}}$ époques) des pseudo-labels et des poids cellulaires à partir de l'espace latent courant. Dans la configuration par défaut, les pseudo-labels sont obtenus avec Leiden. Les poids déjà présents sont lissés par une moyenne mobile avec un momentum afin d'éviter des changements trop brusques au cours de l'apprentissage.
 
 À la fin de l'entraînement, l'encodeur produit l'embedding final de chaque cellule. Le clustering final est ensuite réalisé avec HDBSCAN dans cet espace latent, en demandant des groupes d'au moins 8 cellules et une estimation locale fondée sur 6 voisins. Les points considérés comme bruit par HDBSCAN ne sont pas réassignés dans cette configuration. Les sorties principales de scRAW sont donc l'espace latent, les labels de clusters prédits, les poids cellulaires finaux, le modèle entraîné, l'historique des termes de loss \(\mathcal{L}\) et les métriques calculées par le pipeline d'évaluation.
 
@@ -411,6 +411,7 @@ Dans la configuration par défaut, cette branche est utilisée lorsque la colonn
 L'architecture du modèle présenté ici a été sélectionnée par la recherche d'hyperparamètres décrite dans la section suivante. Une étude d'ablations, dont les résultats sont disponibles en Annexe~\ref{annexe:ablation_scraw}, évalue ensuite l'importance des principaux éléments de l'algorithme.
 
 \subsection{Recherche d'hyperparamètres}
+\label{subsec:recherche_hyperparametres}
 
 La configuration par défaut de scRAW a été construite progressivement. L'objectif n'était pas de trouver le meilleur réglage sur un seul jeu de données, mais d'identifier une configuration assez stable pour être utilisée sans réajustement fin sur un nouveau jeu de données. Les paramètres explorés concernaient principalement l'architecture de l'autoencodeur, le rythme d'entraînement, la pondération des cellules dans \(\mathcal{L}_{\mathrm{recon,ponderee}}\), la triplet loss \(\mathcal{L}_{\mathrm{triplet}}\), la correction adversariale de batch \(\mathcal{L}_{\mathrm{batch}}\) et le clustering final.
 
