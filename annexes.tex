@@ -215,6 +215,34 @@ Dans les formules ci-dessus, \(y_i\) désigne l'annotation biologique de la cell
 \label{tab:scraw_method_families}
 \end{table}
 
+\begin{table}[H]
+\centering
+\scriptsize
+\renewcommand{\arraystretch}{1.12}
+\begin{tabularx}{\textwidth}{@{}p{0.24\textwidth}Xr@{}}
+\toprule
+\textbf{Algorithme} & \textbf{Famille} & \textbf{Temps moyen (s)} \\
+\midrule
+\textbf{scRAW} & scRAW & 664,2 \\
+CellSIUS & Rare Specific & 90,9 \\
+GiniClust & Rare Specific & 21,6 \\
+DeepScena & Rare Specific & 239,0 \\
+scAIDE & Rare Specific & 359,7 \\
+scCAD & Rare Specific & 162,8 \\
+PCA+Leiden & Méthodes généralistes & 2,9 \\
+scVI & Méthodes généralistes & 306,0 \\
+scMAE & Méthodes généralistes & 292,9 \\
+scNAME & Méthodes généralistes & 1786,9 \\
+Harmony & Correction batch & 5,8 \\
+ComBat & Correction batch & 11,0 \\
+Scanorama & Correction batch & 8,6 \\
+DESC & Correction batch & 205,2 \\
+\bottomrule
+\end{tabularx}
+\caption{Temps d'exécution moyen des algorithmes comparés dans le rapport, calculé sur les dix jeux de données présentés dans les résultats : les huit jeux de référence du Tableau~\ref{tab:datasets}, auxquels s'ajoutent les deux jeux de validation externe Human Pancreas et SCIB Mouse Pancreas 1 du Tableau~\ref{tab:datasets_validation_externe}. Chaque jeu de données contribue une fois par algorithme ; les temps sont exprimés en secondes et proviennent du champ \texttt{runtime} des résultats exportés.}
+\label{tab:runtime_moyen_algorithmes}
+\end{table}
+
 \begin{figure}[H]
     \centering
     \includegraphics[width=\textwidth,height=0.93\textheight,keepaspectratio]{scraw_common8_family_panel/common8_family_all_methods_panel.pdf}
