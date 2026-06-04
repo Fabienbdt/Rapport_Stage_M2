@@ -79,8 +79,8 @@ Cette section fournit d'abord les détails des huit jeux de données scRNA-seq d
 
 \begin{table}[H]
 \centering
-\footnotesize
-\setlength{\tabcolsep}{4pt}
+\scriptsize
+\setlength{\tabcolsep}{2.7pt}
 \begin{tabular}{l l c c c c c c}
 \toprule
 \textbf{Dataset} & \textbf{Espèce} & \textbf{Cellules} & \textbf{Gènes} & \textbf{Batchs} & \textbf{Rares ($<5\%$)} & \textbf{PCR/PCA} & \textbf{Gini} \\
@@ -93,6 +93,8 @@ Kang PBMC & Humain & 24 679 & 35 635 & 16 & 1 & 0,069 & 0,500 \\
 Macaque retina bipolar & Macaque & 30 302 & 36 162 & 30 & 4 & 0,184 & 0,388 \\
 Paul15 bone marrow & Souris & 2 730 & 3 451 & 1 & 9 & 0,000 & 0,410 \\
 Tabula Muris liver & Souris & 2 859 & 22 966 & 1 & 5 & 0,000 & 0,578 \\
+\midrule
+\textbf{Plage [Min - Max]} & & 2 730--30 302 & 3 451--36 162 & 1--30 & 1--9 & 0,000--0,499 & 0,304--0,644 \\
 \bottomrule
 \end{tabular}
 \caption{Récapitulatif des huit jeux de données du sous-ensemble commun (common-8) utilisés dans nos expériences.}
