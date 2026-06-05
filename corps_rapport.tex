@@ -328,7 +328,7 @@ Ces observations motivent directement le développement de scRAW : l'objectif n'
 
 scRAW a été développé à partir du constat présenté dans la section précédente : les méthodes de clustering peuvent obtenir de bons scores globaux tout en retrouvant mal les populations cellulaires les plus petites. L'objectif n'est donc pas seulement de construire un nouvel autoencodeur, mais aussi de modifier la contribution des cellules à l'apprentissage. Les cellules situées dans de petits groupes ou dans des zones peu denses de l'espace latent reçoivent un poids plus élevé dans la loss pondérée de reconstruction \(\mathcal{L}_{\mathrm{recon,ponderee}}\). Elles influencent ainsi davantage la représentation apprise.
 
-scRAW conserve une structure volontairement simple. Elle repose sur un autoencodeur MLP, une pondération dynamique des cellules, une contrainte locale de type triplet loss \(\mathcal{L}_{\mathrm{triplet}}\) \cite{weinberger2005distance} et une correction adversariale de l'information de batch \(\mathcal{L}_{\mathrm{batch}}\) lorsque plusieurs batchs sont renseignés. Dans la suite, la description correspond uniquement à la configuration par défaut de scRAW. Les autres variantes de configuration ne sont pas détaillées ici.
+La structure globale de scRAW est la suivante. Il repose sur un autoencodeur MLP, une pondération dynamique des cellules, une contrainte locale de type triplet loss \(\mathcal{L}_{\mathrm{triplet}}\) \cite{weinberger2005distance} et une correction adversariale de l'information de batch \(\mathcal{L}_{\mathrm{batch}}\) lorsque plusieurs batchs sont renseignés.
 
 \subsection{Pipeline}
 
@@ -390,7 +390,7 @@ Pendant la phase initiale, \(\omega_i=1\) pour toutes les cellules. Pendant la p
   \omega^{\mathrm{densite}}_i.
   \label{eq:omega_tilde}
 \end{equation}
-Le résultat est normalisé afin d'obtenir une moyenne proche de 1, puis limité par des bornes de sécurité. Ces bornes évitent qu'une cellule domine entièrement \(\mathcal{L}_{\mathrm{recon,ponderee}}\), tout en maintenant la contribution des cellules très fréquentes à l'apprentissage.
+Le résultat est normalisé afin d'obtenir une moyenne proche de 1, puis limité par des bornes. Ces bornes évitent qu'une cellule domine entièrement \(\mathcal{L}_{\mathrm{recon,ponderee}}\), tout en maintenant la contribution des cellules très fréquentes à l'apprentissage.
 
 \subsubsection*{\texorpdfstring{Triplet loss rare-aware \(\mathcal{L}_{\mathrm{triplet}}\)}{Triplet loss rare-aware L triplet}}
 
@@ -517,7 +517,7 @@ Le tableau~\ref{tab:scraw_holdout_pancreas_results} présente les résultats obt
 \label{tab:scraw_holdout_pancreas_results}
 \end{table}
 
-Sur Human Pancreas, scRAW reste proche des meilleures méthodes sur les métriques globales et rares, sans dominer la correction de batch. Les meilleurs scores isolés sont obtenus par des méthodes différentes selon la métrique : ComBat pour l'ARI, Harmony pour l'ACC et la correction de batch, PCA+Leiden pour la RareACC, et Scanorama pour l'UltraRareACC. Sur SCIB Mouse Pancreas 1, scRAW obtient la meilleure ARI et une ACC élevée, mais l'UltraRareACC reste limitée. Ces deux validations externes fournissent donc un premier contrôle sur des jeux non utilisés pendant l'optimisation : scRAW y conserve un comportement compétitif, mais la meilleure méthode dépend encore fortement de la métrique et du jeu de données.
+Sur Human Pancreas, scRAW reste proche des meilleures méthodes sur les métriques globales et rares, sans dominer la correction de batch. Les meilleurs scores isolés sont obtenus par des méthodes différentes selon la métrique : ComBat pour l'ARI, Harmony pour l'ACC et la correction de batch, PCA+Leiden pour la RareACC, et Scanorama pour l'UltraRareACC. Sur SCIB Mouse Pancreas 1, scRAW obtient la meilleure ARI et une ACC élevée, mais l'UltraRareACC reste limitée. De plus les méthodes qui dépassent scRAW sur un jeu de donnée ne le dépasse plus sur l'autre, chose qui met encore en avant l'aspect stable de notre modèle au travers des jeux de données. Ces deux validations externes fournissent donc un premier contrôle sur des jeux non utilisés pendant l'optimisation : scRAW y conserve un comportement compétitif, mais la meilleure méthode dépend encore fortement de la métrique et du jeu de données.
 \section{Travaux complémentaires}
 
 
