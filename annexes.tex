@@ -502,7 +502,77 @@ Clustering final & \texttt{hdbscan\_reassign\_noise} & \texttt{False} & Pas de r
 \section{Figures de recherche d'hyperparamètres scRAW}
 \label{annexe:figures_hyperparametres_scraw}
 
-Cette annexe regroupe les sorties Optuna d'importance moyenne des hyperparamètres pour les trois recherches utilisées dans la construction de la version par défaut de scRAW
+Cette annexe regroupe les sorties Optuna d'importance moyenne des hyperparamètres pour les trois recherches utilisées dans la construction de la version par défaut de scRAW. Les campagnes ne correspondent pas toutes au même niveau de granularité : une première recherche large a été menée sur Baron Human Pancreas, puis deux recherches multi-jeux plus restreintes ont servi à stabiliser une configuration généraliste et à renforcer le critère de sélection sur les populations rares.
+
+Les artefacts sources utilisés pour renseigner ces détails sont conservés dans les dossiers suivants :
+\begin{itemize}
+    \item recherche Baron large : \path{/data2/fbidet/scRAW_EXPERIMENTAL/results/ultra_searches/baron_pancreas_ultra_search} ;
+    \item recherche généraliste sur huit jeux de données : \path{/data2/fbidet/scRAW_EXPERIMENTAL/results/generalist_ultra_search_20260327_154831} ;
+    \item recherche restreinte \texttt{stable\_generalist} : \path{/data2/fbidet/scRAW_EXPERIMENTAL/results/generalist_search_stage1_stable_default_v2_rare_focus_scib_20260413_0210}.
+\end{itemize}
+
+\begin{table}[H]
+\centering
+\scriptsize
+\setlength{\tabcolsep}{3pt}
+\renewcommand{\arraystretch}{1.15}
+\begin{tabularx}{\textwidth}{p{0.20\textwidth}p{0.23\textwidth}p{0.20\textwidth}X}
+\toprule
+\textbf{Campagne} & \textbf{Données et rôle} & \textbf{Essais Optuna} & \textbf{Objectif et sélection} \\
+\midrule
+Baron large & Baron Human Pancreas, recherche exploratoire initiale. & 450 essais de phase 1, tous complets ; les 10 meilleurs candidats ont ensuite été réévalués sur 3 seeds. & TPE, score pondéré : ARI 0.30, NMI 0.25, F1 macro 0.20, BalancedACC 0.15, RareACC 0.10. DANN activé et clustering final mixte HDBSCAN/Leiden, avec 14 clusters cibles pour Leiden. \\
+Généraliste-8 & Huit jeux de données \textit{common-8}, pour sélectionner une configuration transférable. & 80 essais de phase 1 complets ; puis top-6 sur 3 seeds et top-3 de validation. & Score pondéré : ARI 0.20, NMI 0.17, ACC 0.15, F1 macro 0.13, BalancedACC 0.10, RareACC 0.10, UltraRareACC 0.15. Clustering final mixte HDBSCAN/Leiden. \\
+\texttt{stable\_generalist} & Même ensemble d'entraînement \textit{common-8}, recherche restreinte centrée sur les classes rares. & 120 essais prévus dans le manifeste ; la base Optuna disponible contient 55 essais créés, dont 53 complets et 2 encore marqués \texttt{RUNNING}. L'export \textit{live} a été écrit après 12 essais complets. & Score \texttt{rare\_focus} : ARI 0.25, BalancedACC 0.20, RareACC 0.275, UltraRareACC 0.275. Mode \texttt{best\_of\_both}, avec métriques scIB calculées en complément. \\
+\bottomrule
+\end{tabularx}
+\caption{Résumé des campagnes Optuna utilisées pour construire et stabiliser la configuration scRAW décrite dans le rapport.}
+\label{tab:scraw_optuna_runs_summary}
+\end{table}
+
+Dans le Tableau~\ref{tab:scraw_optuna_search_spaces}, les listes correspondent à des choix catégoriels, tandis que les intervalles annotés \textit{log-uniform} sont échantillonnés continûment dans l'espace logarithmique.
+
+{\scriptsize
+\setlength{\tabcolsep}{3pt}
+\renewcommand{\arraystretch}{1.12}
+\begin{longtable}{p{0.25\textwidth}p{0.68\textwidth}}
+\caption{Hyperparamètres et plages de valeurs testés dans les trois recherches Optuna scRAW.}
+\label{tab:scraw_optuna_search_spaces}\\
+\toprule
+\textbf{Campagne et bloc} & \textbf{Hyperparamètres testés et valeurs possibles} \\
+\midrule
+\endfirsthead
+\toprule
+\textbf{Campagne et bloc} & \textbf{Hyperparamètres testés et valeurs possibles} \\
+\midrule
+\endhead
+\midrule
+\multicolumn{2}{r}{\textit{Suite page suivante}}\\
+\endfoot
+\bottomrule
+\endlastfoot
+
+Baron large -- architecture & \texttt{hidden\_layers} : \texttt{256,128,64}, \texttt{512,256,128}, \texttt{512,256}, \texttt{1024,512,256,128} ; \texttt{z\_dim} : 64, 96, 128, 192, 256 ; \texttt{dropout} : 0.05--0.30 par pas de 0.05. \\
+Baron large -- entraînement & \texttt{epochs} : 80--220 par pas de 10 ; \texttt{warmup\_ratio} : 0.15--0.45 par pas de 0.05, converti en \texttt{warmup\_epochs} ; \texttt{lr} : \(2\cdot10^{-4}\)--\(5\cdot10^{-3}\), \textit{log-uniform} ; \texttt{batch\_size} : 128, 192, 256, 384, 512. \\
+Baron large -- reconstruction & \texttt{reconstruction\_distribution} : \texttt{nb} ou \texttt{mse} ; \texttt{nb\_input\_transform} : \texttt{log1p} ou \texttt{pearson\_residuals} ; \texttt{nb\_theta} : 1--120, \textit{log-uniform} ; \texttt{masking\_rate} : 0.10--0.40 par pas de 0.05 ; \texttt{masked\_recon\_weight} : 0.50--1.00 par pas de 0.05 ; \texttt{masking\_apply\_weighted} : \texttt{True}/\texttt{False}. \\
+Baron large -- pondération & \texttt{weight\_exponent} : 0.1--0.8 par pas de 0.1 ; \texttt{cluster\_density\_alpha} : 0.0--1.0 par pas de 0.1 ; \texttt{density\_knn\_k} : 10, 15, 20, 30 ; \texttt{density\_weight\_clip} : 3.0, 5.0, 8.0, 10.0 ; \texttt{dynamic\_weight\_momentum} : 0.50--0.95 par pas de 0.05 ; \texttt{dynamic\_weight\_update\_interval} : 5, 10, 15, 20 ; \texttt{min\_cell\_weight} : 0.10--0.60 par pas de 0.05 ; \texttt{max\_cell\_weight} : 5.0, 8.0, 10.0, 15.0, 20.0 ; \texttt{weight\_fusion\_mode} : \texttt{additive} ou \texttt{multiplicative}. \\
+Baron large -- triplet & \texttt{rare\_triplet\_weight} : 0.01--0.30, \textit{log-uniform} ; \texttt{triplet\_start\_offset} : 0--25 par pas de 5, ajouté au warm-up ; \texttt{rare\_triplet\_margin} : 0.2--1.0 par pas de 0.1 ; \texttt{rare\_triplet\_min\_weight} : 0.8--2.0 par pas de 0.2 ; \texttt{max\_triplet\_anchors\_per\_batch} : 32, 64, 96, 128. \\
+Baron large -- batch et clustering & \texttt{adversarial\_batch\_weight} : 0.01--0.50, \textit{log-uniform} ; \texttt{adversarial\_lambda} : 0.25--2.5 par pas de 0.25 ; \texttt{adversarial\_start\_epoch} : de 0 à \(\min(60,\mathrm{epochs}-1)\) par pas de 5 ; \texttt{adversarial\_ramp\_epochs} : 0--60 par pas de 5 ; \texttt{mmd\_batch\_weight} : 0.0, 0.02, 0.05, 0.1 ; \texttt{pseudo\_label\_method} : \texttt{leiden} ou \texttt{kmeans} ; \texttt{hdbscan\_min\_cluster\_size} : 2--20 ; \texttt{hdbscan\_min\_samples} : 1--10, borné par la taille minimale de cluster ; \texttt{hdbscan\_cluster\_selection\_method} : \texttt{eom} ou \texttt{leaf} ; \texttt{hdbscan\_reassign\_noise} : \texttt{True}/\texttt{False} ; clustering final : HDBSCAN ou Leiden avec recherche de résolution 0.05--3.0. \\
+\midrule
+Généraliste-8 -- architecture & \texttt{hidden\_layers} : \texttt{512,256,128} ou \texttt{512,256} ; \texttt{z\_dim} : 128, 192, 256 ; \texttt{dropout} : 0.20, 0.25, 0.30. \\
+Généraliste-8 -- entraînement & \texttt{epochs} : 80, 100, 210 ; \texttt{warmup\_epochs} : 36, 45, 74 ; \texttt{lr} : 0.00047--0.0024, \textit{log-uniform} ; \texttt{batch\_size} : 192 ou 384. \\
+Généraliste-8 -- reconstruction & \texttt{reconstruction\_distribution} : \texttt{nb} ou \texttt{mse} ; \texttt{nb\_input\_transform} : \texttt{log1p} ou \texttt{pearson\_residuals} ; \texttt{nb\_theta} : 2.6--104.8, \textit{log-uniform} ; \texttt{masking\_rate} : 0.10, 0.15, 0.20 ; \texttt{masked\_recon\_weight} : 0.60 ou 0.80 ; \texttt{masking\_apply\_weighted} fixé à \texttt{True}. \\
+Généraliste-8 -- pondération & \texttt{weight\_exponent} : 0.1 ou 0.2 ; \texttt{cluster\_density\_alpha} : 0.20--0.60 ; \texttt{density\_knn\_k} : 15 ; \texttt{density\_weight\_clip} : 3.0 ou 8.0 ; \texttt{dynamic\_weight\_momentum} : 0.50--0.85 ; \texttt{dynamic\_weight\_update\_interval} : 10 ou 20 ; \texttt{min\_cell\_weight} : 0.29--0.505 ; \texttt{max\_cell\_weight} : 8.0, 10.0, 15.0 ; \texttt{weight\_fusion\_mode} : \texttt{additive} ou \texttt{multiplicative}. \\
+Généraliste-8 -- triplet & \texttt{rare\_triplet\_weight} : 0.0226--0.2346, \textit{log-uniform} ; \texttt{rare\_triplet\_start\_epoch} : 46, 60, 84 ; \texttt{rare\_triplet\_margin} : 0.4 ou 0.5 ; \texttt{rare\_triplet\_min\_weight} : 0.8, 1.0, 1.8 ; \texttt{max\_triplet\_anchors\_per\_batch} : 64 ou 128. \\
+Généraliste-8 -- batch et clustering & \texttt{use\_batch\_conditioning} fixé à \texttt{True} ; \texttt{adversarial\_batch\_weight} : 0.028--0.314, \textit{log-uniform} ; \texttt{adversarial\_lambda} : 0.5, 1.0, 1.25, 1.5, 1.75 ; \texttt{adversarial\_start\_epoch} : 30, 40, 55 ; \texttt{adversarial\_ramp\_epochs} : 50, 55, 60 ; \texttt{mmd\_batch\_weight} : 0.0 ou 0.05 ; \texttt{pseudo\_label\_method} fixé à \texttt{leiden} ; \texttt{hdbscan\_cluster\_selection\_method} fixé à \texttt{eom} ; \texttt{hdbscan\_min\_cluster\_size} : 8 ou 9 ; \texttt{hdbscan\_min\_samples} : 2, 3, 4, 8 ; \texttt{hdbscan\_reassign\_noise} : \texttt{True}/\texttt{False} ; clustering final demandé : \texttt{hdbscan} ou \texttt{leiden}. \\
+\midrule
+\texttt{stable\_generalist} -- architecture & \texttt{hidden\_layers} fixé à \texttt{512,256} ; \texttt{z\_dim} : 192 ou 256 ; \texttt{dropout} : 0.20, 0.25, 0.30. \\
+\texttt{stable\_generalist} -- entraînement & \texttt{epochs} : 80 ou 100 ; \texttt{warmup\_epochs} : 60, 74, 84 ; \texttt{lr} : 0.00085--0.00125, \textit{log-uniform} ; \texttt{batch\_size} : 192 ou 384. \\
+\texttt{stable\_generalist} -- reconstruction & \texttt{reconstruction\_distribution} fixé à \texttt{mse} ; \texttt{nb\_input\_transform} fixé à \texttt{log1p} ; \texttt{nb\_theta} : 6.5--20.5, \textit{log-uniform} ; \texttt{masking\_rate} : 0.10, 0.15, 0.20 ; \texttt{masked\_recon\_weight} fixé à 0.80 ; \texttt{masking\_apply\_weighted} fixé à \texttt{True}. \\
+\texttt{stable\_generalist} -- pondération & \texttt{weight\_exponent} : 0.1 ou 0.2 ; \texttt{cluster\_density\_alpha} : 0.35--0.60 ; \texttt{density\_knn\_k} : 15 ; \texttt{density\_weight\_clip} : 3.0 ou 8.0 ; \texttt{dynamic\_weight\_momentum} : 0.76--0.85 ; \texttt{dynamic\_weight\_update\_interval} : 10 ou 20 ; \texttt{min\_cell\_weight} : 0.38--0.44 ; \texttt{max\_cell\_weight} : 8.0, 10.0, 15.0 ; \texttt{weight\_fusion\_mode} fixé à \texttt{additive}. \\
+\texttt{stable\_generalist} -- triplet & \texttt{rare\_triplet\_weight} : 0.09--0.23, \textit{log-uniform} ; \texttt{rare\_triplet\_start\_epoch} : 60, 74, 84 ; \texttt{rare\_triplet\_margin} : 0.4 ou 0.5 ; \texttt{rare\_triplet\_min\_weight} : 1.0, 1.2, 1.8 ; \texttt{max\_triplet\_anchors\_per\_batch} fixé à 128. \\
+\texttt{stable\_generalist} -- batch et clustering & \texttt{use\_batch\_conditioning} fixé à \texttt{True} ; \texttt{adversarial\_batch\_weight} : 0.04--0.10, \textit{log-uniform} ; \texttt{adversarial\_lambda} : 0.5, 0.75, 1.0 ; \texttt{adversarial\_start\_epoch} : 45 ou 55 ; \texttt{adversarial\_ramp\_epochs} : 55 ou 60 ; \texttt{mmd\_batch\_weight} : 0.0 ou 0.05 ; \texttt{pseudo\_label\_method} fixé à \texttt{leiden} ; \texttt{hdbscan\_cluster\_selection\_method} fixé à \texttt{eom} ; \texttt{hdbscan\_min\_cluster\_size} : 8, 9, 10 ; \texttt{hdbscan\_min\_samples} : 3, 5, 8 ; \texttt{hdbscan\_reassign\_noise} : \texttt{True}/\texttt{False} ; clustering final demandé : \texttt{best\_of\_both}. \\
+\end{longtable}
+}
 
 \begin{figure}[H]
     \centering
