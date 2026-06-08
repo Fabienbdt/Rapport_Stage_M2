@@ -101,6 +101,33 @@ Tabula Muris liver & Souris & 2 859 & 22 966 & 1 & 5 & 0,000 & 0,578 \\
 \label{tab:datasets}
 \end{table}
 
+\begin{table}[H]
+    \centering
+    \small
+    \begin{tabular}{lrrl}
+        \toprule
+        \textbf{Type cellulaire} & \textbf{Cellules} & \textbf{Proportion} & \textbf{Statut} \\
+        \midrule
+        \textit{beta} & 2\,525 & 29,47\,\% & Fréquente \\
+        \textit{alpha} & 2\,326 & 27,14\,\% & Fréquente \\
+        \textit{ductal} & 1\,077 & 12,57\,\% & Fréquente \\
+        \textit{acinar} & 958 & 11,18\,\% & Fréquente \\
+        \textit{delta} & 601 & 7,01\,\% & Fréquente \\
+        \textit{activated\_stellate} & 284 & 3,31\,\% & Rare \\
+        \textit{gamma} & 255 & 2,98\,\% & Rare \\
+        \textit{endothelial} & 252 & 2,94\,\% & Rare \\
+        \textit{quiescent\_stellate} & 173 & 2,02\,\% & Rare \\
+        \textit{macrophage} & 55 & 0,64\,\% & Ultra-rare \\
+        \textit{mast} & 25 & 0,29\,\% & Ultra-rare \\
+        \textit{epsilon} & 18 & 0,21\,\% & Ultra-rare \\
+        \textit{schwann} & 13 & 0,15\,\% & Ultra-rare \\
+        \textit{t\_cell} & 7 & 0,08\,\% & Ultra-rare \\
+        \bottomrule
+    \end{tabular}
+    \caption{Composition du jeu de données Baron après filtrage. Les classes rares correspondent aux types représentant moins de 5\,\% des cellules, et les classes ultra-rares à ceux représentant moins de 1\,\%.}
+    \label{tab:classes_baron}
+\end{table}
+
 \subsection*{Description des métriques de caractérisation des jeux de données}
 
 \begin{itemize}
@@ -248,7 +275,7 @@ DESC & Correction batch & 205,2 \\
 \begin{figure}[H]
     \centering
     \includegraphics[width=\textwidth,height=0.93\textheight,keepaspectratio]{scraw_common8_family_panel/common8_family_all_methods_panel.pdf}
-    \caption{Résultats complets par famille sur les huit jeux de données communs. Les boîtes représentent la distribution des scores disponibles par méthode sur les jeux de données ; pour l'UltraRareACC, les jeux sans classe ultra-rare ne contribuent pas à la distribution. Les méthodes sont ordonnées par moyenne croissante dans chaque sous-panneau. \textbf{scRAW} est ajouté comme repère dans chaque famille.}
+    \caption{Résultats complets par famille sur les huit jeux de données communs. Les boîtes résument la distribution des scores par méthode ; les jeux sans classe ultra-rare ne contribuent pas à l'UltraRareACC. \textbf{scRAW} est ajouté comme repère dans chaque famille.}
     \label{fig:common8_family_all_methods}
 \end{figure}
 Les tableaux suivants présentent les résultats bruts détaillés par jeu de données pour chaque métrique d'évaluation pour les méthodes principales :
@@ -584,3 +611,27 @@ Cette section regroupe les captures d'écran illustrant le fonctionnement et le 
     
     \caption{Aperçu des différentes étapes de l'interface Streamlit de SCRBenchmark (2\textsuperscript{e} partie : exécution et résultats).}
 \end{figure}
+
+\newpage
+\section{Glossaire et abréviations}
+\label{annexe:glossaire}
+
+\begin{description}
+    \item[ACC] Accuracy, proportion de cellules correctement attribuées après appariement des clusters.
+    \item[ARI] Adjusted Rand Index, métrique de similarité entre deux partitions de clustering.
+    \item[Batch] Ensemble de cellules partageant une même origine technique ou expérimentale.
+    \item[Contrastive learning] Apprentissage par contraste, méthode visant à rapprocher les représentations de cellules similaires et à éloigner celles de cellules différentes.
+    \item[DANN] Domain-Adversarial Neural Network, réseau de neurones adverse utilisé pour éliminer l'effet de batch dans l'espace latent à l'aide d'une inversion de gradient.
+    \item[DEG] Differentially Expressed Genes, gènes exprimés de manière différentielle entre plusieurs populations ou clusters cellulaires (gènes marqueurs).
+    \item[HDBSCAN] Hierarchical Density-Based Spatial Clustering of Applications with Noise, algorithme de clustering fondé sur la densité capable d'isoler des groupes et de détecter le bruit.
+    \item[HVG] Highly Variable Genes, gènes hautement variables sélectionnés après prétraitement.
+    \item[KL (Divergence de)] Kullback-Leibler, mesure statistique de la différence entre deux distributions de probabilité, utilisée pour régulariser les VAE ou contraindre le clustering.
+    \item[Masked autoencoder] Autoencodeur masqué, architecture entraînée à prédire des parties manquantes des données d'entrée pour apprendre des représentations robustes.
+    \item[MSE] Mean Squared Error, erreur quadratique moyenne utilisée comme fonction de coût de reconstruction.
+    \item[NMI] Normalized Mutual Information, métrique d'information partagée entre clusters et annotations de référence.
+    \item[PCA] Principal Component Analysis, réduction linéaire de dimension.
+    \item[scRNA-seq] Single-cell RNA sequencing, séquençage de l'ARN à l'échelle de la cellule unique.
+    \item[UMAP] Uniform Manifold Approximation and Projection, méthode non linéaire de réduction de dimension utilisée pour la visualisation.
+    \item[VAE] Variational Autoencoder, modèle d'apprentissage profond probabiliste projetant les cellules sous forme de distributions de probabilité dans l'espace latent.
+    \item[ZINB / NB] Zero-Inflated Negative Binomial / Negative Binomial, lois binomiales négatives modélisant la sparsité et le bruit de comptage des gènes en single-cell.
+\end{description}

@@ -14,7 +14,7 @@ Au cours de ce stage, j'ai été encadré par une équipe aux expertises complé
 \end{itemize}
 
 \subsubsection*{Cadre de travail}
-J'ai travaillé dans un bureau partagé avec des doctorant·e·s et d'autres stagiaires. Ce cadre a favorisé les échanges scientifiques au quotidien, m'offrant une meilleure compréhension des enjeux d'une thèse et du métier de jeune chercheur·euse.
+J'ai travaillé dans un bureau partagé avec des doctorant·e·s et d'autres stagiaires. Ce cadre a favorisé les échanges scientifiques au quotidien, m'offrant une meilleure compréhension des enjeux d'une thèse et du métier de jeune chercheur·euse. L'intégration au sein de l'équipe BKB m'a ainsi permis de confronter l'abstraction des modèles d'apprentissage profond à la réalité des données biologiques complexes, en bénéficiant de retours à la fois méthodologiques et applicatifs.
 
 J'ai également assisté aux séminaires hebdomadaires organisés par les doctorant·e·s de l'équipe BKB, au cours desquels chercheur·euse·s, doctorant·e·s et stagiaires présentaient leurs travaux en bioinformatique. Ces séminaires m'ont permis de présenter mes travaux à deux reprises, contribuant ainsi à préparer ma soutenance finale. J'ai également eu l'opportunité de participer aux séminaires d'autres équipes, notamment celles spécialisées en intelligence artificielle. Ces événements ont constitué un complément important à ma formation, en particulier pour un profil situé à l'interface entre bioinformatique et intelligence artificielle. D'un point de vue technique, j'ai bénéficié d'un accès distant (via SSH) à un serveur de calcul interne au LaBRI pour réaliser mes expérimentations.
 
@@ -118,6 +118,10 @@ Face à ces limites, l'identification des populations cellulaires minoritaires e
 
 Les méthodes dédiées aux cellules rares cherchent soit des gènes caractéristiques de petites populations, comme GiniClust ou CellSIUS, soit une représentation plus favorable aux groupes minoritaires, comme scAIDE, DeepScena ou scCAD. Ces approches partagent l'idée qu'un clustering global tend à favoriser les grandes populations et peut masquer les sous-types peu représentés. scRAW s'inscrit dans cette continuité, mais intègre cette contrainte directement pendant l'apprentissage en augmentant le poids des cellules isolées ou faiblement représentées dans la loss de reconstruction.
 
+Ces méthodes ne répondent cependant pas exactement au même problème. GiniClust et CellSIUS reposent fortement sur l'identification de signatures ou de marqueurs locaux, ce qui peut être limitant lorsque la population rare est proche d'un type majoritaire. scAIDE et DeepScena améliorent plutôt la représentation ou raffinent les clusters, mais la prise en compte des cellules rares intervient surtout par la procédure de clustering. scCAD aborde les populations rares comme des profils atypiques, ce qui peut être efficace pour des sous-populations très distinctes, mais moins adapté lorsque rareté et anomalie ne coïncident pas. scRAW se distingue de ces approches en intégrant directement la rareté dans l'objectif d'apprentissage, via une pondération dynamique de la reconstruction.
+
+Des approches récentes comme scHNTL \cite{meng_schntl_2025} utilisent également des contraintes de type triplet loss pour structurer l'espace latent. Dans scRAW, cette logique est réorientée vers les cellules rares, en combinant triplet loss, pondération dynamique et correction adversariale de batch.
+
 \subsection{Données}
 
 Pour évaluer la robustesse d'une méthode de clustering, il est nécessaire de la tester sur des données variées. Pour cette évaluation, nous nous sommes appuyés sur une collection de huit jeux de données du sous-ensemble commun, détaillés en Annexe~\ref{annexe:datasets}.
@@ -196,6 +200,8 @@ scVI \cite{Lopez2018scVI} & Autoencodeur Variationnel (VAE) & Modélisation prob
 \label{tab:batch_correction}
 \end{table}
 
+Les approches adversariales de type DANN diffèrent des corrections appliquées en prétraitement : elles apprennent directement un espace latent dans lequel l'information de batch devient difficile à prédire. Un classifieur tente d'identifier le batch, tandis que l'encodeur reçoit un gradient inversé qui l'incite à supprimer cette information. Cette stratégie est intéressante pour scRAW car elle permet de combiner reconstruction, pondération des cellules rares et réduction de l'effet de batch dans un même objectif d'apprentissage.
+
 \section{Comparaison de l'existant}
 
 Nous avons d'abord comparé plusieurs méthodes de l'état de l'art appliquées aux données de séquençage d'ARN à cellule unique (scRNA-seq). À ce stade, l'objectif était d'étudier des approches généralistes ne traitant pas explicitement l'effet de batch ni le déséquilibre des populations cellulaires. Cette première comparaison visait aussi à identifier leurs limites lorsque l'évaluation porte sur des classes rares ou sur des données non vues. Pour cela, nous nous sommes en partie appuyés sur le protocole et la sélection de méthodes du benchmark scCluBench \cite{xu_scclubench_2026}, en retenant plusieurs approches de deep learning fondées sur des autoencodeurs ou sur des graphes.
@@ -204,7 +210,7 @@ Le protocole de comparaison devait permettre de modifier les hyperparamètres de
 
 \subsection{Logiciel}
 
-Développée en Python, la plateforme SCRBenchmark s'appuie sur le package \texttt{Streamlit} pour proposer une interface graphique interactive (GUI), tout en offrant une interface en ligne de commande (CLI) pour l'exécution sur serveur de calcul. Elle a été conçue pour faciliter la construction, la reproduction et l'interprétation des expériences de comparaison, y compris pour des utilisateur·rice·s ne travaillant pas directement dans le code au quotidien. Le logiciel regroupe dans un même environnement le chargement des données, le choix du protocole expérimental, le prétraitement, la sélection des méthodes, l'exécution des analyses et l'exploration des résultats. Sa structure logique est résumée dans la figure \ref{fig:organisation_logiciel}.
+Développée en Python, la plateforme SCRBenchmark s'appuie sur le package \texttt{Streamlit} pour proposer une interface graphique interactive (GUI), tout en offrant une interface en ligne de commande (CLI) pour l'exécution sur serveur de calcul. Le choix de \texttt{Streamlit} s'est imposé car il s'agit d'une solution entièrement en Python, le langage principal de mes développements. C'était une solution simple et parfaitement adaptée pour concevoir rapidement l'interface interactive dont nous avions besoin : afficher des graphiques, manipuler des paramètres via des curseurs et déclencher des actions avec des boutons. Elle a été conçue pour faciliter la construction, la reproduction et l'interprétation des expériences de comparaison, y compris pour des utilisateur·rice·s ne travaillant pas directement dans le code au quotidien. Le logiciel regroupe dans un même environnement le chargement des données, le choix du protocole expérimental, le prétraitement, la sélection des méthodes, l'exécution des analyses et l'exploration des résultats. Sa structure logique est résumée dans la figure \ref{fig:organisation_logiciel}.
 
 \begin{figure}[!htbp]
     \centering
@@ -228,34 +234,7 @@ Enfin, SCRBenchmark sauvegarde les éléments nécessaires à l'analyse et à la
 
 Nous avons retenu le jeu de données de référence de cellules de pancréas humains produit par Baron et al. \cite{Baron2016} pour les expériences présentées ici. Ce choix permettait de réunir dans un même cadre les deux difficultés au centre du rapport : un effet de batch lié aux donneurs et un fort déséquilibre entre types cellulaires. Le jeu de données regroupe quatre donneurs humains, notés \textit{human1} à \textit{human4}, et constitue un standard de référence largement utilisé pour évaluer les méthodes de clustering en scRNA-seq. Les publications originales de plusieurs méthodes d'apprentissage profond comme scDeepCluster \cite{tian2019clustering}, scNAME \cite{wan_scname_2022}, scMAE \cite{Fang2024scMAE} et scCDCG \cite{xu_sccdcg_2025}, ainsi que des approches dédiées aux populations rares telles que CellSIUS \cite{Neri2019}, scAIDE \cite{scAIDE2020}, DeepScena \cite{Lei2023scHDR}, scCAD \cite{Xu2024scCAD} et le benchmark scCluBench \cite{xu_scclubench_2026}, s'appuient sur ce type de données de référence pour valider leurs performances.
 
-Après filtrage, les expériences sur Baron portent sur 8\,569 cellules réparties en quatorze types cellulaires. Le tableau~\ref{tab:classes_baron} montre que les cellules \textit{alpha} et \textit{beta} représentent à elles seules plus de la moitié du jeu de données, tandis que plusieurs populations d'intérêt biologique, comme les \textit{macrophage}, \textit{mast}, \textit{schwann} ou \textit{t\_cell}, représentent moins de 1\,\% des cellules. Ce jeu de données est donc particulièrement adapté pour tester si un algorithme conserve les petites populations au lieu d'optimiser uniquement les grandes classes.
-
-\begin{table}[H]
-    \centering
-    \small
-    \begin{tabular}{lrrl}
-        \toprule
-        \textbf{Type cellulaire} & \textbf{Cellules} & \textbf{Proportion} & \textbf{Statut} \\
-        \midrule
-        \textit{beta} & 2\,525 & 29,47\,\% & Fréquente \\
-        \textit{alpha} & 2\,326 & 27,14\,\% & Fréquente \\
-        \textit{ductal} & 1\,077 & 12,57\,\% & Fréquente \\
-        \textit{acinar} & 958 & 11,18\,\% & Fréquente \\
-        \textit{delta} & 601 & 7,01\,\% & Fréquente \\
-        \textit{activated\_stellate} & 284 & 3,31\,\% & Rare \\
-        \textit{gamma} & 255 & 2,98\,\% & Rare \\
-        \textit{endothelial} & 252 & 2,94\,\% & Rare \\
-        \textit{quiescent\_stellate} & 173 & 2,02\,\% & Rare \\
-        \textit{macrophage} & 55 & 0,64\,\% & Ultra-rare \\
-        \textit{mast} & 25 & 0,29\,\% & Ultra-rare \\
-        \textit{epsilon} & 18 & 0,21\,\% & Ultra-rare \\
-        \textit{schwann} & 13 & 0,15\,\% & Ultra-rare \\
-        \textit{t\_cell} & 7 & 0,08\,\% & Ultra-rare \\
-        \bottomrule
-    \end{tabular}
-    \caption[Composition du jeu de données Baron après filtrage.]{Composition du jeu de données Baron après filtrage. Les classes rares correspondent aux types représentant moins de 5\,\% des cellules, et les classes ultra-rares à ceux représentant moins de 1\,\%.}
-    \label{tab:classes_baron}
-\end{table}
+Après filtrage, les expériences sur Baron portent sur 8\,569 cellules réparties en quatorze types cellulaires. Le tableau~\ref{tab:classes_baron} (disponible en Annexe~\ref{annexe:datasets}) montre que les cellules \textit{alpha} et \textit{beta} représentent à elles seules plus de la moitié du jeu de données, tandis que plusieurs populations d'intérêt biologique, comme les \textit{macrophage}, \textit{mast}, \textit{schwann} ou \textit{t\_cell}, représentent moins de 1\,\% des cellules. Ce jeu de données est donc particulièrement adapté pour tester si un algorithme conserve les petites populations au lieu d'optimiser uniquement les grandes classes.
 
 Différentes expériences ont été menées afin de répondre à la question suivante : un modèle apprenant une représentation sur certaines cellules reste-t-il performant sur des cellules jamais vues pendant l'entraînement ? Cette question distingue deux cadres d'évaluation. Dans un cadre transductif, toutes les cellules sont disponibles au moment de l'apprentissage et le modèle construit ses groupes à partir de l'ensemble complet. Ce cadre est utile pour explorer un jeu de données déjà acquis, mais il renseigne peu sur le comportement du modèle sur des données qu'il n'a pas vues pendant son apprentissage. Dans un cadre inductif, au contraire, le modèle est entraîné sur une partie des cellules, puis il doit projeter ou classer de nouvelles cellules sans être réentraîné depuis le début.
 
@@ -336,6 +315,8 @@ La matrice prétraitée est ensuite utilisée comme entrée d'un autoencodeur sy
 L'entraînement est divisé en deux phases. Pendant les premières époques ($E_{\mathrm{pre}}$), toutes les cellules contribuent de manière uniforme à la reconstruction. Cette phase de préentraînement sert à stabiliser l'espace latent avant d'introduire la pondération. À partir de l'époque $E_{\mathrm{pre}}$, scRAW recalcule périodiquement (toutes les $E_{\mathrm{upd}}$ époques) des pseudo-labels et des poids cellulaires à partir de l'espace latent courant. Dans la configuration par défaut, les pseudo-labels sont obtenus avec Leiden. Les poids déjà présents sont lissés par une moyenne mobile avec un momentum afin d'éviter des changements trop brusques au cours de l'apprentissage.
 
 À la fin de l'entraînement, l'encodeur produit la représentation latente finale, ou embedding, de chaque cellule. Le clustering final est ensuite réalisé avec HDBSCAN dans cet espace latent, avec une taille minimale de 8 cellules par groupe et une estimation locale fondée sur 6 voisins. Les points considérés comme bruit par HDBSCAN ne sont pas réassignés dans cette configuration. Les sorties principales de scRAW sont donc l'espace latent, les labels de clusters prédits, les poids cellulaires finaux, le modèle entraîné, l'historique des termes de loss \(\mathcal{L}\) et les métriques calculées par le pipeline d'évaluation.
+
+HDBSCAN a été retenu comme clustering final car il ne nécessite pas de fixer directement le nombre de clusters et peut isoler des groupes de densités différentes, tout en laissant certains points comme bruit. Ces propriétés sont adaptées aux jeux déséquilibrés, où les populations rares ne forment pas toujours des groupes de même taille ou de même densité que les populations majoritaires. Ce choix reste toutefois important : les figures d'importance des hyperparamètres montrent que les paramètres de HDBSCAN influencent fortement les performances finales, ce qui confirme que le clustering final joue un rôle non négligeable dans scRAW.
 
 \subsection{\texorpdfstring{Fonctions de perte (loss) \(\mathcal{L}\) et variantes}{Fonctions de perte loss L et variantes}}
 
@@ -422,15 +403,7 @@ Pour faciliter la lecture, la figure~\ref{fig:scraw_common8_family_top3_plus_scr
 \begin{figure}[!htbp]
     \centering
     \includegraphics[width=\textwidth,height=0.82\textheight,keepaspectratio]{Images/PresentationOrale/common8_top3_family_sorted_barplots.png}
-    \caption[Distribution des performances sur les huit jeux de données communs pour scRAW et le top 3 de chaque famille de méthodes.]{%
-        Distribution des performances sur les huit jeux de données communs pour scRAW et le top 3 de chaque famille de méthodes.
-        Chaque panneau correspond à une métrique (de haut en bas~: ARI, ACC, RareACC, UltraRareACC, correction de batch).
-        Les couleurs identifient les familles de méthodes~: scRAW (rouge), \textbf{Rare Specific} (bleu),
-        \textbf{Méthodes généralistes} (orange) et \textbf{Correction de batch} (vert).
-        Pour chaque métrique, les méthodes représentées (scRAW et les trois meilleures de chaque famille) sont triées globalement par moyenne décroissante (meilleure à gauche).
-        Les boîtes représentent la distribution des scores par jeu de données, les points noirs les valeurs individuelles et le losange blanc la moyenne~;
-        pour l'UltraRareACC, les jeux sans cellules ultra-rares ne contribuent pas au calcul, et pour la correction de batch, les jeux sans effet de batch exploitable sont indiqués comme NA et exclus du calcul.%
-    }
+    \caption[Distribution des performances sur les huit jeux de données communs.]{Distribution des performances sur les huit jeux de données communs. scRAW est comparé aux trois meilleures méthodes de chaque famille pour chaque métrique. Les boîtes résument les scores par jeu de données ; les points noirs indiquent les valeurs individuelles et le losange blanc la moyenne.}
     \label{fig:scraw_common8_family_top3_plus_scraw}
 \end{figure}
 
@@ -513,7 +486,7 @@ Sur Human Pancreas, scRAW reste proche des meilleures méthodes sur les métriqu
 
 \subsection{Transfert de loss}
 
-Cette expérience évalue la transférabilité de la pondération de reconstruction \(\mathcal{L}_{\mathrm{recon,ponderee}}\) à d'autres architectures de deep learning dotées d'une loss de reconstruction compatible (scMAE, scDeepCluster et DESC). Il s'agit ainsi de dissocier l'effet propre de la pondération orientée cellules rares de l'apport de l'architecture globale de scRAW. Les méthodes testées sont scMAE, scDeepCluster et DESC.
+Cette expérience évalue la transférabilité de la pondération de reconstruction \(\mathcal{L}_{\mathrm{recon,ponderee}}\) à d'autres architectures de deep learning dotées d'une loss de reconstruction compatible : scMAE, scDeepCluster et DESC. Il s'agit ainsi de dissocier l'effet propre de la pondération orientée cellules rares de l'apport de l'architecture globale de scRAW.
 
 Pour chaque méthode, la baseline, c'est-à-dire la configuration de référence, correspond à l'algorithme de base avec ses hyperparamètres d'origine. Les variantes pondérées conservent cette base, mais ajoutent une pondération dans la loss de reconstruction \(\mathcal{L}_{\mathrm{recon}}\), ce qui donne une version \(\mathcal{L}_{\mathrm{recon,ponderee}}\). Comme dans la configuration par défaut de scRAW, cette pondération n'est pas activée dès le début de l'entraînement : une phase de warm-up est conservée, puis la pondération démarre à l'époque 55. Pour les variantes avec triplet loss \(\mathcal{L}_{\mathrm{triplet}}\), cette composante est activée à partir de l'époque 60.
 
@@ -527,6 +500,8 @@ Plusieurs configurations ont été testées : pondération par densité seule, p
 \end{figure}
 
 Les résultats montrent que l'effet de la pondération dépend de l'algorithme considéré. Pour scDeepCluster, la variante pondérée améliore les trois métriques retenues, avec un gain marqué sur UltraRareACC. Pour scMAE, la pondération améliore RareACC et UltraRareACC, mais l'ARI diminue légèrement. Pour DESC, la meilleure variante améliore RareACC, tandis que l'ARI et UltraRareACC restent légèrement inférieurs à la baseline. Ces résultats indiquent que la pondération peut être transférée à d'autres modèles, mais que son effet dépend de l'architecture et du mode de clustering final.
+
+Une explication possible est que scDeepCluster, qui combine déjà reconstruction et objectif de clustering, bénéficie directement d'une reconstruction plus attentive aux cellules rares avant la formation des groupes. Pour scMAE, la reconstruction masquée apprend déjà une représentation robuste ; ajouter une pondération peut améliorer les petites classes, mais aussi déformer légèrement la structure globale, ce qui expliquerait la baisse d'ARI. Dans DESC, l'effet plus limité pourrait venir du poids important de l'objectif de clustering, qui contraint fortement l'espace latent et laisse moins de marge à la pondération de reconstruction.
 
 \subsection{Induction}
 
@@ -545,6 +520,8 @@ Les résultats sont agrégés par jeu de données : les splits disponibles sont 
 
 Sur ces moyennes par jeu de données, scRAW obtient une moyenne de $0{,}787$ en ARI, $0{,}826$ en ACC, $0{,}752$ en RareACC et $0{,}790$ en UltraRareACC. La différence par rapport aux autres méthodes est surtout marquée sur l'UltraRareACC, où ces dernières restent plus instables et nettement plus basses en moyenne. La RareACC est plus contrastée : certains jeux de données restent difficiles, notamment Kang PBMC, mais scRAW conserve une distribution globalement élevée. Ces résultats suggèrent que scRAW conserve un comportement efficace dans un cadre inductif pour l'identification de populations rares et ultra-rares sur des jeux de données déséquilibrés.
 
+Ces résultats restent à interpréter avec prudence. En induction, le modèle ne redécouvre pas entièrement la structure du jeu test : il projette de nouvelles cellules dans un espace appris sur les groupes d'entraînement. Cette logique est adaptée à un scénario de type nouveau patient, mais elle peut échouer si le groupe test contient un état cellulaire absent de l'entraînement ou une population rare très spécifique au patient laissé de côté. L'intérêt de scRAW est donc surtout de conserver une représentation utilisable pour comparer de nouveaux échantillons à une cohorte de référence, plutôt que de remplacer une analyse transductive complète.
+
 \subsection{Interprétation biologique}
 
 Une analyse biologique a été réalisée sur Baron Human Pancreas avec scRAW. Elle vise à évaluer la cohérence des clusters prédits par scRAW avec les types cellulaires de référence à partir des gènes marqueurs, comme résumé dans la figure~\ref{fig:baron_scraw_bio_interpretation}. Inspiré des protocoles de caractérisation biologique de scCluBench \cite{xu_scclubench_2026} et de scAIDE \cite{scAIDE2020}, ce protocole de validation extrait et compare les signatures d'expression des clusters prédits avec les types cellulaires de référence. Pour chaque type cellulaire de la vérité terrain et pour chaque cluster prédit, les 100 meilleurs gènes différentiellement exprimés (DEG) sont extraits à l'aide d'un test de Wilcoxon bilatéral. Ce calcul statistique est effectué après avoir filtré les gènes exprimés dans moins de 3 cellules, normalisé la somme des comptes par cellule à une cible de 10\,000 et appliqué une transformation logarithmique ($\log(x+1)$). En pratique, les gènes sont ordonnés selon leur statistique de test (ou la p-value la plus faible) pour extraire les 100 marqueurs les plus significatifs de chaque groupe. Chaque cluster prédit est ensuite associé au type cellulaire maximisant le recouvrement de leurs signatures respectives, en complément de l'assignation hongroise classique.
@@ -553,21 +530,20 @@ Sur Baron, cette annotation par recouvrement atteint une accuracy de $94{,}8\,\%
 \begin{figure}[!htbp]
     \centering
     \captionsetup{font=small}
-    \begin{subfigure}[t]{0.49\textwidth}
+    \begin{subfigure}[b]{0.75\textwidth}
         \centering
-        \includegraphics[width=\linewidth,height=0.22\textheight,keepaspectratio]{Images/analyse_biologique_scraw_baron_trial0017/tsne_qualitative_panel.png}
+        \includegraphics[width=\linewidth,height=0.28\textheight,keepaspectratio]{Images/analyse_biologique_scraw_baron_trial0017/tsne_qualitative_panel.png}
         \caption{Projection t-SNE des embeddings.}
         \label{fig:baron_scraw_bio_tsne}
     \end{subfigure}
-    \hfill
-    \begin{subfigure}[t]{0.49\textwidth}
+    \vskip 0.5em
+    \begin{subfigure}[b]{0.75\textwidth}
         \centering
-        \includegraphics[width=\linewidth,height=0.22\textheight,keepaspectratio]{Images/analyse_biologique_scraw_baron_trial0017/marker_overlap_heatmap.png}
+        \includegraphics[width=\linewidth,height=0.28\textheight,keepaspectratio]{Images/analyse_biologique_scraw_baron_trial0017/marker_overlap_heatmap.png}
         \caption{Recouvrement des marqueurs.}
         \label{fig:baron_scraw_bio_marker_overlap}
     \end{subfigure}
-    \vspace{-0.4em}
-    \caption[Analyse biologique compacte de scRAW sur Baron Human Pancreas.]{Analyse biologique compacte de scRAW sur Baron Human Pancreas. Les panneaux combinent la structure latente, la concordance des marqueurs différentiels et la distribution des similarités de représentation afin d'évaluer la cohérence biologique du clustering sans dépasser une demi-page.}
+    \caption[Analyse biologique compacte de scRAW sur Baron Human Pancreas.]{Analyse biologique compacte de scRAW sur Baron Human Pancreas. Les panneaux combinent la structure latente et le recouvrement des signatures différentielles pour évaluer la cohérence biologique du clustering.}
     \label{fig:baron_scraw_bio_interpretation}
 \end{figure}
 
@@ -594,27 +570,3 @@ Ce rapport a porté sur l'évaluation et l'amélioration du clustering de donné
 La contribution principale de ce rapport est \textbf{scRAW}, une méthode fondée sur un autoencodeur et une pondération dynamique des cellules rares ou isolées. Les expériences menées sur plusieurs jeux de données montrent que cette stratégie permet d'obtenir un compromis intéressant entre performance globale, identification des populations rares et prise en compte de l'effet de batch. Les résultats obtenus sur deux jeux non utilisés pendant l'optimisation des hyperparamètres apportent un premier signal de robustesse externe. Les analyses complémentaires suggèrent aussi que la logique de pondération peut être transférée à d'autres modèles et que scRAW conserve un comportement prometteur dans un cadre inductif.
 
 Les perspectives principales sont donc de consolider ces résultats sur davantage de répétitions, de splits et de jeux de données indépendants, en couvrant plus de tissus, d'espèces et de niveaux de déséquilibre. Une autre perspective consiste à rendre le protocole plus strictement non supervisé, en sélectionnant le nombre de clusters à partir de critères internes, puis à approfondir la validation biologique. Il serait également pertinent de réaliser une annotation fonctionnelle sur les gènes marqueurs identifiés par notre modèle mais absents des vérités terrain, afin de vérifier leur cohérence avec la fonction biologique attendue des types cellulaires correspondants. Ces étapes permettraient de mieux distinguer les vrais sous-types cellulaires des fragments de clusters dus au bruit, à l'effet de batch ou aux choix de clustering, ou même identifier des marqueurs absents de la vérité terrain.
-
-\clearpage
-\section*{Glossaire et abréviations}
-\addcontentsline{toc}{section}{Glossaire et abréviations}
-
-\begin{description}
-    \item[ACC] Accuracy, proportion de cellules correctement attribuées après appariement des clusters.
-    \item[ARI] Adjusted Rand Index, métrique de similarité entre deux partitions de clustering.
-    \item[Batch] Ensemble de cellules partageant une même origine technique ou expérimentale.
-    \item[Contrastive learning] Apprentissage par contraste, méthode visant à rapprocher les représentations de cellules similaires et à éloigner celles de cellules différentes.
-    \item[DANN] Domain-Adversarial Neural Network, réseau de neurones adverse utilisé pour éliminer l'effet de batch dans l'espace latent à l'aide d'une inversion de gradient.
-    \item[DEG] Differentially Expressed Genes, gènes exprimés de manière différentielle entre plusieurs populations ou clusters cellulaires (gènes marqueurs).
-    \item[HDBSCAN] Hierarchical Density-Based Spatial Clustering of Applications with Noise, algorithme de clustering fondé sur la densité capable d'isoler des groupes et de détecter le bruit.
-    \item[HVG] Highly Variable Genes, gènes hautement variables sélectionnés après prétraitement.
-    \item[KL (Divergence de)] Kullback-Leibler, mesure statistique de la différence entre deux distributions de probabilité, utilisée pour régulariser les VAE ou contraindre le clustering.
-    \item[Masked autoencoder] Autoencodeur masqué, architecture entraînée à prédire des parties manquantes des données d'entrée pour apprendre des représentations robustes.
-    \item[MSE] Mean Squared Error, erreur quadratique moyenne utilisée comme fonction de coût de reconstruction.
-    \item[NMI] Normalized Mutual Information, métrique d'information partagée entre clusters et annotations de référence.
-    \item[PCA] Principal Component Analysis, réduction linéaire de dimension.
-    \item[scRNA-seq] Single-cell RNA sequencing, séquençage de l'ARN à l'échelle de la cellule unique.
-    \item[UMAP] Uniform Manifold Approximation and Projection, méthode non linéaire de réduction de dimension utilisée pour la visualisation.
-    \item[VAE] Variational Autoencoder, modèle d'apprentissage profond probabiliste projetant les cellules sous forme de distributions de probabilité dans l'espace latent.
-    \item[ZINB / NB] Zero-Inflated Negative Binomial / Negative Binomial, lois binomiales négatives modélisant la sparsité et le bruit de comptage des gènes en single-cell.
-\end{description}
