@@ -6,7 +6,7 @@
 \usepackage{lmodern}
 \usepackage{microtype}
 \usepackage{geometry}
-\geometry{margin=2.5cm, bindingoffset=0.5cm}
+\geometry{left=2cm,right=2cm,top=2.2cm,bottom=2.1cm,bindingoffset=0.3cm}
 \usepackage{setspace}
 \onehalfspacing
 \usepackage{graphicx}
@@ -56,8 +56,8 @@
 
 \pagestyle{fancy}
 \fancyhf{}
-\fancyhead[L]{\small \StageStudent}
-\fancyhead[R]{\small Rapport de stage}
+\fancyhead[L]{\StageStudent}
+\fancyhead[R]{Rapport de stage}
 \fancyfoot[C]{\thepage}
 \setlength{\headheight}{14pt}
 
@@ -65,10 +65,13 @@
 \setlist[enumerate]{itemsep=0.25em, topsep=0.35em}
 
 % Paramètres pour éviter les pages blanches de flottants (trous de blanc)
-\renewcommand{\topfraction}{0.85}
-\renewcommand{\bottomfraction}{0.85}
-\renewcommand{\textfraction}{0.1}
-\renewcommand{\floatpagefraction}{0.75}
+\renewcommand{\topfraction}{0.92}
+\renewcommand{\bottomfraction}{0.9}
+\renewcommand{\textfraction}{0.07}
+\renewcommand{\floatpagefraction}{0.7}
+\setlength{\textfloatsep}{0.7\baselineskip plus 0.2\baselineskip minus 0.2\baselineskip}
+\setlength{\floatsep}{0.6\baselineskip plus 0.2\baselineskip minus 0.2\baselineskip}
+\setlength{\intextsep}{0.6\baselineskip plus 0.2\baselineskip minus 0.2\baselineskip}
 
 % Redéfinition de \paragraph pour insérer un retour à la ligne
 \makeatletter
@@ -96,8 +99,8 @@
   \centering
   {\Large \textbf{\StageInstitution}}\\
   \textbf{\StageMaster}\\
-  {\small Parcours : \StageParcours}\\
-  {\small Promotion \StagePromotion}
+  {Parcours : \StageParcours}\\
+  {Promotion \StagePromotion}
 \end{minipage}
 \hfill
 \begin{minipage}{0.22\textwidth}

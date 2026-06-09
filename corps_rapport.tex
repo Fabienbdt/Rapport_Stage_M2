@@ -70,8 +70,7 @@ La difficulté associée aux populations rares vient de la manière dont cette l
 
 \begin{table}[H]
 \centering
-\scriptsize
-\setlength{\tabcolsep}{3pt}
+\setlength{\tabcolsep}{2pt}
 \renewcommand{\arraystretch}{1.22}
 \begin{tabularx}{\textwidth}{@{}
 >{\centering\arraybackslash}p{0.12\textwidth}
@@ -143,7 +142,6 @@ Le tableau~\ref{tab:sc_dataset_layout} illustre un exemple conceptuel de cet ali
 
 \begin{table}[H]
 \centering
-\small
 \renewcommand{\arraystretch}{1.2}
 \begin{tabular}{l ccc c cc}
 \toprule
@@ -426,15 +424,25 @@ Afin de compléter cette évaluation, la configuration finale de scRAW a égalem
 
 Le tableau~\ref{tab:scraw_holdout_pancreas_results} présente les résultats obtenus par scRAW avec la configuration par défaut, sans nouvelle recherche d'hyperparamètres spécifique à ces jeux de données, ainsi que par les méthodes de comparaison retenues. Pour chaque jeu de données, les méthodes sont triées par moyenne décroissante sur les cinq métriques affichées, afin de conserver une lecture synthétique des compromis entre performance globale, populations rares et correction de batch.
 
-\begin{table}[!htbp]
-\centering
-\scriptsize
-\setlength{\tabcolsep}{4pt}
-\renewcommand{\arraystretch}{0.96}
-\begin{tabular}{llrrrrr}
+\begingroup
+\setlength{\tabcolsep}{3pt}
+\renewcommand{\arraystretch}{1.2}
+\begin{longtable}{@{}p{0.22\textwidth}p{0.18\textwidth}rrrrr@{}}
+\caption[Résultats sur deux jeux de données non vus pendant l'optimisation des hyperparamètres.]{Résultats sur deux jeux de données non vus pendant l'optimisation des hyperparamètres. Les méthodes sont triées, pour chaque jeu de données, par moyenne décroissante des cinq métriques affichées. Les meilleures valeurs par métrique et par jeu de données sont indiquées en gras et les deuxièmes meilleures sont soulignées ; scRAW est affiché en rouge. Pour SCIB Mouse Pancreas 1, le score de correction de batch est indiqué comme NA car le jeu ne contient qu'un batch explicite.}
+\label{tab:scraw_holdout_pancreas_results}\\
 \toprule
 \textbf{Jeu de données} & \textbf{Méthode} & \textbf{ARI} & \textbf{ACC} & \textbf{RareACC} & \textbf{UltraRareACC} & \textbf{Batch} \\
 \midrule
+\endfirsthead
+\toprule
+\textbf{Jeu de données} & \textbf{Méthode} & \textbf{ARI} & \textbf{ACC} & \textbf{RareACC} & \textbf{UltraRareACC} & \textbf{Batch} \\
+\midrule
+\endhead
+\midrule
+\multicolumn{7}{r}{\textit{Suite page suivante}}\\
+\endfoot
+\bottomrule
+\endlastfoot
 \multirow{14}{*}{Human Pancreas}
  & Harmony & \underline{0,817} & \textbf{0,897} & 0,848 & 0,662 & \textbf{0,669} \\
  & ComBat & \textbf{0,839} & \underline{0,892} & 0,832 & 0,628 & 0,587 \\
@@ -466,11 +474,8 @@ Le tableau~\ref{tab:scraw_holdout_pancreas_results} présente les résultats obt
  & scNAME & 0,431 & 0,468 & \underline{0,744} & 0,294 & NA \\
  & DeepScena & 0,233 & 0,393 & 0,128 & 0,176 & NA \\
  & GiniClust & 0,021 & 0,443 & 0,058 & 0,000 & NA \\
-\bottomrule
-\end{tabular}
-\caption[Résultats sur deux jeux de données non vus pendant l'optimisation des hyperparamètres.]{Résultats sur deux jeux de données non vus pendant l'optimisation des hyperparamètres. Les méthodes sont triées, pour chaque jeu de données, par moyenne décroissante des cinq métriques affichées. Les meilleures valeurs par métrique et par jeu de données sont indiquées en gras et les deuxièmes meilleures sont soulignées ; scRAW est affiché en rouge. Pour SCIB Mouse Pancreas 1, le score de correction de batch est indiqué comme NA car le jeu ne contient qu'un batch explicite.}
-\label{tab:scraw_holdout_pancreas_results}
-\end{table}
+\end{longtable}
+\endgroup
 
 Sur Human Pancreas, scRAW reste proche des meilleures méthodes sur les métriques globales et rares, sans dominer la correction de batch. Les meilleurs scores isolés sont obtenus par des méthodes différentes selon la métrique : ComBat pour l'ARI, Harmony pour l'ACC et la correction de batch, PCA+Leiden pour la RareACC, et Scanorama pour l'UltraRareACC. Sur SCIB Mouse Pancreas 1, scRAW obtient la meilleure ARI et une ACC élevée, mais l'UltraRareACC reste limitée. De plus, les méthodes surperformant scRAW sur un jeu de données spécifique s'avèrent moins performantes sur l'autre, ce qui souligne la robustesse et la stabilité de notre modèle face à des contextes biologiques variés. Ces deux validations externes fournissent donc un premier contrôle sur des jeux non utilisés pendant l'optimisation : scRAW y conserve un comportement compétitif, mais la meilleure méthode dépend encore fortement de la métrique et du jeu de données.
 \section{Travaux complémentaires}
@@ -523,14 +528,14 @@ Ces résultats restent à interpréter avec prudence. En induction, le modèle n
     \captionsetup{font=small}
     \begin{subfigure}[b]{0.95\textwidth}
         \centering
-        \includegraphics[width=\linewidth,height=0.36\textheight,keepaspectratio]{Images/analyse_biologique_scraw_baron_trial0017/tsne_qualitative_panel.png}
+        \includegraphics[width=\linewidth,height=0.34\textheight,keepaspectratio,trim=0 0 0 0.6cm,clip]{Images/analyse_biologique_scraw_baron_trial0017/tsne_qualitative_panel.png}
         \caption{Projection t-SNE des embeddings.}
         \label{fig:baron_scraw_bio_tsne}
     \end{subfigure}
-    \vskip 0.5em
+    \vskip 0.25em
     \begin{subfigure}[b]{0.95\textwidth}
         \centering
-        \includegraphics[width=\linewidth,height=0.36\textheight,keepaspectratio]{Images/analyse_biologique_scraw_baron_trial0017/marker_overlap_heatmap.png}
+        \includegraphics[width=\linewidth,height=0.34\textheight,keepaspectratio,trim=0 0 0 0.6cm,clip]{Images/analyse_biologique_scraw_baron_trial0017/marker_overlap_heatmap.png}
         \caption{Recouvrement des marqueurs.}
         \label{fig:baron_scraw_bio_marker_overlap}
     \end{subfigure}
@@ -558,8 +563,8 @@ Enfin, scRAW reste plus coûteux que les pipelines classiques, avec un temps d'e
 
 Ces résultats soutiennent l'hypothèse principale de scRAW, mais sa robustesse en conditions cliniques reste à démontrer. Des jeux plus variés, davantage de répétitions et une validation biologique plus complète seront nécessaires pour tester la méthode face à des protocoles hétérogènes, des annotations imparfaites et des états cellulaires absents des références.
 
-\section*{Conclusion}
-\addcontentsline{toc}{section}{Conclusion}
+\section*{Conclusion et perspectives}
+\addcontentsline{toc}{section}{Conclusion et perspectives}
 
 Ce rapport a porté sur l'évaluation et l'amélioration du clustering de données scRNA-seq dans un contexte où les populations cellulaires rares peuvent être masquées par les grands types cellulaires, le bruit technique ou les effets de batch. Une première contribution a été le développement de \textbf{SCRBenchmark}, une plateforme permettant de comparer plusieurs méthodes dans un cadre commun, reproductible et plus facilement exploitable. Ce cadre a ensuite servi à analyser les limites de méthodes existantes, en montrant que de bons scores globaux ne garantissent pas la préservation des types cellulaires minoritaires.
 
