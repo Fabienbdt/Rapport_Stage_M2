@@ -495,6 +495,7 @@ Les résultats montrent que l'effet de la pondération dépend de l'algorithme c
 
 Une explication possible est que scDeepCluster, qui combine déjà reconstruction et objectif de clustering, bénéficie directement d'une reconstruction plus attentive aux cellules rares avant la formation des groupes. Pour scMAE, la reconstruction masquée apprend déjà une représentation robuste ; ajouter une pondération peut améliorer les petites classes, mais aussi déformer légèrement la structure globale, ce qui expliquerait la baisse d'ARI. Dans DESC, l'effet plus limité pourrait venir du poids important de l'objectif de clustering, qui contraint fortement l'espace latent et laisse moins de marge à la pondération de reconstruction.
 
+\FloatBarrier
 \subsection{Induction}
 
 Le passage à un cadre inductif permet d'évaluer si une représentation apprise sur une partie des cellules peut être appliquée à un batch non utilisé pendant l'entraînement, sans réentraîner entièrement le modèle. Cette situation se rapproche d'un scénario d'utilisation réel : entraîner un modèle sur des patients déjà caractérisés, le conserver, puis l'appliquer directement à un nouveau patient. Dans Baron Human Pancreas, par exemple, le modèle est entraîné sur une partie des donneurs puis évalué sur le donneur laissé de côté. Cette logique est utile lorsque réentraîner un modèle à chaque nouveau patient serait coûteux et moins reproductible.
@@ -503,7 +504,7 @@ Dans cette expérience, le protocole général suit une séparation par groupe b
 
 Les résultats sont agrégés par jeu de données : les splits disponibles sont d'abord moyennés, puis les boîtes à moustaches sont construites à partir de ces moyennes. Chaque point noir correspond donc à un jeu de données, la boîte représente la distribution des moyennes disponibles pour un algorithme, et le losange blanc indique sa moyenne globale. Les résultats détaillés par jeu de données et la liste des splits sont fournis en Annexe~\ref{annexe:inductif_details}.
 
-\begin{figure}[H]
+\begin{figure}[!htbp]
     \centering
     \includegraphics[width=\textwidth,height=0.42\textheight,keepaspectratio]{comparaison_inductive_scraw_trial0017_synthese/inductive_metrics_boxplots_ari_acc_rare_ultrarare.pdf}
     \caption[Comparaison inductive de scRAW avec scNAME, scMAE et scDeepCluster sur six jeux de données.]{Comparaison inductive de scRAW avec scNAME, scMAE et scDeepCluster sur six jeux de données. Chaque boîte représente la distribution des moyennes par jeu de données, et chaque point correspond à un jeu de données. Les losanges indiquent la moyenne globale de l'algorithme pour la métrique considérée.}
@@ -514,12 +515,13 @@ Sur ces moyennes par jeu de données, scRAW obtient une moyenne de $0{,}787$ en 
 
 Ces résultats restent à interpréter avec prudence. En induction, le modèle ne redécouvre pas entièrement la structure du jeu test : il projette de nouvelles cellules dans un espace appris sur les groupes d'entraînement. Cette logique est adaptée à un scénario de type nouveau patient, mais elle peut échouer si le groupe test contient un état cellulaire absent de l'entraînement ou une population rare très spécifique au patient laissé de côté. L'intérêt de scRAW est donc surtout de conserver une représentation utilisable pour comparer de nouveaux échantillons à une cohorte de référence, plutôt que de remplacer une analyse transductive complète.
 
+\FloatBarrier
 \subsection{Interprétation biologique}
 
 Une analyse biologique a été réalisée sur Baron Human Pancreas avec scRAW. Elle vise à évaluer la cohérence des clusters prédits par scRAW avec les types cellulaires de référence à partir des gènes marqueurs, comme résumé dans la figure~\ref{fig:baron_scraw_bio_interpretation}. Inspiré des protocoles de caractérisation biologique de scCluBench \cite{xu_scclubench_2026} et de scAIDE \cite{scAIDE2020}, ce protocole de validation extrait et compare les signatures d'expression des clusters prédits avec les types cellulaires de référence. Pour chaque type cellulaire de la vérité terrain et pour chaque cluster prédit, les 100 meilleurs gènes différentiellement exprimés (DEG) sont extraits à l'aide d'un test de Wilcoxon bilatéral. Ce calcul statistique est effectué après avoir filtré les gènes exprimés dans moins de 3 cellules, normalisé la somme des comptes par cellule à une cible de 10\,000 et appliqué une transformation logarithmique ($\log(x+1)$). En pratique, les gènes sont ordonnés selon leur statistique de test (ou la p-value la plus faible) pour extraire les 100 marqueurs les plus significatifs de chaque groupe. Chaque cluster prédit est ensuite associé au type cellulaire maximisant le recouvrement de leurs signatures respectives, en complément de l'assignation hongroise classique.
 
 Sur Baron, cette annotation par recouvrement atteint une accuracy de $94{,}8\,\%$ et une balanced accuracy de $88{,}9\,\%$, contre $93{,}4\,\%$ et $87{,}0\,\%$ pour l'appariement hongrois. Les deux annotations concordent pour $97{,}4\,\%$ des cellules, ce qui indique que le clustering réalisé par scRAW est globalement en accord avec les marqueurs de référence. La projection t-SNE montre cependant que certains types cellulaires peuvent être fragmentés en deux sous-clusters (figure~\ref{fig:baron_scraw_bio_interpretation}\subref{fig:baron_scraw_bio_tsne}), tandis que la heatmap de recouvrement précise la correspondance entre clusters prédits et types annotés (figure~\ref{fig:baron_scraw_bio_interpretation}\subref{fig:baron_scraw_bio_marker_overlap}). Cette heatmap indique la proportion de gènes marqueurs partagés et non un mélange de cellules : par exemple, le cluster 5 (lymphocytes T) partage $33\,\%$ de ses marqueurs avec les mastocytes en raison de leur signature immunitaire commune, bien que l'algorithme sépare parfaitement leurs cellules, comme le montre le panneau t-SNE de la figure~\ref{fig:baron_scraw_bio_interpretation}\subref{fig:baron_scraw_bio_tsne}.
-\begin{figure}[H]
+\begin{figure}[!htbp]
     \centering
     \captionsetup{font=small}
     \begin{subfigure}[b]{0.75\textwidth}
@@ -539,6 +541,7 @@ Sur Baron, cette annotation par recouvrement atteint une accuracy de $94{,}8\,\%
     \label{fig:baron_scraw_bio_interpretation}
 \end{figure}
 
+\FloatBarrier
 \subsection{Limites méthodologiques}
 \label{sec:limites_perspectives}
 
