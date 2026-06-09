@@ -30,6 +30,14 @@ BARON_PAPER_LOGIC_ROOT = Path(
     "/data2/fbidet/SCRBenchmark/results/"
     "baron_paper_logic_existing_algorithms_3seeds_20260527"
 )
+BARON_INDUCTIVE_SCIB_ROOT = Path(
+    "/data2/fbidet/SCRBenchmark/results/"
+    "baron_paper_logic_existing_algorithms_3seeds_inductive_scibe_20260528_100508"
+)
+SCCDCG_SCIB_ROOT = Path(
+    "/data2/fbidet/SCRBenchmark/results/"
+    "baron_sccdcg_scib_3seeds_20260609_143857"
+)
 SCCDCG_INDUCTIVE_ROOT = Path(
     "/data2/fbidet/SCRBenchmark/results/"
     "baron_split_70_10_20_existing_algorithms_5seeds_20260526_103715/"
@@ -59,6 +67,19 @@ INDUCTIVE_ALGORITHMS = [
     ("scname", "scNAME", BARON_PAPER_LOGIC_ROOT / "inductive_scname"),
     ("sccdcg", "scCDCG", SCCDCG_INDUCTIVE_ROOT),
 ]
+
+TRANSDUCTIVE_SCIB_ROOTS = {
+    "sccdcg": [SCCDCG_SCIB_ROOT / "transductive"],
+}
+
+INDUCTIVE_SCIB_ROOTS = {
+    "pca_kmeans": [BARON_INDUCTIVE_SCIB_ROOT / "inductive_core"],
+    "pca_leiden": [BARON_INDUCTIVE_SCIB_ROOT / "inductive_core"],
+    "sc_mae": [BARON_INDUCTIVE_SCIB_ROOT / "inductive_core"],
+    "scdeepcluster": [BARON_INDUCTIVE_SCIB_ROOT / "inductive_core"],
+    "scname": [BARON_INDUCTIVE_SCIB_ROOT / "inductive_scname"],
+    "sccdcg": [SCCDCG_SCIB_ROOT / "inductive"],
+}
 
 CELL_ORDER = [
     "t_cell",
@@ -208,28 +229,41 @@ def evaluate_label_file(
     return metrics, errors
 
 
+def _candidate_roots(extra_roots: dict[str, list[Path]], root: Path, algorithm_key: str) -> list[Path]:
+    candidates = [candidate for candidate in extra_roots.get(algorithm_key, []) if candidate != root]
+    candidates.append(root)
+    return candidates
+
+
 def load_transductive_extra_metrics(root: Path, algorithm_key: str, run_id: int) -> dict[str, float]:
-    path = root / "results" / "results.csv"
-    if not path.exists():
-        return {}
-    results = pd.read_csv(path)
-    row = results[(results["algorithm"] == algorithm_key) & (results["run_id"] == run_id)]
-    if row.empty or "Batch correction" not in row.columns:
-        return {}
-    value = row.iloc[0]["Batch correction"]
-    return {"BatchCorrection": float(value) if not pd.isna(value) else float("nan")}
+    for candidate_root in _candidate_roots(TRANSDUCTIVE_SCIB_ROOTS, root, algorithm_key):
+        path = candidate_root / "results" / "results.csv"
+        if not path.exists():
+            continue
+        results = pd.read_csv(path)
+        if "Batch correction" not in results.columns:
+            continue
+        row = results[(results["algorithm"] == algorithm_key) & (results["run_id"] == run_id)]
+        if row.empty:
+            continue
+        value = row.iloc[0]["Batch correction"]
+        if not pd.isna(value):
+            return {"BatchCorrection": float(value)}
+    return {}
 
 
 def load_inductive_extra_metrics(root: Path, algorithm_key: str, run_id: int) -> dict[str, float]:
-    path = root / "results" / "benchmark_results.json"
-    if not path.exists():
-        return {}
-    with path.open("r", encoding="utf-8") as handle:
-        payload = json.load(handle)
-    for row in payload.get("results", []):
-        if row.get("algorithm_name") == algorithm_key and int(row.get("run_id", -1)) == run_id:
-            value = row.get("test_metrics", {}).get("Batch correction", float("nan"))
-            return {"BatchCorrection": float(value) if not pd.isna(value) else float("nan")}
+    for candidate_root in _candidate_roots(INDUCTIVE_SCIB_ROOTS, root, algorithm_key):
+        path = candidate_root / "results" / "benchmark_results.json"
+        if not path.exists():
+            continue
+        with path.open("r", encoding="utf-8") as handle:
+            payload = json.load(handle)
+        for row in payload.get("results", []):
+            if row.get("algorithm_name") == algorithm_key and int(row.get("run_id", -1)) == run_id:
+                value = row.get("test_metrics", {}).get("Batch correction", float("nan"))
+                if not pd.isna(value):
+                    return {"BatchCorrection": float(value)}
     return {}
 
 
@@ -529,7 +563,7 @@ def plot_baron_inductive_transductive_error_panel() -> None:
         0.015,
         0.012,
         "Note : PCA+Leiden reprend la selection de resolution par silhouette du papier, sans forcer 14 clusters. "
-        "La metrique Batch corr. est affichee lorsqu'elle est disponible ; elle n'a pas ete calculee dans le split inductif.",
+        "La metrique Batch corr. correspond au score global scIB de correction batch lorsque les embeddings sont disponibles.",
         fontsize=8.3,
         color="#495057",
     )
