@@ -81,20 +81,20 @@ Cette section fournit d'abord les détails des huit jeux de données scRNA-seq d
 \centering
 \scriptsize
 \setlength{\tabcolsep}{2.7pt}
-\begin{tabular}{l l c c c c c c}
+\begin{tabular}{l l c c c c c c c}
 \toprule
-\textbf{Dataset} & \textbf{Espèce} & \textbf{Cellules} & \textbf{Gènes} & \textbf{Batchs} & \textbf{Rares ($<5\%$)} & \textbf{PCR/PCA} & \textbf{Gini} \\
+\textbf{Dataset} & \textbf{Espèce} & \textbf{Cellules} & \textbf{Gènes} & \textbf{Batchs} & \textbf{Rares ($<5\%$)} & \textbf{Sparsité} & \textbf{PCR/PCA} & \textbf{Gini} \\
 \midrule
-BBAG094 Zeisel & Souris & 3 006 & 19 972 & 10 & 4 & 0,499 & 0,543 \\
-BBAG094 spleen & Souris & 9 552 & 23 341 & 2 & 3 & 0,022 & 0,644 \\
-Baron Human Pancreas & Humain & 8 569 & 20 125 & 4 & 9 & 0,048 & 0,644 \\
-Human testis GSE112013 & Humain & 6 490 & 27 477 & 6 & 4 & 0,025 & 0,304 \\
-Kang PBMC & Humain & 24 679 & 35 635 & 16 & 1 & 0,069 & 0,500 \\
-Macaque retina bipolar & Macaque & 30 302 & 36 162 & 30 & 4 & 0,184 & 0,388 \\
-Paul15 bone marrow & Souris & 2 730 & 3 451 & 1 & 9 & 0,000 & 0,410 \\
-Tabula Muris liver & Souris & 2 859 & 22 966 & 1 & 5 & 0,000 & 0,578 \\
+BBAG094 Zeisel & Souris & 3 006 & 19 972 & 10 & 4 & 81,2\,\% & 0,499 & 0,543 \\
+BBAG094 spleen & Souris & 9 552 & 23 341 & 2 & 3 & 94,3\,\% & 0,022 & 0,644 \\
+Baron Human Pancreas & Humain & 8 569 & 20 125 & 4 & 9 & 90,6\,\% & 0,048 & 0,644 \\
+Human testis GSE112013 & Humain & 6 490 & 27 477 & 6 & 4 & 88,8\,\% & 0,025 & 0,304 \\
+Kang PBMC & Humain & 24 679 & 35 635 & 16 & 1 & 98,4\,\% & 0,069 & 0,500 \\
+Macaque retina bipolar & Macaque & 30 302 & 36 162 & 30 & 4 & 97,3\,\% & 0,184 & 0,388 \\
+Paul15 bone marrow & Souris & 2 730 & 3 451 & 1 & 9 & 74,7\,\% & 0,000 & 0,410 \\
+Tabula Muris liver & Souris & 2 859 & 22 966 & 1 & 5 & 88,6\,\% & 0,000 & 0,578 \\
 \midrule
-\textbf{Plage [Min - Max]} & & 2 730--30 302 & 3 451--36 162 & 1--30 & 1--9 & 0,000--0,499 & 0,304--0,644 \\
+\textbf{Plage [Min - Max]} & & 2 730--30 302 & 3 451--36 162 & 1--30 & 1--9 & 74,7\,\%--98,4\,\% & 0,000--0,499 & 0,304--0,644 \\
 \bottomrule
 \end{tabular}
 \caption{Récapitulatif des huit jeux de données du sous-ensemble commun utilisés dans nos expériences.}
@@ -164,13 +164,13 @@ Tabula Muris liver & Sous-ensemble foie de Tabula Muris, technologie FACS/Smart-
 \begin{table}[H]
 \centering
 \footnotesize
-\setlength{\tabcolsep}{4pt}
-\begin{tabular}{p{0.24\textwidth} l r r c c c c c}
+\setlength{\tabcolsep}{3pt}
+\begin{tabular}{p{0.24\textwidth} l r r c c c c c c}
 \toprule
-\textbf{Dataset} & \textbf{Espèce} & \textbf{Cellules} & \textbf{Gènes} & \textbf{Batchs} & \textbf{Rares} & \textbf{U.-rares} & \textbf{PCR/PCA} & \textbf{Gini} \\
+\textbf{Dataset} & \textbf{Espèce} & \textbf{Cellules} & \textbf{Gènes} & \textbf{Batchs} & \textbf{Rares} & \textbf{U.-rares} & \textbf{Sparsité} & \textbf{PCR/PCA} & \textbf{Gini} \\
 \midrule
-Human Pancreas & Humain & 6 339 & 14 813 & 4 & 7 & 6 & 0,156 & 0,651 \\
-SCIB Mouse Pancreas 1 & Souris & 822 & 14 878 & 1 & 9 & 5 & 0,000 & 0,711 \\
+Human Pancreas & Humain & 6 339 & 14 813 & 4 & 7 & 6 & 67,2\,\% & 0,156 & 0,651 \\
+SCIB Mouse Pancreas 1 & Souris & 822 & 14 878 & 1 & 9 & 5 & 90,5\,\% & 0,000 & 0,711 \\
 \bottomrule
 \end{tabular}
 \caption{Caractéristiques des deux jeux de données utilisés pour évaluer scRAW sur des données non vues pendant l'optimisation des hyperparamètres.}
