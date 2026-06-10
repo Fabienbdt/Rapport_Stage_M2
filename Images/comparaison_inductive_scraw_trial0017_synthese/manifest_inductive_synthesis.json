@@ -24,6 +24,7 @@
     "ARI",
     "ACC",
     "RareACC",
+    "BalancedRareACC",
     "UltraRareACC"
   ]
 }

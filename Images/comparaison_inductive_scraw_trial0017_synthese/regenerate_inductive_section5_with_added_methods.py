@@ -59,14 +59,15 @@ DATASET_LABELS = {
     "macaque_retina_gse118480_bipolar_raw_counts": "Macaque retina",
     "pancreas_raw_counts_four_batches_celseq_celseq2_fluidigmc1_smartseq2": "Pancreas 4 batches",
 }
-METRICS = ["ARI", "ACC", "RareACC", "UltraRareACC"]
-ALL_METRICS = ["ACC", "BalancedACC", "ARI", "NMI", "RareACC", "UltraRareACC"]
+METRICS = ["ARI", "ACC", "RareACC", "BalancedRareACC", "UltraRareACC"]
+ALL_METRICS = ["ACC", "BalancedACC", "ARI", "NMI", "RareACC", "UltraRareACC", "BalancedRareACC"]
 METRIC_LABELS = {
     "ACC": "ACC",
     "BalancedACC": "Balanced ACC",
     "ARI": "ARI",
     "NMI": "NMI",
     "RareACC": "Rare ACC",
+    "BalancedRareACC": "Balanced Rare ACC",
     "UltraRareACC": "Ultra Rare ACC",
 }
 
@@ -98,12 +99,28 @@ def metric_from_json(output_dir: str, metric: str) -> float:
         return float("nan")
     path = Path(output_dir) / "metrics.json"
     if not path.exists():
-        return float("nan")
+        path = Path(output_dir) / "results.json"
+        if not path.exists():
+            path = Path(output_dir) / "results/results.json"
+            if not path.exists():
+                path = Path(output_dir) / "results/metrics.json"
+                if not path.exists():
+                    return float("nan")
     try:
         payload = json.loads(path.read_text(encoding="utf-8"))
     except json.JSONDecodeError:
         return float("nan")
-    metrics = payload.get("metrics", payload)
+    metrics = payload.get("metrics", payload.get("test_metrics", payload))
+    if metric == "BalancedRareACC" and "ClassWise" in metrics:
+        classwise = metrics["ClassWise"]
+        total_cells = sum(item["Support"] for item in classwise.values())
+        if total_cells == 0:
+            return float("nan")
+        rare_classes = {name: item for name, item in classwise.items() if (item["Support"] / total_cells) < 0.05}
+        if not rare_classes:
+            return float("nan")
+        recalls = [item["Recall"] for item in rare_classes.values()]
+        return float(np.mean(recalls))
     return coerce_float(metrics.get(metric))
 
 
@@ -277,7 +294,7 @@ def plot_boxplots(summary: pd.DataFrame) -> None:
             "ytick.labelsize": 9,
         }
     )
-    fig, axes = plt.subplots(2, 2, figsize=(15.2, 10.4), sharey=True)
+    fig, axes = plt.subplots(2, 3, figsize=(22.5, 10.4), sharey=True)
     axes = axes.ravel()
     for ax, metric in zip(axes, METRICS):
         metric_df = summary[summary["metric"] == metric]
@@ -322,17 +339,18 @@ def plot_boxplots(summary: pd.DataFrame) -> None:
         ax.set_ylim(-0.02, 1.08)
         ax.grid(axis="y", color="#d1d5db", linewidth=0.8, alpha=0.7)
         ax.spines[["top", "right"]].set_visible(False)
+    axes[-1].axis("off")
     axes[0].set_ylabel("Score")
-    axes[2].set_ylabel("Score")
+    axes[3].set_ylabel("Score")
     fig.suptitle("Comparaison inductive par moyennes dataset", y=0.992, fontsize=15, fontweight="bold")
     fig.tight_layout(rect=(0, 0, 1, 0.965))
     for ext in ["png", "pdf"]:
-        fig.savefig(HERE / f"inductive_metrics_boxplots_ari_acc_rare_ultrarare.{ext}", bbox_inches="tight")
+        fig.savefig(HERE / f"inductive_metrics_boxplots_ari_acc_rare_balancedrare_ultrarare.{ext}", bbox_inches="tight")
     plt.close(fig)
 
 
 def plot_heatmap(summary: pd.DataFrame) -> None:
-    fig, axes = plt.subplots(2, 2, figsize=(15.5, 9.8))
+    fig, axes = plt.subplots(2, 3, figsize=(23.0, 9.8))
     axes = axes.ravel()
     for ax, metric in zip(axes, METRICS):
         metric_df = summary[summary["metric"] == metric]
@@ -360,6 +378,7 @@ def plot_heatmap(summary: pd.DataFrame) -> None:
                     color = "white" if value < 0.55 else "#111827"
                     ax.text(col_idx, row_idx, f"{value:.2f}", ha="center", va="center", fontsize=7, color=color)
         fig.colorbar(image, ax=ax, fraction=0.035, pad=0.02)
+    axes[-1].axis("off")
     fig.suptitle("Moyennes inductives par dataset", y=0.995, fontsize=15, fontweight="bold")
     fig.tight_layout(rect=(0, 0, 1, 0.965))
     for ext in ["png", "pdf"]:
@@ -376,6 +395,13 @@ def main() -> int:
     if base.empty:
         raise SystemExit(f"Missing base per-split table: {source_path}")
     base = base[~base["algorithm"].isin(ADDED_ALGORITHMS)].copy()
+
+    # Dynamically fill BalancedRareACC for base algorithms if missing
+    for idx, row in base.iterrows():
+        if "BalancedRareACC" not in base.columns or pd.isna(row.get("BalancedRareACC")):
+            output_dir = row.get("output_dir")
+            bra = metric_from_json(output_dir, "BalancedRareACC")
+            base.at[idx, "BalancedRareACC"] = bra
 
     added = load_added_rows(root)
     if added.empty and not args.allow_empty_added:

@@ -321,12 +321,12 @@ Le Tableau~\ref{tab:loss_transfer_baseline_vs_best} présente la comparaison syn
 
 \input{Images/scraw_loss_transfer_synthesis/loss_transfer_baseline_vs_best_table.tex}
 
-Pour résumer les performances, les seeds sont d'abord moyennées pour chaque jeu de données, puis les jeux de données sont moyennés avec le même poids. Le score utilisé pour sélectionner la meilleure configuration non-baseline est la moyenne de ARI, RareACC et UltraRareACC. L'UltraRareACC a été reprise des fichiers de résultats détaillés lorsqu'elle était disponible, ou recalculée à partir des rappels par type cellulaire lorsque seule la colonne \texttt{ClassWise} était exportée.
+Pour résumer les performances, les seeds sont d'abord moyennées pour chaque jeu de données, puis les jeux de données sont moyennés avec le même poids. Le score utilisé pour sélectionner la meilleure configuration non-baseline est la moyenne de ARI, RareACC, UltraRareACC et BalancedRareACC. La BalancedRareACC est calculée en moyennant le rappel de chaque classe rare (proportion < 5\%) afin que chaque population minoritaire contribue équitablement au score, indépendamment de sa taille relative. L'UltraRareACC a été reprise des fichiers de résultats détaillés lorsqu'elle était disponible, ou recalculée à partir des rappels par type cellulaire lorsque seule la colonne \texttt{ClassWise} était exportée.
 
 \begin{figure}[H]
     \centering
-    \includegraphics[width=\textwidth,height=0.60\textheight,keepaspectratio]{scraw_loss_transfer_synthesis/loss_transfer_all_configurations_boxplot.pdf}
-    \caption{Distribution des scores pour toutes les configurations testées lors du transfert de la loss pondérée \(\mathcal{L}_{\mathrm{recon,ponderee}}\) de scRAW. Les boîtes représentent la distribution des scores moyens (moyenne de l'ARI, de la RareACC et de l'UltraRareACC) sur l'ensemble des jeux de données.}
+    \includegraphics[width=\textwidth,height=0.60\textheight,keepaspectratio]{scraw_loss_transfer_synthesis/loss_transfer_all_configurations_boxplot_4metrics.pdf}
+    \caption{Distribution des scores pour toutes les configurations testées lors du transfert de la loss pondérée \(\mathcal{L}_{\mathrm{recon,ponderée}}\) de scRAW. Les quatre panneaux correspondent aux métriques ARI, RareACC, UltraRareACC et BalancedRareACC. Les boîtes représentent la distribution des scores moyens sur l'ensemble des jeux de données, et les points noirs indiquent les valeurs par jeu de données.}
     \label{fig:loss_transfer_all_configurations_boxplots}
 \end{figure}
 

@@ -2,20 +2,20 @@
 \centering
 \small
 \renewcommand{\arraystretch}{1.08}
-\begin{tabularx}{\textwidth}{l X c c c}
+\begin{tabularx}{\textwidth}{l X c c c c}
 \toprule
-\textbf{Algorithme} & \textbf{Configuration} & \textbf{ARI} & \textbf{RareACC} & \textbf{UltraRareACC} \\
+\textbf{Algorithme} & \textbf{Configuration} & \textbf{ARI} & \textbf{RareACC} & \textbf{UltraRareACC} & \textbf{BalancedRareACC} \\
 \midrule
-scMAE & Baseline & 0,665 & 0,562 & 0,492 \\
- & \textbf{Meilleure pondérée : Pseudo clustering Leiden} & 0,648 & 0,589 & 0,518 \\
+scMAE & Baseline & 0,665 & 0,562 & 0,492 & 0,485 \\
+ & \textbf{Meilleure pondérée : Pseudo clustering Leiden} & 0,648 & 0,589 & 0,518 & \textbf{0,517} \\
 \addlinespace[0.2em]
-scDeepCluster & Baseline & 0,422 & 0,622 & 0,222 \\
- & \textbf{Meilleure pondérée : Pseudo clustering Leiden} & 0,451 & 0,645 & 0,344 \\
+scDeepCluster & Baseline & 0,422 & 0,622 & 0,222 & 0,431 \\
+ & \textbf{Meilleure pondérée : Pseudo clustering Leiden} & 0,451 & 0,645 & 0,344 & \textbf{0,455} \\
 \addlinespace[0.2em]
-DESC & Baseline & 0,585 & 0,631 & 0,429 \\
- & \textbf{Meilleure pondérée : Pseudo clustering KMeans + triplet} & 0,576 & 0,662 & 0,414 \\
+DESC & Baseline & 0,585 & 0,631 & 0,429 & 0,497 \\
+ & \textbf{Meilleure pondérée : Pseudo clustering KMeans + triplet} & 0,576 & 0,662 & 0,414 & \textbf{0,508} \\
 \bottomrule
 \end{tabularx}
-\caption{Comparaison entre chaque algorithme de base et sa meilleure variante avec loss pondérée scRAW. Les valeurs sont des moyennes par jeu de données ; la meilleure variante est sélectionnée par la moyenne des trois métriques.}
+\caption{Comparaison entre chaque algorithme de base et sa meilleure variante avec loss pondérée scRAW. Les valeurs sont des moyennes par jeu de données ; la meilleure variante est sélectionnée par la moyenne des quatre métriques (ARI, RareACC, UltraRareACC, BalancedRareACC).}
 \label{tab:loss_transfer_baseline_vs_best}
 \end{table}
