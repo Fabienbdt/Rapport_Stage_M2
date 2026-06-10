@@ -9,10 +9,16 @@ import numpy as np
 
 ROOT = Path(__file__).resolve().parent
 CSV_PATH = Path(
-    "/data2/fbidet/scRAW_EXPERIMENTAL/results/"
+    "/Users/fabienbidet/Documents/MASTER2/STAGE/"
     "presentation_trial206_nonbaron_20260324/00_source_tables/"
     "trial206_all_results_table.csv"
 )
+if not CSV_PATH.exists():
+    CSV_PATH = Path(
+        "/data2/fbidet/scRAW_EXPERIMENTAL/results/"
+        "presentation_trial206_nonbaron_20260324/00_source_tables/"
+        "trial206_all_results_table.csv"
+    )
 
 COMMON8 = [
     "BBAG094 Zeisel",
@@ -44,6 +50,7 @@ DATASET_DISPLAY = {
 METRICS = [
     "ARI",
     "ACC",
+    "BalancedACC",
     "RareACC",
     "UltraRareACC",
     "Batch correction",
@@ -52,27 +59,31 @@ METRICS = [
 METRIC_LABELS = {
     "ARI": "Rand Index Ajusté (ARI)",
     "ACC": "Précision Globale (ACC)",
+    "BalancedACC": "Balanced Accuracy (BalancedACC)",
     "RareACC": "Précision sur Classes Rares (RareACC)",
     "UltraRareACC": "Précision sur Classes Ultra-Rares (UltraRareACC)",
     "Batch correction": "Correction de Batch",
 }
 
+SCRAW_SOURCE_METHOD = "scRAW"
+SCRAW_METHOD = "scRAW (trial_0017)"
+
 # Define the columns (algorithms) in the desired order
 PRIMARY_COLUMNS = {
-    "scRAW": ["scRAW (trial_0017)"],
+    "scRAW": [SCRAW_METHOD],
     "Rare Specific": ["scAIDE", "CellSIUS", "DeepScena", "scCAD", "GiniClust"],
     "Généralistes": ["scvi", "scMAE", "pca_leiden", "scNAME"],
     "Correction Batch": ["Harmony", "ComBat", "DESC", "Scanorama"]
 }
 
 HARMONY_COLUMNS = {
-    "scRAW": ["scRAW (trial_0017)"],
+    "scRAW": [SCRAW_METHOD],
     "Rare + Harmony": ["scAIDE+Harmony", "CellSIUS+Harmony", "scCAD+Harmony", "DeepScena+Harmony", "GiniClust+Harmony"],
     "Généralistes + Harmony": ["Harmony", "scvi", "scMAE+Harmony", "scNAME+Harmony"]
 }
 
 DISPLAY_MAP = {
-    "scRAW (trial_0017)": "scRAW",
+    SCRAW_METHOD: "scRAW",
     "pca_leiden": "PCA+Leiden",
     "scvi": "scVI",
     "scAIDE+Harmony": "scAIDE",
@@ -96,6 +107,11 @@ def format_float_french(val: float, decimals: int = 3) -> str:
     if pd.isna(val) or np.isnan(val):
         return "--"
     return f"{val:.{decimals}f}".replace(".", ",")
+
+def is_scraw_series(series: pd.Series) -> pd.Series:
+    if series.dtype == bool:
+        return series.fillna(False)
+    return series.fillna(False).astype(str).str.lower().isin({"true", "1"})
 
 def generate_table(df: pd.DataFrame, columns_dict: dict, metric: str, file_prefix: str, caption: str, label: str, font_size: str = "\\scriptsize", tabcolsep: str = "1.5pt"):
     # Flatten the columns dict to get all method keys
@@ -250,9 +266,19 @@ def generate_table(df: pd.DataFrame, columns_dict: dict, metric: str, file_prefi
 def main():
     # Load and filter CSV data
     df = pd.read_csv(CSV_PATH)
-    scraw_trial_0017 = (df["method"] == "scRAW (trial_0017)") & (df["trial_id"] == "trial_0017")
-    keep_non_scraw = ~df["is_scraw_method"].fillna(False)
+    scraw_trial_0017 = (
+        df["method"].isin({SCRAW_SOURCE_METHOD, SCRAW_METHOD})
+        & (df["trial_id"] == "trial_0017")
+    )
+    keep_non_scraw = ~is_scraw_series(df["is_scraw_method"])
     filtered_df = df[df["dataset"].isin(COMMON8) & (keep_non_scraw | scraw_trial_0017)].copy()
+    filtered_df.loc[
+        filtered_df["method"].isin({SCRAW_SOURCE_METHOD, SCRAW_METHOD})
+        & (filtered_df["trial_id"] == "trial_0017"),
+        "method",
+    ] = SCRAW_METHOD
+    for metric in METRICS:
+        filtered_df[metric] = pd.to_numeric(filtered_df[metric], errors="coerce")
     filtered_df.loc[
         filtered_df["dataset"].isin(NO_BATCH_EFFECT_DATASETS), "Batch correction"
     ] = np.nan

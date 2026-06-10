@@ -256,7 +256,7 @@ Ces métriques comparent directement la structure du clustering prédit avec la 
 \paragraph{Métriques de classification (après appariement optimal)}
 L'algorithme hongrois \cite{kuhn1955hungarian}, couramment utilisé dans des benchmarks comme scCluBench \cite{xu_scclubench_2026}, associe chaque cluster prédit à l'étiquette biologique maximisant le nombre de cellules correctement attribuées. Cet appariement permet ensuite d'évaluer :
 \begin{itemize}
-    \item \textbf{L'accuracy (ACC) :} proportion de cellules correctement affectées, sensible aux classes majoritaires.
+    \item \textbf{L'accuracy (ACC) :} proportion de cellules correctement affectées, sensible aux classes majoritaires. Nous la conservons car elle reste très utilisée dans les articles de clustering de cellules uniques et permet donc une comparaison directe avec la littérature, même si elle doit être complétée par des métriques moins sensibles au déséquilibre de classes.
     \item \textbf{La balanced accuracy (Bal ACC) :} moyenne des rappels par classe biologique.
     \item \textbf{La RareACC et l'UltraRareACC :} accuracy restreinte aux classes rares (<5\%) et ultra-rares (<1\%).
 \end{itemize}
@@ -401,14 +401,14 @@ Pour faciliter la lecture, la figure~\ref{fig:scraw_common8_family_top3_plus_scr
 
 Par exemple, scAIDE obtient de très bons scores globaux en ARI ou en ACC, mais ses scores sur les populations ultra-rares restent plus faibles que ceux de scRAW. À l'inverse, scCAD atteint une UltraRareACC légèrement supérieure, mais ses scores globaux en ARI et en ACC sont nettement plus bas. Le même type de compromis apparaît pour la correction de batch : scVI et Harmony corrigent mieux l'effet de batch, mais scVI retrouve moins bien les populations ultra-rares, tandis que Harmony reste plus faible sur les métriques centrées sur les classes rares.
 
-La matrice de rangs de la figure~\ref{fig:rank_matrix_common8} formalise ce compromis. Les rangs sont calculés à partir des moyennes obtenues par méthode sur les huit jeux de données communs, avec le rang 1 attribué au meilleur score de chaque métrique. scRAW n'est pas premier sur une métrique isolée, mais reste dans le top 3 sur les cinq critères, ce qui traduit une stabilité que n'ont pas les autres méthodes. À l'inverse, scAIDE est premier en ARI et en ACC mais chute sur les métriques rares, tandis que scCAD est premier en UltraRareACC mais très bas sur les métriques globales.
+La matrice de rangs de la figure~\ref{fig:rank_matrix_common8} formalise ce compromis. Les rangs sont calculés à partir des moyennes obtenues par méthode sur les huit jeux de données communs, avec le rang 1 attribué au meilleur score de chaque métrique. scRAW n'est pas premier sur une métrique isolée, mais reste dans le top 3 sur les six critères, ce qui traduit une stabilité que n'ont pas les autres méthodes. À l'inverse, scAIDE est premier en ARI et en ACC mais chute sur les métriques rares, tandis que scCAD est premier en UltraRareACC mais très bas sur les métriques globales.
 
 \begin{figure}[!htbp]
     \centering
-    \includegraphics[width=0.96\textwidth,height=0.48\textheight,keepaspectratio,trim=0 0 0 0.8cm,clip]{Images/scraw_common8_family_panel/common8_rank_matrix_heatmap.pdf}
+    \includegraphics[width=0.96\textwidth,height=0.48\textheight,keepaspectratio]{Images/scraw_common8_family_panel/common8_rank_matrix_heatmap.pdf}
     \caption[Matrice de rangs des algorithmes selon les métriques moyennes sur le jeu commun common-8.]{%
         \textbf{Matrice de rangs des algorithmes selon les métriques moyennes sur le jeu commun common-8.}
-        Les lignes correspondent aux méthodes et les colonnes aux métriques affichées dans la section : ARI, ACC, RareACC, UltraRareACC et correction de batch.
+        Les lignes correspondent aux méthodes et les colonnes aux métriques affichées dans la section : ARI, ACC, BalancedACC, RareACC, UltraRareACC et correction de batch.
         Le rang 1 correspond à la meilleure moyenne pour une métrique donnée.
         Les cases suivent un dégradé du violet (meilleur rang) au jaune clair (rang moins favorable).
         La matrice ne contient pas de colonne de score moyen ni de rang global, afin de faire apparaître directement les compromis métrique par métrique.%
@@ -416,7 +416,7 @@ La matrice de rangs de la figure~\ref{fig:rank_matrix_common8} formalise ce comp
     \label{fig:rank_matrix_common8}
 \end{figure}
 
-scRAW n'est donc pas systématiquement la meilleure méthode pour chaque métrique prise séparément. En revanche, ses scores restent élevés sur l'ensemble des critères évalués : 0,658 en ARI, 0,741 en ACC, 0,636 en RareACC, 0,641 en UltraRareACC et 0,636 pour la correction de batch calculée uniquement sur les jeux concernés par un effet de batch. Cette stabilité en fait le meilleur compromis observé dans ces expériences pour préserver les populations rares, limiter l'effet de batch et maintenir un clustering global précis. Les analyses complémentaires montrent aussi que l'ajout d'une correction de batch peut améliorer certaines méthodes, soit lorsqu'elle est appliquée en prétraitement, soit lorsqu'elle intervient après l'apprentissage dans l'espace latent.
+scRAW n'est donc pas systématiquement la meilleure méthode pour chaque métrique prise séparément. En revanche, ses scores restent élevés sur l'ensemble des critères évalués : 0,658 en ARI, 0,741 en ACC, 0,676 en BalancedACC, 0,636 en RareACC, 0,641 en UltraRareACC et 0,636 pour la correction de batch calculée uniquement sur les jeux concernés par un effet de batch. Sur la BalancedACC, scRAW obtient même le meilleur rang moyen parmi les méthodes comparées, ce qui confirme que le gain ne vient pas seulement des classes majoritaires. Cette stabilité en fait le meilleur compromis observé dans ces expériences pour préserver les populations rares, limiter l'effet de batch et maintenir un clustering global précis. Les analyses complémentaires montrent aussi que l'ajout d'une correction de batch peut améliorer certaines méthodes, soit lorsqu'elle est appliquée en prétraitement, soit lorsqu'elle intervient après l'apprentissage dans l'espace latent.
 
 \subsubsection{Validation sur des jeux non vus pendant l'optimisation}
 

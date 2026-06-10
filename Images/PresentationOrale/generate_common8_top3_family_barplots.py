@@ -58,6 +58,7 @@ NO_BATCH_EFFECT_DATASETS = {
 METRICS = [
     "ARI",
     "ACC",
+    "BalancedACC",
     "RareACC",
     "UltraRareACC",
     "Batch correction",
@@ -66,6 +67,7 @@ METRICS = [
 METRIC_LABELS = {
     "ARI": "ARI",
     "ACC": "ACC",
+    "BalancedACC": "Balanced ACC",
     "RareACC": "Rare ACC",
     "UltraRareACC": "Ultra Rare ACC",
     "Batch correction": "Correction batch",
@@ -232,7 +234,7 @@ def draw_plot(selection: pd.DataFrame, long_df: pd.DataFrame) -> None:
     fig, axes = plt.subplots(
         nrows=len(METRICS),
         ncols=1,
-        figsize=(13.0, 15.2),
+        figsize=(13.0, 17.8),
         squeeze=True,
     )
 

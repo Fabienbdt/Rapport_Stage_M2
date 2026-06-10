@@ -7,6 +7,10 @@ Rare Specific,ACC,1,scRAW (trial_0017)
 Rare Specific,ACC,2,scAIDE
 Rare Specific,ACC,3,CellSIUS
 Rare Specific,ACC,4,DeepScena
+Rare Specific,BalancedACC,1,scRAW (trial_0017)
+Rare Specific,BalancedACC,2,scAIDE
+Rare Specific,BalancedACC,3,CellSIUS
+Rare Specific,BalancedACC,4,DeepScena
 Rare Specific,RareACC,1,scRAW (trial_0017)
 Rare Specific,RareACC,2,CellSIUS
 Rare Specific,RareACC,3,scAIDE
@@ -27,6 +31,10 @@ Methodes generalistes,ACC,1,scRAW (trial_0017)
 Methodes generalistes,ACC,2,scMAE
 Methodes generalistes,ACC,3,scvi
 Methodes generalistes,ACC,4,scNAME
+Methodes generalistes,BalancedACC,1,scRAW (trial_0017)
+Methodes generalistes,BalancedACC,2,scvi
+Methodes generalistes,BalancedACC,3,scMAE
+Methodes generalistes,BalancedACC,4,pca_leiden
 Methodes generalistes,RareACC,1,scRAW (trial_0017)
 Methodes generalistes,RareACC,2,scvi
 Methodes generalistes,RareACC,3,scNAME
@@ -47,6 +55,10 @@ Correction batch,ACC,1,scRAW (trial_0017)
 Correction batch,ACC,2,scvi
 Correction batch,ACC,3,Harmony
 Correction batch,ACC,4,DESC
+Correction batch,BalancedACC,1,scRAW (trial_0017)
+Correction batch,BalancedACC,2,Harmony
+Correction batch,BalancedACC,3,scvi
+Correction batch,BalancedACC,4,ComBat
 Correction batch,RareACC,1,scRAW (trial_0017)
 Correction batch,RareACC,2,scvi
 Correction batch,RareACC,3,Harmony

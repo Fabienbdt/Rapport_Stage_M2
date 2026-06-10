@@ -9,19 +9,30 @@ inside the family. Appendix panels keep every method in each family.
 
 from __future__ import annotations
 
+import os
 from pathlib import Path
 
-import matplotlib.pyplot as plt
 import pandas as pd
+
+os.environ.setdefault("MPLCONFIGDIR", "/tmp/matplotlib-fbidet")
+Path(os.environ["MPLCONFIGDIR"]).mkdir(parents=True, exist_ok=True)
+
+import matplotlib.pyplot as plt
 from matplotlib.lines import Line2D
 
 
 ROOT = Path(__file__).resolve().parent
 CSV_PATH = Path(
-    "/data2/fbidet/scRAW_EXPERIMENTAL/results/"
+    "/Users/fabienbidet/Documents/MASTER2/STAGE/"
     "presentation_trial206_nonbaron_20260324/00_source_tables/"
     "trial206_all_results_table.csv"
 )
+if not CSV_PATH.exists():
+    CSV_PATH = Path(
+        "/data2/fbidet/scRAW_EXPERIMENTAL/results/"
+        "presentation_trial206_nonbaron_20260324/00_source_tables/"
+        "trial206_all_results_table.csv"
+    )
 
 COMMON8 = [
     "BBAG094 Zeisel",
@@ -37,6 +48,7 @@ COMMON8 = [
 METRICS = [
     "ARI",
     "ACC",
+    "BalancedACC",
     "RareACC",
     "UltraRareACC",
     "Batch correction",
@@ -50,11 +62,13 @@ NO_BATCH_EFFECT_DATASETS = {
 METRIC_LABELS = {
     "ARI": "ARI",
     "ACC": "ACC",
+    "BalancedACC": "BalancedACC",
     "RareACC": "RareACC",
     "UltraRareACC": "UltraRareACC",
     "Batch correction": "Correction batch",
 }
 
+SCRAW_SOURCE_METHOD = "scRAW"
 SCRAW_METHOD = "scRAW (trial_0017)"
 
 PRIMARY_FAMILIES = {
@@ -164,13 +178,27 @@ def fmt_fr(value: float) -> str:
     return f"{value:.3f}".replace(".", ",")
 
 
+def is_scraw_series(series: pd.Series) -> pd.Series:
+    if series.dtype == bool:
+        return series.fillna(False)
+    return series.fillna(False).astype(str).str.lower().isin({"true", "1"})
+
+
 def load_filtered() -> pd.DataFrame:
     df = pd.read_csv(CSV_PATH)
     scraw_trial_0017 = (
-        (df["method"] == SCRAW_METHOD) & (df["trial_id"] == "trial_0017")
+        df["method"].isin({SCRAW_SOURCE_METHOD, SCRAW_METHOD})
+        & (df["trial_id"] == "trial_0017")
     )
-    keep_non_scraw = ~df["is_scraw_method"].fillna(False)
+    keep_non_scraw = ~is_scraw_series(df["is_scraw_method"])
     df = df[df["dataset"].isin(COMMON8) & (keep_non_scraw | scraw_trial_0017)].copy()
+    df.loc[
+        df["method"].isin({SCRAW_SOURCE_METHOD, SCRAW_METHOD})
+        & (df["trial_id"] == "trial_0017"),
+        "method",
+    ] = SCRAW_METHOD
+    for metric in METRICS:
+        df[metric] = pd.to_numeric(df[metric], errors="coerce")
     df.loc[df["dataset"].isin(NO_BATCH_EFFECT_DATASETS), "Batch correction"] = pd.NA
     df["method_display"] = df["method"].map(display_method)
     return df
@@ -384,18 +412,18 @@ def export_summary_tables(
         r"{\scriptsize",
         r"\setlength{\tabcolsep}{3pt}",
         r"\renewcommand{\arraystretch}{1.12}",
-        r"\begin{longtable}{p{0.24\textwidth}p{0.19\textwidth}rrrrrr}",
+        r"\begin{longtable}{p{0.22\textwidth}p{0.18\textwidth}rrrrrrr}",
         rf"\caption{{{caption}}}\label{{{label}}}\\",
         r"\toprule",
-        r"\textbf{Famille} & \textbf{Méthode} & \textbf{ARI} & \textbf{ACC} & \textbf{RareACC} & \textbf{UltraRareACC} & \textbf{Batch} & \textbf{Score} \\",
+        r"\textbf{Famille} & \textbf{Méthode} & \textbf{ARI} & \textbf{ACC} & \textbf{BalACC} & \textbf{RareACC} & \textbf{UltraRareACC} & \textbf{Batch} & \textbf{Score} \\",
         r"\midrule",
         r"\endfirsthead",
         r"\toprule",
-        r"\textbf{Famille} & \textbf{Méthode} & \textbf{ARI} & \textbf{ACC} & \textbf{RareACC} & \textbf{UltraRareACC} & \textbf{Batch} & \textbf{Score} \\",
+        r"\textbf{Famille} & \textbf{Méthode} & \textbf{ARI} & \textbf{ACC} & \textbf{BalACC} & \textbf{RareACC} & \textbf{UltraRareACC} & \textbf{Batch} & \textbf{Score} \\",
         r"\midrule",
         r"\endhead",
         r"\midrule",
-        r"\multicolumn{8}{r}{\textit{Suite page suivante}}\\",
+        r"\multicolumn{9}{r}{\textit{Suite page suivante}}\\",
         r"\endfoot",
         r"\bottomrule",
         r"\endlastfoot",
@@ -539,7 +567,7 @@ def main() -> None:
         primary_selected,
         "common8_family_top3_plus_scraw_panel",
         "Top 3 par métrique et par famille + scRAW",
-        figsize=(11.2, 13.8),
+        figsize=(11.2, 16.2),
         label_size=6.7,
     )
     # Backward-compatible filename kept to avoid stale manually opened figures.
@@ -548,7 +576,7 @@ def main() -> None:
         primary_selected,
         "common8_family_top4_panel",
         "Top 3 par métrique et par famille + scRAW",
-        figsize=(11.2, 13.8),
+        figsize=(11.2, 16.2),
         label_size=6.7,
     )
 
@@ -557,7 +585,7 @@ def main() -> None:
         PRIMARY_FAMILIES_WITH_SCRAW,
         "common8_family_all_methods_panel",
         "Résultats complets par famille sur les 8 jeux de données communs",
-        figsize=(11.8, 14.8),
+        figsize=(11.8, 17.2),
         label_size=6.1,
     )
 
@@ -566,7 +594,7 @@ def main() -> None:
         HARMONY_COMPLEMENT_FAMILIES_WITH_SCRAW,
         "common8_harmony_complement_panel",
         "Résultats complémentaires avec Harmony",
-        figsize=(8.0, 12.8),
+        figsize=(8.0, 15.0),
         label_size=6.4,
     )
 
