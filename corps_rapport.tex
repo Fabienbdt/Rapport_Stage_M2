@@ -496,6 +496,8 @@ Plusieurs configurations ont été testées : pondération par densité seule, p
     \label{fig:loss_transfer_baseline_vs_best}
 \end{figure}
 
+La figure~\ref{fig:loss_transfer_baseline_vs_best} montre que le transfert de la loss pondérée n'apporte pas un gain homogène à toutes les architectures. L'amélioration la plus cohérente concerne scDeepCluster, dont la meilleure variante pondérée progresse sur l'ensemble des métriques affichées. À l'inverse, scMAE et DESC présentent des effets plus mixtes : certaines métriques rares augmentent, mais les scores globaux ou l'UltraRareACC peuvent diminuer. Cette différence suggère que la pondération de scRAW est plus facilement transférable à scDeepCluster, probablement parce que son architecture reste plus simple et parce que sa loss de reconstruction est directement compatible avec une pondération par cellule. Dans ce cas, modifier le poids des cellules agit directement sur la représentation apprise, alors que dans des architectures plus complexes ou déjà fortement contraintes, l'effet de cette pondération semble moins stable.
+
 \subsection{Induction}
 
 \begin{figure}[!htbp]
