@@ -44,8 +44,9 @@ metric_titles = {
 positions = [0.8, 1.2, 1.8, 2.2, 2.8, 3.2]
 colors = ["#cbd5e1", "#5f9ea0", "#cbd5e1", "#5f9ea0", "#cbd5e1", "#5f9ea0"]
 
-# Create figure (5 panels in a row)
-fig, axes = plt.subplots(1, 5, figsize=(22.5, 5.0), sharey=True)
+# Create figure (2 rows, 3 columns)
+fig, axes = plt.subplots(2, 3, figsize=(15.0, 9.0), sharey=True)
+axes = axes.ravel()
 
 for idx, metric in enumerate(metrics):
     ax = axes[idx]
@@ -114,19 +115,22 @@ for idx, metric in enumerate(metrics):
     ax.grid(axis="y", color="#d1d5db", linewidth=0.85, alpha=0.7)
     ax.spines[["top", "right"]].set_visible(False)
     
-    # Only show y-axis label on the first subplot
-    if idx == 0:
+    # Show y-axis label on the left subplots
+    if idx % 3 == 0:
         ax.set_ylabel("Score moyen", fontsize=11)
-        
+
+# Turn off the empty 6th subplot
+axes[5].axis("off")
+
 # Add global title and subtitle
-fig.suptitle("Loss pondérée scRAW intégrée à d'autres algorithmes", fontsize=13, fontweight="bold", y=0.98)
+fig.suptitle("Loss pondérée scRAW intégrée à d'autres algorithmes", fontsize=14, fontweight="bold", y=0.98)
 fig.text(
-    0.5, 0.91, 
+    0.5, 0.94, 
     "Moyennes par dataset ; meilleure variante sélectionnée par la moyenne ARI/BalancedACC/RareACC/UltraRareACC/BalancedRareACC.", 
-    ha="center", fontsize=9.5, color="#4b5563"
+    ha="center", fontsize=10, color="#4b5563"
 )
 
-# Custom legend
+# Custom legend on the empty 6th panel
 legend_handles = [
     plt.Rectangle((0, 0), 1, 1, facecolor="#cbd5e1", edgecolor="#6b7280", alpha=0.55, label="Baseline"),
     plt.Rectangle((0, 0), 1, 1, facecolor="#5f9ea0", edgecolor="#6b7280", alpha=0.55, label="Meilleure variante pondérée"),
@@ -134,16 +138,16 @@ legend_handles = [
     plt.Line2D([0], [0], marker="D", linestyle="", markerfacecolor="white", markeredgecolor="#111827", markersize=5, label="moyenne de l'algorithme")
 ]
 
-fig.legend(
+axes[5].legend(
     handles=legend_handles,
-    loc="lower center",
-    bbox_to_anchor=(0.5, -0.05),
-    ncol=4,
-    frameon=False,
-    fontsize=9.5
+    loc="center",
+    frameon=True,
+    facecolor="#f9fafb",
+    edgecolor="#e5e7eb",
+    fontsize=10.5
 )
 
-plt.tight_layout(rect=[0, 0.05, 1, 0.88])
+plt.tight_layout(rect=[0, 0.02, 1, 0.92])
 
 # Save outputs
 output_pdf = ROOT / "loss_transfer_baseline_vs_best_weighted.pdf"
