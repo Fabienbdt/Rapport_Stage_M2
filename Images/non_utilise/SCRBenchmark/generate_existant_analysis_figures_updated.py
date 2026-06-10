@@ -61,6 +61,7 @@ METRIC_COLUMNS = [
     "BalancedACC",
     "F1Macro",
     "RareACC",
+    "BalancedRareACC",
     "UltraRareACC",
     "BatchCorrection",
     "n_eval",
@@ -109,11 +110,12 @@ def draw_metric_table(ax: plt.Axes, metrics_mean: pd.DataFrame, metrics_std: pd.
         "ACC",
         "BalancedACC",
         "RareACC",
+        "BalancedRareACC",
         "UltraRareACC",
         "BatchCorrection",
         "n_eval",
     ]
-    headers = ["Methode", "NMI", "ARI", "ACC", "Bal.\nACC", "Rare\nACC", "Ultra\nRare", "Batch\ncorr.", "n"]
+    headers = ["Methode", "NMI", "ARI", "ACC", "Bal.\nACC", "Rare\nACC", "Bal.\nRare", "Ultra\nRare", "Batch\ncorr.", "n"]
     
     # Build display values
     display_rows = []
@@ -149,8 +151,7 @@ def draw_metric_table(ax: plt.Axes, metrics_mean: pd.DataFrame, metrics_std: pd.
     
     ax.set_title(title, loc="left", fontsize=12.0, fontweight="bold", pad=6)
     
-    # Adjusted widths to give enough space for the method names and std dev strings
-    col_widths = [0.18, 0.108, 0.108, 0.108, 0.108, 0.108, 0.108, 0.108, 0.064]
+    col_widths = [0.16, 0.097, 0.097, 0.097, 0.097, 0.097, 0.097, 0.097, 0.10, 0.061]
     
     table = ax.table(
         cellText=display_values,
@@ -162,7 +163,7 @@ def draw_metric_table(ax: plt.Axes, metrics_mean: pd.DataFrame, metrics_std: pd.
         bbox=[0.0, 0.0, 1.0, 0.93],
     )
     table.auto_set_font_size(False)
-    table.set_fontsize(6.8) # Adjusted font size to fit text perfectly within cell boundaries
+    table.set_fontsize(6.1) # Adjusted font size to fit text perfectly within cell boundaries
     
     for (row, col), cell in table.get_celld().items():
         cell.set_edgecolor("#d9dee3")

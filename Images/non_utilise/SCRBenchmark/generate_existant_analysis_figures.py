@@ -111,6 +111,7 @@ METRIC_COLUMNS = [
     "BalancedACC",
     "F1Macro",
     "RareACC",
+    "BalancedRareACC",
     "UltraRareACC",
     "BatchCorrection",
     "n_eval",
@@ -194,11 +195,16 @@ def evaluate_label_file(
 
     recalls = class_recalls(y_true, y_aligned)
     counts = y_true.value_counts()
+    
+    rare_recalls = [recalls[c] for c in recalls if c in rare]
+    balanced_rare_acc = float(np.mean(rare_recalls)) if rare_recalls else float("nan")
+
     metrics = {
         "NMI": normalized_mutual_info_score(y_true, y_raw),
         "ARI": adjusted_rand_score(y_true, y_raw),
         "ACC": accuracy_score(y_true, y_aligned),
         "BalancedACC": float(np.mean(list(recalls.values()))),
+        "BalancedRareACC": balanced_rare_acc,
         "F1Macro": f1_score(
             y_true,
             y_aligned,
@@ -399,11 +405,12 @@ def draw_metric_table(ax: plt.Axes, metrics: pd.DataFrame, mode_name: str, title
         "ACC",
         "BalancedACC",
         "RareACC",
+        "BalancedRareACC",
         "UltraRareACC",
         "BatchCorrection",
         "n_eval",
     ]
-    headers = ["Methode", "NMI", "ARI", "ACC", "Bal.\nACC", "Rare\nACC", "Ultra\nRare", "Batch\ncorr.", "n"]
+    headers = ["Methode", "NMI", "ARI", "ACC", "Bal.\nACC", "Rare\nACC", "Bal.\nRare", "Ultra\nRare", "Batch\ncorr.", "n"]
     display = data[table_cols].copy()
     for col in table_cols[1:-1]:
         display[col] = display[col].map(format_metric)
@@ -416,7 +423,7 @@ def draw_metric_table(ax: plt.Axes, metrics: pd.DataFrame, mode_name: str, title
         loc="center",
         cellLoc="center",
         colLoc="center",
-        colWidths=[0.17, 0.095, 0.095, 0.095, 0.095, 0.095, 0.095, 0.12, 0.085],
+        colWidths=[0.17, 0.085, 0.085, 0.085, 0.085, 0.085, 0.085, 0.085, 0.11, 0.075],
         bbox=[0.0, 0.0, 1.0, 0.88],
     )
     table.auto_set_font_size(False)
