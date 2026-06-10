@@ -281,7 +281,39 @@ def write_metric_value_table(summary: pd.DataFrame) -> None:
     (HERE / "inductive_dataset_metric_values_table.tex").write_text("\n".join(lines) + "\n", encoding="utf-8")
 
 
-def plot_boxplots(summary: pd.DataFrame, metrics_list: list[str], prefix: str) -> None:
+def load_transductive_data(csv_path: Path) -> pd.DataFrame:
+    df = pd.read_csv(csv_path)
+    df.columns = df.columns.str.strip()
+    for col in df.select_dtypes(include='object').columns:
+        df[col] = df[col].astype(str).str.strip()
+    
+    # Filter by target datasets
+    df = df[df["dataset_key"].isin(DATASET_ORDER)].copy()
+    
+    TRANS_METHOD_MAP = {
+        "scraw": "scRAW",
+        "scname": "scNAME",
+        "sc_mae": "scMAE",
+        "scdeepcluster": "DESC",
+        "scaide": "scAIDE",
+        "scvi": "scvi"
+    }
+    
+    # Filter by mapped methods
+    df = df[df["method"].isin(TRANS_METHOD_MAP.values())].copy()
+    
+    # Map back to algorithm names
+    inv_map = {v: k for k, v in TRANS_METHOD_MAP.items()}
+    df["algorithm"] = df["method"].map(inv_map)
+    
+    # Coerce metric columns to numeric
+    for metric in ALL_METRICS:
+        df[metric] = pd.to_numeric(df[metric], errors="coerce")
+        
+    return df
+
+
+def plot_boxplots(summary: pd.DataFrame, trans_df: pd.DataFrame, metrics_list: list[str], prefix: str) -> None:
     plt.rcParams.update(
         {
             "figure.dpi": 170,
@@ -307,18 +339,31 @@ def plot_boxplots(summary: pd.DataFrame, metrics_list: list[str], prefix: str) -
     for idx, metric in enumerate(metrics_list):
         ax = axes[idx]
         metric_df = summary[summary["metric"] == metric]
-        data = []
+        
+        ind_data = []
+        trans_data = []
         for algorithm in ALGORITHM_ORDER:
-            values = pd.to_numeric(
+            # Inductive results (averaged over splits per dataset, then distribution over datasets)
+            ind_values = pd.to_numeric(
                 metric_df.loc[metric_df["algorithm"].astype(str) == algorithm, "mean"],
                 errors="coerce",
             ).dropna()
-            data.append(values.to_numpy(dtype=float))
+            ind_data.append(ind_values.to_numpy(dtype=float))
+            
+            # Transductive results (complete dataset run per dataset, distribution over datasets)
+            trans_values = pd.to_numeric(
+                trans_df.loc[trans_df["algorithm"] == algorithm, metric],
+                errors="coerce",
+            ).dropna()
+            trans_data.append(trans_values.to_numpy(dtype=float))
+            
         positions = np.arange(1, len(ALGORITHM_ORDER) + 1)
-        box = ax.boxplot(
-            data,
-            positions=positions,
-            widths=0.52,
+        
+        # 1. Inductive boxplots (left, colored)
+        box_ind = ax.boxplot(
+            ind_data,
+            positions=positions - 0.18,
+            widths=0.3,
             patch_artist=True,
             showmeans=True,
             meanprops={
@@ -329,21 +374,47 @@ def plot_boxplots(summary: pd.DataFrame, metrics_list: list[str], prefix: str) -
             },
             medianprops={"color": "#111827", "linewidth": 1.2},
         )
-        for patch, algorithm in zip(box["boxes"], ALGORITHM_ORDER):
+        
+        # Color inductive boxes
+        for patch, algorithm in zip(box_ind["boxes"], ALGORITHM_ORDER):
             patch.set_facecolor(PALETTE[ALGORITHM_LABELS[algorithm]])
             patch.set_alpha(0.72)
             patch.set_edgecolor("#4b5563")
             patch.set_linewidth(0.9)
-        for x_pos, values in zip(positions, data):
-            offsets = np.linspace(-0.08, 0.08, len(values)) if len(values) > 1 else np.array([0.0])
-            ax.scatter(x_pos + offsets, values, s=22, color="#111827", alpha=0.82, zorder=3)
-        counts = [len(values) for values in data]
+            
+        # 2. Transductive boxplots (right, greyed out baseline)
+        box_trans = ax.boxplot(
+            trans_data,
+            positions=positions + 0.18,
+            widths=0.3,
+            patch_artist=True,
+            showmeans=True,
+            meanprops={
+                "marker": "D",
+                "markerfacecolor": "white",
+                "markeredgecolor": "#111827",
+                "markersize": 4.5,
+            },
+            medianprops={"color": "#111827", "linewidth": 1.2},
+        )
+        
+        # Color transductive boxes
+        for patch in box_trans["boxes"]:
+            patch.set_facecolor("#cbd5e1")
+            patch.set_alpha(0.6)
+            patch.set_edgecolor("#64748b")
+            patch.set_linewidth(0.9)
+            
         ax.set_xticks(positions)
         ax.set_xticklabels(
-            [f"{ALGORITHM_LABELS[a]}\nn={n}" for a, n in zip(ALGORITHM_ORDER, counts)],
+            [f"{ALGORITHM_LABELS[a]}" for a in ALGORITHM_ORDER],
             rotation=26,
             ha="right",
         )
+        for label in ax.get_xticklabels():
+            if label.get_text() == "scRAW":
+                label.set_color("#dc2626")  # nice red color (tailwindcss red-600)
+                label.set_fontweight("bold")
         ax.set_title(METRIC_LABELS[metric], loc="left", fontweight="bold")
         ax.set_ylim(-0.02, 1.08)
         ax.grid(axis="y", color="#d1d5db", linewidth=0.8, alpha=0.7)
@@ -360,8 +431,16 @@ def plot_boxplots(summary: pd.DataFrame, metrics_list: list[str], prefix: str) -
         axes[0].set_ylabel("Score")
         axes[2].set_ylabel("Score")
         
-    fig.suptitle("Comparaison inductive par moyennes dataset", y=0.992, fontsize=15, fontweight="bold")
-    fig.tight_layout(rect=(0, 0, 1, 0.965))
+    from matplotlib.patches import Patch
+    legend_elements = [
+        Patch(facecolor="white", edgecolor="#4b5563", label="Inductif (données nouvelles)"),
+        Patch(facecolor="#cbd5e1", edgecolor="#64748b", alpha=0.6, label="Baseline (jeu de données complet, transductif - moyenne)")
+    ]
+    
+    fig.suptitle("Comparaison inductive par moyennes dataset", y=0.98, fontsize=15, fontweight="bold")
+    fig.legend(handles=legend_elements, loc="upper center", bbox_to_anchor=(0.5, 0.935), ncol=2, fontsize=11, frameon=True)
+    fig.tight_layout(rect=(0, 0, 1, 0.92))
+    
     for ext in ["png", "pdf"]:
         fig.savefig(HERE / f"{prefix}.{ext}", bbox_inches="tight")
     plt.close(fig)
@@ -424,8 +503,13 @@ def main() -> int:
     selected = summary[summary["metric"].isin(METRICS)].copy()
     selected.to_csv(HERE / "inductive_dataset_level_metric_summary_selected.csv", index=False)
     write_metric_value_table(summary)
-    plot_boxplots(selected, METRICS, "inductive_metrics_boxplots_ari_acc_rare_balancedrare_ultrarare")
-    plot_boxplots(selected, ["ARI", "ACC", "BalancedACC", "RareACC", "UltraRareACC"], "inductive_metrics_boxplots_ari_acc_rare_ultrarare")
+    
+    # Load transductive results
+    trans_csv_path = HERE.parent.parent.parent / "presentation_trial206_nonbaron_20260324/00_source_tables/trial206_all_results_table.csv"
+    trans_df = load_transductive_data(trans_csv_path)
+    
+    plot_boxplots(selected, trans_df, METRICS, "inductive_metrics_boxplots_ari_acc_rare_balancedrare_ultrarare")
+    plot_boxplots(selected, trans_df, ["ARI", "ACC", "BalancedACC", "RareACC", "UltraRareACC"], "inductive_metrics_boxplots_ari_acc_rare_ultrarare")
     plot_heatmap(selected)
 
     manifest = {

@@ -1,6 +1,6 @@
 dataset_key,dataset_label,algorithm,algorithm_label,metric,n_splits,mean,std,min,max,metric_label,dataset_short
 baron_human_pancreas,Baron pancreas,scraw,scRAW,ACC,4,0.9079098586080343,0.02444677144558383,0.8733691481197237,0.9306518723994452,ACC,Baron pancreas
-baron_human_pancreas,Baron pancreas,scraw,scRAW,ARI,4,0.9102019141574615,0.03905420875186718,0.856040827725743,0.9474137804725348,ARI,Baron pancreas
+baron_human_pancreas,Baron pancreas,scraw,scRAW,ARI,4,0.9102019141574615,0.03905420875186717,0.856040827725743,0.9474137804725348,ARI,Baron pancreas
 baron_human_pancreas,Baron pancreas,scraw,scRAW,BalancedACC,4,0.7448456044483014,0.013941293297198036,0.7312298437813347,0.761312172824066,Balanced ACC,Baron pancreas
 baron_human_pancreas,Baron pancreas,scraw,scRAW,BalancedRareACC,4,0.6615515771526002,0.036726691657337406,0.612233589087809,0.7,Balanced Rare ACC,Baron pancreas
 baron_human_pancreas,Baron pancreas,scraw,scRAW,RareACC,4,0.7343516667995749,0.1595966030850392,0.5174825174825175,0.8725099601593626,Rare ACC,Baron pancreas
@@ -29,10 +29,10 @@ baron_human_pancreas,Baron pancreas,scaide,scAIDE,BalancedACC,4,0.69804906976741
 baron_human_pancreas,Baron pancreas,scaide,scAIDE,BalancedRareACC,4,0.6209017915024415,0.12082105331285882,0.4663233771769577,0.7589629629629628,Balanced Rare ACC,Baron pancreas
 baron_human_pancreas,Baron pancreas,scaide,scAIDE,RareACC,4,0.7068913923238503,0.2084035255650032,0.4615384615384615,0.9211087420042644,Rare ACC,Baron pancreas
 baron_human_pancreas,Baron pancreas,scaide,scAIDE,UltraRareACC,4,0.7221434479498995,0.2629818616794255,0.3333333333333333,0.9032258064516128,Ultra Rare ACC,Baron pancreas
-baron_human_pancreas,Baron pancreas,scvi,scVI,ACC,4,0.6043318690001933,0.047786942979046426,0.5384615384615384,0.646968534151957,ACC,Baron pancreas
+baron_human_pancreas,Baron pancreas,scvi,scVI,ACC,4,0.6043318690001933,0.04778694297904643,0.5384615384615384,0.646968534151957,ACC,Baron pancreas
 baron_human_pancreas,Baron pancreas,scvi,scVI,ARI,4,0.5484769503090078,0.05596255813991079,0.464903617523056,0.5826308995394548,ARI,Baron pancreas
 baron_human_pancreas,Baron pancreas,scvi,scVI,BalancedACC,4,0.4818587394359951,0.05531034631456948,0.4248921440163805,0.5347157194341886,Balanced ACC,Baron pancreas
-baron_human_pancreas,Baron pancreas,scvi,scVI,BalancedRareACC,4,0.39709626964008,0.09987500389284584,0.2650621118012423,0.485045038568106,Balanced Rare ACC,Baron pancreas
+baron_human_pancreas,Baron pancreas,scvi,scVI,BalancedRareACC,4,0.39709626964008,0.09987500389284583,0.2650621118012423,0.485045038568106,Balanced Rare ACC,Baron pancreas
 baron_human_pancreas,Baron pancreas,scvi,scVI,RareACC,4,0.7191736298707886,0.1469685442398823,0.5948827292110874,0.9090909090909092,Rare ACC,Baron pancreas
 baron_human_pancreas,Baron pancreas,scvi,scVI,UltraRareACC,4,0.4280766276734018,0.28388603337976726,0.0238095238095238,0.6785714285714286,Ultra Rare ACC,Baron pancreas
 bbag094_spleen,BBAG094 spleen,scraw,scRAW,ACC,1,0.9177086362314626,0.0,0.9177086362314626,0.9177086362314626,ACC,BBAG094 spleen
