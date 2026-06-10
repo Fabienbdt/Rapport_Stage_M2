@@ -3,5 +3,6 @@ ARI,8,0,
 ACC,8,1,Baron human pancreas
 BalancedACC,8,2,Baron human pancreas; Tabula Muris liver
 RareACC,8,2,Human testis GSE112013; Kang PBMC
+BalancedRareACC,8,2,Baron human pancreas; Kang PBMC
 UltraRareACC,7,0,
 Batch correction,6,0,

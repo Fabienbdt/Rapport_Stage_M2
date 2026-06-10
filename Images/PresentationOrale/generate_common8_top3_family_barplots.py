@@ -60,6 +60,7 @@ METRICS = [
     "ACC",
     "BalancedACC",
     "RareACC",
+    "BalancedRareACC",
     "UltraRareACC",
     "Batch correction",
 ]
@@ -69,6 +70,7 @@ METRIC_LABELS = {
     "ACC": "ACC",
     "BalancedACC": "Balanced ACC",
     "RareACC": "Rare ACC",
+    "BalancedRareACC": "Balanced Rare ACC",
     "UltraRareACC": "Ultra Rare ACC",
     "Batch correction": "Correction batch",
 }
@@ -234,7 +236,7 @@ def draw_plot(selection: pd.DataFrame, long_df: pd.DataFrame) -> None:
     fig, axes = plt.subplots(
         nrows=len(METRICS),
         ncols=1,
-        figsize=(13.0, 17.8),
+        figsize=(13.0, 20.2),
         squeeze=True,
     )
 

@@ -1,0 +1,9 @@
+metric,dataset,scraw_value,best_value,scraw_rank,is_scraw_first
+BalancedRareACC,BBAG094 Zeisel,0.3942307692307692,0.6363226059654631,8,False
+BalancedRareACC,BBAG094 spleen,0.7420385045572452,0.9884715380405036,8,False
+BalancedRareACC,Baron human pancreas,0.837473323530332,0.837473323530332,1,True
+BalancedRareACC,Human testis GSE112013,0.89321124021709,0.9129847638506812,2,False
+BalancedRareACC,Kang PBMC,0.7142094017094017,0.7142094017094017,1,True
+BalancedRareACC,Macaque retina bipolar,0.9037712136460482,0.9443944502732472,2,False
+BalancedRareACC,Paul15 bone marrow,0.2113500597371565,0.5825744794449247,12,False
+BalancedRareACC,Tabula Muris liver,0.4,0.5069246031746031,3,False

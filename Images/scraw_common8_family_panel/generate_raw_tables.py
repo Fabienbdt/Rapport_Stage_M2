@@ -52,6 +52,7 @@ METRICS = [
     "ACC",
     "BalancedACC",
     "RareACC",
+    "BalancedRareACC",
     "UltraRareACC",
     "Batch correction",
 ]
@@ -61,6 +62,7 @@ METRIC_LABELS = {
     "ACC": "Précision Globale (ACC)",
     "BalancedACC": "Balanced Accuracy (BalancedACC)",
     "RareACC": "Précision sur Classes Rares (RareACC)",
+    "BalancedRareACC": "Balanced Accuracy sur Classes Rares (BalancedRareACC)",
     "UltraRareACC": "Précision sur Classes Ultra-Rares (UltraRareACC)",
     "Batch correction": "Correction de Batch",
 }

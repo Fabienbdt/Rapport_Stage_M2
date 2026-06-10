@@ -1,0 +1,24 @@
+\begin{table}[H]
+  \centering
+  \fontsize{5.5pt}{7.0pt}\selectfont
+  \setlength{\tabcolsep}{1.0pt}
+  \begin{tabular}{l|c|ccccc|cccc|cccc}
+    \toprule
+    \textbf{Jeu de données} & \multicolumn{1}{c|}{\textbf{scRAW}} & \multicolumn{5}{c|}{\textbf{Rare Specific}} & \multicolumn{4}{c|}{\textbf{Généralistes}} & \multicolumn{4}{c}{\textbf{Correction Batch}} \\
+    & \textbf{scRAW} & scAIDE & CellSIUS & DeepScena & scCAD & GiniClust & scVI & scMAE & PCA+Leiden & scNAME & Harmony & ComBat & DESC & Scanorama \\
+    \midrule
+    Zeisel & 0,394 & 0,600 & \textbf{0,636} & 0,416 & 0,515 & 0,071 & 0,465 & 0,553 & 0,336 & \underline{0,622} & 0,295 & 0,000 & 0,341 & 0,336 \\
+    Spleen & 0,742 & 0,529 & 0,836 & 0,652 & 0,492 & 0,050 & 0,962 & 0,539 & \textbf{0,988} & 0,874 & \underline{0,988} & 0,981 & 0,662 & 0,894 \\
+    Baron Pancreas & \textbf{0,837} & 0,501 & 0,650 & 0,275 & 0,555 & 0,191 & 0,542 & 0,520 & 0,670 & 0,523 & 0,664 & 0,665 & 0,442 & \underline{0,690} \\
+    Human Testis & \underline{0,893} & 0,866 & 0,769 & 0,489 & 0,353 & 0,090 & 0,707 & 0,657 & 0,712 & 0,647 & \textbf{0,913} & 0,481 & 0,670 & 0,665 \\
+    Kang PBMC & \textbf{0,714} & 0,178 & 0,298 & 0,251 & 0,234 & 0,005 & 0,127 & 0,171 & 0,391 & 0,002 & 0,381 & 0,382 & \underline{0,435} & 0,156 \\
+    Macaque Retina & \underline{0,904} & 0,737 & 0,743 & 0,036 & 0,712 & 0,035 & 0,733 & 0,730 & 0,746 & 0,490 & 0,739 & \textbf{0,944} & 0,738 & 0,643 \\
+    Bone Marrow & 0,211 & 0,421 & 0,426 & 0,138 & 0,425 & 0,010 & \underline{0,454} & \textbf{0,583} & 0,285 & 0,450 & 0,285 & 0,355 & 0,219 & 0,285 \\
+    TM Liver & 0,400 & 0,200 & \textbf{0,507} & 0,040 & \underline{0,419} & 0,120 & 0,193 & 0,193 & 0,200 & 0,191 & 0,200 & 0,200 & 0,000 & 0,200 \\
+    \midrule
+    \textbf{Moyenne} & \textbf{0,637} & 0,504 & \underline{0,608} & 0,287 & 0,463 & 0,072 & 0,523 & 0,493 & 0,541 & 0,475 & 0,558 & 0,501 & 0,438 & 0,484 \\
+    \bottomrule
+  \end{tabular}
+  \caption{Résultats bruts de Balanced Accuracy sur Classes Rares (BalancedRareACC) pour les méthodes principales sur les 8 jeux de données communs. La meilleure performance par jeu de données est en gras, et la deuxième est soulignée.}
+  \label{tab:common8_primary_raw_BalancedRareACC}
+\end{table}

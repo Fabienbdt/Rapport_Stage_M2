@@ -3,7 +3,11 @@
 
 from __future__ import annotations
 
+import os
 from pathlib import Path
+
+os.environ.setdefault("MPLCONFIGDIR", "/tmp/matplotlib-fbidet")
+Path(os.environ["MPLCONFIGDIR"]).mkdir(parents=True, exist_ok=True)
 
 import matplotlib.pyplot as plt
 import matplotlib.patches as patches
@@ -16,12 +20,21 @@ ROOT = Path(__file__).resolve().parent
 INPUT_CSV = ROOT / "common8_primary_all_methods_means.csv"
 OUTPUT_STEM = ROOT / "common8_rank_matrix_heatmap"
 
-METRICS = ["ARI", "ACC", "BalancedACC", "RareACC", "UltraRareACC", "Batch correction"]
+METRICS = [
+    "ARI",
+    "ACC",
+    "BalancedACC",
+    "RareACC",
+    "BalancedRareACC",
+    "UltraRareACC",
+    "Batch correction",
+]
 METRIC_LABELS = {
     "ARI": "ARI",
     "ACC": "ACC",
     "BalancedACC": "Bal. ACC",
     "RareACC": "RareACC",
+    "BalancedRareACC": "Bal. RareACC",
     "UltraRareACC": "UltraRareACC",
     "Batch correction": "Batch",
 }
@@ -60,7 +73,7 @@ def main() -> None:
     )
 
     sns.set_theme(style="white", context="paper")
-    fig, ax = plt.subplots(figsize=(9.0, 5.7))
+    fig, ax = plt.subplots(figsize=(10.0, 5.7))
     heatmap = sns.heatmap(
         ranks,
         ax=ax,

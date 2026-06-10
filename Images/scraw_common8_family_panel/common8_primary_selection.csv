@@ -15,6 +15,10 @@ Rare Specific,RareACC,1,scRAW (trial_0017)
 Rare Specific,RareACC,2,CellSIUS
 Rare Specific,RareACC,3,scAIDE
 Rare Specific,RareACC,4,DeepScena
+Rare Specific,BalancedRareACC,1,scRAW (trial_0017)
+Rare Specific,BalancedRareACC,2,CellSIUS
+Rare Specific,BalancedRareACC,3,scAIDE
+Rare Specific,BalancedRareACC,4,scCAD
 Rare Specific,UltraRareACC,1,scRAW (trial_0017)
 Rare Specific,UltraRareACC,2,scCAD
 Rare Specific,UltraRareACC,3,CellSIUS
@@ -39,6 +43,10 @@ Methodes generalistes,RareACC,1,scRAW (trial_0017)
 Methodes generalistes,RareACC,2,scvi
 Methodes generalistes,RareACC,3,scNAME
 Methodes generalistes,RareACC,4,pca_leiden
+Methodes generalistes,BalancedRareACC,1,scRAW (trial_0017)
+Methodes generalistes,BalancedRareACC,2,pca_leiden
+Methodes generalistes,BalancedRareACC,3,scvi
+Methodes generalistes,BalancedRareACC,4,scMAE
 Methodes generalistes,UltraRareACC,1,scRAW (trial_0017)
 Methodes generalistes,UltraRareACC,2,pca_leiden
 Methodes generalistes,UltraRareACC,3,scvi
@@ -63,6 +71,10 @@ Correction batch,RareACC,1,scRAW (trial_0017)
 Correction batch,RareACC,2,scvi
 Correction batch,RareACC,3,Harmony
 Correction batch,RareACC,4,DESC
+Correction batch,BalancedRareACC,1,scRAW (trial_0017)
+Correction batch,BalancedRareACC,2,Harmony
+Correction batch,BalancedRareACC,3,scvi
+Correction batch,BalancedRareACC,4,ComBat
 Correction batch,UltraRareACC,1,scRAW (trial_0017)
 Correction batch,UltraRareACC,2,Scanorama
 Correction batch,UltraRareACC,3,Harmony
