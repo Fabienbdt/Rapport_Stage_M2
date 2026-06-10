@@ -1,0 +1,27 @@
+\documentclass{article}
+\usepackage[paperwidth=1440pt,paperheight=810pt,margin=0pt]{geometry}
+\usepackage{pdfpages}
+\usepackage{eso-pic}
+\usepackage[hidelinks]{hyperref}
+
+\pagestyle{empty}
+\setlength{\parindent}{0pt}
+
+\newcommand{\sourcepdf}{ORAL STAGE (1)_compressed.pdf}
+\newcommand{\videofile}{demo_SCRBENCHMARK.mp4}
+
+\newcommand{\videolinkoverlay}{%
+  \AddToShipoutPictureFG*{%
+    \AtPageLowerLeft{%
+      \put(\LenToUnit{623pt},\LenToUnit{245pt}){%
+        \href{run:\videofile}{\rule{220pt}{0pt}\rule{0pt}{170pt}}%
+      }%
+    }%
+  }%
+}
+
+\begin{document}
+\includepdf[pages=1-16,fitpaper=true]{\sourcepdf}
+\includepdf[pages=17,fitpaper=true,pagecommand={\videolinkoverlay}]{\sourcepdf}
+\includepdf[pages=18-43,fitpaper=true]{\sourcepdf}
+\end{document}

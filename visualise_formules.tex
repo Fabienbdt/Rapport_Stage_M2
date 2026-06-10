@@ -1,0 +1,135 @@
+\documentclass[11pt,a4paper]{article}
+
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[french]{babel}
+\usepackage{lmodern}
+\usepackage{geometry}
+\geometry{margin=2.5cm}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{xcolor}
+
+\definecolor{ubblue}{HTML}{0969DA}
+
+\title{\textbf{\color{ubblue}Formules Pédagogiques du Rapport de Stage}}
+\author{Visualisation des métriques}
+\date{\today}
+
+\begin{document}
+
+\maketitle
+
+\section{Indice de Gini (Déséquilibre des classes)}
+
+L'indice de Gini mesure la disparité de taille entre les différentes populations cellulaires (classes).
+
+\subsection{Formule en mots}
+\[
+\text{Gini} = \frac{\text{Différence moyenne de taille entre toutes les paires de classes}}{2 \times \text{Taille moyenne des classes}}
+\]
+
+\subsection{Formule mathématique générale}
+Si $C$ est le nombre total de classes et $N_i$ est le nombre de cellules dans la classe $i$ :
+\[
+G = \frac{\sum_{i=1}^{C} \sum_{j=1}^{C} |N_i - N_j|}{2 \, C \sum_{i=1}^{C} N_i}
+\]
+
+\subsection{Formule simplifiée pour 2 classes ($A$ et $B$)}
+Dans le cas particulier où il n'y a que deux populations, la formule s'écrit de manière très intuitive :
+\[
+G = \frac{|N_A - N_B|}{2(N_A + N_B)}
+\]
+
+\subsection{Explication pas-à-pas pour les débutants}
+
+Pour bien comprendre cette formule mathématique sans être un expert, décomposons ses éléments :
+
+\begin{enumerate}
+    \item \textbf{Le numérateur ($\sum_{i=1}^{C} \sum_{j=1}^{C} |N_i - N_j|$)} :
+    C'est la somme de toutes les différences de taille entre chaque paire de classes possible. 
+    \begin{itemize}
+        \item Le terme $|N_i - N_j|$ représente l'écart absolu (sans signe négatif) entre la taille de la classe $i$ et celle de la classe $j$.
+        \item La double somme ($\sum\sum$) signifie que l'on compare chaque classe $i$ à toutes les classes $j$ une à une. Par exemple, avec trois classes A, B et C, on calcule les écarts pour les couples (A,B), (A,C), (B,C), mais aussi (B,A), (C,A), (C,B). On y inclut aussi les auto-comparaisons (A,A), (B,B), (C,C) qui valent $0$.
+    \end{itemize}
+    
+    \item \textbf{Le dénominateur ($2 \, C \sum_{i=1}^{C} N_i$)} :
+    Ce terme sert de valeur de référence pour normaliser le score. Il est composé de :
+    \begin{itemize}
+        \item $\sum_{i=1}^{C} N_i = N$ : le nombre total de cellules de tous les types confondus.
+        \item $C$ : le nombre total de classes.
+        \item Le facteur $2$ : il permet de compenser le fait que chaque paire de classes a été comparée deux fois au numérateur (A contre B, et B contre A).
+    \end{itemize}
+    
+    \item \textbf{Le lien avec la taille moyenne des classes} :
+    La taille moyenne d'une classe est définie par $\mu = \frac{N}{C}$ (le nombre total de cellules divisé par le nombre de classes). Si on réorganise mathématiquement l'équation, on retrouve la formule simplifiée exprimée en mots :
+    \[
+    G = \frac{\text{Différence moyenne entre paires}}{2 \times \text{Taille moyenne des classes}}
+    \]
+    L'indice de Gini exprime donc simplement la différence relative de taille entre deux populations de cellules prise au hasard par rapport à leur taille moyenne.
+    
+    \item \textbf{Pourquoi la valeur finale est-elle comprise entre $0$ et $1$ ?} :
+    \begin{itemize}
+        \item \textbf{Cas 0 (Équilibre parfait)} : Si toutes les classes ont exactement la même taille (ex. $25\%$ chacune pour 4 classes), toutes les différences $|N_i - N_j|$ valent $0$, ce qui donne $G = 0$.
+        \item \textbf{Cas 1 (Inégalité extrême)} : Si une seule classe contient toutes les cellules ($N$) et que les autres sont vides ($0$), la somme des différences au numérateur vaut $2N(C-1)$. Divisée par le dénominateur $2NC$, le rapport vaut $\frac{C-1}{C}$, qui s'approche de $1$ quand le nombre de classes $C$ augmente. Le facteur $2$ garantit que cette limite supérieure ne dépasse pas $1$.
+    \end{itemize}
+\end{enumerate}
+
+\section{PCR sur PCA (Effet de batch)}
+
+La régression sur composantes principales (PCR) estime dans quelle mesure le batch technique explique la variance des données sur les principaux axes de la PCA.
+
+\subsection{Formule en mots}
+\[
+\text{PCR} = \sum \left( \text{Importance de l'axe PCA} \times \text{Part de cet axe expliquée par le batch} \right)
+\]
+
+\subsection{Formule mathématique}
+Pour un espace PCA à $D$ dimensions (typiquement les $50$ premières composantes principales) :
+\[
+\text{PCR} = \sum_{k=1}^{D} \text{Var}(k) \cdot R^2(\mathbf{x}_k \mid B)
+\]
+Où :
+\begin{itemize}
+    \item $D$ est le nombre de composantes principales considérées.
+    \item $\text{Var}(k)$ est la variance relative expliquée par la composante principale $k$ ($\sum_k \text{Var}(k) = 1$).
+    \item $\mathbf{x}_k$ est le vecteur des coordonnées des cellules sur l'axe $k$.
+    \item $R^2(\mathbf{x}_k \mid B)$ est le coefficient de détermination de la régression linéaire de $\mathbf{x}_k$ sur la variable de batch $B$.
+\end{itemize}
+
+\subsection{Explication pas-à-pas pour les débutants}
+
+Pour bien comprendre cette formule sans être un expert en mathématiques, décomposons-la pas à pas :
+
+\begin{enumerate}
+    \item \textbf{Le symbole somme ($\sum_{k=1}^{D}$)} :
+    C'est une boucle de calcul. Cela signifie : « Fais le calcul pour le premier axe (PC1), puis pour le deuxième (PC2), et ainsi de suite jusqu'au $D$-ième axe, et additionne tous les résultats. »
+    
+    \item \textbf{L'importance de l'axe ($\text{Var}(k)$)} :
+    La PCA crée des axes ordonnés par importance. Le premier axe (PC1) contient beaucoup de signal (variance élevée), le dixième en contient beaucoup moins. $\text{Var}(k)$ est un pourcentage (ex. $0{,}30$ pour $30\%$) qui indique quelle part du signal global est portée par l'axe $k$.
+    
+    \item \textbf{L'influence du batch ($R^2(\mathbf{x}_k \mid B)$)} :
+    Le $R^2$ est une note entre $0$ et $1$ issue d'une régression linéaire. Elle répond à la question : « Si je connais le batch d'une cellule, à quel point puis-je prédire sa position sur cet axe ? »
+    \begin{itemize}
+        \item $R^2 \approx 0$ : Le batch n'a aucun impact sur cet axe (c'est le cas idéal, il n'y a pas d'effet de batch).
+        \item $R^2 \approx 1$ : L'axe sépare uniquement les cellules en fonction de leur batch de provenance (l'axe est "pollué" par le batch).
+    \end{itemize}
+    
+    \item \textbf{La multiplication ($\text{Var}(k) \cdot R^2$)} :
+    On multiplie l'influence du batch par l'importance de l'axe. Pourquoi ?
+    \begin{itemize}
+        \item Si un axe est \textbf{très important} (ex. $\text{Var}(1) = 40\%$) et qu'il est \textbf{très impacté} par le batch (ex. $R^2 = 0{,}9$), la multiplication donne $0{,}36$ : c'est une grosse contribution au score final car le batch pollue le signal biologique majeur.
+        \item Si un axe est \textbf{insignifiant} (ex. $\text{Var}(40) = 0{,}1\%$) mais qu'il est \textbf{très impacté} par le batch (ex. $R^2 = 0{,}9$), la multiplication donne $0{,}0009$ : cela n'impacte presque pas le score final car cet axe ne contient presque aucun signal utile à la base.
+    \end{itemize}
+    
+    \item \textbf{Pourquoi est-ce une moyenne s'il n'y a pas de division ? (La moyenne pondérée)} :
+    Dans une moyenne classique, on additionne toutes les valeurs et on divise par le nombre d'éléments, ce qui revient à attribuer le même poids à chacun. Ici, chaque score $R^2$ est multiplié par sa variance relative $\text{Var}(k)$, qui fait office de coefficient (ou poids). Comme ces importances relatives sont des fractions d'un tout, leur somme vaut exactement $1$ (soit $100\%$ de la variance de la PCA) :
+    \[
+    \sum_{k=1}^{D} \text{Var}(k) = 1
+    \]
+    Puisque la somme des coefficients d'importance vaut $1$, la formule calcule directement une moyenne pondérée des $R^2$. Diviser à la fin par la somme des poids n'est donc plus nécessaire (la division est déjà implicitement faite lors du calcul des parts relatives).
+\end{enumerate}
+
+\textbf{En résumé} : La PCR est la moyenne des effets de batch mesurés sur chaque axe de la PCA, où les axes qui portent le plus d'informations comptent plus lourd dans la moyenne. Un score final proche de $0$ est idéal, tandis qu'un score proche de $1$ indique que l'effet de batch domine le signal biologique principal.
+
+\end{document}
