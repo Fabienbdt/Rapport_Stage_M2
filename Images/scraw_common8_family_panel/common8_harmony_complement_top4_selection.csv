@@ -1,9 +1,0 @@
-family,rank,method
-Rare Specific + Harmony,1,scAIDE+Harmony
-Rare Specific + Harmony,2,CellSIUS+Harmony
-Rare Specific + Harmony,3,scCAD+Harmony
-Rare Specific + Harmony,4,DeepScena+Harmony
-Generalistes + Harmony,1,Harmony
-Generalistes + Harmony,2,scvi
-Generalistes + Harmony,3,scMAE+Harmony
-Generalistes + Harmony,4,scNAME+Harmony

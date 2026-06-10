@@ -1,7 +1,0 @@
-algorithm,configuration_type,variant,variant_label,ARI,RareACC,UltraRareACC,selection_score
-scMAE,Baseline,baseline,Baseline,0.6654574983739628,0.5617204806052656,0.491671681800623,0.5729498869266172
-scMAE,Meilleure variante pondérée,full_leiden,Pondération complète Leiden,0.6483383316440043,0.5889436909865471,0.5178431463279741,0.5850417229861752
-scDeepCluster,Baseline,baseline,Baseline,0.4218420186774356,0.6223875409022366,0.22234851459045007,0.42219269139004073
-scDeepCluster,Meilleure variante pondérée,full_leiden,Pondération complète Leiden,0.4505687492455162,0.6451769025256388,0.3442294640068925,0.4799917052593492
-DESC,Baseline,baseline,Baseline,0.584871421983841,0.6309186159776163,0.42943350524351703,0.5484078477349914
-DESC,Meilleure variante pondérée,full_kmeans_triplet,Pondération complète KMeans + triplet,0.5761569843391364,0.6621317632156679,0.41415659047376296,0.5508151126761891

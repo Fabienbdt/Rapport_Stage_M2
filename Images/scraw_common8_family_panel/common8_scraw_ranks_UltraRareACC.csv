@@ -1,9 +1,0 @@
-metric,dataset,scraw_value,best_value,scraw_rank,is_scraw_first
-UltraRareACC,BBAG094 Zeisel,0.5555555555555556,0.7037037037037037,5,False
-UltraRareACC,BBAG094 spleen,0.9761904761904762,1.0,5,False
-UltraRareACC,Baron human pancreas,0.8135593220338984,0.9152542372881356,2,False
-UltraRareACC,Human testis GSE112013,0.6428571428571429,0.9642857142857144,5,False
-UltraRareACC,Kang PBMC,0.8173076923076923,0.8697674418604651,2,False
-UltraRareACC,Macaque retina bipolar,0.6802721088435374,0.8435374149659864,3,False
-UltraRareACC,Paul15 bone marrow,0.0,0.7419354838709677,7,False
-UltraRareACC,Tabula Muris liver,,,,False
