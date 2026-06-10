@@ -1,5 +1,5 @@
 {
-  "source_table": "/Users/fabienbidet/Documents/MASTER2/STAGE/Rapport_Stage_M2/Images/comparaison_inductive_scraw_trial0017_synthese/inductive_per_split_combined_summary_source.csv",
+  "source_table": "/data2/fbidet/Rapport_Stage_M2_git/Images/comparaison_inductive_scraw_trial0017_synthese/inductive_per_split_combined_summary_source.csv",
   "additional_root": "",
   "n_base_rows": 78,
   "n_added_rows": 0,
@@ -22,6 +22,7 @@
   "metrics": [
     "ARI",
     "ACC",
+    "BalancedACC",
     "RareACC",
     "BalancedRareACC",
     "UltraRareACC"

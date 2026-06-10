@@ -58,7 +58,7 @@ DATASET_LABELS = {
     "macaque_retina_gse118480_bipolar_raw_counts": "Macaque retina",
     "pancreas_raw_counts_four_batches_celseq_celseq2_fluidigmc1_smartseq2": "Pancreas 4 batches",
 }
-METRICS = ["ARI", "ACC", "RareACC", "BalancedRareACC", "UltraRareACC"]
+METRICS = ["ARI", "ACC", "BalancedACC", "RareACC", "BalancedRareACC", "UltraRareACC"]
 ALL_METRICS = ["ACC", "BalancedACC", "ARI", "NMI", "RareACC", "UltraRareACC", "BalancedRareACC"]
 METRIC_LABELS = {
     "ACC": "ACC",
@@ -269,7 +269,7 @@ def write_metric_value_table(summary: pd.DataFrame) -> None:
             "\\bottomrule",
             "\\end{tabular}}",
             (
-                "\\caption{Moyennes par jeu de données des expériences inductives pour les quatre "
+                "\\caption{Moyennes par jeu de données des expériences inductives pour les "
                 "métriques principales. Chaque valeur correspond à la moyenne des splits "
                 "inductifs disponibles pour un couple jeu de données--algorithme ; la meilleure "
                 "valeur de chaque ligne est en gras.}"
@@ -294,7 +294,9 @@ def plot_boxplots(summary: pd.DataFrame, metrics_list: list[str], prefix: str) -
         }
     )
     n_metrics = len(metrics_list)
-    if n_metrics == 5:
+    if n_metrics == 6:
+        fig, axes = plt.subplots(2, 3, figsize=(22.5, 10.4), sharey=True)
+    elif n_metrics == 5:
         fig, axes = plt.subplots(2, 3, figsize=(22.5, 10.4), sharey=True)
     elif n_metrics == 4:
         fig, axes = plt.subplots(2, 2, figsize=(15.0, 10.4), sharey=True)
@@ -349,6 +351,9 @@ def plot_boxplots(summary: pd.DataFrame, metrics_list: list[str], prefix: str) -
         
     if n_metrics == 5:
         axes[-1].axis("off")
+        axes[0].set_ylabel("Score")
+        axes[3].set_ylabel("Score")
+    elif n_metrics == 6:
         axes[0].set_ylabel("Score")
         axes[3].set_ylabel("Score")
     else:
@@ -420,7 +425,7 @@ def main() -> int:
     selected.to_csv(HERE / "inductive_dataset_level_metric_summary_selected.csv", index=False)
     write_metric_value_table(summary)
     plot_boxplots(selected, METRICS, "inductive_metrics_boxplots_ari_acc_rare_balancedrare_ultrarare")
-    plot_boxplots(selected, ["ARI", "ACC", "RareACC", "UltraRareACC"], "inductive_metrics_boxplots_ari_acc_rare_ultrarare")
+    plot_boxplots(selected, ["ARI", "ACC", "BalancedACC", "RareACC", "UltraRareACC"], "inductive_metrics_boxplots_ari_acc_rare_ultrarare")
     plot_heatmap(selected)
 
     manifest = {

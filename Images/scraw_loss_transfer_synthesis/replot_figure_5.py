@@ -30,9 +30,10 @@ best_variants = {
     "DESC": "full_kmeans_triplet"
 }
 
-metrics = ["ARI", "RareACC", "UltraRareACC", "BalancedRareACC"]
+metrics = ["ARI", "BalancedACC", "RareACC", "UltraRareACC", "BalancedRareACC"]
 metric_titles = {
     "ARI": "ARI",
+    "BalancedACC": "Balanced ACC",
     "RareACC": "Rare ACC",
     "UltraRareACC": "Ultra Rare ACC",
     "BalancedRareACC": "Balanced Rare ACC"
@@ -43,8 +44,8 @@ metric_titles = {
 positions = [0.8, 1.2, 1.8, 2.2, 2.8, 3.2]
 colors = ["#cbd5e1", "#5f9ea0", "#cbd5e1", "#5f9ea0", "#cbd5e1", "#5f9ea0"]
 
-# Create figure (4 panels in a row)
-fig, axes = plt.subplots(1, 4, figsize=(18.0, 5.0), sharey=True)
+# Create figure (5 panels in a row)
+fig, axes = plt.subplots(1, 5, figsize=(22.5, 5.0), sharey=True)
 
 for idx, metric in enumerate(metrics):
     ax = axes[idx]
@@ -121,7 +122,7 @@ for idx, metric in enumerate(metrics):
 fig.suptitle("Loss pondérée scRAW intégrée à d'autres algorithmes", fontsize=13, fontweight="bold", y=0.98)
 fig.text(
     0.5, 0.91, 
-    "Moyennes par dataset ; meilleure variante sélectionnée par la moyenne ARI/RareACC/UltraRareACC/BalancedRareACC.", 
+    "Moyennes par dataset ; meilleure variante sélectionnée par la moyenne ARI/BalancedACC/RareACC/UltraRareACC/BalancedRareACC.", 
     ha="center", fontsize=9.5, color="#4b5563"
 )
 

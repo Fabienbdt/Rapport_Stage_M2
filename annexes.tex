@@ -326,7 +326,7 @@ Pour résumer les performances, les seeds sont d'abord moyennées pour chaque je
 \begin{figure}[H]
     \centering
     \includegraphics[width=\textwidth,height=0.60\textheight,keepaspectratio]{scraw_loss_transfer_synthesis/loss_transfer_all_configurations_boxplot_4metrics.pdf}
-    \caption{Distribution des scores pour toutes les configurations testées lors du transfert de la loss pondérée \(\mathcal{L}_{\mathrm{recon,ponderée}}\) de scRAW. Les quatre panneaux correspondent aux métriques ARI, RareACC, UltraRareACC et BalancedRareACC. Les boîtes représentent la distribution des scores moyens sur l'ensemble des jeux de données, et les points noirs indiquent les valeurs par jeu de données.}
+    \caption{Distribution des scores pour toutes les configurations testées lors du transfert de la loss pondérée \(\mathcal{L}_{\mathrm{recon,ponderée}}\) de scRAW. Les cinq panneaux correspondent aux métriques ARI, BalancedACC, RareACC, UltraRareACC et BalancedRareACC. Les boîtes représentent la distribution des scores moyens sur l'ensemble des jeux de données, et les points noirs indiquent les valeurs par jeu de données.}
     \label{fig:loss_transfer_all_configurations_boxplots}
 \end{figure}
 
@@ -361,7 +361,7 @@ Human Pancreas & Technologies \texttt{smartseq2} et \texttt{celseq2} & Technolog
 \begin{figure}[H]
     \centering
     \includegraphics[width=\textwidth,height=0.42\textheight,keepaspectratio]{comparaison_inductive_scraw_trial0017_synthese/inductive_metrics_boxplots_ari_acc_rare_ultrarare.pdf}
-    \caption{Distribution des performances inductives pour ARI, ACC, RareACC et UltraRareACC. Les boîtes représentent la distribution des moyennes par jeu de données et split inductif pour chaque algorithme testé. Chaque point noir correspond à la moyenne d'un jeu de données et les losanges blancs indiquent la moyenne globale de l'algorithme.}
+    \caption{Distribution des performances inductives pour ARI, ACC, Balanced ACC, RareACC et UltraRareACC. Les boîtes représentent la distribution des moyennes par jeu de données et split inductif pour chaque algorithme testé. Chaque point noir correspond à la moyenne d'un jeu de données et les losanges blancs indiquent la moyenne globale de l'algorithme.}
     \label{fig:inductive_metrics_dataset_boxplots}
 \end{figure}
 

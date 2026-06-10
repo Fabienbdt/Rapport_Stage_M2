@@ -2,35 +2,35 @@
 \centering
 \scriptsize
 \renewcommand{\arraystretch}{1.04}
-\begin{tabularx}{\textwidth}{l X c c c c c}
+\begin{tabularx}{\textwidth}{l X c c c c c c}
 \toprule
-\textbf{Algorithme} & \textbf{Configuration} & \textbf{ARI} & \textbf{RareACC} & \textbf{UltraRareACC} & \textbf{BalancedRareACC} & \textbf{Score} \\
+\textbf{Algorithme} & \textbf{Configuration} & \textbf{ARI} & \textbf{BalancedACC} & \textbf{RareACC} & \textbf{UltraRareACC} & \textbf{BalancedRareACC} & \textbf{Score} \\
 \midrule
-scMAE & Baseline & 0,665 & 0,562 & 0,492 & 0,485 & 0,551 \\
- & Pondération densité & 0,636 & 0,581 & 0,527 & 0,515 & 0,565 \\
- & \textbf{Pondération complète Leiden} & 0,648 & 0,589 & 0,518 & 0,517 & \textbf{0,568} \\
- & Pondération complète KMeans & 0,612 & 0,603 & 0,505 & 0,525 & 0,561 \\
- & Pondération complète Leiden + triplet & 0,483 & 0,640 & 0,317 & 0,478 & 0,479 \\
- & Pondération complète KMeans + triplet & 0,549 & 0,614 & 0,325 & 0,513 & 0,500 \\
- & Pondération densité + triplet KMeans & 0,552 & 0,615 & 0,343 & 0,504 & 0,503 \\
+scMAE & Baseline & 0,665 & 0,625 & 0,562 & 0,492 & 0,485 & 0,566 \\
+ & Pondération densité & 0,636 & 0,640 & 0,581 & 0,527 & 0,515 & 0,579 \\
+ & \textbf{Pondération complète Leiden} & \textbf{0,648} & \textbf{0,636} & \textbf{0,589} & \textbf{0,518} & \textbf{0,517} & \textbf{0,582} \\
+ & Pondération complète KMeans & 0,612 & 0,635 & 0,603 & 0,505 & 0,525 & 0,576 \\
+ & Pondération complète Leiden + triplet & 0,483 & 0,573 & 0,640 & 0,317 & 0,478 & 0,498 \\
+ & Pondération complète KMeans + triplet & 0,549 & 0,615 & 0,614 & 0,325 & 0,513 & 0,523 \\
+ & Pondération densité + triplet KMeans & 0,552 & 0,609 & 0,615 & 0,343 & 0,504 & 0,525 \\
 \addlinespace[0.25em]
-scDeepCluster & Baseline & 0,422 & 0,622 & 0,222 & 0,431 & 0,424 \\
- & Pondération densité & 0,471 & 0,644 & 0,313 & 0,452 & 0,470 \\
- & \textbf{Pondération complète Leiden} & 0,451 & 0,645 & 0,344 & 0,455 & \textbf{0,474} \\
- & Pondération complète KMeans & 0,461 & 0,619 & 0,284 & 0,427 & 0,448 \\
- & Pondération complète Leiden + triplet & 0,484 & 0,464 & 0,289 & 0,315 & 0,388 \\
- & Pondération complète KMeans + triplet & 0,498 & 0,508 & 0,264 & 0,349 & 0,405 \\
- & Pondération densité + triplet KMeans & 0,502 & 0,510 & 0,197 & 0,337 & 0,387 \\
+scDeepCluster & Baseline & 0,422 & 0,515 & 0,622 & 0,222 & 0,431 & 0,443 \\
+ & Pondération densité & 0,471 & 0,539 & 0,644 & 0,313 & 0,452 & 0,484 \\
+ & \textbf{Pondération complète Leiden} & \textbf{0,451} & \textbf{0,548} & \textbf{0,645} & \textbf{0,344} & \textbf{0,455} & \textbf{0,489} \\
+ & Pondération complète KMeans & 0,461 & 0,538 & 0,619 & 0,284 & 0,427 & 0,466 \\
+ & Pondération complète Leiden + triplet & 0,484 & 0,474 & 0,464 & 0,289 & 0,315 & 0,405 \\
+ & Pondération complète KMeans + triplet & 0,498 & 0,506 & 0,508 & 0,264 & 0,349 & 0,425 \\
+ & Pondération densité + triplet KMeans & 0,502 & 0,506 & 0,510 & 0,197 & 0,337 & 0,410 \\
 \addlinespace[0.25em]
-DESC & Baseline & 0,585 & 0,631 & 0,429 & 0,497 & 0,535 \\
- & Pondération densité & 0,592 & 0,596 & 0,355 & 0,433 & 0,494 \\
- & Pondération complète Leiden & 0,593 & 0,606 & 0,411 & 0,463 & 0,518 \\
- & Pondération complète KMeans & 0,595 & 0,635 & 0,371 & 0,475 & 0,519 \\
- & Pondération complète Leiden + triplet & 0,580 & 0,633 & 0,389 & 0,487 & 0,522 \\
- & \textbf{Pondération complète KMeans + triplet} & 0,576 & 0,662 & 0,414 & 0,508 & \textbf{0,540} \\
- & Pondération densité + triplet KMeans & 0,573 & 0,630 & 0,383 & 0,485 & 0,518 \\
+DESC & Baseline & 0,585 & 0,558 & 0,631 & 0,429 & 0,497 & 0,540 \\
+ & Pondération densité & 0,592 & 0,543 & 0,596 & 0,355 & 0,433 & 0,504 \\
+ & Pondération complète Leiden & 0,593 & 0,558 & 0,606 & 0,411 & 0,463 & 0,526 \\
+ & Pondération complète KMeans & 0,595 & 0,558 & 0,635 & 0,371 & 0,475 & 0,527 \\
+ & Pondération complète Leiden + triplet & 0,580 & 0,559 & 0,633 & 0,389 & 0,487 & 0,530 \\
+ & \textbf{Pondération complète KMeans + triplet} & \textbf{0,576} & \textbf{0,561} & \textbf{0,662} & \textbf{0,414} & \textbf{0,508} & \textbf{0,544} \\
+ & Pondération densité + triplet KMeans & 0,573 & 0,570 & 0,630 & 0,383 & 0,485 & 0,528 \\
 \bottomrule
 \end{tabularx}
-\caption{Résultats moyens de toutes les configurations expérimentées pour l'intégration de la loss pondérée scRAW. Le score correspond à la moyenne de ARI, RareACC, UltraRareACC et BalancedRareACC ; la meilleure configuration non-baseline de chaque algorithme est en gras.}
+\caption{Résultats moyens de toutes les configurations expérimentées pour l'intégration de la loss pondérée scRAW. Le score correspond à la moyenne de ARI, BalancedACC, RareACC, UltraRareACC et BalancedRareACC ; la meilleure configuration non-baseline de chaque algorithme est en gras.}
 \label{tab:loss_transfer_all_configurations}
 \end{table}

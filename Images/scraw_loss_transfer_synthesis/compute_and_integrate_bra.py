@@ -156,12 +156,14 @@ for csv_file in scrbenchmark_files:
         if algo_label is None:
             continue
         bra = compute_bra(row)
+        bac = row.get("BalancedACC", None)
         if not np.isnan(bra):
             records.append({
                 "dataset": dataset,
                 "algorithm": algo_label,
                 "variant": variant,
                 "BalancedRareACC": bra,
+                "BalancedACC": bac,
             })
 
 # ── Walk full runs: DESC from desc/runs/seed_*/results/results.json ─────────
@@ -190,35 +192,43 @@ for json_file in desc_json_files:
             if vals.get("Support", 0) / total < 0.05
         ]
         bra = float(np.mean(rare_recalls)) if rare_recalls else float("nan")
+        bac = metrics.get("BalancedACC", None)
         if not np.isnan(bra):
             records.append({
                 "dataset": dataset,
                 "algorithm": "DESC",
                 "variant": variant,
                 "BalancedRareACC": bra,
+                "BalancedACC": bac,
             })
     except Exception as e:
         print(f"  Error reading {json_file}: {e}")
         continue
 
-print(f"Total per-seed BRA records: {len(records)}")
+print(f"Total per-seed records: {len(records)}")
 bra_df = pd.DataFrame(records)
 print("Unique algorithms:", bra_df["algorithm"].unique())
 print("Unique datasets:", bra_df["dataset"].unique())
 
-# ── Aggregate by (dataset, algorithm, variant) ────────────────────────────────
-agg = bra_df.groupby(["dataset", "algorithm", "variant"])["BalancedRareACC"].agg(
+# Melt so we can aggregate both BalancedRareACC and BalancedACC
+melted = bra_df.melt(
+    id_vars=["dataset", "algorithm", "variant"],
+    value_vars=["BalancedRareACC", "BalancedACC"],
+    var_name="metric",
+    value_name="value"
+)
+
+# ── Aggregate by (dataset, algorithm, variant, metric) ────────────────────────
+agg = melted.groupby(["dataset", "algorithm", "variant", "metric"])["value"].agg(
     mean="mean", std="std", n="count"
 ).reset_index()
-agg.columns = ["dataset", "algorithm", "variant", "mean", "std", "n"]
-agg["metric"] = "BalancedRareACC"
-agg = agg[["dataset", "algorithm", "variant", "metric", "mean", "std", "n"]]
+agg.columns = ["dataset", "algorithm", "variant", "metric", "mean", "std", "n"]
 
 print(f"\nAggregated rows: {len(agg)}")
 
 # ── Update loss_transfer CSV ──────────────────────────────────────────────────
 lt = pd.read_csv(CSV_PATH)
-lt_clean = lt[lt["metric"] != "BalancedRareACC"]
+lt_clean = lt[~lt["metric"].isin(["BalancedRareACC", "BalancedACC"])]
 lt_updated = pd.concat([lt_clean, agg], ignore_index=True)
 lt_updated = lt_updated.sort_values(
     ["dataset", "algorithm", "variant", "metric"]
@@ -227,7 +237,7 @@ lt_updated.to_csv(CSV_PATH, index=False)
 print(f"Updated CSV: {CSV_PATH} ({len(lt_updated)} rows, {lt_updated['metric'].unique()})")
 
 # ── Print table values for LaTeX ──────────────────────────────────────────────
-metrics = ["ARI", "RareACC", "UltraRareACC", "BalancedRareACC"]
+metrics = ["ARI", "BalancedACC", "RareACC", "UltraRareACC", "BalancedRareACC"]
 lt_sub = lt_updated[lt_updated["metric"].isin(metrics)]
 pivot = lt_sub.groupby(["algorithm", "variant", "metric"])["mean"].mean().reset_index()
 pivot = pivot.pivot_table(
@@ -246,16 +256,168 @@ for algo in ["scMAE", "scDeepCluster", "DESC"]:
     for _, row in sub.iterrows():
         name = VARIANT_LABELS.get(row["variant"], row["variant"])
         ari = row.get("ARI", float("nan"))
+        bac = row.get("BalancedACC", float("nan"))
         rare = row.get("RareACC", float("nan"))
         ultra = row.get("UltraRareACC", float("nan"))
         bra = row.get("BalancedRareACC", float("nan"))
-        score = np.nanmean([ari, rare, ultra, bra])
+        score = np.nanmean([ari, bac, rare, ultra, bra])
         print(
-            f"  {name}: ARI={ari:.3f}, RareACC={rare:.3f}, "
-            f"UltraRareACC={ultra:.3f}, BalancedRareACC={bra:.3f}, Score(4-metric)={score:.3f}"
+            f"  {name}: ARI={ari:.3f}, BalancedACC={bac:.3f}, RareACC={rare:.3f}, "
+            f"UltraRareACC={ultra:.3f}, BalancedRareACC={bra:.3f}, Score(5-metric)={score:.3f}"
         )
 
-# ── Regenerate boxplot (2x2: ARI, RareACC, UltraRareACC, BalancedRareACC) ────
+
+def write_baseline_vs_best_table(pivot_df):
+    lines = [
+        "\\begin{table}[H]",
+        "\\centering",
+        "\\small",
+        "\\renewcommand{\\arraystretch}{1.08}",
+        "\\begin{tabularx}{\\textwidth}{l X c c c c c}",
+        "\\toprule",
+        "\\textbf{Algorithme} & \\textbf{Configuration} & \\textbf{ARI} & \\textbf{BalancedACC} & \\textbf{RareACC} & \\textbf{UltraRareACC} & \\textbf{BalancedRareACC} \\\\",
+        "\\midrule"
+    ]
+    
+    best_variants = {
+        "scMAE": "full_leiden",
+        "scDeepCluster": "full_leiden",
+        "DESC": "full_kmeans_triplet"
+    }
+    
+    variant_labels_best = {
+        "baseline": "Baseline",
+        "full_leiden": "\\textbf{Meilleure pondérée : Pseudo clustering Leiden}",
+        "full_kmeans_triplet": "\\textbf{Meilleure pondérée : Pseudo clustering KMeans + triplet}"
+    }
+    
+    algos = ["scMAE", "scDeepCluster", "DESC"]
+    
+    for i, algo in enumerate(algos):
+        for var in ["baseline", best_variants[algo]]:
+            row_data = pivot_df[(pivot_df["algorithm"] == algo) & (pivot_df["variant"] == var)]
+            if row_data.empty:
+                continue
+            row_data = row_data.iloc[0]
+            
+            algo_cell = algo if var == "baseline" else ""
+            config_cell = variant_labels_best[var]
+            
+            ari = row_data.get("ARI", float("nan"))
+            bac = row_data.get("BalancedACC", float("nan"))
+            rare = row_data.get("RareACC", float("nan"))
+            ultra = row_data.get("UltraRareACC", float("nan"))
+            bra = row_data.get("BalancedRareACC", float("nan"))
+            
+            def fmt(v, is_best=False):
+                if pd.isna(v): return "--"
+                formatted = f"{v:.3f}".replace(".", ",")
+                return f"\\textbf{{{formatted}}}" if is_best else formatted
+            
+            is_var = (var != "baseline")
+            lines.append(
+                f"{algo_cell} & {config_cell} & {fmt(ari)} & {fmt(bac)} & {fmt(rare)} & {fmt(ultra)} & {fmt(bra, is_best=is_var)} \\\\"
+            )
+        if i < len(algos) - 1:
+            lines.append("\\addlinespace[0.2em]")
+            
+    lines.extend([
+        "\\bottomrule",
+        "\\end{tabularx}",
+        "\\caption{Comparaison entre chaque algorithme de base et sa meilleure variante avec loss pondérée scRAW. Les valeurs sont des moyennes par jeu de données ; la meilleure variante est sélectionnée par la moyenne des quatre métriques (ARI, RareACC, UltraRareACC, BalancedRareACC).}",
+        "\\label{tab:loss_transfer_baseline_vs_best}",
+        "\\end{table}"
+    ])
+    
+    out_path = SYNTH_DIR / "loss_transfer_baseline_vs_best_table.tex"
+    out_path.write_text("\n".join(lines) + "\n", encoding="utf-8")
+    print(f"Generated LaTeX baseline vs best table: {out_path}")
+
+
+def write_all_configurations_table(pivot_df):
+    lines = [
+        "\\begin{table}[H]",
+        "\\centering",
+        "\\scriptsize",
+        "\\renewcommand{\\arraystretch}{1.04}",
+        "\\begin{tabularx}{\\textwidth}{l X c c c c c c}",
+        "\\toprule",
+        "\\textbf{Algorithme} & \\textbf{Configuration} & \\textbf{ARI} & \\textbf{BalancedACC} & \\textbf{RareACC} & \\textbf{UltraRareACC} & \\textbf{BalancedRareACC} & \\textbf{Score} \\\\",
+        "\\midrule"
+    ]
+    
+    variant_labels = {
+        "baseline": "Baseline",
+        "density_only": "Pondération densité",
+        "full_leiden": "Pondération complète Leiden",
+        "full_kmeans": "Pondération complète KMeans",
+        "full_leiden_triplet": "Pondération complète Leiden + triplet",
+        "full_kmeans_triplet": "Pondération complète KMeans + triplet",
+        "density_only_triplet_kmeans": "Pondération densité + triplet KMeans",
+    }
+    
+    best_variants = {
+        "scMAE": "full_leiden",
+        "scDeepCluster": "full_leiden",
+        "DESC": "full_kmeans_triplet"
+    }
+    
+    algos = ["scMAE", "scDeepCluster", "DESC"]
+    
+    for i, algo in enumerate(algos):
+        sub = pivot_df[pivot_df["algorithm"] == algo].copy()
+        sub["order"] = sub["variant"].map({v: idx for idx, v in enumerate(VARIANT_ORDER)})
+        sub = sub.sort_values("order")
+        
+        for idx_row, row_data in enumerate(sub.iterrows()):
+            row_data = row_data[1]
+            var = row_data["variant"]
+            
+            algo_cell = algo if idx_row == 0 else ""
+            
+            ari = row_data.get("ARI", float("nan"))
+            bac = row_data.get("BalancedACC", float("nan"))
+            rare = row_data.get("RareACC", float("nan"))
+            ultra = row_data.get("UltraRareACC", float("nan"))
+            bra = row_data.get("BalancedRareACC", float("nan"))
+            score = np.nanmean([ari, bac, rare, ultra, bra])
+            
+            is_best = (var == best_variants[algo])
+            
+            def fmt(v, bold=False):
+                if pd.isna(v): return "--"
+                formatted = f"{v:.3f}".replace(".", ",")
+                return f"\\textbf{{{formatted}}}" if bold else formatted
+            
+            config_label = variant_labels.get(var, var)
+            if is_best:
+                config_label = f"\\textbf{{{config_label}}}"
+                
+            lines.append(
+                f"{algo_cell} & {config_label} & {fmt(ari, is_best)} & {fmt(bac, is_best)} & {fmt(rare, is_best)} & {fmt(ultra, is_best)} & {fmt(bra, is_best)} & {fmt(score, is_best)} \\\\"
+            )
+        if i < len(algos) - 1:
+            lines.append("\\addlinespace[0.25em]")
+            
+    lines.extend([
+        "\\bottomrule",
+        "\\end{tabularx}",
+        "\\caption{Résultats moyens de toutes les configurations expérimentées pour l'intégration de la loss pondérée scRAW. Le score correspond à la moyenne de ARI, BalancedACC, RareACC, UltraRareACC et BalancedRareACC ; la meilleure configuration non-baseline de chaque algorithme est en gras.}",
+        "\\label{tab:loss_transfer_all_configurations}",
+        "\\end{table}"
+    ])
+    
+    out_path = SYNTH_DIR / "loss_transfer_all_configurations_table.tex"
+    out_path.write_text("\n".join(lines) + "\n", encoding="utf-8")
+    print(f"Generated LaTeX all configurations table: {out_path}")
+
+
+# Generate LaTeX tables
+write_baseline_vs_best_table(pivot)
+write_all_configurations_table(pivot)
+
+
+# ── Regenerate boxplot (2x3: ARI, BalancedACC, RareACC, BalancedRareACC, UltraRareACC) ────
 sns.set_theme(style="whitegrid")
 plt.rcParams.update({
     "figure.dpi": 160,
@@ -267,17 +429,21 @@ plt.rcParams.update({
     "ytick.labelsize": 9,
 })
 
-fig, axes = plt.subplots(2, 2, figsize=(14, 10), sharey=False)
+fig, axes = plt.subplots(2, 3, figsize=(18, 10), sharey=False)
 axes = axes.flatten()
+
+metrics_list = ["ARI", "BalancedACC", "RareACC", "BalancedRareACC", "UltraRareACC"]
 
 metric_titles = {
     "ARI": "ARI",
+    "BalancedACC": "BalancedACC",
     "RareACC": "RareACC",
-    "UltraRareACC": "UltraRareACC",
     "BalancedRareACC": "BalancedRareACC",
+    "UltraRareACC": "UltraRareACC",
 }
 
-for ax, metric in zip(axes, ["ARI", "RareACC", "UltraRareACC", "BalancedRareACC"]):
+for idx, metric in enumerate(metrics_list):
+    ax = axes[idx]
     df_m = lt_updated[lt_updated["metric"] == metric].copy()
     df_m["variant"] = pd.Categorical(
         df_m["variant"], categories=VARIANT_ORDER, ordered=True
@@ -318,6 +484,9 @@ for ax, metric in zip(axes, ["ARI", "RareACC", "UltraRareACC", "BalancedRareACC"
     ax.set_ylabel("Score moyen", fontsize=10)
     ax.set_ylim(0, 1.05)
     ax.get_legend().remove()
+
+# Hide the last unused subplot
+axes[-1].axis("off")
 
 # Shared legend
 handles, labels = axes[0].get_legend_handles_labels()
