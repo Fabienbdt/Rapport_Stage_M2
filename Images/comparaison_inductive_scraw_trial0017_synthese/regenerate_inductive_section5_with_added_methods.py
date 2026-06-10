@@ -24,14 +24,13 @@ DEFAULT_ADDITIONAL_ROOT = Path(
 )
 
 ADDED_ALGORITHMS = ["scaide", "pca_harmony", "scvi"]
-ALGORITHM_ORDER = ["scraw", "scname", "sc_mae", "scdeepcluster", "scaide", "pca_harmony", "scvi"]
+ALGORITHM_ORDER = ["scraw", "scname", "sc_mae", "scdeepcluster", "scaide", "scvi"]
 ALGORITHM_LABELS = {
     "scraw": "scRAW",
     "scname": "scNAME",
     "sc_mae": "scMAE",
     "scdeepcluster": "scDeepCluster",
     "scaide": "scAIDE",
-    "pca_harmony": "PCA+Harmony",
     "scvi": "scVI",
 }
 PALETTE = {
@@ -282,7 +281,7 @@ def write_metric_value_table(summary: pd.DataFrame) -> None:
     (HERE / "inductive_dataset_metric_values_table.tex").write_text("\n".join(lines) + "\n", encoding="utf-8")
 
 
-def plot_boxplots(summary: pd.DataFrame) -> None:
+def plot_boxplots(summary: pd.DataFrame, metrics_list: list[str], prefix: str) -> None:
     plt.rcParams.update(
         {
             "figure.dpi": 170,
@@ -294,9 +293,17 @@ def plot_boxplots(summary: pd.DataFrame) -> None:
             "ytick.labelsize": 9,
         }
     )
-    fig, axes = plt.subplots(2, 3, figsize=(22.5, 10.4), sharey=True)
+    n_metrics = len(metrics_list)
+    if n_metrics == 5:
+        fig, axes = plt.subplots(2, 3, figsize=(22.5, 10.4), sharey=True)
+    elif n_metrics == 4:
+        fig, axes = plt.subplots(2, 2, figsize=(15.0, 10.4), sharey=True)
+    else:
+        raise ValueError("Unsupported number of metrics")
+        
     axes = axes.ravel()
-    for ax, metric in zip(axes, METRICS):
+    for idx, metric in enumerate(metrics_list):
+        ax = axes[idx]
         metric_df = summary[summary["metric"] == metric]
         data = []
         for algorithm in ALGORITHM_ORDER:
@@ -339,13 +346,19 @@ def plot_boxplots(summary: pd.DataFrame) -> None:
         ax.set_ylim(-0.02, 1.08)
         ax.grid(axis="y", color="#d1d5db", linewidth=0.8, alpha=0.7)
         ax.spines[["top", "right"]].set_visible(False)
-    axes[-1].axis("off")
-    axes[0].set_ylabel("Score")
-    axes[3].set_ylabel("Score")
+        
+    if n_metrics == 5:
+        axes[-1].axis("off")
+        axes[0].set_ylabel("Score")
+        axes[3].set_ylabel("Score")
+    else:
+        axes[0].set_ylabel("Score")
+        axes[2].set_ylabel("Score")
+        
     fig.suptitle("Comparaison inductive par moyennes dataset", y=0.992, fontsize=15, fontweight="bold")
     fig.tight_layout(rect=(0, 0, 1, 0.965))
     for ext in ["png", "pdf"]:
-        fig.savefig(HERE / f"inductive_metrics_boxplots_ari_acc_rare_balancedrare_ultrarare.{ext}", bbox_inches="tight")
+        fig.savefig(HERE / f"{prefix}.{ext}", bbox_inches="tight")
     plt.close(fig)
 
 
@@ -388,26 +401,15 @@ def plot_heatmap(summary: pd.DataFrame) -> None:
 
 def main() -> int:
     args = parse_args()
-    root = Path(args.additional_root).expanduser().resolve()
     source_path = HERE / "inductive_per_split_combined_summary_source.csv"
 
-    base = read_csv(source_path)
-    if base.empty:
+    final = read_csv(source_path)
+    if final.empty:
         raise SystemExit(f"Missing base per-split table: {source_path}")
-    base = base[~base["algorithm"].isin(ADDED_ALGORITHMS)].copy()
 
-    # Dynamically fill BalancedRareACC for base algorithms if missing
-    for idx, row in base.iterrows():
-        if "BalancedRareACC" not in base.columns or pd.isna(row.get("BalancedRareACC")):
-            output_dir = row.get("output_dir")
-            bra = metric_from_json(output_dir, "BalancedRareACC")
-            base.at[idx, "BalancedRareACC"] = bra
+    # Exclude pca_harmony
+    final = final[final["algorithm"] != "pca_harmony"].copy()
 
-    added = load_added_rows(root)
-    if added.empty and not args.allow_empty_added:
-        raise SystemExit(f"No completed added-method rows found under {root}")
-
-    final = pd.concat([base, added], ignore_index=True, sort=False)
     final["algorithm"] = pd.Categorical(final["algorithm"], ALGORITHM_ORDER, ordered=True)
     final["dataset_key"] = pd.Categorical(final["dataset_key"], DATASET_ORDER, ordered=True)
     final = final.sort_values(["dataset_key", "algorithm", "test_group"]).reset_index(drop=True)
@@ -417,21 +419,21 @@ def main() -> int:
     selected = summary[summary["metric"].isin(METRICS)].copy()
     selected.to_csv(HERE / "inductive_dataset_level_metric_summary_selected.csv", index=False)
     write_metric_value_table(summary)
-    plot_boxplots(selected)
+    plot_boxplots(selected, METRICS, "inductive_metrics_boxplots_ari_acc_rare_balancedrare_ultrarare")
+    plot_boxplots(selected, ["ARI", "ACC", "RareACC", "UltraRareACC"], "inductive_metrics_boxplots_ari_acc_rare_ultrarare")
     plot_heatmap(selected)
 
     manifest = {
         "source_table": str(source_path),
-        "additional_root": str(root),
-        "n_base_rows": int(len(base)),
-        "n_added_rows": int(len(added)),
+        "additional_root": "",
+        "n_base_rows": int(len(final)),
+        "n_added_rows": 0,
         "algorithms": ALGORITHM_ORDER,
         "datasets": DATASET_ORDER,
         "metrics": METRICS,
     }
     (HERE / "manifest_inductive_synthesis.json").write_text(json.dumps(manifest, indent=2) + "\n", encoding="utf-8")
     print(f"wrote={HERE}")
-    print(f"added_rows={len(added)}")
     return 0
 
 
