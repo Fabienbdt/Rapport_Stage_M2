@@ -393,7 +393,7 @@ Pour faciliter la lecture, la figure~\ref{fig:scraw_common8_family_top3_plus_scr
 \begin{figure}[!htbp]
     \centering
     \includegraphics[width=\textwidth,height=0.82\textheight,keepaspectratio,trim=0 0 0 0.8cm,clip]{Images/PresentationOrale/common8_top3_family_sorted_barplots.png}
-    \caption[Distribution des performances sur les huit jeux de données communs.]{Distribution des performances sur les huit jeux de données communs. scRAW est comparé aux trois meilleures méthodes de chaque famille pour chaque métrique. Les boîtes résument les scores par jeu de données ; les points noirs indiquent les valeurs individuelles et le losange blanc la moyenne.}
+    \caption[Distribution des performances sur les 8 jeux de données communs.]{Distribution des performances sur les 8 jeux de données communs. scRAW est comparé aux trois meilleures méthodes de chaque famille pour chaque métrique. Les boîtes résument les scores pour les 8 jeux de données ; les points noirs indiquent les valeurs individuelles et le losange blanc la moyenne.}
     \label{fig:scraw_common8_family_top3_plus_scraw}
 \end{figure}
 
@@ -406,8 +406,8 @@ La matrice de rangs de la figure~\ref{fig:rank_matrix_common8} formalise ce comp
 \begin{figure}[!htbp]
     \centering
     \includegraphics[width=0.96\textwidth,height=0.48\textheight,keepaspectratio]{Images/scraw_common8_family_panel/common8_rank_matrix_heatmap.pdf}
-    \caption[Matrice de rangs des algorithmes selon les métriques moyennes sur le jeu commun common-8.]{%
-        \textbf{Matrice de rangs des algorithmes selon les métriques moyennes sur le jeu commun common-8.}
+    \caption[Matrice de rangs des algorithmes selon les métriques moyennes sur le jeu commun (8 jeux de données).]{%
+        \textbf{Matrice de rangs des algorithmes selon les métriques moyennes sur le jeu commun (8 jeux de données).}
         Les lignes correspondent aux méthodes et les colonnes aux métriques affichées dans la section : ARI, ACC, BalancedACC, RareACC, BalancedRareACC, UltraRareACC et correction de batch.
         Le rang 1 correspond à la meilleure moyenne pour une métrique donnée.
         Les cases suivent un dégradé du violet (meilleur rang) au jaune clair (rang moins favorable).
@@ -492,7 +492,7 @@ Plusieurs configurations ont été testées : pondération par densité seule, p
 \begin{figure}[!htbp]
     \centering
     \includegraphics[width=\textwidth,height=0.48\textheight,keepaspectratio,trim=0 0 0 1.5cm,clip]{scraw_loss_transfer_synthesis/loss_transfer_baseline_vs_best_weighted.pdf}
-    \caption[Comparaison entre les algorithmes de base et leur meilleure variante avec loss pondérée scRAW.]{Comparaison entre les algorithmes de base et leur meilleure variante avec loss pondérée scRAW. Les scores sont des moyennes par jeu de données.}
+    \caption[Comparaison entre les algorithmes de base et leur meilleure variante avec loss pondérée scRAW sur 8 jeux de données.]{Comparaison entre les algorithmes de base et leur meilleure variante avec loss pondérée scRAW. Les scores sont des moyennes sur les 8 jeux de données communs.}
     \label{fig:loss_transfer_baseline_vs_best}
 \end{figure}
 
@@ -501,7 +501,7 @@ Plusieurs configurations ont été testées : pondération par densité seule, p
 \begin{figure}[!htbp]
     \centering
     \includegraphics[width=\textwidth,height=0.52\textheight,keepaspectratio,trim=0 0 0 0.8cm,clip]{comparaison_inductive_scraw_trial0017_synthese/inductive_metrics_boxplots_ari_acc_rare_balancedrare_ultrarare.pdf}
-    \caption[Comparaison des performances en mode inductif et transductif (baseline) sur six jeux de données.]{Comparaison des performances en mode inductif (boîtes colorées, sur données tests non vues) et transductif (boîtes grisées, baseline entraînée sur tout le jeu de données et moyennée) pour six algorithmes sur six jeux de données. Chaque boîte représente la distribution des moyennes par jeu de données. Les losanges indiquent la moyenne globale pour chaque métrique.}
+    \caption[Comparaison des performances en mode inductif et transductif (baseline) sur 6 jeux de données.]{Comparaison des performances en mode inductif (boîtes colorées, sur données tests non vues) et transductif (boîtes grisées, baseline entraînée sur tout le jeu de données et moyennée) pour 6 algorithmes sur les 6 jeux de données. Chaque boîte représente la distribution des moyennes par jeu de données. Les losanges indiquent la moyenne globale pour chaque métrique.}
     \label{fig:inductive_metrics_boxplots_default}
 \end{figure}
 

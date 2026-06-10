@@ -276,7 +276,7 @@ DESC & Correction batch & 205,2 \\
 \begin{figure}[H]
     \centering
     \includegraphics[width=\textwidth,height=0.93\textheight,keepaspectratio]{scraw_common8_family_panel/common8_family_all_methods_panel.pdf}
-    \caption{Résultats complets par famille sur les huit jeux de données communs. Les boîtes résument la distribution des scores par méthode ; les jeux sans classe ultra-rare ne contribuent pas à l'UltraRareACC. \textbf{scRAW} est ajouté comme repère dans chaque famille.}
+    \caption{Résultats complets par famille sur les 8 jeux de données communs. Les boîtes résument la distribution des scores pour ces 8 jeux de données par méthode ; les jeux sans classe ultra-rare ne contribuent pas à l'UltraRareACC. \textbf{scRAW} est ajouté comme repère dans chaque famille.}
     \label{fig:common8_family_all_methods}
 \end{figure}
 Les tableaux suivants présentent les résultats bruts détaillés par jeu de données pour chaque métrique d'évaluation pour les méthodes principales :
@@ -294,7 +294,7 @@ Les tableaux suivants présentent les résultats bruts détaillés par jeu de do
 \begin{figure}[H]
     \centering
     \includegraphics[width=\textwidth,height=0.93\textheight,keepaspectratio]{scraw_common8_family_panel/common8_harmony_complement_panel.pdf}
-    \caption{Résultats complémentaires avec Harmony. Les méthodes \textit{Rare Specific}+Harmony sont indiquées à titre exploratoire, car cette association n'est pas documentée comme usage standard par les auteur·rice·s. Pour les méthodes de deep learning généralistes, Harmony est appliqué sur l'espace latent avant le clustering final. La ligne Harmony correspond au pipeline PCA+Harmony avant clustering ; scVI est conservé comme méthode native intégrant l'information de batch.}
+    \caption{Résultats complémentaires avec Harmony sur les 8 jeux de données communs. Les méthodes \textit{Rare Specific}+Harmony sont indiquées à titre exploratoire, car cette association n'est pas documentée comme usage standard par les auteur·rice·s. Pour les méthodes de deep learning généralistes, Harmony est appliqué sur l'espace latent avant le clustering final. La ligne Harmony correspond au pipeline PCA+Harmony avant clustering ; scVI est conservé comme méthode native intégrant l'information de batch.}
     \label{fig:common8_harmony_complement}
 \end{figure}
 
@@ -326,7 +326,7 @@ Pour résumer les performances, les seeds sont d'abord moyennées pour chaque je
 \begin{figure}[H]
     \centering
     \includegraphics[width=\textwidth,height=0.60\textheight,keepaspectratio]{scraw_loss_transfer_synthesis/loss_transfer_all_configurations_boxplot_4metrics.pdf}
-    \caption{Distribution des scores pour toutes les configurations testées lors du transfert de la loss pondérée \(\mathcal{L}_{\mathrm{recon,ponderée}}\) de scRAW. Les cinq panneaux correspondent aux métriques ARI, BalancedACC, RareACC, UltraRareACC et BalancedRareACC. Les boîtes représentent la distribution des scores moyens sur l'ensemble des jeux de données, et les points noirs indiquent les valeurs par jeu de données.}
+    \caption{Distribution des scores pour toutes les configurations testées lors du transfert de la loss pondérée \(\mathcal{L}_{\mathrm{recon,ponderée}}\) de scRAW sur 8 jeux de données. Les cinq panneaux correspondent aux métriques ARI, BalancedACC, RareACC, UltraRareACC et BalancedRareACC. Les boîtes représentent la distribution des scores moyens sur les 8 jeux de données communs, et les points noirs indiquent les valeurs par jeu de données.}
     \label{fig:loss_transfer_all_configurations_boxplots}
 \end{figure}
 
@@ -361,7 +361,7 @@ Human Pancreas & Technologies \texttt{smartseq2} et \texttt{celseq2} & Technolog
 \begin{figure}[H]
     \centering
     \includegraphics[width=\textwidth,height=0.42\textheight,keepaspectratio]{comparaison_inductive_scraw_trial0017_synthese/inductive_metrics_boxplots_ari_acc_rare_ultrarare.pdf}
-    \caption{Distribution des performances inductives pour ARI, ACC, Balanced ACC, RareACC et UltraRareACC. Les boîtes représentent la distribution des moyennes par jeu de données et split inductif pour chaque algorithme testé. Chaque point noir correspond à la moyenne d'un jeu de données et les losanges blancs indiquent la moyenne globale de l'algorithme.}
+    \caption{Distribution des performances inductives pour ARI, ACC, Balanced ACC, RareACC et UltraRareACC sur 6 jeux de données. Les boîtes représentent la distribution des moyennes par jeu de données et split inductif pour chaque algorithme testé. Chaque point noir correspond à la moyenne d'un des 6 jeux de données et les losanges blancs indiquent la moyenne globale de l'algorithme.}
     \label{fig:inductive_metrics_dataset_boxplots}
 \end{figure}
 
@@ -582,7 +582,7 @@ Campagne 3 -- batch et clustering & \texttt{use\_batch\_conditioning} fixé à \
 \begin{figure}[H]
     \centering
     \includegraphics[width=\textwidth,height=0.72\textheight,keepaspectratio]{hyperparametres_scraw/generalist8_param_importances_mean5_top30.png}
-    \caption{Importance des hyperparamètres pour la campagne 2 (généraliste sur huit jeux de données).}
+    \caption{Importance des hyperparamètres pour la campagne 2 (généraliste sur 8 jeux de données).}
     \label{fig:scraw_hparam_importance_generalist8}
 \end{figure}
 

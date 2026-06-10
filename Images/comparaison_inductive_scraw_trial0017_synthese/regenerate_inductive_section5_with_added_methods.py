@@ -433,8 +433,8 @@ def plot_boxplots(summary: pd.DataFrame, trans_df: pd.DataFrame, metrics_list: l
         
     from matplotlib.patches import Patch
     legend_elements = [
-        Patch(facecolor="white", edgecolor="#4b5563", label="Inductif (données nouvelles)"),
-        Patch(facecolor="#cbd5e1", edgecolor="#64748b", alpha=0.6, label="Baseline (jeu de données complet, transductif - moyenne)")
+        Patch(facecolor="white", edgecolor="#4b5563", label="Inductif (données nouvelles, 6 jeux de données)"),
+        Patch(facecolor="#cbd5e1", edgecolor="#64748b", alpha=0.6, label="Baseline (jeu de données complet, transductif - 6 jeux de données)")
     ]
     
     fig.suptitle("Comparaison inductive par moyennes dataset", y=0.98, fontsize=15, fontweight="bold")
