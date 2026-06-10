@@ -1,0 +1,144 @@
+dataset,dataset_key,method,missing_labels_before_augmentation,filled_labels,status,source
+BBAG094 Zeisel,bbag094_zeisel,scRAW (default),0,0,already_complete,consolidated_predictions
+BBAG094 Zeisel,bbag094_zeisel,scRAW (trial_0017),10,10,augmented,classwise:/data2/fbidet/scRAW_EXPERIMENTAL/results/trial206_default_v6_search_20260415_161134/phase1/stable_generalist/stage1/runs/stable_generalist_trial_0017/bbag094_zeisel/seed_42/results/results.csv
+BBAG094 Zeisel,bbag094_zeisel,scRAW (best per dataset),0,0,already_complete,consolidated_predictions
+BBAG094 Zeisel,bbag094_zeisel,scNAME,10,0,missing_source,
+BBAG094 Zeisel,bbag094_zeisel,scMAE,10,0,missing_source,
+BBAG094 Zeisel,bbag094_zeisel,Harmony,0,0,already_complete,consolidated_predictions
+BBAG094 Zeisel,bbag094_zeisel,ComBat,0,0,already_complete,consolidated_predictions
+BBAG094 Zeisel,bbag094_zeisel,Scanorama,0,0,already_complete,consolidated_predictions
+BBAG094 Zeisel,bbag094_zeisel,DESC,0,0,already_complete,consolidated_predictions
+BBAG094 Zeisel,bbag094_zeisel,pca_leiden,10,0,missing_source,
+BBAG094 Zeisel,bbag094_zeisel,scvi,0,0,already_complete,consolidated_predictions
+BBAG094 spleen,bbag094_spleen,scRAW (default),0,0,already_complete,consolidated_predictions
+BBAG094 spleen,bbag094_spleen,scRAW (trial_0017),5,5,augmented,classwise:/data2/fbidet/scRAW_EXPERIMENTAL/results/trial206_default_v6_search_20260415_161134/phase1/stable_generalist/stage1/runs/stable_generalist_trial_0017/bbag094_spleen/seed_42/results/results.csv
+BBAG094 spleen,bbag094_spleen,scRAW (best per dataset),0,0,already_complete,consolidated_predictions
+BBAG094 spleen,bbag094_spleen,scNAME,5,0,missing_source,
+BBAG094 spleen,bbag094_spleen,scMAE,5,0,missing_source,
+BBAG094 spleen,bbag094_spleen,Harmony,0,0,already_complete,consolidated_predictions
+BBAG094 spleen,bbag094_spleen,ComBat,0,0,already_complete,consolidated_predictions
+BBAG094 spleen,bbag094_spleen,Scanorama,0,0,already_complete,consolidated_predictions
+BBAG094 spleen,bbag094_spleen,DESC,0,0,already_complete,consolidated_predictions
+BBAG094 spleen,bbag094_spleen,pca_leiden,5,0,missing_source,
+BBAG094 spleen,bbag094_spleen,scvi,0,0,already_complete,consolidated_predictions
+Baron human pancreas,baron_human_pancreas,scRAW (default),0,0,already_complete,consolidated_predictions
+Baron human pancreas,baron_human_pancreas,scRAW (trial_0017),14,14,augmented,classwise:/data2/fbidet/scRAW_EXPERIMENTAL/results/trial206_default_v6_search_20260415_161134/phase1/stable_generalist/stage1/runs/stable_generalist_trial_0017/baron_human_pancreas/seed_42/results/results.csv
+Baron human pancreas,baron_human_pancreas,scRAW (best per dataset),14,0,missing_source,
+Baron human pancreas,baron_human_pancreas,scNAME,14,0,missing_source,
+Baron human pancreas,baron_human_pancreas,scMAE,14,0,missing_source,
+Baron human pancreas,baron_human_pancreas,Harmony,0,0,already_complete,consolidated_predictions
+Baron human pancreas,baron_human_pancreas,ComBat,0,0,already_complete,consolidated_predictions
+Baron human pancreas,baron_human_pancreas,Scanorama,0,0,already_complete,consolidated_predictions
+Baron human pancreas,baron_human_pancreas,DESC,0,0,already_complete,consolidated_predictions
+Baron human pancreas,baron_human_pancreas,pca_leiden,14,0,missing_source,
+Baron human pancreas,baron_human_pancreas,scvi,0,0,already_complete,consolidated_predictions
+Human testis GSE112013,gse112013_human_testis_raw_counts,scRAW (default),0,0,already_complete,consolidated_predictions
+Human testis GSE112013,gse112013_human_testis_raw_counts,scRAW (trial_0017),13,13,augmented,classwise:/data2/fbidet/scRAW_EXPERIMENTAL/results/trial206_default_v6_search_20260415_161134/phase1/stable_generalist/stage1/runs/stable_generalist_trial_0017/gse112013_human_testis_raw_counts/seed_42/results/results.csv
+Human testis GSE112013,gse112013_human_testis_raw_counts,scRAW (best per dataset),0,0,already_complete,consolidated_predictions
+Human testis GSE112013,gse112013_human_testis_raw_counts,scNAME,13,0,missing_source,
+Human testis GSE112013,gse112013_human_testis_raw_counts,scMAE,13,0,missing_source,
+Human testis GSE112013,gse112013_human_testis_raw_counts,Harmony,0,0,already_complete,consolidated_predictions
+Human testis GSE112013,gse112013_human_testis_raw_counts,ComBat,0,0,already_complete,consolidated_predictions
+Human testis GSE112013,gse112013_human_testis_raw_counts,Scanorama,0,0,already_complete,consolidated_predictions
+Human testis GSE112013,gse112013_human_testis_raw_counts,DESC,0,0,already_complete,consolidated_predictions
+Human testis GSE112013,gse112013_human_testis_raw_counts,pca_leiden,13,0,missing_source,
+Human testis GSE112013,gse112013_human_testis_raw_counts,scvi,0,0,already_complete,consolidated_predictions
+Kang PBMC,kang_pbmc_gse96583_singlets_raw_counts,scRAW (default),0,0,already_complete,consolidated_predictions
+Kang PBMC,kang_pbmc_gse96583_singlets_raw_counts,scRAW (trial_0017),8,8,augmented,classwise:/data2/fbidet/scRAW_EXPERIMENTAL/results/trial206_default_v6_search_20260415_161134/phase1/stable_generalist/stage1/runs/stable_generalist_trial_0017/kang_pbmc_gse96583_singlets_raw_counts/seed_42/results/results.csv
+Kang PBMC,kang_pbmc_gse96583_singlets_raw_counts,scRAW (best per dataset),0,0,already_complete,consolidated_predictions
+Kang PBMC,kang_pbmc_gse96583_singlets_raw_counts,scNAME,8,0,missing_source,
+Kang PBMC,kang_pbmc_gse96583_singlets_raw_counts,scMAE,8,0,missing_source,
+Kang PBMC,kang_pbmc_gse96583_singlets_raw_counts,Harmony,0,0,already_complete,consolidated_predictions
+Kang PBMC,kang_pbmc_gse96583_singlets_raw_counts,ComBat,0,0,already_complete,consolidated_predictions
+Kang PBMC,kang_pbmc_gse96583_singlets_raw_counts,Scanorama,0,0,already_complete,consolidated_predictions
+Kang PBMC,kang_pbmc_gse96583_singlets_raw_counts,DESC,0,0,already_complete,consolidated_predictions
+Kang PBMC,kang_pbmc_gse96583_singlets_raw_counts,pca_leiden,8,0,missing_source,
+Kang PBMC,kang_pbmc_gse96583_singlets_raw_counts,scvi,0,0,already_complete,consolidated_predictions
+Macaque retina bipolar,macaque_retina_gse118480_bipolar_raw_counts,scRAW (default),0,0,already_complete,consolidated_predictions
+Macaque retina bipolar,macaque_retina_gse118480_bipolar_raw_counts,scRAW (trial_0017),12,12,augmented,classwise:/data2/fbidet/scRAW_EXPERIMENTAL/results/trial206_default_v6_search_20260415_161134/phase1/stable_generalist/stage1/runs/stable_generalist_trial_0017/macaque_retina_gse118480_bipolar_raw_counts/seed_42/results/results.csv
+Macaque retina bipolar,macaque_retina_gse118480_bipolar_raw_counts,scRAW (best per dataset),0,0,already_complete,consolidated_predictions
+Macaque retina bipolar,macaque_retina_gse118480_bipolar_raw_counts,scNAME,12,0,missing_source,
+Macaque retina bipolar,macaque_retina_gse118480_bipolar_raw_counts,scMAE,12,0,missing_source,
+Macaque retina bipolar,macaque_retina_gse118480_bipolar_raw_counts,Harmony,0,0,already_complete,consolidated_predictions
+Macaque retina bipolar,macaque_retina_gse118480_bipolar_raw_counts,ComBat,0,0,already_complete,consolidated_predictions
+Macaque retina bipolar,macaque_retina_gse118480_bipolar_raw_counts,Scanorama,0,0,already_complete,consolidated_predictions
+Macaque retina bipolar,macaque_retina_gse118480_bipolar_raw_counts,DESC,0,0,already_complete,consolidated_predictions
+Macaque retina bipolar,macaque_retina_gse118480_bipolar_raw_counts,pca_leiden,12,0,missing_source,
+Macaque retina bipolar,macaque_retina_gse118480_bipolar_raw_counts,scvi,0,0,already_complete,consolidated_predictions
+Pancreas,pancreas_raw_counts,scRAW (default),0,0,already_complete,consolidated_predictions
+Pancreas,pancreas_raw_counts,scRAW (trial_0017),14,0,missing_source,
+Pancreas,pancreas_raw_counts,scRAW (best per dataset),0,0,already_complete,consolidated_predictions
+Pancreas,pancreas_raw_counts,scNAME,14,0,missing_source,
+Pancreas,pancreas_raw_counts,scMAE,14,0,missing_source,
+Pancreas,pancreas_raw_counts,Harmony,0,0,already_complete,consolidated_predictions
+Pancreas,pancreas_raw_counts,ComBat,0,0,already_complete,consolidated_predictions
+Pancreas,pancreas_raw_counts,Scanorama,0,0,already_complete,consolidated_predictions
+Pancreas,pancreas_raw_counts,DESC,0,0,already_complete,consolidated_predictions
+Pancreas,pancreas_raw_counts,pca_leiden,14,0,missing_source,
+Pancreas,pancreas_raw_counts,scvi,0,0,already_complete,consolidated_predictions
+Pancreas 4 batches,pancreas_raw_counts_four_batches_celseq_celseq2_fluidigmc1_smartseq2,scRAW (default),0,0,already_complete,consolidated_predictions
+Pancreas 4 batches,pancreas_raw_counts_four_batches_celseq_celseq2_fluidigmc1_smartseq2,scRAW (trial_0017),13,13,augmented,classwise:/data2/fbidet/scRAW_EXPERIMENTAL/results/trial206_default_v6_search_20260415_161134/phase1/stable_generalist/stage1/runs/stable_generalist_trial_0017/pancreas_raw_counts_four_batches_celseq_celseq2_fluidigmc1_smartseq2/seed_42/results/results.csv
+Pancreas 4 batches,pancreas_raw_counts_four_batches_celseq_celseq2_fluidigmc1_smartseq2,scRAW (best per dataset),13,0,missing_source,
+Pancreas 4 batches,pancreas_raw_counts_four_batches_celseq_celseq2_fluidigmc1_smartseq2,scNAME,13,0,missing_source,
+Pancreas 4 batches,pancreas_raw_counts_four_batches_celseq_celseq2_fluidigmc1_smartseq2,scMAE,13,0,missing_source,
+Pancreas 4 batches,pancreas_raw_counts_four_batches_celseq_celseq2_fluidigmc1_smartseq2,Harmony,0,0,already_complete,consolidated_predictions
+Pancreas 4 batches,pancreas_raw_counts_four_batches_celseq_celseq2_fluidigmc1_smartseq2,ComBat,0,0,already_complete,consolidated_predictions
+Pancreas 4 batches,pancreas_raw_counts_four_batches_celseq_celseq2_fluidigmc1_smartseq2,Scanorama,0,0,already_complete,consolidated_predictions
+Pancreas 4 batches,pancreas_raw_counts_four_batches_celseq_celseq2_fluidigmc1_smartseq2,DESC,0,0,already_complete,consolidated_predictions
+Pancreas 4 batches,pancreas_raw_counts_four_batches_celseq_celseq2_fluidigmc1_smartseq2,pca_leiden,13,0,missing_source,
+Pancreas 4 batches,pancreas_raw_counts_four_batches_celseq_celseq2_fluidigmc1_smartseq2,scvi,0,0,already_complete,consolidated_predictions
+Paul15 bone marrow,paul15_bone_marrow_raw_counts,scRAW (default),0,0,already_complete,consolidated_predictions
+Paul15 bone marrow,paul15_bone_marrow_raw_counts,scRAW (trial_0017),19,19,augmented,classwise:/data2/fbidet/scRAW_EXPERIMENTAL/results/trial206_default_v6_search_20260415_161134/phase1/stable_generalist/stage1/runs/stable_generalist_trial_0017/paul15_bone_marrow_raw_counts/seed_42/results/results.csv
+Paul15 bone marrow,paul15_bone_marrow_raw_counts,scRAW (best per dataset),0,0,already_complete,consolidated_predictions
+Paul15 bone marrow,paul15_bone_marrow_raw_counts,scNAME,19,0,missing_source,
+Paul15 bone marrow,paul15_bone_marrow_raw_counts,scMAE,19,0,missing_source,
+Paul15 bone marrow,paul15_bone_marrow_raw_counts,Harmony,0,0,already_complete,consolidated_predictions
+Paul15 bone marrow,paul15_bone_marrow_raw_counts,ComBat,0,0,already_complete,consolidated_predictions
+Paul15 bone marrow,paul15_bone_marrow_raw_counts,Scanorama,0,0,already_complete,consolidated_predictions
+Paul15 bone marrow,paul15_bone_marrow_raw_counts,DESC,0,0,already_complete,consolidated_predictions
+Paul15 bone marrow,paul15_bone_marrow_raw_counts,pca_leiden,19,0,missing_source,
+Paul15 bone marrow,paul15_bone_marrow_raw_counts,scvi,0,0,already_complete,consolidated_predictions
+SCIB Human Pancreas 1,Human_Pancreas_1_raw_counts,scRAW (default),0,0,already_complete,consolidated_predictions
+SCIB Human Pancreas 1,Human_Pancreas_1_raw_counts,scRAW (trial_0017),14,14,augmented,classwise:/data2/fbidet/scRAW_EXPERIMENTAL/results/trial206_default_v6_search_20260415_161134/phase1/stable_generalist/stage1/runs/stable_generalist_trial_0017/Human_Pancreas_1_raw_counts/seed_42/results/results.csv
+SCIB Human Pancreas 1,Human_Pancreas_1_raw_counts,scRAW (best per dataset),14,0,missing_source,
+SCIB Human Pancreas 1,Human_Pancreas_1_raw_counts,scNAME,14,0,missing_source,
+SCIB Human Pancreas 1,Human_Pancreas_1_raw_counts,scMAE,14,0,missing_source,
+SCIB Human Pancreas 1,Human_Pancreas_1_raw_counts,Harmony,0,0,already_complete,consolidated_predictions
+SCIB Human Pancreas 1,Human_Pancreas_1_raw_counts,ComBat,0,0,already_complete,consolidated_predictions
+SCIB Human Pancreas 1,Human_Pancreas_1_raw_counts,Scanorama,0,0,already_complete,consolidated_predictions
+SCIB Human Pancreas 1,Human_Pancreas_1_raw_counts,DESC,0,0,already_complete,consolidated_predictions
+SCIB Human Pancreas 1,Human_Pancreas_1_raw_counts,pca_leiden,14,0,missing_source,
+SCIB Human Pancreas 1,Human_Pancreas_1_raw_counts,scvi,0,0,already_complete,consolidated_predictions
+SCIB Human Pancreas 2,Human_Pancreas_2_raw_counts,scRAW (default),0,0,already_complete,consolidated_predictions
+SCIB Human Pancreas 2,Human_Pancreas_2_raw_counts,scRAW (trial_0017),14,14,augmented,classwise:/data2/fbidet/scRAW_EXPERIMENTAL/results/trial206_default_v6_search_20260415_161134/phase1/stable_generalist/stage1/runs/stable_generalist_trial_0017/Human_Pancreas_2_raw_counts/seed_42/results/results.csv
+SCIB Human Pancreas 2,Human_Pancreas_2_raw_counts,scRAW (best per dataset),14,0,missing_source,
+SCIB Human Pancreas 2,Human_Pancreas_2_raw_counts,scNAME,14,0,missing_source,
+SCIB Human Pancreas 2,Human_Pancreas_2_raw_counts,scMAE,14,0,missing_source,
+SCIB Human Pancreas 2,Human_Pancreas_2_raw_counts,Harmony,0,0,already_complete,consolidated_predictions
+SCIB Human Pancreas 2,Human_Pancreas_2_raw_counts,ComBat,0,0,already_complete,consolidated_predictions
+SCIB Human Pancreas 2,Human_Pancreas_2_raw_counts,Scanorama,0,0,already_complete,consolidated_predictions
+SCIB Human Pancreas 2,Human_Pancreas_2_raw_counts,DESC,0,0,already_complete,consolidated_predictions
+SCIB Human Pancreas 2,Human_Pancreas_2_raw_counts,pca_leiden,14,0,missing_source,
+SCIB Human Pancreas 2,Human_Pancreas_2_raw_counts,scvi,0,0,already_complete,consolidated_predictions
+SCIB Mouse Pancreas 1,Mouse_Pancreas_1_raw_counts,scRAW (default),0,0,already_complete,consolidated_predictions
+SCIB Mouse Pancreas 1,Mouse_Pancreas_1_raw_counts,scRAW (trial_0017),13,13,augmented,classwise:/data2/fbidet/scRAW_EXPERIMENTAL/results/trial206_default_v6_search_20260415_161134/phase1/stable_generalist/stage1/runs/stable_generalist_trial_0017/Mouse_Pancreas_1_raw_counts/seed_42/results/results.csv
+SCIB Mouse Pancreas 1,Mouse_Pancreas_1_raw_counts,scRAW (best per dataset),13,0,missing_source,
+SCIB Mouse Pancreas 1,Mouse_Pancreas_1_raw_counts,scNAME,13,0,missing_source,
+SCIB Mouse Pancreas 1,Mouse_Pancreas_1_raw_counts,scMAE,13,0,missing_source,
+SCIB Mouse Pancreas 1,Mouse_Pancreas_1_raw_counts,Harmony,0,0,already_complete,consolidated_predictions
+SCIB Mouse Pancreas 1,Mouse_Pancreas_1_raw_counts,ComBat,0,0,already_complete,consolidated_predictions
+SCIB Mouse Pancreas 1,Mouse_Pancreas_1_raw_counts,Scanorama,0,0,already_complete,consolidated_predictions
+SCIB Mouse Pancreas 1,Mouse_Pancreas_1_raw_counts,DESC,0,0,already_complete,consolidated_predictions
+SCIB Mouse Pancreas 1,Mouse_Pancreas_1_raw_counts,pca_leiden,13,0,missing_source,
+SCIB Mouse Pancreas 1,Mouse_Pancreas_1_raw_counts,scvi,0,0,already_complete,consolidated_predictions
+Tabula Muris liver,Tabula_Muris_liver_filtered_raw_counts,scRAW (default),0,0,already_complete,consolidated_predictions
+Tabula Muris liver,Tabula_Muris_liver_filtered_raw_counts,scRAW (trial_0017),11,11,augmented,classwise:/data2/fbidet/scRAW_EXPERIMENTAL/results/trial206_default_v6_search_20260415_161134/phase1/stable_generalist/stage1/runs/stable_generalist_trial_0017/Tabula_Muris_liver_filtered_raw_counts/seed_42/results/results.csv
+Tabula Muris liver,Tabula_Muris_liver_filtered_raw_counts,scRAW (best per dataset),0,0,already_complete,consolidated_predictions
+Tabula Muris liver,Tabula_Muris_liver_filtered_raw_counts,scNAME,11,0,missing_source,
+Tabula Muris liver,Tabula_Muris_liver_filtered_raw_counts,scMAE,11,0,missing_source,
+Tabula Muris liver,Tabula_Muris_liver_filtered_raw_counts,Harmony,0,0,already_complete,consolidated_predictions
+Tabula Muris liver,Tabula_Muris_liver_filtered_raw_counts,ComBat,0,0,already_complete,consolidated_predictions
+Tabula Muris liver,Tabula_Muris_liver_filtered_raw_counts,Scanorama,0,0,already_complete,consolidated_predictions
+Tabula Muris liver,Tabula_Muris_liver_filtered_raw_counts,DESC,0,0,already_complete,consolidated_predictions
+Tabula Muris liver,Tabula_Muris_liver_filtered_raw_counts,pca_leiden,11,0,missing_source,
+Tabula Muris liver,Tabula_Muris_liver_filtered_raw_counts,scvi,0,0,already_complete,consolidated_predictions

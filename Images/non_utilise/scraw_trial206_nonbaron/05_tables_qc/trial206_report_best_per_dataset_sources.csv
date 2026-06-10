@@ -1,0 +1,14 @@
+dataset,dataset_key,method,trial_id,result_row_id,source_type
+BBAG094 Zeisel,bbag094_zeisel,scRAW (best per dataset),trial_0011,TR206R_0009,single_seed_generalist_trial_0011
+BBAG094 spleen,bbag094_spleen,scRAW (best per dataset),trial_0074,TR206R_0028,single_seed_generalist_trial_0074
+Baron human pancreas,baron_human_pancreas,scRAW (best per dataset),trial_0016,TR206R_0047,single_seed_generalist_trial_0016
+Human testis GSE112013,gse112013_human_testis_raw_counts,scRAW (best per dataset),trial_0068,TR206R_0066,single_seed_generalist_trial_0068
+Kang PBMC,kang_pbmc_gse96583_singlets_raw_counts,scRAW (best per dataset),trial_0022,TR206R_0085,single_seed_generalist_trial_0022
+Macaque retina bipolar,macaque_retina_gse118480_bipolar_raw_counts,scRAW (best per dataset),trial_0073,TR206R_0104,single_seed_generalist_trial_0073
+Pancreas,pancreas_raw_counts,scRAW (best per dataset),trial_0074,TR206R_0123,single_seed_key04_completion_trial_0074
+Pancreas 4 batches,pancreas_raw_counts_four_batches_celseq_celseq2_fluidigmc1_smartseq2,scRAW (best per dataset),trial_0060,TR206R_0140,single_seed_key04_completion_trial_0060
+Paul15 bone marrow,paul15_bone_marrow_raw_counts,scRAW (best per dataset),trial_0009,TR206R_0158,single_seed_generalist_trial_0009
+SCIB Human Pancreas 1,Human_Pancreas_1_raw_counts,scRAW (best per dataset),trial_0074,TR206R_0176,single_seed_generalist_stage2_trial_0074
+SCIB Human Pancreas 2,Human_Pancreas_2_raw_counts,scRAW (best per dataset),trial_0074,TR206R_0193,single_seed_generalist_stage3_trial_0074
+SCIB Mouse Pancreas 1,Mouse_Pancreas_1_raw_counts,scRAW (best per dataset),trial_0074,TR206R_0210,single_seed_generalist_stage3_trial_0074
+Tabula Muris liver,Tabula_Muris_liver_filtered_raw_counts,scRAW (best per dataset),trial_0018,TR206R_0227,single_seed_generalist_trial_0018

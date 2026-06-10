@@ -1,0 +1,7 @@
+metric,datasets_available,scraw_first_count,datasets_where_scraw_is_first
+ARI,8,0,
+ACC,8,1,Baron human pancreas
+BalancedACC,8,2,Baron human pancreas; Tabula Muris liver
+RareACC,8,2,Human testis GSE112013; Kang PBMC
+UltraRareACC,7,0,
+Batch correction,6,0,

@@ -1,0 +1,9 @@
+dataset,dataset_key,method,trial_id,result_row_id,source_type
+BBAG094 Zeisel,bbag094_zeisel,scRAW (best per dataset),trial_0011,REPORT_BEST_0006,report_stage1_best_per_dataset
+BBAG094 spleen,bbag094_spleen,scRAW (best per dataset),trial_0046,REPORT_BEST_0007,report_stage1_best_per_dataset
+Baron human pancreas,baron_human_pancreas,scRAW (best per dataset),trial_0001,REPORT_BEST_0008,report_stage1_best_per_dataset
+Human testis GSE112013,gse112013_human_testis_raw_counts,scRAW (best per dataset),trial_0047,REPORT_BEST_0001,report_stage1_best_per_dataset
+Kang PBMC,kang_pbmc_gse96583_singlets_raw_counts,scRAW (best per dataset),trial_0022,REPORT_BEST_0002,report_stage1_best_per_dataset
+Macaque retina bipolar,macaque_retina_gse118480_bipolar_raw_counts,scRAW (best per dataset),trial_0062,REPORT_BEST_0003,report_stage1_best_per_dataset
+Paul15 bone marrow,paul15_bone_marrow_raw_counts,scRAW (best per dataset),trial_0009,REPORT_BEST_0004,report_stage1_best_per_dataset
+Tabula Muris liver,Tabula_Muris_liver_filtered_raw_counts,scRAW (best per dataset),trial_0018,REPORT_BEST_0005,report_stage1_best_per_dataset
