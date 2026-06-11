@@ -291,6 +291,7 @@ Les tableaux suivants présentent les résultats bruts détaillés par jeu de do
 \input{Images/scraw_common8_family_panel/common8_primary_raw_BalancedRareACC_table.tex}
 \input{Images/scraw_common8_family_panel/common8_primary_raw_UltraRareACC_table.tex}
 \input{Images/scraw_common8_family_panel/common8_primary_raw_Batch_correction_table.tex}
+\input{Images/scraw_common8_family_panel/common8_primary_raw_Silhouette_table.tex}
 
 \medskip
 \noindent Pour faciliter la lecture des résultats, chaque sous-panneau de la figure~\ref{fig:scraw_common8_family_top3_plus_scraw} affiche \textbf{scRAW} ainsi que les trois meilleures méthodes de la famille pour la métrique considérée (sur la base de la moyenne des huit jeux de données). Les méthodes restantes, ainsi que des résultats complémentaires avec les méthodes de correction de batch associées aux différents algorithmes, sont fournis dans cette annexe. Nous ne présentons pas dans le panneau principal les méthodes couplées à un outil de correction de batch, car les auteur·rice·s ne décrivent pas cet usage, ni comme prétraitement recommandé, ni comme composant du modèle. Ces variantes sont donc conservées uniquement comme analyses complémentaires. Pour les méthodes de deep learning généralistes, Harmony a été appliqué sur l'espace latent appris, avant le clustering final, car il s'agissait de la correction de batch la plus robuste dans les expériences de référence \cite{tran2020benchmark}. Cette pratique est justifiée par la conception même de Harmony : l'algorithme opère sur tout espace de faible dimension et ne suppose pas que celui-ci provienne d'une PCA obligatoirement. En revanche, aucun des papiers originaux des méthodes benchmarkées ici (scDeepCluster, scMAE, scNAME, scCDCG) ne propose ni n'évalue ce couplage de manière systématique : notre protocole comble ce manque en évaluant l'apport de Harmony sur l'espace latent de plusieurs architectures profondes avec des métriques globales et centrées sur les populations rares.
@@ -310,6 +311,7 @@ Les tableaux suivants présentent les résultats bruts détaillés par jeu de do
 \input{Images/scraw_common8_family_panel/common8_harmony_complement_raw_BalancedRareACC_table.tex}
 \input{Images/scraw_common8_family_panel/common8_harmony_complement_raw_UltraRareACC_table.tex}
 \input{Images/scraw_common8_family_panel/common8_harmony_complement_raw_Batch_correction_table.tex}
+\input{Images/scraw_common8_family_panel/common8_harmony_complement_raw_Silhouette_table.tex}
 
 Ces résultats détaillés permettent d'analyser le comportement individuel de chaque méthode sur chacun des jeux de données, offrant ainsi une vision plus fine et contrastée que les seules moyennes globales.
 
@@ -394,23 +396,23 @@ Le Tableau~\ref{tab:scraw_ablation} détaille les scores obtenus pour les varian
 \centering
 \small
 \renewcommand{\arraystretch}{1.15}
-\begin{tabularx}{\textwidth}{X c c c c c c c r}
+\begin{tabularx}{\textwidth}{X c c c c c c c c c r}
 \toprule
-\textbf{Variante} & \textbf{ARI} & \textbf{NMI} & \textbf{ACC} & \textbf{B. ACC} & \textbf{Rare} & \textbf{U. Rare} & \textbf{scIB-E} & \textbf{Temps (s)} \\
+\textbf{Variante} & \textbf{ARI} & \textbf{NMI} & \textbf{ACC} & \textbf{B. ACC} & \textbf{Rare} & \textbf{B. Rare} & \textbf{U. Rare} & \textbf{Sil.} & \textbf{scIB-E} & \textbf{Temps (s)} \\
 \midrule
-MSE & 0,189 & 0,397 & 0,407 & 0,427 & 0,350 & 0,695 & 0,427 & 70,8 \\
-Weighted MSE & 0,269 & 0,455 & 0,456 & 0,520 & 0,390 & 0,686 & 0,426 & 518,2 \\
-Weighted + triplet & 0,851 & 0,871 & 0,885 & 0,813 & 0,809 & 0,805 & 0,431 & 454,9 \\
-Weighted + DANN & 0,246 & 0,560 & 0,545 & 0,611 & 0,491 & 0,653 & 0,574 & 279,7 \\
+MSE & 0,189 & 0,397 & 0,407 & 0,427 & 0,350 & 0,444 & 0,695 & -0,173 & 0,427 & 70,8 \\
+Weighted MSE & 0,269 & 0,455 & 0,456 & 0,520 & 0,390 & 0,554 & 0,686 & -0,020 & 0,426 & 518,2 \\
+Weighted + triplet & 0,851 & 0,871 & 0,885 & 0,813 & 0,809 & 0,763 & 0,805 & 0,570 & 0,431 & 454,9 \\
+Weighted + DANN & 0,246 & 0,560 & 0,545 & 0,611 & 0,491 & 0,606 & 0,653 & -0,095 & 0,574 & 279,7 \\
 \midrule
-\textbf{Full (scRAW)} & \textbf{0,916} & \textbf{0,884} & \textbf{0,934} & \textbf{0,870} & \textbf{0,896} & \textbf{0,814} & \textbf{0,590} & \textbf{337,9} \\
-Full single update & 0,900 & 0,873 & 0,913 & 0,747 & 0,793 & 0,686 & 0,599 & 285,9 \\
-Full density-only & 0,920 & 0,888 & 0,926 & 0,753 & 0,796 & 0,703 & 0,587 & 334,4 \\
-Full cluster-size-only & 0,723 & 0,777 & 0,800 & 0,869 & 0,897 & 0,949 & 0,596 & 347,2 \\
-Full sans warm-up & 0,885 & 0,868 & 0,913 & 0,769 & 0,811 & 0,814 & 0,569 & 754,3 \\
+\textbf{Full (scRAW)} & \textbf{0,916} & \textbf{0,884} & \textbf{0,934} & \textbf{0,870} & \textbf{0,896} & \textbf{0,837} & \textbf{0,814} & \textbf{0,633} & \textbf{0,590} & \textbf{337,9} \\
+Full single update & 0,900 & 0,873 & 0,913 & 0,747 & 0,793 & 0,649 & 0,686 & 0,582 & 0,599 & 285,9 \\
+Full density-only & 0,920 & 0,888 & 0,926 & 0,753 & 0,796 & 0,653 & 0,703 & 0,632 & 0,587 & 334,4 \\
+Full cluster-size-only & 0,723 & 0,777 & 0,800 & 0,869 & 0,897 & 0,928 & 0,949 & 0,323 & 0,596 & 347,2 \\
+Full sans warm-up & 0,885 & 0,868 & 0,913 & 0,769 & 0,811 & 0,681 & 0,814 & 0,586 & 0,569 & 754,3 \\
 \bottomrule
 \end{tabularx}
-\caption{Résultats de l'étude d'ablation des composantes de scRAW sur le jeu de données Baron Human Pancreas (clustering final HDBSCAN). B. ACC : BalancedACC ; Rare : RareACC ; U. Rare : UltraRareACC ; scIB-E : score d'intégration de batch scIB (entropie de mélange).}
+\caption{Résultats de l'étude d'ablation des composantes de scRAW sur le jeu de données Baron Human Pancreas (clustering final HDBSCAN). B. ACC : BalancedACC ; Rare : RareACC ; B. Rare : BalancedRareACC ; U. Rare : UltraRareACC ; Sil. : coefficient de Silhouette ; scIB-E : score d'intégration de batch scIB (entropie de mélange).}
 \label{tab:scraw_ablation}
 \end{table}
 

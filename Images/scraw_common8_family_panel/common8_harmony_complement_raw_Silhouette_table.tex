@@ -1,0 +1,26 @@
+\begin{table}[H]
+  \centering
+  \scriptsize
+  \setlength{\tabcolsep}{1.5pt}
+  \resizebox{\textwidth}{!}{%
+  \begin{tabular}{l|c|ccccc|cccc}
+    \toprule
+    \textbf{Jeu de données} & \multicolumn{1}{c|}{\textbf{scRAW}} & \multicolumn{5}{c|}{\textbf{Rare + Harmony}} & \multicolumn{4}{c}{\textbf{Généralistes + Harmony}} \\
+    & \textbf{scRAW} & scAIDE & CellSIUS & scCAD & DeepScena & GiniClust & Harmony & scVI & scMAE & scNAME \\
+    \midrule
+    Zeisel & \textbf{0,758} & 0,324 & 0,141 & -0,077 & 0,277 & -0,237 & 0,211 & 0,161 & 0,223 & \underline{0,689} \\
+    Spleen & 0,421 & \underline{0,777} & 0,181 & -0,103 & 0,261 & -0,340 & 0,142 & 0,171 & 0,544 & \textbf{0,973} \\
+    Baron Pancreas & \underline{0,633} & 0,555 & 0,284 & -0,110 & 0,281 & -0,436 & 0,262 & 0,184 & 0,350 & \textbf{0,737} \\
+    Human Testis & \underline{0,682} & 0,675 & 0,343 & 0,130 & 0,536 & -0,198 & 0,428 & 0,288 & 0,501 & \textbf{0,947} \\
+    Kang PBMC & -0,045 & \underline{0,483} & 0,175 & -0,118 & 0,365 & 0,004 & 0,217 & 0,164 & 0,167 & \textbf{0,906} \\
+    Macaque Retina & \underline{0,561} & 0,544 & 0,214 & -0,068 & 0,151 & -0,136 & 0,212 & 0,223 & 0,213 & \textbf{0,763} \\
+    Bone Marrow & \underline{0,778} & 0,193 & 0,059 & -0,107 & 0,174 & 0,082 & 0,067 & 0,071 & 0,170 & \textbf{0,973} \\
+    TM Liver & \underline{0,776} & 0,533 & 0,090 & -0,106 & 0,405 & 0,098 & 0,201 & 0,220 & 0,383 & \textbf{0,984} \\
+    \midrule
+    \textbf{Moyenne} & \underline{0,571} & 0,510 & 0,186 & -0,070 & 0,306 & -0,145 & 0,218 & 0,185 & 0,319 & \textbf{0,872} \\
+    \bottomrule
+  \end{tabular}
+  }
+  \caption{Résultats bruts complémentaires de Coefficient de Silhouette (Silhouette) avec Harmony pour les 8 jeux de données communs. La meilleure performance par jeu de données est en gras, et la deuxième est soulignée.}
+  \label{tab:common8_harmony_complement_raw_Silhouette}
+\end{table}

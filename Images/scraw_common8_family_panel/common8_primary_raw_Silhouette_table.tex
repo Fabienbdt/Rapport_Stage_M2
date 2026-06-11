@@ -1,0 +1,26 @@
+\begin{table}[H]
+  \centering
+  \fontsize{5.5pt}{7.0pt}\selectfont
+  \setlength{\tabcolsep}{1.0pt}
+  \resizebox{\textwidth}{!}{%
+  \begin{tabular}{l|c|ccccc|cccc|cccc}
+    \toprule
+    \textbf{Jeu de données} & \multicolumn{1}{c|}{\textbf{scRAW}} & \multicolumn{5}{c|}{\textbf{Rare Specific}} & \multicolumn{4}{c|}{\textbf{Généralistes}} & \multicolumn{4}{c}{\textbf{Correction Batch}} \\
+    & \textbf{scRAW} & scAIDE & CellSIUS & DeepScena & scCAD & GiniClust & scVI & scMAE & PCA+Leiden & scNAME & Harmony & ComBat & DESC & Scanorama \\
+    \midrule
+    Zeisel & \underline{0,758} & 0,446 & 0,115 & 0,306 & -0,014 & -0,300 & 0,161 & 0,379 & 0,202 & \textbf{0,980} & 0,211 & 0,000 & 0,176 & 0,203 \\
+    Spleen & 0,421 & 0,786 & 0,128 & 0,241 & -0,112 & -0,289 & 0,171 & 0,532 & 0,083 & \textbf{0,965} & 0,142 & 0,131 & \underline{0,848} & 0,171 \\
+    Baron Pancreas & 0,633 & 0,434 & 0,221 & 0,380 & -0,118 & -0,443 & 0,184 & 0,376 & 0,230 & \textbf{0,959} & 0,262 & 0,155 & \underline{0,804} & 0,105 \\
+    Human Testis & 0,682 & 0,560 & 0,335 & 0,595 & 0,131 & -0,235 & 0,288 & 0,499 & 0,378 & \textbf{0,983} & 0,428 & 0,217 & \underline{0,806} & 0,180 \\
+    Kang PBMC & -0,045 & 0,563 & 0,218 & 0,404 & -0,125 & 0,013 & 0,164 & 0,163 & 0,218 & \textbf{0,983} & 0,217 & 0,217 & \underline{0,851} & 0,210 \\
+    Macaque Retina & 0,561 & 0,371 & 0,129 & -0,058 & -0,039 & -0,103 & 0,223 & 0,182 & 0,127 & \textbf{0,969} & 0,212 & 0,172 & \underline{0,827} & 0,080 \\
+    Bone Marrow & \underline{0,778} & 0,199 & 0,059 & 0,313 & -0,107 & 0,082 & 0,071 & 0,170 & 0,066 & \textbf{0,920} & 0,067 & 0,067 & 0,117 & 0,066 \\
+    TM Liver & \underline{0,776} & 0,537 & 0,090 & 0,493 & -0,106 & 0,098 & 0,220 & 0,383 & 0,206 & \textbf{0,979} & 0,201 & 0,206 & 0,285 & 0,206 \\
+    \midrule
+    \textbf{Moyenne} & 0,571 & 0,487 & 0,162 & 0,334 & -0,061 & -0,147 & 0,185 & 0,335 & 0,189 & \textbf{0,967} & 0,218 & 0,146 & \underline{0,589} & 0,152 \\
+    \bottomrule
+  \end{tabular}
+  }
+  \caption{Résultats bruts de Coefficient de Silhouette (Silhouette) pour les méthodes principales sur les 8 jeux de données communs. La meilleure performance par jeu de données est en gras, et la deuxième est soulignée.}
+  \label{tab:common8_primary_raw_Silhouette}
+\end{table}

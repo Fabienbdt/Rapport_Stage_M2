@@ -55,6 +55,7 @@ METRICS = [
     "BalancedRareACC",
     "UltraRareACC",
     "Batch correction",
+    "Silhouette",
 ]
 
 METRIC_LABELS = {
@@ -65,6 +66,7 @@ METRIC_LABELS = {
     "BalancedRareACC": "Balanced Accuracy sur Classes Rares (BalancedRareACC)",
     "UltraRareACC": "Précision sur Classes Ultra-Rares (UltraRareACC)",
     "Batch correction": "Correction de Batch",
+    "Silhouette": "Coefficient de Silhouette (Silhouette)",
 }
 
 SCRAW_SOURCE_METHOD = "scRAW"
