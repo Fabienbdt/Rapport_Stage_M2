@@ -26,6 +26,7 @@ METRICS = [
     "F1_Macro",
     "BalancedACC",
     "RareACC",
+    "BalancedRareACC",
     "UltraRareACC",
     "Silhouette",
     "RareWeightedSilhouette",
@@ -87,6 +88,20 @@ def main() -> int:
         }
         for key in METRICS + PARAMS:
             row[key] = analysis.get(key, "")
+        
+        # Calculate BalancedRareACC if missing but ClassWise is present
+        if not row.get("BalancedRareACC") and "ClassWise" in analysis and analysis["ClassWise"]:
+            try:
+                import ast
+                classwise = ast.literal_eval(analysis["ClassWise"])
+                total_cells = sum(item["Support"] for item in classwise.values())
+                if total_cells > 0:
+                    rare_classes = {name: item for name, item in classwise.items() if (item["Support"] / total_cells) < 0.05}
+                    if rare_classes:
+                        recalls = [item["Recall"] for item in rare_classes.values()]
+                        row["BalancedRareACC"] = sum(recalls) / len(recalls)
+            except Exception:
+                pass
         rows.append(row)
 
     summaries = run_root / "summaries"

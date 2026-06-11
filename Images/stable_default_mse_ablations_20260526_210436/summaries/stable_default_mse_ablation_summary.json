@@ -12,7 +12,7 @@
     "07_weighted_mse_dann_triplet_density_only": "Weighted MSE + DANN + triplet, density-only",
     "08_weighted_mse_dann_triplet_cluster_only": "Weighted MSE + DANN + triplet, cluster-size-only"
   },
-  "summary_csv": "/data2/fbidet/scRAW_EXPERIMENTAL/results/00_mis_de_cote/anciennes_ablations_trial206_mse/stable_default_mse_ablations_20260526_210436/summaries/stable_default_mse_ablation_summary.csv",
+  "summary_csv": "/Users/fabienbidet/Documents/MASTER2/STAGE/Rapport_Stage_M2/Images/stable_default_mse_ablations_20260526_210436/summaries/stable_default_mse_ablation_summary.csv",
   "complete_count": 8,
   "total_count": 8
 }
