@@ -219,6 +219,7 @@ Cette section regroupe les définitions, formules mathématiques et interprétat
         RareACC & Classification des classes rares & RareACC\({}=\frac{\sum_{c\in\mathcal{R}}TP_c}{\sum_{c\in\mathcal{R}}N_c}\), avec \(\mathcal{R}=\{c\,|\,N_c/n<5\,\%\}\) & Calcule la proportion brute de cellules correctement affectées parmi l'ensemble des populations rares. \\
         BalancedRareACC & Classification équilibrée des classes rares & BalancedRareACC\({}=\frac{1}{|\mathcal{R}|}\sum_{c\in\mathcal{R}}\frac{TP_c}{N_c}\), avec \(\mathcal{R}=\{c\,|\,N_c/n<5\,\%\}\) & Calcule la moyenne des rappels des classes rares : chaque classe rare compte autant, même lorsqu'elle contient très peu de cellules. \\
         UltraRareACC & Classification des classes ultra-rares & UltraRareACC\({}=\frac{\sum_{c\in\mathcal{U}}TP_c}{\sum_{c\in\mathcal{U}}N_c}\), avec \(\mathcal{U}=\{c\,|\,N_c/n<1\,\%\}\) & Calcule la proportion brute de cellules correctement affectées parmi l'ensemble des populations ultra-rares. \\
+        Silhouette & Séparation géométrique des clusters & \(s(i) = \frac{b(i) - a(i)}{\max(a(i), b(i))}\), où \(a(i)\) est la distance moyenne intra-cluster et \(b(i)\) la distance moyenne minimale externe. & Évalue la compacité et l'isolement des clusters dans l'espace latent (de \(-1\) à \(1\) ; proche de \(1\) indique des clusters bien séparés). \\
         Temps & Coût computationnel & \(t_{\mathrm{exec}}=t_{\mathrm{fin}}-t_{\mathrm{debut}}\) & Permet de comparer les méthodes non seulement sur leur qualité de clustering, mais aussi sur leur coût pratique. \\
         \bottomrule
     \end{tabularx}
@@ -396,7 +397,8 @@ Le Tableau~\ref{tab:scraw_ablation} détaille les scores obtenus pour les varian
 \centering
 \small
 \renewcommand{\arraystretch}{1.15}
-\begin{tabularx}{\textwidth}{X c c c c c c c c c r}
+\resizebox{\textwidth}{!}{%
+\begin{tabular}{l c c c c c c c c c r}
 \toprule
 \textbf{Variante} & \textbf{ARI} & \textbf{NMI} & \textbf{ACC} & \textbf{B. ACC} & \textbf{Rare} & \textbf{B. Rare} & \textbf{U. Rare} & \textbf{Sil.} & \textbf{scIB-E} & \textbf{Temps (s)} \\
 \midrule
@@ -411,7 +413,8 @@ Full density-only & 0,920 & 0,888 & 0,926 & 0,753 & 0,796 & 0,653 & 0,703 & 0,63
 Full cluster-size-only & 0,723 & 0,777 & 0,800 & 0,869 & 0,897 & 0,928 & 0,949 & 0,323 & 0,596 & 347,2 \\
 Full sans warm-up & 0,885 & 0,868 & 0,913 & 0,769 & 0,811 & 0,681 & 0,814 & 0,586 & 0,569 & 754,3 \\
 \bottomrule
-\end{tabularx}
+\end{tabular}%
+}
 \caption{Résultats de l'étude d'ablation des composantes de scRAW sur le jeu de données Baron Human Pancreas (clustering final HDBSCAN). B. ACC : BalancedACC ; Rare : RareACC ; B. Rare : BalancedRareACC ; U. Rare : UltraRareACC ; Sil. : coefficient de Silhouette ; scIB-E : score d'intégration de batch scIB (entropie de mélange).}
 \label{tab:scraw_ablation}
 \end{table}
@@ -433,7 +436,7 @@ Cette annexe détaille les hyperparamètres effectivement actifs dans la configu
 {\scriptsize
 \setlength{\tabcolsep}{3pt}
 \renewcommand{\arraystretch}{1.15}
-\begin{longtable}{p{0.15\textwidth}p{0.27\textwidth}p{0.20\textwidth}p{0.30\textwidth}}
+\begin{longtable}{p{0.12\textwidth}p{0.24\textwidth}p{0.22\textwidth}p{0.34\textwidth}}
 \caption{Hyperparamètres actifs du preset \texttt{stable\_default} de scRAW.}
 \label{tab:scraw_stable_default_hyperparams}\\
 \toprule
