@@ -2,6 +2,7 @@
   \centering
   \scriptsize
   \setlength{\tabcolsep}{1.5pt}
+  \resizebox{\textwidth}{!}{%
   \begin{tabular}{l|c|ccccc|cccc}
     \toprule
     \textbf{Jeu de données} & \multicolumn{1}{c|}{\textbf{scRAW}} & \multicolumn{5}{c|}{\textbf{Rare + Harmony}} & \multicolumn{4}{c}{\textbf{Généralistes + Harmony}} \\
@@ -19,6 +20,7 @@
     \textbf{Moyenne} & \underline{0,641} & 0,479 & 0,599 & \textbf{0,671} & 0,352 & 0,091 & 0,542 & 0,294 & 0,282 & 0,361 \\
     \bottomrule
   \end{tabular}
+  }
   \caption{Résultats bruts complémentaires de Précision sur Classes Ultra-Rares (UltraRareACC) avec Harmony pour les 8 jeux de données communs. La meilleure performance par jeu de données est en gras, et la deuxième est soulignée.}
   \label{tab:common8_harmony_complement_raw_UltraRareACC}
 \end{table}

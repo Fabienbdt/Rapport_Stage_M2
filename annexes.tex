@@ -81,22 +81,24 @@ Cette section fournit d'abord les détails des huit jeux de données scRNA-seq d
 \centering
 \scriptsize
 \setlength{\tabcolsep}{2.7pt}
+\resizebox{\textwidth}{!}{%
 \begin{tabular}{l l c c c c c c c}
 \toprule
 \textbf{Dataset} & \textbf{Espèce} & \textbf{Cellules} & \textbf{Gènes} & \textbf{Batchs} & \textbf{Rares ($<5\%$)} & \textbf{Sparsité} & \textbf{PCR/PCA} & \textbf{Gini} \\
 \midrule
-BBAG094 Zeisel & Souris & 3 006 & 19 972 & 10 & 4 & 81,2\,\% & 0,499 & 0,543 \\
-BBAG094 spleen & Souris & 9 552 & 23 341 & 2 & 3 & 94,3\,\% & 0,022 & 0,644 \\
-Baron Human Pancreas & Humain & 8 569 & 20 125 & 4 & 9 & 90,6\,\% & 0,048 & 0,644 \\
-Human testis GSE112013 & Humain & 6 490 & 27 477 & 6 & 4 & 88,8\,\% & 0,025 & 0,304 \\
+Zeisel (BBAG094) & Souris & 3 006 & 19 972 & 10 & 4 & 81,2\,\% & 0,499 & 0,543 \\
+Spleen (BBAG094) & Souris & 9 552 & 23 341 & 2 & 3 & 94,3\,\% & 0,022 & 0,644 \\
+Baron Pancreas & Humain & 8 569 & 20 125 & 4 & 9 & 90,6\,\% & 0,048 & 0,644 \\
+Human Testis & Humain & 6 490 & 27 477 & 6 & 4 & 88,8\,\% & 0,025 & 0,304 \\
 Kang PBMC & Humain & 24 679 & 35 635 & 16 & 1 & 98,4\,\% & 0,069 & 0,500 \\
-Macaque retina bipolar & Macaque & 30 302 & 36 162 & 30 & 4 & 97,3\,\% & 0,184 & 0,388 \\
-Paul15 bone marrow & Souris & 2 730 & 3 451 & 1 & 9 & 74,7\,\% & 0,000 & 0,410 \\
-Tabula Muris liver & Souris & 2 859 & 22 966 & 1 & 5 & 88,6\,\% & 0,000 & 0,578 \\
+Macaque Retina & Macaque & 30 302 & 36 162 & 30 & 4 & 97,3\,\% & 0,184 & 0,388 \\
+Bone Marrow (Paul15) & Souris & 2 730 & 3 451 & 1 & 9 & 74,7\,\% & 0,000 & 0,410 \\
+TM Liver & Souris & 2 859 & 22 966 & 1 & 5 & 88,6\,\% & 0,000 & 0,578 \\
 \midrule
 \textbf{Plage [Min - Max]} & & 2 730--30 302 & 3 451--36 162 & 1--30 & 1--9 & 74,7\,\%--98,4\,\% & 0,000--0,499 & 0,304--0,644 \\
 \bottomrule
-\end{tabular}
+\end{tabular}%
+}
 \caption{Récapitulatif des huit jeux de données du sous-ensemble commun utilisés dans nos expériences.}
 \label{tab:datasets}
 \end{table}
@@ -164,15 +166,17 @@ Tabula Muris liver & Sous-ensemble foie de Tabula Muris, technologie FACS/Smart-
 \begin{table}[H]
 \centering
 \footnotesize
-\setlength{\tabcolsep}{3pt}
-\begin{tabular}{p{0.24\textwidth} l r r c c c c c c}
+\setlength{\tabcolsep}{2.5pt}
+\resizebox{\textwidth}{!}{%
+\begin{tabular}{l l c c c c c c c c}
 \toprule
 \textbf{Dataset} & \textbf{Espèce} & \textbf{Cellules} & \textbf{Gènes} & \textbf{Batchs} & \textbf{Rares} & \textbf{U.-rares} & \textbf{Sparsité} & \textbf{PCR/PCA} & \textbf{Gini} \\
 \midrule
 Human Pancreas & Humain & 6 339 & 14 813 & 4 & 7 & 6 & 67,2\,\% & 0,156 & 0,651 \\
 SCIB Mouse Pancreas 1 & Souris & 822 & 14 878 & 1 & 9 & 5 & 90,5\,\% & 0,000 & 0,711 \\
 \bottomrule
-\end{tabular}
+\end{tabular}%
+}
 \caption{Caractéristiques des deux jeux de données utilisés pour évaluer scRAW sur des données non vues pendant l'optimisation des hyperparamètres.}
 \label{tab:datasets_validation_externe}
 \end{table}
@@ -326,7 +330,7 @@ Pour résumer les performances, les seeds sont d'abord moyennées pour chaque je
 \begin{figure}[H]
     \centering
     \includegraphics[width=\textwidth,height=0.60\textheight,keepaspectratio]{scraw_loss_transfer_synthesis/loss_transfer_all_configurations_boxplot_4metrics.pdf}
-    \caption{Distribution des scores pour toutes les configurations testées lors du transfert de la loss pondérée \(\mathcal{L}_{\mathrm{recon,ponderée}}\) de scRAW sur 8 jeux de données. Les cinq panneaux correspondent aux métriques ARI, BalancedACC, RareACC, UltraRareACC et BalancedRareACC. Les boîtes représentent la distribution des scores moyens sur les 8 jeux de données communs, et les points noirs indiquent les valeurs par jeu de données.}
+    \caption{Distribution des scores pour toutes les configurations testées lors du transfert de la loss pondérée \(\mathcal{L}_{\mathrm{recon,ponderee}}\) de scRAW sur 8 jeux de données. Les cinq panneaux correspondent aux métriques ARI, BalancedACC, RareACC, UltraRareACC et BalancedRareACC. Les boîtes représentent la distribution des scores moyens sur les 8 jeux de données communs, et les points noirs indiquent les valeurs par jeu de données.}
     \label{fig:loss_transfer_all_configurations_boxplots}
 \end{figure}
 
@@ -455,7 +459,7 @@ Architecture & \texttt{dropout} & 0.3 & Dropout dans l'encodeur et le décodeur.
 
 Entraînement & \texttt{epochs} & 120 & Nombre total d'époques. \\
 Entraînement & \texttt{warmup\_epochs} & 55 & Phase sans pondération dynamique. \\
-Entraînement & \texttt{lr} & 0.00164076083297036 & Taux d'apprentissage initial. \\
+Entraînement & \texttt{lr} & 0,00164076\allowbreak{}083297036 & Taux d'apprentissage initial. \\
 Entraînement & \texttt{batch\_size} & 192 & Taille des mini-batchs. \\
 Entraînement & \texttt{seed} & 64 & Graine utilisée pour l'entraînement. \\
 
@@ -472,9 +476,9 @@ Pondération & \texttt{density\_weight\_clip} & 3.0 & Borne supérieure avant no
 Pondération & \texttt{weight\_fusion\_mode} & \texttt{multiplicative} & Fusion des composantes cluster et densité. \\
 Pondération & \texttt{cluster\_weight\_power} & 1.0 & Puissance appliquée à la composante cluster. \\
 Pondération & \texttt{density\_weight\_power} & 1.0 & Puissance appliquée à la composante densité. \\
-Pondération & \texttt{dynamic\_weight\_momentum} & 0.6884621079434989 & Lissage des poids entre deux mises à jour. \\
+Pondération & \texttt{dynamic\_weight\_momentum} & 0,688462\allowbreak{}1079434989 & Lissage des poids entre deux mises à jour. \\
 Pondération & \texttt{dynamic\_weight\_update\_interval} & 20 & Fréquence de recalcul des poids. \\
-Pondération & \texttt{min\_cell\_weight} & 0.3845423008053828 & Borne inférieure du poids cellulaire final. \\
+Pondération & \texttt{min\_cell\_weight} & 0,384542\allowbreak{}3008053828 & Borne inférieure du poids cellulaire final. \\
 Pondération & \texttt{max\_cell\_weight} & 10.0 & Borne supérieure du poids cellulaire final. \\
 
 Pseudo-labels & \texttt{pseudo\_label\_method} & \texttt{leiden} & Méthode utilisée pour les pseudo-clusters. \\
@@ -483,7 +487,7 @@ Pseudo-labels & \texttt{unsupervised\_k\_selection} & \texttt{heuristic} & Estim
 Pseudo-labels & \texttt{unsupervised\_k\_min} & 8 & Borne minimale de \(K\). \\
 Pseudo-labels & \texttt{unsupervised\_k\_max} & 30 & Borne maximale de \(K\). \\
 
-Triplet & \texttt{rare\_triplet\_weight} & 0.05007581780188212 & Poids de la triplet loss \(\mathcal{L}_{\mathrm{triplet}}\). \\
+Triplet & \texttt{rare\_triplet\_weight} & 0,050075\allowbreak{}81780188212 & Poids de la triplet loss \(\mathcal{L}_{\mathrm{triplet}}\). \\
 Triplet & \texttt{rare\_triplet\_start\_epoch} & 60 & Début de la triplet loss \(\mathcal{L}_{\mathrm{triplet}}\). \\
 Triplet & \texttt{rare\_triplet\_margin} & 0.4 & Marge de séparation. \\
 Triplet & \texttt{rare\_triplet\_min\_weight} & 1.2 & Poids minimal pour choisir une ancre. \\
@@ -491,7 +495,7 @@ Triplet & \texttt{max\_triplet\_anchors\_per\_batch} & 64 & Nombre maximal d'anc
 
 Batch & \texttt{use\_batch\_conditioning} & \texttt{True} & Activation de la branche batch si plusieurs modalités de batch sont exploitables. \\
 Batch & \texttt{batch\_correction\_key} & \texttt{batch} & Colonne de métadonnées utilisée pour le batch. \\
-Batch & \texttt{adversarial\_batch\_weight} & 0.11763398875166495 & Poids de la loss adversariale batch \(\mathcal{L}_{\mathrm{batch}}\). \\
+Batch & \texttt{adversarial\_batch\_weight} & 0,117633\allowbreak{}98875166495 & Poids de la loss adversariale batch \(\mathcal{L}_{\mathrm{batch}}\). \\
 Batch & \texttt{adversarial\_lambda} & 1.0 & Intensité de l'inversion de gradient. \\
 Batch & \texttt{adversarial\_start\_epoch} & 30 & Début de la branche adversariale. \\
 Batch & \texttt{adversarial\_ramp\_epochs} & 30 & Durée de montée progressive du signal adversarial. \\

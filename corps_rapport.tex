@@ -68,7 +68,7 @@ La loss totale \(\mathcal{L}_{\mathrm{total}}\) (\textit{total loss}) de plusieu
 
 La difficulté associée aux populations rares vient de la manière dont cette loss totale \(\mathcal{L}_{\mathrm{total}}\) est calculée. Le modèle cherche à minimiser cette loss globale sur l'ensemble des données. Les populations majoritaires, qui contiennent des milliers de cellules, ont un poids important dans ce calcul. À l'inverse, une erreur sur un type cellulaire rare contenant seulement quelques dizaines de cellules modifie très peu \(\mathcal{L}_{\mathrm{total}}\). Le réseau de neurones peut donc apprendre une représentation globalement performante tout en négligeant les petites populations.
 
-\begin{table}[H]
+\begin{table}[htbp]
 \centering
 \setlength{\tabcolsep}{2pt}
 \renewcommand{\arraystretch}{1.22}
@@ -80,7 +80,7 @@ La difficulté associée aux populations rares vient de la manière dont cette l
 >{\raggedright\arraybackslash}X
 @{}}
 \toprule
-\textbf{Famille} & \textbf{Méthode} & \textbf{Rôle} & \textbf{Framework} & \textbf{Objectif / loss} \\
+\textbf{Famille} & \textbf{Méthode} & \textbf{Rôle} & \textbf{Approche} & \textbf{Objectif / loss} \\
 \midrule
 \multirow{5}{0.12\textwidth}{\centering\textbf{Approches classiques}}
 & PCA \cite{Pearson1901} & Réduction de dimension & Projection linéaire & Maximisation de la variance expliquée \\
@@ -140,7 +140,7 @@ Les données de séquençage d'ARN sur cellule unique (scRNA-seq) manipulées so
 
 Le tableau~\ref{tab:sc_dataset_layout} illustre un exemple conceptuel de cet alignement entre la matrice d'expression et les métadonnées cellulaires.
 
-\begin{table}[H]
+\begin{table}[htbp]
 \centering
 \renewcommand{\arraystretch}{1.2}
 \begin{tabular}{l ccc c cc}
@@ -175,7 +175,7 @@ Ce biais complique directement le clustering. Une méthode peut séparer deux ba
 
 Une autre stratégie consiste à corriger l'effet de batch directement pendant l'apprentissage, par exemple en utilisant le principe des réseaux adversariaux DANN (\textit{Domain-Adversarial Neural Networks}) \cite{ganin2016domain}. Le principe est de pénaliser le modèle lorsque le batch d'origine reste facilement prédictible à partir de l'espace latent, afin de l'inciter à minimiser cette information technique. Cette approche a été adaptée aux données biologiques, notamment avec scDGN pour aligner des expériences différentes \cite{ge2021supervised}, ou encore avec D2AN \cite{zhu2024d2an} et ABC \cite{danino2024abc} pour retirer l'effet de batch. Comme pour les autres méthodes, cette stratégie peut faire disparaître de réelles différences biologiques lorsque celles-ci sont confondues avec l'effet de batch.
 
-\begin{table}[H]
+\begin{table}[htbp]
 \centering
 \renewcommand{\arraystretch}{1.3}
 \begin{tabularx}{\textwidth}{l l X}
@@ -215,7 +215,7 @@ Développée en Python, la plateforme SCRBenchmark s'appuie sur le package \text
 Le premier choix important a été de séparer l'interface utilisée pour configurer les expériences du moteur chargé d'exécuter les calculs. L'interface web guide l'utilisateur·rice étape par étape, tandis que la ligne de commande permet de relancer la même analyse sur un serveur ou dans un environnement de calcul plus adapté aux expériences longues. Les neuf écrans principaux de l'interface, consultables en Annexe~\ref{annexe:screenshots}, couvrent l'ensemble du parcours : importation des données, visualisation préliminaire, choix du type d'expérience, prétraitement, sélection des algorithmes, génération de la commande d'exécution, suivi du calcul, consultation des métriques et visualisation des UMAP finales.
 
 
-SCRBenchmark propose ensuite deux modes d'analyse. Le mode standard utilise toutes les cellules ensemble et sert à observer directement le comportement d'une méthode sur un jeu de données. Le mode benchmark sépare au contraire les cellules en ensembles d'entraînement, de validation et de test, afin d'évaluer les méthodes dans des conditions plus contrôlées, notamment lorsqu'il s'agit de tester leur comportement sur des cellules ou des batchs non vus pendant l'entraînement.
+SCRBenchmark propose ensuite deux modes d'analyse. Le mode Global utilise toutes les cellules ensemble et sert à observer directement le comportement d'une méthode sur un jeu de données. Le mode Split sépare au contraire les cellules en ensembles d'entraînement, de validation et de test, afin d'évaluer les méthodes dans des conditions plus contrôlées, notamment lorsqu'il s'agit de tester leur comportement sur des cellules ou des batchs non vus pendant l'entraînement.
 
 L'intérêt principal du logiciel est d'imposer un cadre commun à des méthodes très différentes. Le même pipeline de prétraitement peut être appliqué à toutes les méthodes : filtrage, normalisation, sélection des gènes les plus informatifs et, si nécessaire, correction de l'effet de batch. De la même manière, le moteur d'exécution attend de chaque algorithme les mêmes types de sorties : groupes de cellules prédits, représentation numérique des cellules lorsque la méthode en produit une, paramètres utilisés et temps d'exécution. Ce cadre commun permet de limiter les différences liées aux données d'entrée et de comparer plus directement le comportement des algorithmes.
 

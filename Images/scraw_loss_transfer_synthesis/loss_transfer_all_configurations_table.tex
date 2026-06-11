@@ -4,7 +4,7 @@
 \renewcommand{\arraystretch}{1.04}
 \begin{tabularx}{\textwidth}{l X c c c c c c}
 \toprule
-\textbf{Algorithme} & \textbf{Configuration} & \textbf{ARI} & \textbf{BalancedACC} & \textbf{RareACC} & \textbf{UltraRareACC} & \textbf{BalancedRareACC} & \textbf{Score} \\
+\textbf{Algorithme} & \textbf{Configuration} & \textbf{ARI} & \textbf{B. ACC} & \textbf{Rare} & \textbf{U. Rare} & \textbf{B. Rare} & \textbf{Score} \\
 \midrule
 scMAE & Baseline & 0,665 & 0,625 & 0,562 & 0,492 & 0,485 & 0,566 \\
  & Pondération densité & 0,636 & 0,640 & 0,581 & 0,527 & 0,515 & 0,579 \\
@@ -31,6 +31,6 @@ DESC & Baseline & 0,585 & 0,558 & 0,631 & 0,429 & 0,497 & 0,540 \\
  & Pondération densité + triplet KMeans & 0,573 & 0,570 & 0,630 & 0,383 & 0,485 & 0,528 \\
 \bottomrule
 \end{tabularx}
-\caption{Résultats moyens de toutes les configurations expérimentées pour l'intégration de la loss pondérée scRAW. Le score correspond à la moyenne de ARI, BalancedACC, RareACC, UltraRareACC et BalancedRareACC ; la meilleure configuration non-baseline de chaque algorithme est en gras.}
+\caption{Résultats moyens de toutes les configurations expérimentées pour l'intégration de la loss pondérée scRAW. Le score correspond à la moyenne de ARI, BalancedACC, RareACC, UltraRareACC et BalancedRareACC ; la meilleure configuration non-baseline de chaque algorithme est en gras. B. ACC : BalancedACC ; Rare : RareACC ; U. Rare : UltraRareACC ; B. Rare : BalancedRareACC.}
 \label{tab:loss_transfer_all_configurations}
 \end{table}

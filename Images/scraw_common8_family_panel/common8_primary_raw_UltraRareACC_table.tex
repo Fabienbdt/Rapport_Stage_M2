@@ -2,6 +2,7 @@
   \centering
   \fontsize{5.5pt}{7.0pt}\selectfont
   \setlength{\tabcolsep}{1.0pt}
+  \resizebox{\textwidth}{!}{%
   \begin{tabular}{l|c|ccccc|cccc|cccc}
     \toprule
     \textbf{Jeu de données} & \multicolumn{1}{c|}{\textbf{scRAW}} & \multicolumn{5}{c|}{\textbf{Rare Specific}} & \multicolumn{4}{c|}{\textbf{Généralistes}} & \multicolumn{4}{c}{\textbf{Correction Batch}} \\
@@ -19,6 +20,7 @@
     \textbf{Moyenne} & \underline{0,641} & 0,359 & 0,576 & 0,182 & \textbf{0,671} & 0,091 & 0,294 & 0,291 & 0,418 & 0,280 & 0,542 & 0,450 & 0,270 & 0,575 \\
     \bottomrule
   \end{tabular}
+  }
   \caption{Résultats bruts de Précision sur Classes Ultra-Rares (UltraRareACC) pour les méthodes principales sur les 8 jeux de données communs. La meilleure performance par jeu de données est en gras, et la deuxième est soulignée.}
   \label{tab:common8_primary_raw_UltraRareACC}
 \end{table}

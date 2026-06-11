@@ -161,6 +161,7 @@ def generate_table(df: pd.DataFrame, columns_dict: dict, metric: str, file_prefi
     lines.append(r"  \centering")
     lines.append(f"  {font_size}")
     lines.append(f"  \\setlength{{\\tabcolsep}}{{{tabcolsep}}}")
+    lines.append(r"  \resizebox{\textwidth}{!}{%")
     
     # Column specifier
     # e.g., l | c | ccccc | cccc | cccc
@@ -256,6 +257,7 @@ def generate_table(df: pd.DataFrame, columns_dict: dict, metric: str, file_prefi
     
     lines.append(r"    \bottomrule")
     lines.append(r"  \end{tabular}")
+    lines.append(r"  }")
     lines.append(f"  \\caption{{{caption}}}")
     lines.append(f"  \\label{{{label}}}")
     lines.append(r"\end{table}")
@@ -268,6 +270,9 @@ def generate_table(df: pd.DataFrame, columns_dict: dict, metric: str, file_prefi
 def main():
     # Load and filter CSV data
     df = pd.read_csv(CSV_PATH)
+    df.columns = df.columns.str.strip()
+    for col in df.select_dtypes(include=["object"]):
+        df[col] = df[col].astype(str).str.strip()
     scraw_trial_0017 = (
         df["method"].isin({SCRAW_SOURCE_METHOD, SCRAW_METHOD})
         & (df["trial_id"] == "trial_0017")

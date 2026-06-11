@@ -2,6 +2,7 @@
   \centering
   \scriptsize
   \setlength{\tabcolsep}{1.5pt}
+  \resizebox{\textwidth}{!}{%
   \begin{tabular}{l|c|ccccc|cccc}
     \toprule
     \textbf{Jeu de données} & \multicolumn{1}{c|}{\textbf{scRAW}} & \multicolumn{5}{c|}{\textbf{Rare + Harmony}} & \multicolumn{4}{c}{\textbf{Généralistes + Harmony}} \\
@@ -19,6 +20,7 @@
     \textbf{Moyenne} & \textbf{0,676} & \underline{0,675} & 0,673 & 0,400 & 0,511 & 0,153 & 0,672 & 0,668 & 0,617 & 0,557 \\
     \bottomrule
   \end{tabular}
+  }
   \caption{Résultats bruts complémentaires de Balanced Accuracy (BalancedACC) avec Harmony pour les 8 jeux de données communs. La meilleure performance par jeu de données est en gras, et la deuxième est soulignée.}
   \label{tab:common8_harmony_complement_raw_BalancedACC}
 \end{table}

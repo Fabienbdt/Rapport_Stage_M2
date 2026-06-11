@@ -174,8 +174,8 @@
       \strng{authorfullhash}{2c9fb095d0140de6a58d239b50357778}
       \strng{authorfullhashraw}{2c9fb095d0140de6a58d239b50357778}
       \field{extraname}{1}
-      \field{sortinit}{1}
-      \field{sortinithash}{4f6aaa89bab872aa0999fec09ff8e98a}
+      \field{sortinit}{2}
+      \field{sortinithash}{8b555b3791beccb63322c22f3320aa9a}
       \field{labelnamesource}{author}
       \field{labeltitlesource}{title}
       \field{journaltitle}{Cell Stem Cell}
@@ -252,8 +252,8 @@
       \strng{authornamehash}{93b100e51a5138de7acaadd239be8b92}
       \strng{authorfullhash}{2da365a3e8ec3d28478b8b7d7feaafa7}
       \strng{authorfullhashraw}{2da365a3e8ec3d28478b8b7d7feaafa7}
-      \field{sortinit}{1}
-      \field{sortinithash}{4f6aaa89bab872aa0999fec09ff8e98a}
+      \field{sortinit}{3}
+      \field{sortinithash}{ad6fe7482ffbd7b9f99c9e8b5dccd3d7}
       \field{labelnamesource}{author}
       \field{labeltitlesource}{title}
       \field{journaltitle}{Journal of Experimental \& Clinical Cancer Research}
@@ -303,8 +303,8 @@
       \strng{authornamehash}{72815bbd7c66de9593a291123da83973}
       \strng{authorfullhash}{b3d9a4cd9c858260a73a961af7aa2383}
       \strng{authorfullhashraw}{b3d9a4cd9c858260a73a961af7aa2383}
-      \field{sortinit}{1}
-      \field{sortinithash}{4f6aaa89bab872aa0999fec09ff8e98a}
+      \field{sortinit}{4}
+      \field{sortinithash}{9381316451d1b9788675a07e972a12a7}
       \field{labelnamesource}{author}
       \field{labeltitlesource}{title}
       \field{journaltitle}{Briefings in Bioinformatics}
@@ -409,8 +409,8 @@
       \strng{authornamehash}{63d83f8435875d7ea021921da0371cec}
       \strng{authorfullhash}{c175883c8828a1d18b19350cc42af0a2}
       \strng{authorfullhashraw}{c175883c8828a1d18b19350cc42af0a2}
-      \field{sortinit}{1}
-      \field{sortinithash}{4f6aaa89bab872aa0999fec09ff8e98a}
+      \field{sortinit}{5}
+      \field{sortinithash}{20e9b4b0b173788c5dace24730f47d8c}
       \field{labelnamesource}{author}
       \field{labeltitlesource}{title}
       \field{journaltitle}{Nature}
@@ -445,8 +445,8 @@
       \strng{authornamehash}{928be91475ba70d75b602668483504e2}
       \strng{authorfullhash}{928be91475ba70d75b602668483504e2}
       \strng{authorfullhashraw}{928be91475ba70d75b602668483504e2}
-      \field{sortinit}{7}
-      \field{sortinithash}{108d0be1b1bee9773a1173443802c0a3}
+      \field{sortinit}{6}
+      \field{sortinithash}{b33bc299efb3c36abec520a4c896a66d}
       \field{labelnamesource}{author}
       \field{labeltitlesource}{title}
       \field{journaltitle}{Molecular systems biology}
@@ -483,8 +483,8 @@
       \strng{authornamehash}{fb26fd5c8c59804e7ed9cc2435d300c7}
       \strng{authorfullhash}{fb26fd5c8c59804e7ed9cc2435d300c7}
       \strng{authorfullhashraw}{fb26fd5c8c59804e7ed9cc2435d300c7}
-      \field{sortinit}{8}
-      \field{sortinithash}{a231b008ebf0ecbe0b4d96dcc159445f}
+      \field{sortinit}{7}
+      \field{sortinithash}{108d0be1b1bee9773a1173443802c0a3}
       \field{labelnamesource}{author}
       \field{labeltitlesource}{title}
       \field{journaltitle}{Genome Biology}
@@ -524,8 +524,8 @@
       \strng{authornamehash}{42ad90954d59efd852e784e1c05fbd50}
       \strng{authorfullhash}{42ad90954d59efd852e784e1c05fbd50}
       \strng{authorfullhashraw}{42ad90954d59efd852e784e1c05fbd50}
-      \field{sortinit}{8}
-      \field{sortinithash}{a231b008ebf0ecbe0b4d96dcc159445f}
+      \field{sortinit}{7}
+      \field{sortinithash}{108d0be1b1bee9773a1173443802c0a3}
       \field{labelnamesource}{author}
       \field{labeltitlesource}{title}
       \field{journaltitle}{Nature Reviews Genetics}
@@ -575,8 +575,8 @@
       \strng{authornamehash}{5c10d7a4ec99310dfd2b171cb57b638a}
       \strng{authorfullhash}{dafaea55a71865c5087dd1081243a995}
       \strng{authorfullhashraw}{dafaea55a71865c5087dd1081243a995}
-      \field{sortinit}{9}
-      \field{sortinithash}{0a5ebc79d83c96b6579069544c73c7d4}
+      \field{sortinit}{8}
+      \field{sortinithash}{a231b008ebf0ecbe0b4d96dcc159445f}
       \field{labelnamesource}{author}
       \field{labeltitlesource}{title}
       \field{journaltitle}{Nature Methods}
@@ -609,8 +609,8 @@
       \strng{authornamehash}{1c80931c8f086c94a4655483e35042d3}
       \strng{authorfullhash}{1c80931c8f086c94a4655483e35042d3}
       \strng{authorfullhashraw}{1c80931c8f086c94a4655483e35042d3}
-      \field{sortinit}{1}
-      \field{sortinithash}{4f6aaa89bab872aa0999fec09ff8e98a}
+      \field{sortinit}{9}
+      \field{sortinithash}{0a5ebc79d83c96b6579069544c73c7d4}
       \field{labelnamesource}{author}
       \field{labeltitlesource}{title}
       \field{booktitle}{Proceedings of the fifth Berkeley symposium on mathematical statistics and probability}
@@ -998,8 +998,8 @@
       \strng{authornamehash}{d679304711e2c453ba732aa9c919079a}
       \strng{authorfullhash}{e6bed87c9816cf6a7da465e95308875c}
       \strng{authorfullhashraw}{e6bed87c9816cf6a7da465e95308875c}
-      \field{sortinit}{2}
-      \field{sortinithash}{8b555b3791beccb63322c22f3320aa9a}
+      \field{sortinit}{1}
+      \field{sortinithash}{4f6aaa89bab872aa0999fec09ff8e98a}
       \field{labelnamesource}{author}
       \field{labeltitlesource}{title}
       \field{journaltitle}{IEEE/ACM Transactions on Computational Biology and Bioinformatics}
@@ -1439,47 +1439,6 @@
       \range{pages}{1}
       \verb{doi}
       \verb 10.1038/s41467-024-51891-9
-      \endverb
-    \endentry
-    \entry{meng_schntl_2025}{article}{}{}
-      \name{author}{3}{}{%
-        {{hash=9bda5fca6cf612404115788d6dec4d61}{%
-           family={Meng},
-           familyi={M\bibinitperiod},
-           given={Hua},
-           giveni={H\bibinitperiod}}}%
-        {{hash=efa14006b4be39c2fca0f7dc33c26238}{%
-           family={Qin},
-           familyi={Q\bibinitperiod},
-           given={Chuan},
-           giveni={C\bibinitperiod}}}%
-        {{hash=1740ec68accf7181f4fa1bfa2c1ee01f}{%
-           family={Long},
-           familyi={L\bibinitperiod},
-           given={Zhiguo},
-           giveni={Z\bibinitperiod}}}%
-      }
-      \strng{namehash}{cfc5325693bd4f582f4fd210069c8f06}
-      \strng{fullhash}{cfc5325693bd4f582f4fd210069c8f06}
-      \strng{fullhashraw}{cfc5325693bd4f582f4fd210069c8f06}
-      \strng{bibnamehash}{cfc5325693bd4f582f4fd210069c8f06}
-      \strng{authorbibnamehash}{cfc5325693bd4f582f4fd210069c8f06}
-      \strng{authornamehash}{cfc5325693bd4f582f4fd210069c8f06}
-      \strng{authorfullhash}{cfc5325693bd4f582f4fd210069c8f06}
-      \strng{authorfullhashraw}{cfc5325693bd4f582f4fd210069c8f06}
-      \field{sortinit}{7}
-      \field{sortinithash}{108d0be1b1bee9773a1173443802c0a3}
-      \field{labelnamesource}{author}
-      \field{labeltitlesource}{title}
-      \field{journaltitle}{Bioinformatics}
-      \field{number}{2}
-      \field{title}{{scHNTL}: single-cell {RNA}-seq data clustering augmented by high-order neighbors and triplet loss}
-      \field{volume}{41}
-      \field{year}{2025}
-      \field{pages}{btaf044}
-      \range{pages}{-1}
-      \verb{doi}
-      \verb 10.1093/bioinformatics/btaf044
       \endverb
     \endentry
     \entry{johnson2007adjusting}{article}{}{}
@@ -2168,6 +2127,47 @@
       \field{year}{2005}
       \field{pages}{1473\bibrangedash 1480}
       \range{pages}{8}
+    \endentry
+    \entry{meng_schntl_2025}{article}{}{}
+      \name{author}{3}{}{%
+        {{hash=9bda5fca6cf612404115788d6dec4d61}{%
+           family={Meng},
+           familyi={M\bibinitperiod},
+           given={Hua},
+           giveni={H\bibinitperiod}}}%
+        {{hash=efa14006b4be39c2fca0f7dc33c26238}{%
+           family={Qin},
+           familyi={Q\bibinitperiod},
+           given={Chuan},
+           giveni={C\bibinitperiod}}}%
+        {{hash=1740ec68accf7181f4fa1bfa2c1ee01f}{%
+           family={Long},
+           familyi={L\bibinitperiod},
+           given={Zhiguo},
+           giveni={Z\bibinitperiod}}}%
+      }
+      \strng{namehash}{cfc5325693bd4f582f4fd210069c8f06}
+      \strng{fullhash}{cfc5325693bd4f582f4fd210069c8f06}
+      \strng{fullhashraw}{cfc5325693bd4f582f4fd210069c8f06}
+      \strng{bibnamehash}{cfc5325693bd4f582f4fd210069c8f06}
+      \strng{authorbibnamehash}{cfc5325693bd4f582f4fd210069c8f06}
+      \strng{authornamehash}{cfc5325693bd4f582f4fd210069c8f06}
+      \strng{authorfullhash}{cfc5325693bd4f582f4fd210069c8f06}
+      \strng{authorfullhashraw}{cfc5325693bd4f582f4fd210069c8f06}
+      \field{sortinit}{1}
+      \field{sortinithash}{4f6aaa89bab872aa0999fec09ff8e98a}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{journaltitle}{Bioinformatics}
+      \field{number}{2}
+      \field{title}{{scHNTL}: single-cell {RNA}-seq data clustering augmented by high-order neighbors and triplet loss}
+      \field{volume}{41}
+      \field{year}{2025}
+      \field{pages}{btaf044}
+      \range{pages}{-1}
+      \verb{doi}
+      \verb 10.1093/bioinformatics/btaf044
+      \endverb
     \endentry
     \entry{akiba2019optuna}{inproceedings}{}{}
       \name{author}{5}{}{%

@@ -35,9 +35,7 @@ MATRIX_ROOT = Path(
 FULL_RUNS_ROOT = MATRIX_ROOT / "02_full_runs" / "runs"
 IMPORTED_ROOT = MATRIX_ROOT / "03_imported_existing"
 
-SYNTH_DIR = Path(
-    "/data2/fbidet/Rapport_Stage_M2_git/Images/scraw_loss_transfer_synthesis"
-)
+SYNTH_DIR = Path(__file__).resolve().parent
 CSV_PATH = SYNTH_DIR / "loss_transfer_by_dataset_algorithm_variant.csv"
 
 ALGORITHM_LABELS = {
@@ -132,109 +130,114 @@ def extract_dataset_variant_from_full_runs(path: Path):
         return None, None
 
 
-# ── Walk full runs: scMAE/scDeepCluster from scrbenchmark/analysis_results.csv ──
-records = []
-scrbenchmark_files = list(FULL_RUNS_ROOT.rglob("scrbenchmark/results/analysis_results.csv"))
-print(f"Found {len(scrbenchmark_files)} scrbenchmark analysis_results.csv files.")
+# Check if FULL_RUNS_ROOT exists. If not, use the existing CSV path
+if FULL_RUNS_ROOT.exists():
+    # ── Walk full runs: scMAE/scDeepCluster from scrbenchmark/analysis_results.csv ──
+    records = []
+    scrbenchmark_files = list(FULL_RUNS_ROOT.rglob("scrbenchmark/results/analysis_results.csv"))
+    print(f"Found {len(scrbenchmark_files)} scrbenchmark analysis_results.csv files.")
 
-for csv_file in scrbenchmark_files:
-    dataset, variant = extract_dataset_variant_from_full_runs(csv_file)
-    if dataset is None or variant is None:
-        continue
-    try:
-        df = pd.read_csv(csv_file)
-    except Exception as e:
-        print(f"  Error reading {csv_file}: {e}")
-        continue
-
-    if "ClassWise" not in df.columns:
-        continue
-
-    for _, row in df.iterrows():
-        raw_algo = str(row.get("algorithm", "")).strip().lower()
-        algo_label = ALGORITHM_LABELS.get(raw_algo, None)
-        if algo_label is None:
+    for csv_file in scrbenchmark_files:
+        dataset, variant = extract_dataset_variant_from_full_runs(csv_file)
+        if dataset is None or variant is None:
             continue
-        bra = compute_bra(row)
-        bac = row.get("BalancedACC", None)
-        if not np.isnan(bra):
-            records.append({
-                "dataset": dataset,
-                "algorithm": algo_label,
-                "variant": variant,
-                "BalancedRareACC": bra,
-                "BalancedACC": bac,
-            })
-
-# ── Walk full runs: DESC from desc/runs/seed_*/results/results.json ─────────
-desc_json_files = list(FULL_RUNS_ROOT.rglob("desc/runs/*/results/results.json"))
-print(f"Found {len(desc_json_files)} DESC results.json files.")
-
-for json_file in desc_json_files:
-    dataset, variant = extract_dataset_variant_from_full_runs(json_file)
-    if dataset is None or variant is None:
-        continue
-    try:
-        with open(json_file) as f:
-            data = json.load(f)
-        results_list = data.get("results", [])
-        if not results_list:
+        try:
+            df = pd.read_csv(csv_file)
+        except Exception as e:
+            print(f"  Error reading {csv_file}: {e}")
             continue
-        item = results_list[0]  # one result per JSON
-        metrics = item.get("metrics", {})
-        cw = metrics.get("ClassWise", None)
-        total = metrics.get("n_samples_evaluated", None)
-        if cw is None or total is None or total <= 0:
+
+        if "ClassWise" not in df.columns:
             continue
-        rare_recalls = [
-            vals.get("Recall", 0.0)
-            for vals in cw.values()
-            if vals.get("Support", 0) / total < 0.05
-        ]
-        bra = float(np.mean(rare_recalls)) if rare_recalls else float("nan")
-        bac = metrics.get("BalancedACC", None)
-        if not np.isnan(bra):
-            records.append({
-                "dataset": dataset,
-                "algorithm": "DESC",
-                "variant": variant,
-                "BalancedRareACC": bra,
-                "BalancedACC": bac,
-            })
-    except Exception as e:
-        print(f"  Error reading {json_file}: {e}")
-        continue
 
-print(f"Total per-seed records: {len(records)}")
-bra_df = pd.DataFrame(records)
-print("Unique algorithms:", bra_df["algorithm"].unique())
-print("Unique datasets:", bra_df["dataset"].unique())
+        for _, row in df.iterrows():
+            raw_algo = str(row.get("algorithm", "")).strip().lower()
+            algo_label = ALGORITHM_LABELS.get(raw_algo, None)
+            if algo_label is None:
+                continue
+            bra = compute_bra(row)
+            bac = row.get("BalancedACC", None)
+            if not np.isnan(bra):
+                records.append({
+                    "dataset": dataset,
+                    "algorithm": algo_label,
+                    "variant": variant,
+                    "BalancedRareACC": bra,
+                    "BalancedACC": bac,
+                })
 
-# Melt so we can aggregate both BalancedRareACC and BalancedACC
-melted = bra_df.melt(
-    id_vars=["dataset", "algorithm", "variant"],
-    value_vars=["BalancedRareACC", "BalancedACC"],
-    var_name="metric",
-    value_name="value"
-)
+    # ── Walk full runs: DESC from desc/runs/seed_*/results/results.json ─────────
+    desc_json_files = list(FULL_RUNS_ROOT.rglob("desc/runs/*/results/results.json"))
+    print(f"Found {len(desc_json_files)} DESC results.json files.")
 
-# ── Aggregate by (dataset, algorithm, variant, metric) ────────────────────────
-agg = melted.groupby(["dataset", "algorithm", "variant", "metric"])["value"].agg(
-    mean="mean", std="std", n="count"
-).reset_index()
-agg.columns = ["dataset", "algorithm", "variant", "metric", "mean", "std", "n"]
+    for json_file in desc_json_files:
+        dataset, variant = extract_dataset_variant_from_full_runs(json_file)
+        if dataset is None or variant is None:
+            continue
+        try:
+            with open(json_file) as f:
+                data = json.load(f)
+            results_list = data.get("results", [])
+            if not results_list:
+                continue
+            item = results_list[0]  # one result per JSON
+            metrics = item.get("metrics", {})
+            cw = metrics.get("ClassWise", None)
+            total = metrics.get("n_samples_evaluated", None)
+            if cw is None or total is None or total <= 0:
+                continue
+            rare_recalls = [
+                vals.get("Recall", 0.0)
+                for vals in cw.values()
+                if vals.get("Support", 0) / total < 0.05
+            ]
+            bra = float(np.mean(rare_recalls)) if rare_recalls else float("nan")
+            bac = metrics.get("BalancedACC", None)
+            if not np.isnan(bra):
+                records.append({
+                    "dataset": dataset,
+                    "algorithm": "DESC",
+                    "variant": variant,
+                    "BalancedRareACC": bra,
+                    "BalancedACC": bac,
+                })
+        except Exception as e:
+            print(f"  Error reading {json_file}: {e}")
+            continue
 
-print(f"\nAggregated rows: {len(agg)}")
+    print(f"Total per-seed records: {len(records)}")
+    bra_df = pd.DataFrame(records)
+    print("Unique algorithms:", bra_df["algorithm"].unique())
+    print("Unique datasets:", bra_df["dataset"].unique())
 
-# ── Update loss_transfer CSV ──────────────────────────────────────────────────
-lt = pd.read_csv(CSV_PATH)
-lt_clean = lt[~lt["metric"].isin(["BalancedRareACC", "BalancedACC"])]
-lt_updated = pd.concat([lt_clean, agg], ignore_index=True)
-lt_updated = lt_updated.sort_values(
-    ["dataset", "algorithm", "variant", "metric"]
-).reset_index(drop=True)
-lt_updated.to_csv(CSV_PATH, index=False)
-print(f"Updated CSV: {CSV_PATH} ({len(lt_updated)} rows, {lt_updated['metric'].unique()})")
+    # Melt so we can aggregate both BalancedRareACC and BalancedACC
+    melted = bra_df.melt(
+        id_vars=["dataset", "algorithm", "variant"],
+        value_vars=["BalancedRareACC", "BalancedACC"],
+        var_name="metric",
+        value_name="value"
+    )
+
+    # ── Aggregate by (dataset, algorithm, variant, metric) ────────────────────────
+    agg = melted.groupby(["dataset", "algorithm", "variant", "metric"])["value"].agg(
+        mean="mean", std="std", n="count"
+    ).reset_index()
+    agg.columns = ["dataset", "algorithm", "variant", "metric", "mean", "std", "n"]
+
+    print(f"\nAggregated rows: {len(agg)}")
+
+    # ── Update loss_transfer CSV ──────────────────────────────────────────────────
+    lt = pd.read_csv(CSV_PATH)
+    lt_clean = lt[~lt["metric"].isin(["BalancedRareACC", "BalancedACC"])]
+    lt_updated = pd.concat([lt_clean, agg], ignore_index=True)
+    lt_updated = lt_updated.sort_values(
+        ["dataset", "algorithm", "variant", "metric"]
+    ).reset_index(drop=True)
+    lt_updated.to_csv(CSV_PATH, index=False)
+    print(f"Updated CSV: {CSV_PATH} ({len(lt_updated)} rows, {lt_updated['metric'].unique()})")
+else:
+    print(f"Directory {FULL_RUNS_ROOT} not found. Regenerating LaTeX tables directly from existing CSV.")
+    lt_updated = pd.read_csv(CSV_PATH)
 
 # ── Print table values for LaTeX ──────────────────────────────────────────────
 metrics = ["ARI", "BalancedACC", "RareACC", "UltraRareACC", "BalancedRareACC"]
@@ -275,7 +278,7 @@ def write_baseline_vs_best_table(pivot_df):
         "\\renewcommand{\\arraystretch}{1.08}",
         "\\begin{tabularx}{\\textwidth}{l X c c c c c}",
         "\\toprule",
-        "\\textbf{Algorithme} & \\textbf{Configuration} & \\textbf{ARI} & \\textbf{BalancedACC} & \\textbf{RareACC} & \\textbf{UltraRareACC} & \\textbf{BalancedRareACC} \\\\",
+        "\\textbf{Algorithme} & \\textbf{Configuration} & \\textbf{ARI} & \\textbf{B. ACC} & \\textbf{Rare} & \\textbf{U. Rare} & \\textbf{B. Rare} \\\\",
         "\\midrule"
     ]
     
@@ -324,7 +327,7 @@ def write_baseline_vs_best_table(pivot_df):
     lines.extend([
         "\\bottomrule",
         "\\end{tabularx}",
-        "\\caption{Comparaison entre chaque algorithme de base et sa meilleure variante avec loss pondérée scRAW. Les valeurs sont des moyennes par jeu de données ; la meilleure variante est sélectionnée par la moyenne des quatre métriques (ARI, RareACC, UltraRareACC, BalancedRareACC).}",
+        "\\caption{Comparaison entre chaque algorithme de base et sa meilleure variante avec loss pondérée scRAW. Les valeurs sont des moyennes par jeu de données ; la meilleure variante est sélectionnée par la moyenne des quatre métriques (ARI, RareACC, UltraRareACC, BalancedRareACC). B. ACC : BalancedACC ; Rare : RareACC ; U. Rare : UltraRareACC ; B. Rare : BalancedRareACC.}",
         "\\label{tab:loss_transfer_baseline_vs_best}",
         "\\end{table}"
     ])
@@ -342,7 +345,7 @@ def write_all_configurations_table(pivot_df):
         "\\renewcommand{\\arraystretch}{1.04}",
         "\\begin{tabularx}{\\textwidth}{l X c c c c c c}",
         "\\toprule",
-        "\\textbf{Algorithme} & \\textbf{Configuration} & \\textbf{ARI} & \\textbf{BalancedACC} & \\textbf{RareACC} & \\textbf{UltraRareACC} & \\textbf{BalancedRareACC} & \\textbf{Score} \\\\",
+        "\\textbf{Algorithme} & \\textbf{Configuration} & \\textbf{ARI} & \\textbf{B. ACC} & \\textbf{Rare} & \\textbf{U. Rare} & \\textbf{B. Rare} & \\textbf{Score} \\\\",
         "\\midrule"
     ]
     
@@ -402,7 +405,7 @@ def write_all_configurations_table(pivot_df):
     lines.extend([
         "\\bottomrule",
         "\\end{tabularx}",
-        "\\caption{Résultats moyens de toutes les configurations expérimentées pour l'intégration de la loss pondérée scRAW. Le score correspond à la moyenne de ARI, BalancedACC, RareACC, UltraRareACC et BalancedRareACC ; la meilleure configuration non-baseline de chaque algorithme est en gras.}",
+        "\\caption{Résultats moyens de toutes les configurations expérimentées pour l'intégration de la loss pondérée scRAW. Le score correspond à la moyenne de ARI, BalancedACC, RareACC, UltraRareACC et BalancedRareACC ; la meilleure configuration non-baseline de chaque algorithme est en gras. B. ACC : BalancedACC ; Rare : RareACC ; U. Rare : UltraRareACC ; B. Rare : BalancedRareACC.}",
         "\\label{tab:loss_transfer_all_configurations}",
         "\\end{table}"
     ])

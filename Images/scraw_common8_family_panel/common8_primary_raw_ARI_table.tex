@@ -2,6 +2,7 @@
   \centering
   \fontsize{5.5pt}{7.0pt}\selectfont
   \setlength{\tabcolsep}{1.0pt}
+  \resizebox{\textwidth}{!}{%
   \begin{tabular}{l|c|ccccc|cccc|cccc}
     \toprule
     \textbf{Jeu de données} & \multicolumn{1}{c|}{\textbf{scRAW}} & \multicolumn{5}{c|}{\textbf{Rare Specific}} & \multicolumn{4}{c|}{\textbf{Généralistes}} & \multicolumn{4}{c}{\textbf{Correction Batch}} \\
@@ -19,6 +20,7 @@
     \textbf{Moyenne} & 0,658 & \textbf{0,709} & 0,533 & 0,477 & 0,412 & 0,057 & 0,609 & \underline{0,686} & 0,562 & 0,616 & 0,621 & 0,552 & 0,624 & 0,521 \\
     \bottomrule
   \end{tabular}
+  }
   \caption{Résultats bruts de Rand Index Ajusté (ARI) pour les méthodes principales sur les 8 jeux de données communs. La meilleure performance par jeu de données est en gras, et la deuxième est soulignée.}
   \label{tab:common8_primary_raw_ARI}
 \end{table}

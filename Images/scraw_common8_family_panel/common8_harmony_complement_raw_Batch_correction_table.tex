@@ -2,6 +2,7 @@
   \centering
   \scriptsize
   \setlength{\tabcolsep}{1.5pt}
+  \resizebox{\textwidth}{!}{%
   \begin{tabular}{l|c|ccccc|cccc}
     \toprule
     \textbf{Jeu de données} & \multicolumn{1}{c|}{\textbf{scRAW}} & \multicolumn{5}{c|}{\textbf{Rare + Harmony}} & \multicolumn{4}{c}{\textbf{Généralistes + Harmony}} \\
@@ -19,6 +20,7 @@
     \textbf{Moyenne} & 0,636 & 0,578 & 0,649 & 0,649 & 0,624 & 0,650 & \underline{0,667} & \textbf{0,671} & 0,594 & 0,350 \\
     \bottomrule
   \end{tabular}
+  }
   \caption{Résultats bruts complémentaires de Correction de Batch avec Harmony pour les 8 jeux de données communs. La meilleure performance par jeu de données est en gras, et la deuxième est soulignée. Les jeux sans effet de batch exploitable sont indiqués NA et exclus de la moyenne.}
   \label{tab:common8_harmony_complement_raw_Batch_correction}
 \end{table}

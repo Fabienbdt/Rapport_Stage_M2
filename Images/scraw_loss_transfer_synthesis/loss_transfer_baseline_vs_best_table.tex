@@ -4,7 +4,7 @@
 \renewcommand{\arraystretch}{1.08}
 \begin{tabularx}{\textwidth}{l X c c c c c}
 \toprule
-\textbf{Algorithme} & \textbf{Configuration} & \textbf{ARI} & \textbf{BalancedACC} & \textbf{RareACC} & \textbf{UltraRareACC} & \textbf{BalancedRareACC} \\
+\textbf{Algorithme} & \textbf{Configuration} & \textbf{ARI} & \textbf{B. ACC} & \textbf{Rare} & \textbf{U. Rare} & \textbf{B. Rare} \\
 \midrule
 scMAE & Baseline & 0,665 & 0,625 & 0,562 & 0,492 & 0,485 \\
  & \textbf{Meilleure pondérée : Pseudo clustering Leiden} & 0,648 & 0,636 & 0,589 & 0,518 & \textbf{0,517} \\
@@ -16,6 +16,6 @@ DESC & Baseline & 0,585 & 0,558 & 0,631 & 0,429 & 0,497 \\
  & \textbf{Meilleure pondérée : Pseudo clustering KMeans + triplet} & 0,576 & 0,561 & 0,662 & 0,414 & \textbf{0,508} \\
 \bottomrule
 \end{tabularx}
-\caption{Comparaison entre chaque algorithme de base et sa meilleure variante avec loss pondérée scRAW. Les valeurs sont des moyennes sur les 8 jeux de données communs ; la meilleure variante est sélectionnée par la moyenne des quatre métriques (ARI, RareACC, UltraRareACC, BalancedRareACC).}
+\caption{Comparaison entre chaque algorithme de base et sa meilleure variante avec loss pondérée scRAW. Les valeurs sont des moyennes par jeu de données ; la meilleure variante est sélectionnée par la moyenne des quatre métriques (ARI, RareACC, UltraRareACC, BalancedRareACC). B. ACC : BalancedACC ; Rare : RareACC ; U. Rare : UltraRareACC ; B. Rare : BalancedRareACC.}
 \label{tab:loss_transfer_baseline_vs_best}
 \end{table}
