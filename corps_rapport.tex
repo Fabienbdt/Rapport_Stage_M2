@@ -425,10 +425,10 @@ Afin de compléter cette évaluation, la configuration finale de scRAW a égalem
 Le tableau~\ref{tab:scraw_holdout_pancreas_results} présente les résultats obtenus par scRAW avec la configuration par défaut, sans nouvelle recherche d'hyperparamètres spécifique à ces jeux de données, ainsi que par les méthodes de comparaison retenues. Pour chaque jeu de données, les méthodes sont présentées dans le même ordre de tri (par moyenne décroissante sur les cinq métriques initiales : ARI, ACC, RareACC, UltraRareACC et Batch), mais les colonnes RareACC et UltraRareACC ont été retirées ici pour des raisons de compacité (les résultats détaillés complets restent disponibles en Annexe). Deux métriques équilibrées, BalancedACC et BalancedRareACC, complètent l'analyse.
 
 \begingroup
-\small
-\setlength{\tabcolsep}{5pt}
-\renewcommand{\arraystretch}{1.15}
-\begin{longtable}{@{}p{0.19\textwidth}p{0.16\textwidth}rrrrr@{}}
+\footnotesize
+\setlength{\tabcolsep}{6pt}
+\renewcommand{\arraystretch}{1.1}
+\begin{longtable}{@{}ll rrrrr@{}}
 \caption[Résultats sur deux jeux de données non vus pendant l'optimisation des hyperparamètres.]{Résultats sur deux jeux de données non vus pendant l'optimisation des hyperparamètres (version compacte). Les méthodes sont triées, pour chaque jeu de données, par moyenne décroissante sur les métriques initiales. Les meilleures valeurs par métrique et par jeu de données sont indiquées en gras et les deuxièmes meilleures sont soulignées ; scRAW est affiché en rouge. Pour SCIB Mouse Pancreas 1, le score de correction de batch est indiqué comme NA car le jeu ne contient qu'un batch explicite.}
 \label{tab:scraw_holdout_pancreas_results}\\
 \toprule
@@ -460,7 +460,7 @@ Le tableau~\ref{tab:scraw_holdout_pancreas_results} présente les résultats obt
  & scNAME & 0,502 & 0,542 & 0,450 & 0,331 & 0,224 \\
  & GiniClust & 0,042 & 0,342 & 0,103 & 0,027 & 0,485 \\
 \midrule
-\multirow{14}{*}{SCIB Mouse Pancreas 1}
+\multirow{14}{*}{\shortstack[l]{SCIB Mouse\\Pancreas 1}}
  & scMAE & 0,560 & 0,614 & \textbf{0,614} & \textbf{0,568} & NA \\
  & \textcolor{red}{scRAW} & \textcolor{red}{\textbf{0,821}} & \textcolor{red}{\underline{0,787}} & \textcolor{red}{0,530} & \textcolor{red}{0,429} & \textcolor{red}{NA} \\
  & scCAD & 0,636 & 0,634 & 0,513 & \underline{0,502} & NA \\
