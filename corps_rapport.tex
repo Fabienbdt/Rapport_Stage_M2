@@ -355,7 +355,7 @@ Le résultat est normalisé afin d'obtenir une moyenne proche de 1, puis limité
 
 \subsubsection*{\texorpdfstring{Triplet loss rare-aware \(\mathcal{L}_{\mathrm{triplet}}\)}{Triplet loss rare-aware L triplet}}
 
-La \textit{triplet loss} \(\mathcal{L}_{\mathrm{triplet}}\) est une loss de comparaison relative appliquée dans l'espace latent. Elle ne cherche pas à reconstruire directement les profils d'expression ; elle agit plutôt sur l'organisation géométrique des représentations latentes. Pour un triplet composé d'une cellule ancre \(a\), d'une cellule positive \(p\) supposée similaire, et d'une cellule négative \(n\) supposée différente, elle pénalise le modèle lorsque l'ancre n'est pas suffisamment plus proche de \(p\) que de \(n\).
+La \textit{triplet loss} \(\mathcal{L}_{\mathrm{triplet}}\) \cite{weinberger2005distance} est une loss de comparaison relative appliquée dans l'espace latent. Elle ne cherche pas à reconstruire directement les profils d'expression ; elle agit plutôt sur l'organisation géométrique des représentations latentes. Pour un triplet composé d'une cellule ancre \(a\), d'une cellule positive \(p\) supposée similaire, et d'une cellule négative \(n\) supposée différente, elle pénalise le modèle lorsque l'ancre n'est pas suffisamment plus proche de \(p\) que de \(n\).
 
 Ce type de contrainte est couramment utilisé pour structurer l'espace latent, comme dans la méthode scHNTL \cite{meng_schntl_2025} qui s'appuie sur des voisins d'ordre élevé. Dans scRAW, ce principe de comparaison relative est réorienté et appliqué spécifiquement aux cellules rares.
 
