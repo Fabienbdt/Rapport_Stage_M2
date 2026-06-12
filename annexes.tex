@@ -605,6 +605,19 @@ Campagne 3 -- batch et clustering & \texttt{use\_batch\_conditioning} fixé à \
 \end{figure}
 
 \newpage
+\section{Visualisation qualitative des annotations et des lots sur Baron}
+\label{annexe:visualisation_baron_clusters_batchs}
+
+Cette annexe présente la projection en deux dimensions (t-SNE) des représentations latentes apprises par scRAW sur le jeu de données \textit{Baron Human Pancreas}. La figure~\ref{fig:annexe_baron_tsne_qualitative} compare la vérité terrain biologique, les clusters bruts identifiés, les résultats des deux méthodes d'annotation (appariement optimal de l'algorithme hongrois et recouvrement de gènes marqueurs), ainsi que la répartition par lot (batch/donneur) pour illustrer la robustesse de scRAW face aux effets de lot.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\textwidth]{Images/analyse_biologique_scraw_baron_trial0017/tsne_annotations_comparison.png}
+    \caption[Visualisation qualitative des clusters, annotations et lots sur Baron.]{Visualisation qualitative des embeddings scRAW sur Baron Human Pancreas : comparaison de la vérité terrain (A), des clusters prédits (B), des annotations par association optimale (C), des annotations par marqueurs (D) et de la coloration par batch/donneur (E) démontrant le bon mélange des différents lots.}
+    \label{fig:annexe_baron_tsne_qualitative}
+\end{figure}
+
+\newpage
 \section{Screenshots de l'interface graphique SCRBenchmark}
 \label{annexe:screenshots}
 

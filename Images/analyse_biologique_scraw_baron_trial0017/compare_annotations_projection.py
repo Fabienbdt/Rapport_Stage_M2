@@ -54,6 +54,7 @@ def main() -> None:
     pred = np.array([f"Cluster {p}" for p in df["predicted_label"]])
     hungarian = np.array([str(h).replace("_", " ") for h in df["hungarian_annotation"]])
     marker = np.array([str(m).replace("_", " ") for m in df["marker_overlap_annotation"]])
+    batches = np.array([str(b) for b in df["batch"]])
 
     # Build consistent cell type categories colormap (union of true, hungarian, marker labels)
     all_cell_types = sorted(list(set(true) | set(hungarian) | set(marker)))
@@ -65,6 +66,11 @@ def main() -> None:
     cluster_palette = sns.color_palette("tab20", n_colors=max(1, len(all_clusters)))
     cluster_color_map = {c: cluster_palette[i % len(cluster_palette)] for i, c in enumerate(all_clusters)}
 
+    # Build batch colormap
+    all_batches = sorted(np.unique(batches))
+    batch_palette = sns.color_palette("Set2", n_colors=max(1, len(all_batches)))
+    batch_color_map = {b: batch_palette[i % len(batch_palette)] for i, b in enumerate(all_batches)}
+
     plt.style.use("default")
     plt.rcParams.update({
         "figure.dpi": 180,
@@ -75,7 +81,7 @@ def main() -> None:
         "ytick.labelsize": 9,
     })
 
-    fig, axes = plt.subplots(2, 2, figsize=(14, 12))
+    fig, axes = plt.subplots(3, 2, figsize=(14, 18))
 
     # Panel 1: Ground Truth
     scatter_categories_with_colormap(
@@ -97,8 +103,16 @@ def main() -> None:
         axes[1, 1], coords, marker, "D. Annotation par recouvrement de marqueurs", color_map
     )
 
+    # Panel 5: Lots (Batches)
+    scatter_categories_with_colormap(
+        axes[2, 0], coords, batches, "E. Lots du jeu de données (Batches)", batch_color_map
+    )
+
+    # Hide the 6th empty subplot
+    fig.delaxes(axes[2, 1])
+
     fig.suptitle("Comparaison des annotations de clustering - scRAW", fontsize=15, fontweight="bold")
-    fig.tight_layout(rect=[0, 0, 1, 0.96])
+    fig.tight_layout(rect=[0, 0, 1, 0.97])
     
     fig.savefig(OUTPUT_PATH, bbox_inches="tight", dpi=180)
     plt.close(fig)
