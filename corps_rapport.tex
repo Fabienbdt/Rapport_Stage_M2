@@ -295,7 +295,9 @@ Le pipeline général de scRAW est présenté dans la figure~\ref{fig:scraw_pipe
 
 \begin{figure}[!htbp]
     \centering
-    \includegraphics[width=0.8\textwidth,height=0.5\textheight,keepaspectratio]{Images/SCRAW_PIPELINE/scRAW.png}
+    \makebox[\textwidth][c]{%
+        \includegraphics[width=1.08\textwidth,height=0.56\textheight,keepaspectratio]{Images/SCRAW_PIPELINE/scRAW.png}%
+    }
     \caption[Pipeline général de scRAW.]{Pipeline général de scRAW. Le modèle apprend un espace latent par autoencodeur, met à jour des poids cellulaires à partir de pseudo-clusters et de la densité locale, puis réalise le clustering final dans l'espace latent.}
     \label{fig:scraw_pipeline}
 \end{figure}
@@ -392,7 +394,9 @@ Pour faciliter la lecture, la figure~\ref{fig:scraw_common8_family_top3_plus_scr
 
 \begin{figure}[!htbp]
     \centering
-    \includegraphics[width=\textwidth,height=0.82\textheight,keepaspectratio,trim=0 0 0 0.8cm,clip]{Images/PresentationOrale/common8_top3_family_sorted_barplots.png}
+    \makebox[\textwidth][c]{%
+        \includegraphics[width=1.15\textwidth,height=0.94\textheight,keepaspectratio,trim=0 0 0 0.8cm,clip]{Images/PresentationOrale/common8_top3_family_sorted_barplots.png}%
+    }
     \caption[Distribution des performances sur les 8 jeux de données communs.]{Distribution des performances sur les 8 jeux de données communs. scRAW est comparé aux trois meilleures méthodes de chaque famille pour chaque métrique. Les boîtes résument les scores pour les 8 jeux de données ; le losange blanc indique la moyenne.}
     \label{fig:scraw_common8_family_top3_plus_scraw}
 \end{figure}
