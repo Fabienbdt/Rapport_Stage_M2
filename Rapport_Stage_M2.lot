@@ -3,3 +3,4 @@
 \contentsline {table}{\numberline {2}{\ignorespaces Structure conceptuelle d'un jeu de données scRNA-seq.}}{7}{table.caption.9}%
 \contentsline {table}{\numberline {3}{\ignorespaces Principaux outils de correction de l'effet de batch.}}{9}{table.caption.10}%
 \contentsline {table}{\numberline {4}{\ignorespaces Résultats sur deux jeux de données non vus pendant l'optimisation des hyperparamètres.}}{22}{table.4}%
+\contentsline {table}{\numberline {5}{\ignorespaces Comparaison des méthodes d'annotation pour scRAW sur le jeu de données Baron.}}{27}{table.caption.25}%
