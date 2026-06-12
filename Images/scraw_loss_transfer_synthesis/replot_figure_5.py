@@ -90,20 +90,6 @@ for idx, metric in enumerate(metrics):
         patch.set_edgecolor("#6b7280")
         patch.set_linewidth(1.1)
         
-    # Plot individual dataset points
-    for pos, values in zip(positions, data_for_metric):
-        values_np = values.to_numpy(dtype=float)
-        # Jitter the points slightly to avoid overlapping
-        offsets = np.linspace(-0.04, 0.04, len(values_np)) if len(values_np) > 1 else np.array([0.0])
-        ax.scatter(
-            np.full_like(values_np, pos) + offsets,
-            values_np,
-            s=28,
-            color="#111827",
-            alpha=0.9,
-            zorder=3
-        )
-        
     # Style subplot
     ax.set_title(metric_titles[metric], fontsize=12, pad=10)
     ax.set_xticks([1.0, 2.0, 3.0])
@@ -134,7 +120,6 @@ fig.text(
 legend_handles = [
     plt.Rectangle((0, 0), 1, 1, facecolor="#cbd5e1", edgecolor="#6b7280", alpha=0.55, label="Baseline"),
     plt.Rectangle((0, 0), 1, 1, facecolor="#5f9ea0", edgecolor="#6b7280", alpha=0.55, label="Meilleure variante pondérée"),
-    plt.Line2D([0], [0], marker="o", linestyle="", color="#111827", markersize=5, label="moyenne par dataset"),
     plt.Line2D([0], [0], marker="D", linestyle="", markerfacecolor="white", markeredgecolor="#111827", markersize=5, label="moyenne de l'algorithme")
 ]
 

@@ -258,7 +258,7 @@ L'algorithme hongrois \cite{kuhn1955hungarian}, couramment utilisé dans des ben
 \begin{itemize}
     \item \textbf{L'accuracy (ACC) :} proportion de cellules correctement affectées, sensible aux classes majoritaires. Nous la conservons car elle reste très utilisée dans les articles de clustering de cellules uniques et permet donc une comparaison directe avec la littérature, même si elle doit être complétée par des métriques moins sensibles au déséquilibre de classes.
     \item \textbf{La balanced accuracy (Bal ACC) :} moyenne des rappels par classe biologique.
-    \item \textbf{La RareACC, la BalancedRareACC et l'UltraRareACC :} scores restreints aux classes rares (<5\%) et ultra-rares (<1\%). La RareACC est une accuracy brute sur l'ensemble des cellules rares, tandis que la BalancedRareACC moyenne les rappels des classes rares afin que chaque classe rare contribue autant.
+    \item \textbf{La RareACC, la BalancedRareACC et l'UltraRareACC :} scores restreints aux classes rares (<5\%) et ultra-rares (<1\%). La RareACC est une accuracy brute sur l'ensemble des cellules rares, tandis que la BalancedRareACC moyenne les rappels des classes rares afin que chaque classe rare contribue autant. Nous n'avons pas défini de version équilibrée pour les classes ultra-rares (\textit{BalancedUltraRareACC}) car ces dernières ne représentent souvent qu'une ou deux populations cellulaires dans les jeux de données étudiés, rendant ce calcul peu pertinent. De plus, nous avons conservé la \textit{RareACC} et l'\textit{UltraRareACC} plutôt que de nous limiter à la seule \textit{BalancedRareACC} car la littérature n'utilise généralement que l'accuracy standard et non sa version équilibrée, facilitant ainsi la comparaison avec les travaux existants. Néanmoins, la seule lecture de la métrique \textit{BalancedRareACC} semble suffire pour interpréter la capacité d'un algorithme à retrouver efficacement toutes les classes rares.
 \end{itemize}
 
 \paragraph{Métrique de correction de batch}
@@ -492,7 +492,7 @@ Plusieurs configurations ont été testées : pondération par densité seule, p
 \begin{figure}[!htbp]
     \centering
     \includegraphics[width=\textwidth,height=0.48\textheight,keepaspectratio,trim=0 0 0 1.5cm,clip]{scraw_loss_transfer_synthesis/loss_transfer_baseline_vs_best_weighted.pdf}
-    \caption[Comparaison entre les algorithmes de base et leur meilleure variante avec loss pondérée scRAW sur 8 jeux de données.]{Comparaison entre les algorithmes de base et leur meilleure variante avec loss pondérée scRAW. Les scores sont des moyennes sur les 8 jeux de données communs.}
+    \caption[Comparaison entre les algorithmes de base et leur meilleure variante avec loss pondérée scRAW.]{Comparaison entre les algorithmes de base et leur meilleure variante avec loss pondérée scRAW. Les scores sont des moyennes sur les 5 jeux de données disponibles en Annexe~\ref{annexe:loss_transfer_datasets}.}
     \label{fig:loss_transfer_baseline_vs_best}
 \end{figure}
 

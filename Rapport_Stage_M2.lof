@@ -4,6 +4,6 @@
 \contentsline {figure}{\numberline {3}{\ignorespaces Pipeline général de scRAW.}}{15}{figure.caption.16}%
 \contentsline {figure}{\numberline {4}{\ignorespaces Distribution des performances sur les 8 jeux de données communs.}}{20}{figure.caption.20}%
 \contentsline {figure}{\numberline {5}{\ignorespaces Matrice de rangs des algorithmes selon les métriques moyennes sur le jeu commun (8 jeux de données).}}{21}{figure.caption.21}%
-\contentsline {figure}{\numberline {6}{\ignorespaces Comparaison entre les algorithmes de base et leur meilleure variante avec loss pondérée scRAW sur 8 jeux de données.}}{24}{figure.caption.22}%
-\contentsline {figure}{\numberline {7}{\ignorespaces Comparaison des performances en mode inductif et transductif (baseline) sur 6 jeux de données.}}{24}{figure.caption.23}%
+\contentsline {figure}{\numberline {6}{\ignorespaces Comparaison entre les algorithmes de base et leur meilleure variante avec loss pondérée scRAW.}}{24}{figure.caption.22}%
+\contentsline {figure}{\numberline {7}{\ignorespaces Comparaison des performances en mode inductif et transductif (baseline) sur 6 jeux de données.}}{25}{figure.caption.23}%
 \contentsline {figure}{\numberline {8}{\ignorespaces Analyse biologique compacte de scRAW sur Baron Human Pancreas.}}{26}{figure.caption.24}%

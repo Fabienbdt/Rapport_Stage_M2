@@ -317,6 +317,20 @@ Les tableaux suivants présentent les résultats bruts détaillés par jeu de do
 Ces résultats détaillés permettent d'analyser le comportement individuel de chaque méthode sur chacun des jeux de données, offrant ainsi une vision plus fine et contrastée que les seules moyennes globales.
 
 \newpage
+\section{Jeux de données de l'expérience de transfert de loss}
+\label{annexe:loss_transfer_datasets}
+
+Cette annexe présente la sélection des 5 jeux de données utilisés pour évaluer l'intégration de la loss pondérée $\mathcal{L}_{\mathrm{recon,ponderee}}$ de \textbf{scRAW} dans scMAE, scDeepCluster et DESC. Ces jeux de données ont été choisis car il s'agit de ceux sur lesquels les algorithmes testés obtenaient les moins bons résultats parmi l'ensemble des datasets étudiés, constituant ainsi les cas les plus difficiles pour évaluer l'apport de la pondération :
+\begin{itemize}
+    \item \textbf{Baron Pancreas} (Humain) : jeu de référence comportant 8\,569 cellules, caractérisé par un fort déséquilibre de classes et 9 populations cellulaires rares ou ultra-rares (lymphocytes T, mastocytes, etc.).
+    \item \textbf{Zeisel (BBAG094)} (Souris) : tissu cérébral de 3\,006 cellules et 19\,972 gènes, avec un effet de batch marqué (PCR sur PCA de $0{,}499$).
+    \item \textbf{Spleen (BBAG094)} (Souris) : tissu splénique de 9\,552 cellules et 23\,341 gènes, présentant une sparsité élevée ($94{,}3\%$).
+    \item \textbf{Kang PBMC} (Humain) : cellules mononucléées du sang périphérique (24\,679 cellules, 35\,635 gènes), avec des effets de batch complexes liés à la stimulation à l'interféron.
+    \item \textbf{Bone Marrow (Paul15)} (Souris) : cellules de moelle osseuse (2\,730 cellules, 3\,451 gènes), comportant 9 populations rares sans effet de batch.
+\end{itemize}
+Ces jeux de données sont décrits plus en détail dans l'Annexe~\ref{annexe:datasets}. Les trois autres jeux du sous-ensemble commun (Human Testis, Macaque Retina et TM Liver) n'ont pas été inclus dans cette analyse de transfert de la loss.
+
+\newpage
 \section{\texorpdfstring{Résultats complets du transfert de loss pondérée \(\mathcal{L}_{\mathrm{recon,ponderee}}\)}{Résultats complets du transfert de loss pondérée L recon ponderee}}
 \label{annexe:loss_transfer_details}
 
@@ -333,7 +347,7 @@ Pour résumer les performances, les seeds sont d'abord moyennées pour chaque je
 \begin{figure}[H]
     \centering
     \includegraphics[width=\textwidth,height=0.60\textheight,keepaspectratio]{scraw_loss_transfer_synthesis/loss_transfer_all_configurations_boxplot_4metrics.pdf}
-    \caption{Distribution des scores pour toutes les configurations testées lors du transfert de la loss pondérée \(\mathcal{L}_{\mathrm{recon,ponderee}}\) de scRAW sur 8 jeux de données. Les cinq panneaux correspondent aux métriques ARI, BalancedACC, RareACC, UltraRareACC et BalancedRareACC. Les boîtes représentent la distribution des scores moyens sur les 8 jeux de données communs, et les points noirs indiquent les valeurs par jeu de données.}
+    \caption{Distribution des scores pour toutes les configurations testées lors du transfert de la loss pondérée \(\mathcal{L}_{\mathrm{recon,ponderee}}\) de scRAW sur 5 jeux de données. Les cinq panneaux correspondent aux métriques ARI, BalancedACC, RareACC, UltraRareACC et BalancedRareACC. Les boîtes représentent la distribution des scores moyens sur les 5 jeux de données communs, et les points noirs indiquent les valeurs par jeu de données.}
     \label{fig:loss_transfer_all_configurations_boxplots}
 \end{figure}
 
