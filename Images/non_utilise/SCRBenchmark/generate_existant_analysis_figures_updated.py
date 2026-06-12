@@ -283,7 +283,7 @@ def plot_baron_inductive_transductive_error_panel() -> None:
         show_ylabels=False,
     )
     cbar = fig.colorbar(image, ax=[ax_inductive, ax_transductive], fraction=0.023, pad=0.012)
-    cbar.set_label("Taux d'erreur", fontsize=8.5)
+    cbar.set_label(r"$1 - \mathrm{rappel}_c$", fontsize=8.5)
     cbar.ax.tick_params(labelsize=8)
 
     ax_table_inductive = fig.add_subplot(grid[1, 0])
