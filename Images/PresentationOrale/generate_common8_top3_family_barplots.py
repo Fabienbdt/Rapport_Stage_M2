@@ -14,12 +14,14 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parent
 os.environ.setdefault("MPLCONFIGDIR", "/tmp/matplotlib-fbidet")
 Path(os.environ["MPLCONFIGDIR"]).mkdir(parents=True, exist_ok=True)
+os.environ.setdefault("XDG_CACHE_HOME", "/tmp/matplotlib-fbidet")
 
 import matplotlib
 
 matplotlib.use("Agg")
 import matplotlib.patches as mpatches
 import matplotlib.pyplot as plt
+from matplotlib.lines import Line2D
 import numpy as np
 import pandas as pd
 
@@ -109,7 +111,10 @@ def load_filtered() -> pd.DataFrame:
     if not SOURCE_CSV.exists():
         raise FileNotFoundError(f"Missing source table: {SOURCE_CSV}")
 
-    df = pd.read_csv(SOURCE_CSV)
+    df = pd.read_csv(SOURCE_CSV, skipinitialspace=True)
+    df.columns = df.columns.str.strip()
+    object_columns = df.select_dtypes(include=["object"]).columns
+    df[object_columns] = df[object_columns].apply(lambda col: col.str.strip())
     required = {"dataset", "method", "trial_id", "is_scraw_method", *METRICS}
     missing = required.difference(df.columns)
     if missing:
@@ -336,12 +341,23 @@ def draw_plot(selection: pd.DataFrame, long_df: pd.DataFrame) -> None:
             alpha=0.72,
             label="Correction batch",
         ),
+        Line2D(
+            [0],
+            [0],
+            marker="D",
+            markerfacecolor="white",
+            markeredgecolor="#111827",
+            color="none",
+            linestyle="none",
+            markersize=5.5,
+            label="Moyenne",
+        ),
     ]
     fig.legend(
         handles=legend_handles,
         loc="upper center",
         bbox_to_anchor=(0.5, 1.005),
-        ncol=4,
+        ncol=5,
         frameon=False,
         fontsize=9,
     )

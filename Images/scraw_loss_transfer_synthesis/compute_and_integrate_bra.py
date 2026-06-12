@@ -468,20 +468,20 @@ for idx, metric in enumerate(metrics_list):
         linewidth=1.2,
         ax=ax,
     )
-    sns.stripplot(
-        data=df_agg,
-        x="algorithm",
-        y="mean",
-        hue="variant",
-        hue_order=VARIANT_ORDER,
-        dodge=True,
-        jitter=0.15,
-        alpha=0.6,
-        size=5,
-        color="black",
-        ax=ax,
-        legend=False,
-    )
+#    sns.stripplot(
+#        data=df_agg,
+#        x="algorithm",
+#        y="mean",
+#        hue="variant",
+#        hue_order=VARIANT_ORDER,
+#        dodge=True,
+#        jitter=0.15,
+#        alpha=0.6,
+#        size=5,
+#        color="black",
+#        ax=ax,
+#        legend=False,
+#    )
     ax.set_title(metric_titles[metric], fontweight="bold", fontsize=12)
     ax.set_xlabel("")
     ax.set_ylabel("Score moyen", fontsize=10)
