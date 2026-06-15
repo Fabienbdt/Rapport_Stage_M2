@@ -233,6 +233,8 @@ Dans les formules ci-dessus, \(y_i\) désigne l'annotation biologique de la cell
 \section{Résultats complets sur les huit jeux de données de l'annexe B}
 \label{annexe:resultats_common8}
 
+Cette annexe complète les résultats synthétiques présentés dans le corps du rapport. Elle indique d'abord la répartition des méthodes par famille et leur temps d'exécution moyen, puis présente leurs performances sur les huit jeux de données communs. Les figures permettent une comparaison globale, tandis que les tableaux donnent les scores détaillés pour chaque jeu de données et chaque métrique. La dernière partie regroupe les analyses complémentaires dans lesquelles Harmony est associé aux différentes méthodes.
+
 \begin{table}[H]
 \centering
 \small
@@ -336,11 +338,9 @@ Ces jeux de données sont décrits plus en détail dans l'Annexe~\ref{annexe:dat
 \section{\texorpdfstring{Résultats complets du transfert de loss pondérée \(\mathcal{L}_{\mathrm{recon,ponderee}}\)}{Résultats complets du transfert de loss pondérée L recon ponderee}}
 \label{annexe:loss_transfer_details}
 
-Cette annexe présente les résultats complets de l'expérience d'intégration de la loss pondérée \(\mathcal{L}_{\mathrm{recon,ponderee}}\) de \textbf{scRAW} dans scMAE, scDeepCluster et DESC. Les valeurs correspondent à la phase complète, avec cinq seeds par configuration.
+Cette annexe présente les résultats complets de l'intégration de la loss pondérée \(\mathcal{L}_{\mathrm{recon,ponderee}}\) de \textbf{scRAW} dans scMAE, scDeepCluster et DESC. Pour une lecture rapide, le Tableau~\ref{tab:loss_transfer_baseline_vs_best} compare chaque méthode de référence à sa meilleure variante pondérée, puis la Figure~\ref{fig:loss_transfer_all_configurations_boxplots} montre la distribution des performances de toutes les configurations. Le dernier tableau fournit les valeurs détaillées utilisées dans cette comparaison. Les résultats correspondent à la phase complète, avec cinq seeds par configuration.
 
 La baseline correspond à l'algorithme sans pondération ajoutée. Les autres lignes correspondent aux variantes où une pondération rare-aware est ajoutée à la loss de reconstruction \(\mathcal{L}_{\mathrm{recon}}\), ce qui produit une version \(\mathcal{L}_{\mathrm{recon,ponderee}}\). La pondération est activée après une phase de warm-up, à l'époque 55, comme dans la configuration par défaut de scRAW. Les variantes avec triplet loss \(\mathcal{L}_{\mathrm{triplet}}\) activent cette composante à partir de l'époque 60.
-
-Le Tableau~\ref{tab:loss_transfer_baseline_vs_best} présente la comparaison synthétique entre chaque baseline et sa meilleure variante pondérée.
 
 \input{Images/scraw_loss_transfer_synthesis/loss_transfer_baseline_vs_best_table.tex}
 
@@ -718,6 +718,19 @@ Cette section regroupe les captures d'écran illustrant le fonctionnement et le 
     \end{subfigure}
     
     \caption{Aperçu des différentes étapes de l'interface Streamlit de SCRBenchmark (2\textsuperscript{e} partie : exécution et résultats).}
+\end{figure}
+
+\newpage
+\section{Poster réalisé pour JOBIM 2026}
+\label{annexe:poster_jobim}
+
+Ce poster présente de manière synthétique le contexte, le fonctionnement et les principaux résultats de scRAW. Il a été réalisé pour les Journées Ouvertes en Biologie, Informatique et Mathématiques (JOBIM 2026).
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\textwidth,height=0.72\textheight,keepaspectratio]{Images/poster_jobim/scraw_jobim_2026.png}
+    \caption{Poster de présentation de scRAW réalisé pour JOBIM 2026.}
+    \label{fig:poster_jobim}
 \end{figure}
 
 \newpage
