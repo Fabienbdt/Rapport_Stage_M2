@@ -84,6 +84,13 @@
 % Redéfinition de \_ pour autoriser le retour à la ligne
 \renewcommand{\_}{\textunderscore\allowbreak}
 
+% Initialisation des flux d'écriture pour les listes des annexes
+\makeatletter
+\newwrite\tf@lofapp
+\immediate\openout\tf@lofapp=\jobname.lofapp
+\newwrite\tf@lotapp
+\immediate\openout\tf@lotapp=\jobname.lotapp
+\makeatother
 
 \begin{document}
 
@@ -172,8 +179,13 @@
 
 \cleardoublepage
 \appendix
-\captionsetup[figure]{list=no}
-\captionsetup[table]{list=no}
+\addcontentsline{toc}{section}{Annexes}
+\captionsetup[figure]{list=yes}
+\captionsetup[table]{list=yes}
+\makeatletter
+\write\@auxout{\string\let\string\tf@lof\string\tf@lofapp}
+\write\@auxout{\string\let\string\tf@lot\string\tf@lotapp}
+\makeatother
 \input{annexes}
 
 \cleardoublepage

@@ -1,4 +1,37 @@
 % !TeX root = Rapport_Stage_M2.tex
+
+\thispagestyle{empty}
+\begin{center}
+  \vspace*{3cm}
+  \hrule height 1.5pt
+  \vspace{0.6cm}
+  {\Huge \textbf{ANNEXES}} \\
+  \vspace{0.6cm}
+  \hrule height 1.5pt
+  \vspace{1.5cm}
+  {\Large \textbf{\StageTitle}} \\
+  \vspace{1.5cm}
+  {\large \textbf{Étudiant :} \StageStudent} \\
+  \vspace{0.5cm}
+  {\large \StageDate}
+\end{center}
+
+\vspace{2.5cm}
+
+\makeatletter
+\section*{Liste des figures des annexes}
+\addcontentsline{toc}{subsection}{Liste des figures des annexes}
+\@starttoc{lofapp}
+
+\vspace{1.5cm}
+
+\section*{Liste des tableaux des annexes}
+\addcontentsline{toc}{subsection}{Liste des tableaux des annexes}
+\@starttoc{lotapp}
+\makeatother
+
+\newpage
+
 \section{Structure et organigramme du LaBRI}
 \label{annexe:labri}
 
