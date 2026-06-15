@@ -38,7 +38,7 @@
 \newcommand{\StageParcours}{Du génome aux écosystèmes}
 \newcommand{\StagePromotion}{2024-2026}
 \newcommand{\StageType}{Rapport de stage}
-\newcommand{\StageTitle}{Évaluation et développement de méthodes Deep Learning pour l'analyse de données single-cell RNA-seq}
+\newcommand{\StageTitle}{Évaluation et développement de méthodes d'apprentissage profond pour le clustering de données single-cell RNA-seq}
 \newcommand{\StageStudent}{Fabien Bidet}
 \newcommand{\StageDate}{Juin 2026}
 \newcommand{\StagePeriod}{Janvier-Juin 2026}
@@ -92,27 +92,28 @@
 \thispagestyle{empty}
 
 % Logos header
-\begin{minipage}{0.28\textwidth}
+\noindent
+\begin{minipage}[c]{0.28\textwidth}
   \centering
   \IfFileExists{Images/page_de_garde/logo_univ_bordeaux.png}
-    {\includegraphics[width=\linewidth,height=1.8cm,keepaspectratio]{Images/page_de_garde/logo_univ_bordeaux.png}}
+    {\raisebox{-0.5\height}{\includegraphics[width=\linewidth,height=1.8cm,keepaspectratio]{Images/page_de_garde/logo_univ_bordeaux.png}}}
     {\fbox{\parbox[c][1.8cm][c]{\linewidth}{\centering Logo\\Univ}}}
-\end{minipage}
+\end{minipage}%
 \hfill
-\begin{minipage}{0.44\textwidth}
+\raisebox{-6.25pt}{\begin{minipage}[c]{0.44\textwidth}
   \centering
   {\Large \textbf{\StageInstitution}}\\
   \textbf{\StageMaster}\\
   {Parcours : \StageParcours}\\
   {Promotion \StagePromotion}
-\end{minipage}
+\end{minipage}}%
 \hfill
-\begin{minipage}{0.22\textwidth}
+\begin{minipage}[c]{0.22\textwidth}
   \centering
   \IfFileExists{Images/page_de_garde/logo_labri.png}
-    {\includegraphics[width=\linewidth,height=1.8cm,keepaspectratio]{Images/page_de_garde/logo_labri.png}}
+    {\raisebox{-0.5\height}{\includegraphics[width=\linewidth,height=1.8cm,keepaspectratio]{Images/page_de_garde/logo_labri.png}}}
     {\IfFileExists{Images/page_de_garde/logo_labri.jpg}
-      {\includegraphics[width=\linewidth,height=1.8cm,keepaspectratio]{Images/page_de_garde/logo_labri.jpg}}
+      {\raisebox{-0.5\height}{\includegraphics[width=\linewidth,height=1.8cm,keepaspectratio]{Images/page_de_garde/logo_labri.jpg}}}
       {\fbox{\parbox[c][1.8cm][c]{\linewidth}{\centering Logo\\LaBRI}}}}
 \end{minipage}
 
