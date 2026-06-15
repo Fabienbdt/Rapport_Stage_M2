@@ -325,7 +325,7 @@ Ces résultats détaillés permettent d'analyser le comportement individuel de c
 \section{Jeux de données de l'expérience de transfert de loss}
 \label{annexe:loss_transfer_datasets}
 
-Cette annexe présente la sélection des 5 jeux de données utilisés pour évaluer l'intégration de la loss pondérée $\mathcal{L}_{\mathrm{recon,ponderee}}$ de \textbf{scRAW} dans scMAE, scDeepCluster et DESC. Ces jeux de données ont été choisis car il s'agit de ceux sur lesquels les algorithmes testés obtenaient les moins bons résultats parmi l'ensemble des datasets étudiés, constituant ainsi les cas les plus difficiles pour évaluer l'apport de la pondération :
+Cette annexe présente la sélection des 5 jeux de données utilisés pour évaluer l'intégration de la loss pondérée $\mathcal{L}_{\mathrm{recon,ponderee}}$ de \textbf{scRAW} dans scMAE, scDeepCluster et DESC. Ces jeux de données ont été choisis car il s'agit de ceux sur lesquels les algorithmes testés obtenaient les moins bons résultats parmi l'ensemble des datasets étudiés. Ils constituent ainsi les cas les plus difficiles pour évaluer l'apport de la pondération :
 \begin{itemize}
     \item \textbf{Baron Pancreas} (Humain) : jeu de référence comportant 8\,569 cellules, caractérisé par un fort déséquilibre de classes et 9 populations cellulaires rares ou ultra-rares (lymphocytes T, mastocytes, etc.).
     \item \textbf{Zeisel (BBAG094)} (Souris) : tissu cérébral de 3\,006 cellules et 19\,972 gènes, avec un effet de batch marqué (PCR sur PCA de $0{,}499$).
@@ -627,7 +627,7 @@ Campagne 3 -- batch et clustering & \texttt{use\_batch\_conditioning} fixé à \
 \section{Visualisation qualitative des annotations et des lots sur Baron}
 \label{annexe:visualisation_baron_clusters_batchs}
 
-Cette annexe présente la projection en deux dimensions (t-SNE) des représentations latentes apprises par scRAW sur le jeu de données \textit{Baron Human Pancreas}. La figure~\ref{fig:annexe_baron_tsne_qualitative} compare la vérité terrain biologique, les clusters bruts identifiés, les résultats des deux méthodes d'annotation (appariement optimal de l'algorithme hongrois et recouvrement de gènes marqueurs), ainsi que la répartition par lot (batch/donneur) pour illustrer la robustesse de scRAW face aux effets de lot.
+Cette annexe présente la projection en deux dimensions (t-SNE) des représentations latentes apprises par scRAW sur le jeu de données \textit{Baron Human Pancreas}. La figure~\ref{fig:annexe_baron_tsne_qualitative} compare la vérité terrain biologique, les clusters bruts identifiés, les résultats des deux méthodes d'annotation (appariement optimal de l'algorithme hongrois et recouvrement de gènes marqueurs), ainsi que la répartition par lot (batch/donneur) pour visualiser la répartition des lots de scRAW face aux effets de lot.
 
 \begin{figure}[H]
     \centering
