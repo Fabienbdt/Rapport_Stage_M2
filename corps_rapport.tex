@@ -397,7 +397,7 @@ Pour faciliter la lecture, la figure~\ref{fig:scraw_common8_family_top3_plus_scr
 \begin{figure}[!htbp]
     \centering
     \makebox[\textwidth][c]{%
-        \includegraphics[width=1.15\textwidth,height=0.94\textheight,keepaspectratio,trim=0 0 0 0.8cm,clip]{Images/PresentationOrale/common8_top3_family_sorted_barplots.png}%
+        \includegraphics[width=1.15\textwidth,height=0.90\textheight,keepaspectratio,trim=0 0 0 0.8cm,clip]{Images/PresentationOrale/common8_top3_family_sorted_barplots.png}%
     }
     \caption[Distribution des performances sur les 8 jeux de données communs.]{Distribution des performances sur les 8 jeux de données communs. scRAW est comparé aux trois meilleures méthodes de chaque famille pour chaque métrique. Les boîtes résument les scores pour les 8 jeux de données ; le losange blanc indique la moyenne.}
     \label{fig:scraw_common8_family_top3_plus_scraw}
@@ -451,35 +451,35 @@ Le tableau~\ref{tab:scraw_holdout_pancreas_results} présente les résultats obt
 \bottomrule
 \endlastfoot
 \multirow{14}{*}{Human Pancreas}
- & Harmony & \underline{0,817} & \textbf{0,897} & \textbf{0,735} & 0,561 & \textbf{0,669} \\
- & ComBat & \textbf{0,839} & \underline{0,892} & \underline{0,720} & 0,545 & 0,587 \\
- & \textcolor{red}{scRAW} & \textcolor{red}{0,791} & \textcolor{red}{0,817} & \textcolor{red}{0,634} & \textcolor{red}{0,539} & \textcolor{red}{0,511} \\
- & scVI & 0,595 & 0,720 & 0,622 & 0,441 & 0,530 \\
- & Scanorama & 0,432 & 0,563 & 0,693 & \textbf{0,713} & \underline{0,610} \\
- & PCA+Leiden & 0,444 & 0,513 & 0,610 & \underline{0,671} & 0,478 \\
- & DeepScena & 0,626 & 0,713 & 0,505 & 0,298 & 0,462 \\
- & CellSIUS & 0,444 & 0,519 & 0,641 & 0,678 & 0,485 \\
- & scAIDE & 0,520 & 0,564 & 0,543 & 0,490 & 0,377 \\
- & scMAE & 0,502 & 0,543 & 0,540 & 0,525 & 0,353 \\
- & DESC & 0,474 & 0,511 & 0,521 & 0,505 & 0,304 \\
- & scCAD & 0,346 & 0,311 & 0,495 & 0,671 & 0,484 \\
- & scNAME & 0,502 & 0,542 & 0,450 & 0,331 & 0,224 \\
- & GiniClust & 0,042 & 0,342 & 0,103 & 0,027 & 0,485 \\
-\midrule
+  & Harmony & \underline{0,817} & \textbf{0,897} & \textbf{0,735} & 0,561 & \textbf{0,669} \\*
+  & ComBat & \textbf{0,839} & \underline{0,892} & \underline{0,720} & 0,545 & 0,587 \\*
+  & \textcolor{red}{scRAW} & \textcolor{red}{0,791} & \textcolor{red}{0,817} & \textcolor{red}{0,634} & \textcolor{red}{0,539} & \textcolor{red}{0,511} \\*
+  & scVI & 0,595 & 0,720 & 0,622 & 0,441 & 0,530 \\*
+  & Scanorama & 0,432 & 0,563 & 0,693 & \textbf{0,713} & \underline{0,610} \\*
+  & PCA+Leiden & 0,444 & 0,513 & 0,610 & \underline{0,671} & 0,478 \\*
+  & DeepScena & 0,626 & 0,713 & 0,505 & 0,298 & 0,462 \\*
+  & CellSIUS & 0,444 & 0,519 & 0,641 & 0,678 & 0,485 \\*
+  & scAIDE & 0,520 & 0,564 & 0,543 & 0,490 & 0,377 \\*
+  & scMAE & 0,502 & 0,543 & 0,540 & 0,525 & 0,353 \\*
+  & DESC & 0,474 & 0,511 & 0,521 & 0,505 & 0,304 \\*
+  & scCAD & 0,346 & 0,311 & 0,495 & 0,671 & 0,484 \\*
+  & scNAME & 0,502 & 0,542 & 0,450 & 0,331 & 0,224 \\*
+  & GiniClust & 0,042 & 0,342 & 0,103 & 0,027 & 0,485 \\
+\midrule \pagebreak
 \multirow{14}{*}{\shortstack[l]{SCIB Mouse\\Pancreas 1}}
- & scMAE & 0,560 & 0,614 & \textbf{0,614} & \textbf{0,568} & NA \\
- & \textcolor{red}{scRAW} & \textcolor{red}{\textbf{0,821}} & \textcolor{red}{\underline{0,787}} & \textcolor{red}{0,530} & \textcolor{red}{0,429} & \textcolor{red}{NA} \\
- & scCAD & 0,636 & 0,634 & 0,513 & \underline{0,502} & NA \\
- & CellSIUS & 0,588 & 0,674 & \underline{0,562} & 0,481 & NA \\
- & DESC & \underline{0,781} & \textbf{0,839} & 0,459 & 0,255 & NA \\
- & scAIDE & 0,672 & 0,715 & 0,521 & 0,391 & NA \\
- & Harmony & 0,463 & 0,551 & 0,526 & 0,457 & NA \\
- & Scanorama & 0,463 & 0,551 & 0,526 & 0,457 & NA \\
- & PCA+Leiden & 0,463 & 0,551 & 0,526 & 0,457 & NA \\
- & ComBat & 0,462 & 0,550 & 0,526 & 0,457 & NA \\
- & scVI & 0,491 & 0,578 & 0,447 & 0,325 & NA \\
- & scNAME & 0,431 & 0,468 & 0,488 & 0,474 & NA \\
- & DeepScena & 0,233 & 0,393 & 0,227 & 0,179 & NA \\
+ & scMAE & 0,560 & 0,614 & \textbf{0,614} & \textbf{0,568} & NA \\*
+ & \textcolor{red}{scRAW} & \textcolor{red}{\textbf{0,821}} & \textcolor{red}{\underline{0,787}} & \textcolor{red}{0,530} & \textcolor{red}{0,429} & \textcolor{red}{NA} \\*
+ & scCAD & 0,636 & 0,634 & 0,513 & \underline{0,502} & NA \\*
+ & CellSIUS & 0,588 & 0,674 & \underline{0,562} & 0,481 & NA \\*
+ & DESC & \underline{0,781} & \textbf{0,839} & 0,459 & 0,255 & NA \\*
+ & scAIDE & 0,672 & 0,715 & 0,521 & 0,391 & NA \\*
+ & Harmony & 0,463 & 0,551 & 0,526 & 0,457 & NA \\*
+ & Scanorama & 0,463 & 0,551 & 0,526 & 0,457 & NA \\*
+ & PCA+Leiden & 0,463 & 0,551 & 0,526 & 0,457 & NA \\*
+ & ComBat & 0,462 & 0,550 & 0,526 & 0,457 & NA \\*
+ & scVI & 0,491 & 0,578 & 0,447 & 0,325 & NA \\*
+ & scNAME & 0,431 & 0,468 & 0,488 & 0,474 & NA \\*
+ & DeepScena & 0,233 & 0,393 & 0,227 & 0,179 & NA \\*
  & GiniClust & 0,021 & 0,443 & 0,095 & 0,019 & NA \\
 \end{longtable}
 \endgroup
