@@ -1,3 +1,0 @@
-dataset,dataset_key,method,trial_id,result_row_id,source_type
-BBAG094 Zeisel,bbag094_zeisel,scRAW (best per dataset),trial_0011,REPORT_BEST_0006,report_stage1_best_per_dataset
-Paul15 bone marrow,paul15_bone_marrow_raw_counts,scRAW (best per dataset),trial_0009,REPORT_BEST_0004,report_stage1_best_per_dataset
