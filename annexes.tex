@@ -133,7 +133,7 @@ TM Liver & Souris & 2 859 & 22 966 & 1 & 5 & 88,6\,\% & 0,000 & 0,578 \\
 \subsection*{Description des métriques de caractérisation des jeux de données}
 
 \begin{itemize}
-    \item \textbf{PCR sur PCA (Principal Component Regression on PCA) :} cette métrique estime la part de variance portée par le batch dans l'espace PCA. Elle est inspirée de scIB, qui utilise la régression sur composantes principales pour quantifier la contribution d'une covariable comme le batch \cite{luecken_benchmarking_2022}.
+    \item \textbf{PCR sur PCA (Principal Component Regression on PCA) :} cette métrique estime la part de variance portée par le batch dans l'espace PCA. Elle est inspirée de scIB, qui utilise la régression sur composantes principales pour quantifier la contribution d'une covariable comme le batch \cite{luecken_benchmarking_2022}. Un score proche de 0 indique une faible influence du batch (idéal), tandis qu'un score proche de 1 indique que l'effet de batch domine le signal biologique principal.
     \item \textbf{Indice de Gini des classes :} cette métrique résume le déséquilibre des effectifs entre types cellulaires. Un score proche de 0 indique des classes de tailles comparables, tandis qu'un score élevé indique quelques classes dominantes et des classes minoritaires. L'usage du coefficient de Gini pour détecter un déséquilibre multi-classe est par exemple employé par Hirsch et al. \cite{hirsch2023exploiting}.
 \end{itemize}
 
