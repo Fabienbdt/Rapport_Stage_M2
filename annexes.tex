@@ -246,9 +246,11 @@ Dans les formules ci-dessus, \(y_i\) désigne l'annotation biologique de la cell
 \textbf{Correction batch} & Harmony, ComBat, DESC et Scanorama. \\
 \bottomrule
 \end{tabularx}
-\caption{Synthèse des familles de méthodes utilisées pour organiser les résultats de la section scRAW. scVI est conservé dans la famille des méthodes généralistes pour les figures de synthèse, même si le modèle peut intégrer une information de batch.}
+\caption{Synthèse des familles de méthodes utilisées pour organiser les résultats de la section scRAW.}
 \label{tab:scraw_method_families}
 \end{table}
+
+Les familles utilisées dans les figures correspondent à l'objectif principal retenu pour chaque méthode et ne sont pas exclusives. scVI est classé parmi les méthodes généralistes, car il permet plusieurs types d'analyses, tout en intégrant l'information de batch dans son modèle. DESC est classé parmi les méthodes de correction de batch, car son apprentissage vise à réduire progressivement cet effet pendant le clustering.
 
 \begin{table}[H]
 \centering
