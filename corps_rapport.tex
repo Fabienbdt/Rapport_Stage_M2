@@ -221,6 +221,8 @@ L'intérêt principal du logiciel est d'imposer un cadre commun à des méthodes
 
 Enfin, SCRBenchmark sauvegarde les éléments nécessaires à l'analyse et à la reproductibilité : scores, labels prédits, représentations latentes, figures, paramètres et logs. Les visualisations générées automatiquement, comme les UMAP, les matrices de confusion ou les figures comparant entraînement et test, permettent d'explorer rapidement les résultats sans réécrire du code pour chaque expérience. L'outil a ainsi servi à produire les expériences et à analyser leurs sorties dans un cadre cohérent. Il intègre aussi des fonctions plus ponctuelles pour reprendre des fichiers de résultats déjà produits, comparer plusieurs algorithmes de clustering sur un même espace de représentation (PCA ou espace latent d'autoencodeur), préparer une commande CLI de benchmark sans exécution immédiate et lancer des recherches d'hyperparamètres.
 
+Concernant l'environnement matériel et logiciel utilisé pour l'ensemble des calculs et l'entraînement des modèles, les expérimentations ont été lancées sur un serveur sous Ubuntu 22.04.5 LTS équipé d'un processeur Intel Core i7-6950X (10 cœurs, 20 threads, 3.00 GHz) et de 128 Go de RAM. L'entraînement des modèles d'apprentissage profond s'est appuyé sur trois cartes graphiques NVIDIA TITAN X (Pascal) disposant de 12 Go de VRAM chacune (CUDA version 13.0).
+
 \subsection{Expériences}
 
 \subsubsection{Données et splits}
