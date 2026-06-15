@@ -219,6 +219,7 @@ Cette section regroupe les définitions, formules mathématiques et interprétat
         RareACC & Classification des classes rares & RareACC\({}=\frac{\sum_{c\in\mathcal{R}}TP_c}{\sum_{c\in\mathcal{R}}N_c}\), avec \(\mathcal{R}=\{c\,|\,N_c/n<5\,\%\}\) & Calcule la proportion brute de cellules correctement affectées parmi l'ensemble des populations rares. \\
         BalancedRareACC & Classification équilibrée des classes rares & BalancedRareACC\({}=\frac{1}{|\mathcal{R}|}\sum_{c\in\mathcal{R}}\frac{TP_c}{N_c}\), avec \(\mathcal{R}=\{c\,|\,N_c/n<5\,\%\}\) & Calcule la moyenne des rappels des classes rares : chaque classe rare compte autant, même lorsqu'elle contient très peu de cellules. \\
         UltraRareACC & Classification des classes ultra-rares & UltraRareACC\({}=\frac{\sum_{c\in\mathcal{U}}TP_c}{\sum_{c\in\mathcal{U}}N_c}\), avec \(\mathcal{U}=\{c\,|\,N_c/n<1\,\%\}\) & Calcule la proportion brute de cellules correctement affectées parmi l'ensemble des populations ultra-rares. \\
+        scIB-E & Intégration des batchs & Score agrégé fondé sur la silhouette de batch, iLISI, kBET et la connectivité du graphe. & Évalue le mélange des batchs dans la représentation latente. Un score élevé indique une influence plus faible du batch, mais doit être interprété avec les métriques biologiques afin de vérifier que le signal cellulaire reste préservé. \\
         Silhouette & Séparation géométrique des clusters & \(s(i) = \frac{b(i) - a(i)}{\max(a(i), b(i))}\), où \(a(i)\) est la distance moyenne intra-cluster et \(b(i)\) la distance moyenne minimale externe. & Évalue la compacité et l'isolement des clusters dans l'espace latent (de \(-1\) à \(1\) ; proche de \(1\) indique des clusters bien séparés). \\
         Temps & Coût computationnel & \(t_{\mathrm{exec}}=t_{\mathrm{fin}}-t_{\mathrm{debut}}\) & Permet de comparer les méthodes non seulement sur leur qualité de clustering, mais aussi sur leur coût pratique. \\
         \bottomrule
@@ -344,7 +345,7 @@ La baseline correspond à l'algorithme sans pondération ajoutée. Les autres li
 
 \input{Images/scraw_loss_transfer_synthesis/loss_transfer_baseline_vs_best_table.tex}
 
-Pour résumer les performances, les seeds sont d'abord moyennées pour chaque jeu de données, puis les jeux de données sont moyennés avec le même poids. Le score utilisé pour sélectionner la meilleure configuration non-baseline est la moyenne de ARI, RareACC, UltraRareACC et BalancedRareACC. La BalancedRareACC est calculée en moyennant le rappel de chaque classe rare (proportion < 5\%) afin que chaque population minoritaire contribue équitablement au score, indépendamment de sa taille relative. L'UltraRareACC a été reprise des fichiers de résultats détaillés lorsqu'elle était disponible, ou recalculée à partir des rappels par type cellulaire lorsque seule la colonne \texttt{ClassWise} était exportée.
+Pour résumer les performances, les seeds sont d'abord moyennées pour chaque jeu de données, puis les jeux de données sont moyennés avec le même poids. Le score utilisé pour sélectionner la meilleure configuration non-baseline est la moyenne de cinq métriques : ARI, BalancedACC, RareACC, UltraRareACC et BalancedRareACC. La BalancedRareACC est calculée en moyennant le rappel de chaque classe rare (proportion < 5\%) afin que chaque population minoritaire contribue équitablement au score, indépendamment de sa taille relative. L'UltraRareACC a été reprise des fichiers de résultats détaillés lorsqu'elle était disponible, ou recalculée à partir des rappels par type cellulaire lorsque seule la colonne \texttt{ClassWise} était exportée.
 
 \begin{figure}[H]
     \centering
@@ -394,7 +395,7 @@ Human Pancreas & Technologies \texttt{smartseq2} et \texttt{celseq2} & Technolog
 \section{Étude d'ablation de scRAW}
 \label{annexe:ablation_scraw}
 
-Cette section présente l'étude d'ablation menée pour valider l'apport individuel de chaque composante de \textbf{scRAW} : la pondération dynamique \(\mathcal{L}_{\mathrm{recon,ponderee}}\), la triplet loss rare-aware \(\mathcal{L}_{\mathrm{triplet}}\) et la correction adversariale de batch DANN \(\mathcal{L}_{\mathrm{batch}}\). Toutes les variantes ont été entraînées sur le jeu de données Baron Human Pancreas en utilisant HDBSCAN comme algorithme de clustering final.
+Cette section présente l'étude d'ablation menée pour évaluer l'effet individuel de chaque composante de \textbf{scRAW} : la pondération dynamique \(\mathcal{L}_{\mathrm{recon,ponderee}}\), la triplet loss rare-aware \(\mathcal{L}_{\mathrm{triplet}}\) et la correction adversariale de batch DANN \(\mathcal{L}_{\mathrm{batch}}\). Toutes les variantes ont été entraînées sur le jeu de données Baron Human Pancreas en utilisant HDBSCAN comme algorithme de clustering final.
 
 Le Tableau~\ref{tab:scraw_ablation} détaille les scores obtenus pour les variantes suivantes :
 \begin{itemize}
@@ -434,6 +435,8 @@ Full sans warm-up & 0,885 & 0,868 & 0,913 & 0,769 & 0,811 & 0,681 & 0,814 & 0,58
 \caption{Résultats de l'étude d'ablation des composantes de scRAW sur le jeu de données Baron Human Pancreas (clustering final HDBSCAN). B. ACC : BalancedACC ; Rare : RareACC ; B. Rare : BalancedRareACC ; U. Rare : UltraRareACC ; Sil. : coefficient de Silhouette ; scIB-E : score d'intégration évaluant le mélange des batchs dans l'espace latent.}
 \label{tab:scraw_ablation}
 \end{table}
+
+Les résultats montrent que les composantes n'agissent pas de manière uniforme sur toutes les métriques. La variante \textit{Full density-only} obtient ainsi des scores d'ARI et de NMI légèrement supérieurs au modèle complet, tandis que la variante \textit{Full cluster-size-only} obtient de meilleurs résultats en BalancedRareACC et en UltraRareACC, mais des scores plus faibles sur les métriques globales de clustering et d'accuracy. Le modèle complet a été retenu car nous avons privilégié une configuration forte sur ces métriques globales, tout en conservant de bonnes performances sur les populations rares. La ligne en gras identifie ce modèle de référence et ne signifie pas qu'il atteint la valeur maximale pour chaque métrique.
 
 \begin{figure}[H]
     \centering
