@@ -86,10 +86,8 @@
 
 % Initialisation des flux d'écriture pour les listes des annexes
 \makeatletter
-\newwrite\tf@lofapp
-\immediate\openout\tf@lofapp=\jobname.lofapp
-\newwrite\tf@lotapp
-\immediate\openout\tf@lotapp=\jobname.lotapp
+\let\tf@lofapp\relax
+\let\tf@lotapp\relax
 \makeatother
 
 \begin{document}
