@@ -1,0 +1,13 @@
+family,rank,method
+Methodes orientees cellules rares,1,scAIDE+Harmony
+Methodes orientees cellules rares,2,CellSIUS+Harmony
+Methodes orientees cellules rares,3,scAIDE
+Methodes orientees cellules rares,4,CellSIUS
+Methodes generalistes,1,scvi
+Methodes generalistes,2,scMAE
+Methodes generalistes,3,pca_leiden
+Methodes generalistes,4,DESC
+Generalistes + correction batch,1,scRAW (stable_generalist)
+Generalistes + correction batch,2,Harmony
+Generalistes + correction batch,3,ComBat-seq
+Generalistes + correction batch,4,scMAE+Harmony

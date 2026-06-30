@@ -1,0 +1,30 @@
+{
+  "source_table": "/Users/fabienbidet/Documents/MASTER2/STAGE/Rapport_Stage_M2/Images/comparaison_inductive_scraw_stable_generalist_synthese/inductive_per_split_combined_summary_source.csv",
+  "additional_root": "",
+  "n_base_rows": 78,
+  "n_added_rows": 0,
+  "algorithms": [
+    "scraw",
+    "scname",
+    "sc_mae",
+    "scdeepcluster",
+    "scaide",
+    "scvi"
+  ],
+  "datasets": [
+    "baron_human_pancreas",
+    "bbag094_spleen",
+    "gse112013_human_testis_raw_counts",
+    "kang_pbmc_gse96583_singlets_raw_counts",
+    "macaque_retina_gse118480_bipolar_raw_counts",
+    "pancreas_raw_counts_four_batches_celseq_celseq2_fluidigmc1_smartseq2"
+  ],
+  "metrics": [
+    "ARI",
+    "ACC",
+    "BalancedACC",
+    "RareACC",
+    "BalancedRareACC",
+    "UltraRareACC"
+  ]
+}

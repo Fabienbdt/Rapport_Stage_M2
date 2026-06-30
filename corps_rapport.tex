@@ -510,7 +510,7 @@ La figure~\ref{fig:loss_transfer_baseline_vs_best} montre que le transfert de la
 
 \begin{figure}[!htbp]
     \centering
-    \includegraphics[width=\textwidth,height=0.52\textheight,keepaspectratio,trim=0 0 0 0.8cm,clip]{comparaison_inductive_scraw_trial0017_synthese/inductive_metrics_boxplots_ari_acc_rare_balancedrare_ultrarare.pdf}
+    \includegraphics[width=\textwidth,height=0.52\textheight,keepaspectratio,trim=0 0 0 0.8cm,clip]{comparaison_inductive_scraw_stable_generalist_synthese/inductive_metrics_boxplots_ari_acc_rare_balancedrare_ultrarare.pdf}
     \caption[Comparaison des performances en mode inductif et transductif (baseline) sur 6 jeux de données.]{Comparaison des performances en mode inductif (boîtes colorées, sur données tests non vues) et transductif (boîtes grisées, baseline entraînée sur tout le jeu de données et moyennée) pour 6 algorithmes sur les 6 jeux de données. Chaque boîte représente la distribution des moyennes par jeu de données. Les losanges indiquent la moyenne globale pour chaque métrique.}
     \label{fig:inductive_metrics_boxplots_default}
 \end{figure}
@@ -535,14 +535,14 @@ Ces résultats indiquent que scRAW maintient ses performances sur des données n
     \captionsetup{font=small}
     \begin{subfigure}[b]{0.95\textwidth}
         \centering
-        \includegraphics[width=\linewidth,height=0.34\textheight,keepaspectratio,trim=0 0 0 0.6cm,clip]{Images/analyse_biologique_scraw_baron_trial0017/tsne_qualitative_panel.png}
+        \includegraphics[width=\linewidth,height=0.34\textheight,keepaspectratio,trim=0 0 0 0.6cm,clip]{Images/analyse_biologique_scraw_baron_stable_generalist/tsne_qualitative_panel.png}
         \caption{Projection t-SNE des représentations latentes.}
         \label{fig:baron_scraw_bio_tsne}
     \end{subfigure}
     \vskip 0.25em
     \begin{subfigure}[b]{0.95\textwidth}
         \centering
-        \includegraphics[width=\linewidth,height=0.34\textheight,keepaspectratio,trim=0 0 0 0.6cm,clip]{Images/analyse_biologique_scraw_baron_trial0017/marker_overlap_heatmap.png}
+        \includegraphics[width=\linewidth,height=0.34\textheight,keepaspectratio,trim=0 0 0 0.6cm,clip]{Images/analyse_biologique_scraw_baron_stable_generalist/marker_overlap_heatmap.png}
         \caption{Recouvrement des marqueurs. L'axe des ordonnées est ordonné par taille décroissante des clusters prédits, et l'axe des abscisses par taille décroissante des populations de référence (les cellules stellaires activées et quiescentes étant placées côte à côte pour faciliter la comparaison).}
         \label{fig:baron_scraw_bio_marker_overlap}
     \end{subfigure}

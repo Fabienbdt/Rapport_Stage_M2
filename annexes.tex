@@ -1,37 +1,4 @@
 % !TeX root = Rapport_Stage_M2.tex
-
-\thispagestyle{empty}
-\begin{center}
-  \vspace*{4cm}
-  \hrule height 1.5pt
-  \vspace{0.6cm}
-  {\Huge \textbf{ANNEXES}} \\
-  \vspace{0.6cm}
-  \hrule height 1.5pt
-  \vspace{1.5cm}
-  {\Large \textbf{\StageTitle}} \\
-  \vspace{2.0cm}
-  {\large \textbf{Étudiant :} \StageStudent} \\
-  \vspace{0.5cm}
-  {\large \StageDate}
-\end{center}
-
-\newpage
-
-\makeatletter
-\section*{Table des figures des annexes}
-\addcontentsline{toc}{subsection}{Table des figures des annexes}
-\@starttoc{lofapp}
-
-\newpage
-
-\section*{Table des tableaux des annexes}
-\addcontentsline{toc}{subsection}{Table des tableaux des annexes}
-\@starttoc{lotapp}
-\makeatother
-
-\newpage
-
 \section{Structure et organigramme du LaBRI}
 \label{annexe:labri}
 
@@ -100,7 +67,7 @@ L'organigramme structurel simplifié correspondant est présenté dans la Figure
   \path [draw, thick] (coord) -| (dept5);
 
   \end{tikzpicture}
-  \caption[Organigramme structurel simplifié du LaBRI]{Organigramme structurel simplifié du LaBRI.}
+  \caption{Organigramme structurel simplifié du LaBRI.}
   \label{fig:organigramme_labri}
 \end{figure}
 
@@ -115,24 +82,24 @@ Cette section fournit d'abord les détails des huit jeux de données scRNA-seq d
 \scriptsize
 \setlength{\tabcolsep}{2.7pt}
 \resizebox{\textwidth}{!}{%
-\begin{tabular}{l l l c c c c c c c}
+\begin{tabular}{l l c c c c c c c}
 \toprule
-\textbf{Dataset} & \textbf{Espèce} & \textbf{Tissu} & \textbf{Cellules} & \textbf{Gènes} & \textbf{Batchs} & \textbf{Rares ($<5\%$)} & \textbf{Sparsité} & \textbf{PCR/PCA} & \textbf{Gini} \\
+\textbf{Dataset} & \textbf{Espèce} & \textbf{Cellules} & \textbf{Gènes} & \textbf{Batchs} & \textbf{Rares ($<5\%$)} & \textbf{Sparsité} & \textbf{PCR/PCA} & \textbf{Gini} \\
 \midrule
-Zeisel (BBAG094) & Souris & Cerveau & 3 006 & 19 972 & 10 & 4 & 81,2\,\% & 0,499 & 0,543 \\
-Spleen (BBAG094) & Souris & Rate & 9 552 & 23 341 & 2 & 3 & 94,3\,\% & 0,022 & 0,644 \\
-Baron Pancreas & Humain & Pancréas & 8 569 & 20 125 & 4 & 9 & 90,6\,\% & 0,048 & 0,644 \\
-Human Testis & Humain & Testicule & 6 490 & 27 477 & 6 & 4 & 88,8\,\% & 0,025 & 0,304 \\
-Kang PBMC & Humain & Sang périphérique & 24 679 & 35 635 & 16 & 1 & 98,4\,\% & 0,069 & 0,500 \\
-Macaque Retina & Macaque & Rétine & 30 302 & 36 162 & 30 & 4 & 97,3\,\% & 0,184 & 0,388 \\
-Bone Marrow (Paul15) & Souris & Moelle osseuse & 2 730 & 3 451 & 1 & 9 & 74,7\,\% & 0,000 & 0,410 \\
-TM Liver & Souris & Foie & 2 859 & 22 966 & 1 & 5 & 88,6\,\% & 0,000 & 0,578 \\
+Zeisel (BBAG094) & Souris & 3 006 & 19 972 & 10 & 4 & 81,2\,\% & 0,499 & 0,543 \\
+Spleen (BBAG094) & Souris & 9 552 & 23 341 & 2 & 3 & 94,3\,\% & 0,022 & 0,644 \\
+Baron Pancreas & Humain & 8 569 & 20 125 & 4 & 9 & 90,6\,\% & 0,048 & 0,644 \\
+Human Testis & Humain & 6 490 & 27 477 & 6 & 4 & 88,8\,\% & 0,025 & 0,304 \\
+Kang PBMC & Humain & 24 679 & 35 635 & 16 & 1 & 98,4\,\% & 0,069 & 0,500 \\
+Macaque Retina & Macaque & 30 302 & 36 162 & 30 & 4 & 97,3\,\% & 0,184 & 0,388 \\
+Bone Marrow (Paul15) & Souris & 2 730 & 3 451 & 1 & 9 & 74,7\,\% & 0,000 & 0,410 \\
+TM Liver & Souris & 2 859 & 22 966 & 1 & 5 & 88,6\,\% & 0,000 & 0,578 \\
 \midrule
-\textbf{Plage [Min - Max]} & & & 2 730--30 302 & 3 451--36 162 & 1--30 & 1--9 & 74,7\,\%--98,4\,\% & 0,000--0,499 & 0,304--0,644 \\
+\textbf{Plage [Min - Max]} & & 2 730--30 302 & 3 451--36 162 & 1--30 & 1--9 & 74,7\,\%--98,4\,\% & 0,000--0,499 & 0,304--0,644 \\
 \bottomrule
 \end{tabular}%
 }
-\caption[Caractéristiques des huit jeux de données common-8]{Récapitulatif des huit jeux de données du sous-ensemble commun utilisés dans nos expériences.}
+\caption{Récapitulatif des huit jeux de données du sous-ensemble commun utilisés dans nos expériences.}
 \label{tab:datasets}
 \end{table}
 
@@ -159,7 +126,7 @@ TM Liver & Souris & Foie & 2 859 & 22 966 & 1 & 5 & 88,6\,\% & 0,000 & 0,578 \\
         \textit{t\_cell} & 7 & 0,08\,\% & Ultra-rare \\
         \bottomrule
     \end{tabular}
-    \caption[Composition du jeu de données Baron]{Composition du jeu de données Baron après filtrage. Les classes rares correspondent aux types représentant moins de 5\,\% des cellules, et les classes ultra-rares à ceux représentant moins de 1\,\%.}
+    \caption{Composition du jeu de données Baron après filtrage. Les classes rares correspondent aux types représentant moins de 5\,\% des cellules, et les classes ultra-rares à ceux représentant moins de 1\,\%.}
     \label{tab:classes_baron}
 \end{table}
 
@@ -190,7 +157,7 @@ Paul15 bone marrow & Chargeur natif \texttt{scanpy.datasets.paul15()}. \\
 Tabula Muris liver & Sous-ensemble foie de Tabula Muris, technologie FACS/Smart-seq2. \\
 \bottomrule
 \end{tabularx}
-\caption[Provenance des jeux de données common-8]{Résumé synthétique de l'origine des huit jeux de données common-8.}
+\caption{Résumé synthétique de l'origine des huit jeux de données common-8.}
 \label{tab:datasets_provenance}
 \end{table}
 
@@ -210,7 +177,7 @@ SCIB Mouse Pancreas 1 & Souris & 822 & 14 878 & 1 & 9 & 5 & 90,5\,\% & 0,000 & 0
 \bottomrule
 \end{tabular}%
 }
-\caption[Caractéristiques des jeux de données de validation externe]{Caractéristiques des deux jeux de données utilisés pour évaluer scRAW sur des données non vues pendant l'optimisation des hyperparamètres.}
+\caption{Caractéristiques des deux jeux de données utilisés pour évaluer scRAW sur des données non vues pendant l'optimisation des hyperparamètres.}
 \label{tab:datasets_validation_externe}
 \end{table}
 
@@ -226,7 +193,7 @@ Human Pancreas & Jeu \texttt{openproblems\_v1/pancreas} d'OpenProblems, dérivé
 SCIB Mouse Pancreas 1 & Jeu pancréas souris préparé depuis le fichier source mouse1 (\texttt{GSM2230761}) de \texttt{GSE84133\_RAW}, associé aux données Baron \cite{Baron2016}. \\
 \bottomrule
 \end{tabularx}
-\caption[Provenance des jeux de données de validation externe]{Origine des deux jeux de données de validation externe. Pour le jeu de données Human Pancreas, seuls les batchs \texttt{celseq}, \texttt{celseq2}, \texttt{fluidigmc1} et \texttt{smartseq2} ont été conservés, tandis que les batchs communs avec Baron Human Pancreas (\texttt{inDrop}) et ceux issus de SMARTER-seq ont été retirés.}
+\caption{Origine des deux jeux de données de validation externe. Pour le jeu de données Human Pancreas, seuls les batchs \texttt{celseq}, \texttt{celseq2}, \texttt{fluidigmc1} et \texttt{smartseq2} ont été conservés, tandis que les batchs communs avec Baron Human Pancreas (\texttt{inDrop}) et ceux issus de SMARTER-seq ont été retirés.}
 \label{tab:datasets_validation_externe_provenance}
 \end{table}
 
@@ -257,7 +224,7 @@ Cette section regroupe les définitions, formules mathématiques et interprétat
         Temps & Coût computationnel & \(t_{\mathrm{exec}}=t_{\mathrm{fin}}-t_{\mathrm{debut}}\) & Permet de comparer les méthodes non seulement sur leur qualité de clustering, mais aussi sur leur coût pratique. \\
         \bottomrule
     \end{tabularx}
-    \caption[Métriques d'évaluation et de comparaison]{Métriques utilisées pour comparer les méthodes. \(TP_c\) correspond au nombre de cellules de la classe \(c\) correctement attribuées après appariement, et \(N_c\) au nombre total de cellules de cette classe.}
+    \caption{Métriques utilisées pour comparer les méthodes. \(TP_c\) correspond au nombre de cellules de la classe \(c\) correctement attribuées après appariement, et \(N_c\) au nombre total de cellules de cette classe.}
     \label{tab:metriques_evaluation}
 \end{table}
 
@@ -282,7 +249,7 @@ Cette annexe complète les résultats synthétiques présentés dans le corps du
 \textbf{Correction batch} & Harmony, ComBat, DESC et Scanorama. \\
 \bottomrule
 \end{tabularx}
-\caption[Familles d'algorithmes de clustering]{Synthèse des familles de méthodes utilisées pour organiser les résultats de la section scRAW.}
+\caption{Synthèse des familles de méthodes utilisées pour organiser les résultats de la section scRAW.}
 \label{tab:scraw_method_families}
 \end{table}
 
@@ -312,14 +279,14 @@ Scanorama & Correction batch & 8,6 \\
 DESC & Correction batch & 205,2 \\
 \bottomrule
 \end{tabularx}
-\caption[Temps d'exécution moyen des algorithmes]{Temps d'exécution moyen des algorithmes comparés dans le rapport, calculé sur les dix jeux de données présentés dans les résultats : les huit jeux de référence du Tableau~\ref{tab:datasets}, auxquels s'ajoutent les deux jeux de validation externe Human Pancreas et SCIB Mouse Pancreas 1 du Tableau~\ref{tab:datasets_validation_externe}. Chaque jeu de données contribue une fois par algorithme ; les temps d'exécution proviennent du champ \texttt{runtime} des résultats exportés.}
+\caption{Temps d'exécution moyen des algorithmes comparés dans le rapport, calculé sur les dix jeux de données présentés dans les résultats : les huit jeux de référence du Tableau~\ref{tab:datasets}, auxquels s'ajoutent les deux jeux de validation externe Human Pancreas et SCIB Mouse Pancreas 1 du Tableau~\ref{tab:datasets_validation_externe}. Chaque jeu de données contribue une fois par algorithme ; les temps d'exécution proviennent du champ \texttt{runtime} des résultats exportés.}
 \label{tab:runtime_moyen_algorithmes}
 \end{table}
 
 \begin{figure}[H]
     \centering
     \includegraphics[width=\textwidth,height=0.87\textheight,keepaspectratio]{scraw_common8_family_panel/common8_family_all_methods_panel.pdf}
-    \caption[Résultats complets par famille sur les 8 jeux communs]{Résultats complets par famille sur les 8 jeux de données communs. Les boîtes résument la distribution des scores pour ces 8 jeux de données par méthode ; le losange blanc indique la moyenne ; les jeux sans classe ultra-rare ne contribuent pas à l'UltraRareACC. \textbf{scRAW} est ajouté comme repère dans chaque famille.}
+    \caption{Résultats complets par famille sur les 8 jeux de données communs. Les boîtes résument la distribution des scores pour ces 8 jeux de données par méthode ; le losange blanc indique la moyenne ; les jeux sans classe ultra-rare ne contribuent pas à l'UltraRareACC. \textbf{scRAW} est ajouté comme repère dans chaque famille.}
     \label{fig:common8_family_all_methods}
 \end{figure}
 Les tableaux suivants présentent les résultats bruts détaillés par jeu de données pour chaque métrique d'évaluation pour les méthodes principales :
@@ -338,7 +305,7 @@ Les tableaux suivants présentent les résultats bruts détaillés par jeu de do
 \begin{figure}[H]
     \centering
     \includegraphics[width=\textwidth,height=0.80\textheight,keepaspectratio]{scraw_common8_family_panel/common8_harmony_complement_panel.pdf}
-    \caption[Résultats avec Harmony sur les 8 jeux communs]{Résultats complémentaires avec Harmony sur les 8 jeux de données communs. Les boîtes résument la distribution des scores pour ces 8 jeux de données par méthode ; le losange blanc indique la moyenne. Les méthodes \textit{Rare Specific}+Harmony sont indiquées à titre exploratoire, car cette association n'est pas documentée comme usage standard par les auteur·rice·s. Pour les méthodes de deep learning généralistes, Harmony est appliqué sur l'espace latent avant le clustering final. La ligne Harmony correspond au pipeline PCA+Harmony avant clustering ; scVI est conservé comme méthode native intégrant l'information de batch.}
+    \caption{Résultats complémentaires avec Harmony sur les 8 jeux de données communs. Les boîtes résument la distribution des scores pour ces 8 jeux de données par méthode ; le losange blanc indique la moyenne. Les méthodes \textit{Rare Specific}+Harmony sont indiquées à titre exploratoire, car cette association n'est pas documentée comme usage standard par les auteur·rice·s. Pour les méthodes de deep learning généralistes, Harmony est appliqué sur l'espace latent avant le clustering final. La ligne Harmony correspond au pipeline PCA+Harmony avant clustering ; scVI est conservé comme méthode native intégrant l'information de batch.}
     \label{fig:common8_harmony_complement}
 \end{figure}
 
@@ -383,7 +350,7 @@ Pour résumer les performances, les seeds sont d'abord moyennées pour chaque je
 \begin{figure}[H]
     \centering
     \includegraphics[width=\textwidth,height=0.60\textheight,keepaspectratio]{scraw_loss_transfer_synthesis/loss_transfer_all_configurations_boxplot_4metrics.pdf}
-    \caption[Scores pour toutes les configurations du transfert de loss]{Distribution des scores pour toutes les configurations testées lors du transfert de la loss pondérée \(\mathcal{L}_{\mathrm{recon,ponderee}}\) de scRAW sur 5 jeux de données. Les cinq panneaux correspondent aux métriques ARI, BalancedACC, RareACC, UltraRareACC et BalancedRareACC. Les boîtes représentent la distribution des scores moyens sur les 5 jeux de données communs.}
+    \caption{Distribution des scores pour toutes les configurations testées lors du transfert de la loss pondérée \(\mathcal{L}_{\mathrm{recon,ponderee}}\) de scRAW sur 5 jeux de données. Les cinq panneaux correspondent aux métriques ARI, BalancedACC, RareACC, UltraRareACC et BalancedRareACC. Les boîtes représentent la distribution des scores moyens sur les 5 jeux de données communs.}
     \label{fig:loss_transfer_all_configurations_boxplots}
 \end{figure}
 
@@ -411,18 +378,18 @@ Macaque retina & Individus \texttt{M1} et \texttt{M2} & Individus \texttt{M3} et
 Human Pancreas & Technologies \texttt{smartseq2} et \texttt{celseq2} & Technologies \texttt{celseq} et \texttt{fluidigmc1}, évaluées séparément \\
 \bottomrule
 \end{tabularx}
-\caption[Définition des splits inductifs de l'évaluation]{Définition des splits inductifs utilisés dans la comparaison. Chaque split simule l'application d'un modèle entraîné sur des groupes connus à un groupe non observé pendant l'entraînement.}
+\caption{Définition des splits inductifs utilisés dans la comparaison. Chaque split simule l'application d'un modèle entraîné sur des groupes connus à un groupe non observé pendant l'entraînement.}
 \label{tab:inductive_split_design}
 \end{table}
 
 \begin{figure}[H]
     \centering
-    \includegraphics[width=\textwidth,height=0.42\textheight,keepaspectratio]{comparaison_inductive_scraw_trial0017_synthese/inductive_metrics_boxplots_ari_acc_rare_ultrarare.pdf}
-    \caption[Distribution des performances inductives]{Distribution des performances inductives pour ARI, ACC, Balanced ACC, RareACC et UltraRareACC sur 6 jeux de données. Les boîtes représentent la distribution des moyennes par jeu de données et split inductif pour chaque algorithme testé ; les losanges blancs indiquent la moyenne globale de l'algorithme.}
+    \includegraphics[width=\textwidth,height=0.42\textheight,keepaspectratio]{comparaison_inductive_scraw_stable_generalist_synthese/inductive_metrics_boxplots_ari_acc_rare_ultrarare.pdf}
+    \caption{Distribution des performances inductives pour ARI, ACC, Balanced ACC, RareACC et UltraRareACC sur 6 jeux de données. Les boîtes représentent la distribution des moyennes par jeu de données et split inductif pour chaque algorithme testé ; les losanges blancs indiquent la moyenne globale de l'algorithme.}
     \label{fig:inductive_metrics_dataset_boxplots}
 \end{figure}
 
-\input{Images/comparaison_inductive_scraw_trial0017_synthese/inductive_dataset_metric_values_table.tex}
+\input{Images/comparaison_inductive_scraw_stable_generalist_synthese/inductive_dataset_metric_values_table.tex}
 
 \newpage
 \section{Étude d'ablation de scRAW}
@@ -465,7 +432,7 @@ Full sans warm-up & 0,885 & 0,868 & 0,913 & 0,769 & 0,811 & 0,681 & 0,814 & 0,58
 \bottomrule
 \end{tabular}%
 }
-\caption[Résultats de l'étude d'ablation de scRAW]{Résultats de l'étude d'ablation des composantes de scRAW sur le jeu de données Baron Human Pancreas (clustering final HDBSCAN). B. ACC : BalancedACC ; Rare : RareACC ; B. Rare : BalancedRareACC ; U. Rare : UltraRareACC ; Sil. : coefficient de Silhouette ; scIB-E : score d'intégration évaluant le mélange des batchs dans l'espace latent.}
+\caption{Résultats de l'étude d'ablation des composantes de scRAW sur le jeu de données Baron Human Pancreas (clustering final HDBSCAN). B. ACC : BalancedACC ; Rare : RareACC ; B. Rare : BalancedRareACC ; U. Rare : UltraRareACC ; Sil. : coefficient de Silhouette ; scIB-E : score d'intégration évaluant le mélange des batchs dans l'espace latent.}
 \label{tab:scraw_ablation}
 \end{table}
 
@@ -474,7 +441,7 @@ Les résultats montrent que les composantes n'agissent pas de manière uniforme 
 \begin{figure}[H]
     \centering
     \includegraphics[width=0.9\textwidth]{stable_default_mse_ablations_20260526_210436/figures/stable_default_mse_ablation_key_metrics_barplot.png}
-    \caption[Comparaison graphique de l'ablation de scRAW]{Comparaison graphique des performances des variantes d'ablation de scRAW pour les métriques de clustering global (ARI, NMI, ACC), la détection des classes rares (RareACC, UltraRareACC) et le score d'intégration de batch (scIB-E).}
+    \caption{Comparaison graphique des performances des variantes d'ablation de scRAW pour les métriques de clustering global (ARI, NMI, ACC), la détection des classes rares (RareACC, UltraRareACC) et le score d'intégration de batch (scIB-E).}
     \label{fig:scraw_ablation_barplot}
 \end{figure}
 
@@ -489,7 +456,7 @@ Cette annexe détaille les hyperparamètres effectivement actifs dans la configu
 \setlength{\tabcolsep}{3pt}
 \renewcommand{\arraystretch}{1.15}
 \begin{longtable}{p{0.12\textwidth}p{0.24\textwidth}p{0.22\textwidth}p{0.34\textwidth}}
-\caption[Hyperparamètres actifs de scRAW (stable\_default)]{Hyperparamètres actifs du preset \texttt{stable\_default} de scRAW.}
+\caption{Hyperparamètres actifs du preset \texttt{stable\_default} de scRAW.}
 \label{tab:scraw_stable_default_hyperparams}\\
 \toprule
 \textbf{Bloc} & \textbf{Paramètre} & \textbf{Valeur} & \textbf{Rôle} \\
@@ -586,7 +553,7 @@ Campagne 2 & Huit jeux de données \textit{common-8}, pour sélectionner une con
 Campagne 3 & Treize jeux de données, pour consolider une configuration généraliste. & 19 essais Optuna. & Même logique de score que la campagne 2, avec sélection du meilleur clustering final entre HDBSCAN et Leiden. \\
 \bottomrule
 \end{tabularx}
-\caption[Résumé des campagnes Optuna de scRAW]{Résumé des campagnes Optuna utilisées pour construire et stabiliser la configuration scRAW décrite dans le rapport.}
+\caption{Résumé des campagnes Optuna utilisées pour construire et stabiliser la configuration scRAW décrite dans le rapport.}
 \label{tab:scraw_optuna_runs_summary}
 \end{table}
 
@@ -596,7 +563,7 @@ Dans le Tableau~\ref{tab:scraw_optuna_search_spaces}, les listes correspondent �
 \setlength{\tabcolsep}{3pt}
 \renewcommand{\arraystretch}{1.12}
 \begin{longtable}{p{0.25\textwidth}p{0.68\textwidth}}
-\caption[Espace de recherche des campagnes Optuna]{Hyperparamètres et plages de valeurs testés dans les trois recherches Optuna scRAW.}
+\caption{Hyperparamètres et plages de valeurs testés dans les trois recherches Optuna scRAW.}
 \label{tab:scraw_optuna_search_spaces}\\
 \toprule
 \textbf{Campagne et bloc} & \textbf{Hyperparamètres testés et valeurs possibles} \\
@@ -638,21 +605,21 @@ Campagne 3 -- batch et clustering & \texttt{use\_batch\_conditioning} fixé à \
 \begin{figure}[H]
     \centering
     \includegraphics[width=\textwidth,height=0.72\textheight,keepaspectratio]{hyperparametres_scraw/baron_param_importances_mean5_top30.png}
-    \caption[Importance des hyperparamètres (campagne 1)]{Importance des hyperparamètres pour la campagne 1 (Baron Human Pancreas).}
+    \caption{Importance des hyperparamètres pour la campagne 1 (Baron Human Pancreas).}
     \label{fig:scraw_hparam_importance_baron}
 \end{figure}
 
 \begin{figure}[H]
     \centering
     \includegraphics[width=\textwidth,height=0.72\textheight,keepaspectratio]{hyperparametres_scraw/generalist8_param_importances_mean5_top30.png}
-    \caption[Importance des hyperparamètres (campagne 2)]{Importance des hyperparamètres pour la campagne 2 (généraliste sur 8 jeux de données).}
+    \caption{Importance des hyperparamètres pour la campagne 2 (généraliste sur 8 jeux de données).}
     \label{fig:scraw_hparam_importance_generalist8}
 \end{figure}
 
 \begin{figure}[H]
     \centering
     \includegraphics[width=\textwidth,height=0.72\textheight,keepaspectratio]{hyperparametres_scraw/stable_generalist_param_importances_mean5_top30.png}
-    \caption[Importance des hyperparamètres (campagne 3)]{Importance des hyperparamètres pour la campagne 3 (consolidation généraliste).}
+    \caption{Importance des hyperparamètres pour la campagne 3 (consolidation généraliste).}
     \label{fig:scraw_hparam_importance_stable_generalist}
 \end{figure}
 
@@ -664,8 +631,8 @@ Cette annexe présente la projection en deux dimensions (t-SNE) des représentat
 
 \begin{figure}[H]
     \centering
-    \includegraphics[width=\textwidth]{Images/analyse_biologique_scraw_baron_trial0017/tsne_annotations_comparison.png}
-    \caption[Visualisation qualitative sur Baron]{Visualisation qualitative des représentations latentes scRAW sur Baron Human Pancreas : comparaison de la vérité terrain (A), des clusters prédits (B), des annotations par association optimale (C), des annotations par marqueurs (D) et de la coloration par batch/donneur (E) démontrant le bon mélange des différents lots.}
+    \includegraphics[width=\textwidth]{Images/analyse_biologique_scraw_baron_stable_generalist/tsne_annotations_comparison.png}
+    \caption[Visualisation qualitative des clusters, annotations et lots sur Baron.]{Visualisation qualitative des représentations latentes scRAW sur Baron Human Pancreas : comparaison de la vérité terrain (A), des clusters prédits (B), des annotations par association optimale (C), des annotations par marqueurs (D) et de la coloration par batch/donneur (E) démontrant le bon mélange des différents lots.}
     \label{fig:annexe_baron_tsne_qualitative}
 \end{figure}
 
@@ -723,7 +690,7 @@ Cette section regroupe les captures d'écran illustrant le fonctionnement et le 
         \label{fig:scr_cli}
     \end{subfigure}
     
-    \caption[Interface graphique de SCRBenchmark (configuration)]{Aperçu des différentes étapes de l'interface Streamlit de SCRBenchmark (1\textsuperscript{re} partie : configuration et préparation).}
+    \caption{Aperçu des différentes étapes de l'interface Streamlit de SCRBenchmark (1\textsuperscript{re} partie : configuration et préparation).}
     \label{fig:scrbenchmark_panel}
 \end{figure}
 
@@ -753,7 +720,7 @@ Cette section regroupe les captures d'écran illustrant le fonctionnement et le 
         \label{fig:scr_results_umaps}
     \end{subfigure}
     
-    \caption[Interface graphique de SCRBenchmark (exécution/résultats)]{Aperçu des différentes étapes de l'interface Streamlit de SCRBenchmark (2\textsuperscript{e} partie : exécution et résultats).}
+    \caption{Aperçu des différentes étapes de l'interface Streamlit de SCRBenchmark (2\textsuperscript{e} partie : exécution et résultats).}
 \end{figure}
 
 \newpage
@@ -765,7 +732,7 @@ Ce poster présente de manière synthétique le contexte, le fonctionnement et l
 \begin{figure}[H]
     \centering
     \includegraphics[width=\textwidth,height=0.72\textheight,keepaspectratio]{Images/poster_jobim/scraw_jobim_2026.png}
-    \caption[Poster scRAW (JOBIM 2026)]{Poster de présentation de scRAW réalisé pour JOBIM 2026.}
+    \caption{Poster de présentation de scRAW réalisé pour JOBIM 2026.}
     \label{fig:poster_jobim}
 \end{figure}
 
